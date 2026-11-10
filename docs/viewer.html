@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="board_data.js"></script>
+  <script src="board_data.js?v=261110225959"></script>
 
   <style>
     :root {
@@ -424,11 +424,8 @@
 
     function isViewerAuthorized() {
       try {
-        localStorage.removeItem(AUTH_SESSION_KEY);
-      } catch(e) {}
-      try {
-        const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY);
-        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY);
+        const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY) || localStorage.getItem(AUTH_SESSION_KEY);
+        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY) || localStorage.getItem(AUTH_ROLE_KEY);
         const activeHash = localStorage.getItem(AUTH_CUSTOM_VIEW_KEY) || AUTH_DEFAULT_VIEW_HASH;
         if (sessionToken === AUTH_MASTER_HASH) {
           currentViewerRole = 'master';
@@ -490,7 +487,8 @@
         currentViewerRole = 'master';
         sessionStorage.setItem(AUTH_SESSION_KEY, hash);
         sessionStorage.setItem(AUTH_ROLE_KEY, 'master');
-        try { localStorage.removeItem(AUTH_SESSION_KEY); } catch(e) {}
+        localStorage.setItem(AUTH_SESSION_KEY, hash);
+        localStorage.setItem(AUTH_ROLE_KEY, 'master');
         const header = document.querySelector('header');
         if (header) header.style.display = 'flex';
         document.querySelector('.toc-sidebar').style.display = 'block';
@@ -499,7 +497,8 @@
         currentViewerRole = 'viewer';
         sessionStorage.setItem(AUTH_SESSION_KEY, hash);
         sessionStorage.setItem(AUTH_ROLE_KEY, 'viewer');
-        try { localStorage.removeItem(AUTH_SESSION_KEY); } catch(e) {}
+        localStorage.setItem(AUTH_SESSION_KEY, hash);
+        localStorage.setItem(AUTH_ROLE_KEY, 'viewer');
         const header = document.querySelector('header');
         if (header) header.style.display = 'flex';
         document.querySelector('.toc-sidebar').style.display = 'block';
@@ -547,7 +546,7 @@
         }
 
         document.getElementById('docTitle').textContent = targetItem.title;
-        document.getElementById('btnDownload').href = targetItem.url;
+        document.getElementById('btnDownload').href = encodeURI(targetItem.url);
         document.title = `${targetItem.title} — ROOSTER RUMBLE`;
 
         if (targetItem.content) {
@@ -563,8 +562,11 @@
       const urlToFetch = targetItem ? targetItem.url : fileUrl;
       const isTxt = urlToFetch && urlToFetch.toLowerCase().endsWith('.txt');
       if (urlToFetch) {
-        fetch(urlToFetch)
-          .then(res => res.text())
+        fetch(encodeURI(urlToFetch))
+          .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.text();
+          })
           .then(text => {
             if (isTxt) renderPlainText(text);
             else renderMarkdown(text);

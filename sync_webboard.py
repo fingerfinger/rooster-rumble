@@ -387,6 +387,25 @@ def main():
     print(f"  • JSON 메타데이터 갱신: {json_path.name}")
     print(f"  • JS 메타데이터 갱신: {js_path.name}")
 
+    # 4.5 index.html 및 viewer.html의 script 태그 캐시 방지 버전 자동 갱신
+    ver_tag = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+    for html_name in ["index.html", "viewer.html"]:
+        html_file = docs_dir / html_name
+        if html_file.exists():
+            try:
+                with open(html_file, "r", encoding="utf-8") as f:
+                    ht_content = f.read()
+                ht_fixed = re.sub(
+                    r'<script\s+src=["\']board_data\.js(?:\?[^"\']*)?["\']\s*></script>',
+                    f'<script src="board_data.js?v={ver_tag}"></script>',
+                    ht_content
+                )
+                with open(html_file, "w", encoding="utf-8") as f:
+                    f.write(ht_fixed)
+                print(f"  • 캐시 방지 태그 갱신 ({html_name} ➔ ?v={ver_tag})")
+            except Exception as e:
+                print(f"  [경고] 캐시 태그 갱신 실패 ({html_name}): {e}")
+
     print("\n" + "=" * 64)
     print(" 🎉 마크다운 뷰어 지원 및 동기화 완료!")
     print(f"  - 동기화 에셋: {total_folder_files_copied}개 파일")

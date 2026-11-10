@@ -2468,6 +2468,10 @@
               <button type="button" class="auth-link-btn" onclick="resetPasswordToDefault()" style="font-size:0.75rem;">기본값으로 복원</button>
               <button type="button" class="btn-action btn-action-primary" onclick="saveNewPasswordFromSettings()">💾 비밀번호 변경 저장</button>
             </div>
+            <div style="margin-top:12px; padding-top:10px; border-top:1px dashed var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.78rem; color:var(--text-muted);">브라우저 가시성 임시 캐시:</span>
+              <button type="button" class="btn-action" onclick="resetMasterVisibilityOverrides()" style="font-size:0.75rem; border-color:#f59e0b; color:#fbbf24;" title="로컬에 임시 저장된 공개/숨김 오버라이드를 지우고 최신 배포본 상태로 즉시 복원합니다.">🔄 배포본 상태로 초기화</button>
+            </div>
           </div>
         </div>
 
@@ -2513,7 +2517,7 @@
   </div>
 
   <audio id="coreAudioPlayer" preload="none"></audio>
-  <script src="board_data.js"></script>
+  <script src="board_data.js?v=261110225959"></script>
 
   <script>
     let activeMenuId = 'view_issues';
@@ -2547,10 +2551,30 @@
     }
 
     const MASTER_OVERRIDES_KEY = 'rooster_master_visibility_overrides';
+    const MASTER_OVERRIDES_SYNC_KEY = 'rooster_master_overrides_synctime';
 
     function loadMasterVisibilityOverrides(dataItems) {
       if (!dataItems) return;
       try {
+        const lastSync = window.BOARD_DATA ? window.BOARD_DATA.last_sync : '';
+        const savedSyncTime = localStorage.getItem(MASTER_OVERRIDES_SYNC_KEY);
+
+        // 배포본의 동기화 시간(last_sync)이 로컬 저장 시점과 다르면 배포본이 정본이므로 로컬 캐시 자동 무효화
+        if (lastSync && savedSyncTime && savedSyncTime !== lastSync) {
+          console.log('[보안 동기화] 새로운 웹보드 배포본이 감지되어 로컬 가시성 임시 설정을 초기화합니다.');
+          localStorage.removeItem(MASTER_OVERRIDES_KEY);
+          localStorage.setItem(MASTER_OVERRIDES_SYNC_KEY, lastSync);
+          return;
+        }
+        if (lastSync && !savedSyncTime) {
+          localStorage.setItem(MASTER_OVERRIDES_SYNC_KEY, lastSync);
+        }
+
+        // 일반 열람자(viewer)는 배포된 board_data.js의 공개 설정만 바라봄 (로컬 오버라이드 미적용)
+        if (currentUserRole !== 'master') {
+          return;
+        }
+
         const raw = localStorage.getItem(MASTER_OVERRIDES_KEY);
         if (raw) {
           const overrides = JSON.parse(raw);
@@ -2567,7 +2591,9 @@
             }
           });
         }
-      } catch(e) {}
+      } catch(e) {
+        console.warn('오버라이드 로드 실패:', e);
+      }
     }
 
     function saveMasterVisibilityOverrides() {
@@ -2581,7 +2607,29 @@
           };
         });
         localStorage.setItem(MASTER_OVERRIDES_KEY, JSON.stringify(overrides));
+        if (window.BOARD_DATA.last_sync) {
+          localStorage.setItem(MASTER_OVERRIDES_SYNC_KEY, window.BOARD_DATA.last_sync);
+        }
       } catch(e) {}
+    }
+
+    function resetMasterVisibilityOverrides() {
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한이 필요합니다.', '⚠️');
+        return;
+      }
+      try {
+        localStorage.removeItem(MASTER_OVERRIDES_KEY);
+        if (window.BOARD_DATA && window.BOARD_DATA.last_sync) {
+          localStorage.setItem(MASTER_OVERRIDES_SYNC_KEY, window.BOARD_DATA.last_sync);
+        }
+      } catch(e) {}
+
+      // 원본 board_data.js 데이터로 완전 복원
+      if (window.BOARD_DATA && window.BOARD_DATA.items) {
+        // 새로고침하여 정적 배포본 상태 즉각 재적용
+        window.location.reload();
+      }
     }
 
     function toggleDocVisibility(docId, event) {
@@ -2833,13 +2881,8 @@
     async function checkSavedAuthSession() {
       const activeViewHash = getActiveViewPasswordHash();
       try {
-        localStorage.removeItem(AUTH_SESSION_KEY);
-        localStorage.removeItem('rooster_auth_remember');
-      } catch(e) {}
-
-      try {
-        const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY);
-        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY);
+        const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY) || localStorage.getItem(AUTH_SESSION_KEY);
+        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY) || localStorage.getItem(AUTH_ROLE_KEY);
         if (sessionToken === AUTH_MASTER_HASH) {
           currentUserRole = 'master';
           return true;
@@ -2887,8 +2930,8 @@
       try {
         sessionStorage.setItem(AUTH_SESSION_KEY, token);
         sessionStorage.setItem(AUTH_ROLE_KEY, role);
-        localStorage.removeItem(AUTH_SESSION_KEY);
-        localStorage.removeItem('rooster_auth_remember');
+        localStorage.setItem(AUTH_SESSION_KEY, token);
+        localStorage.setItem(AUTH_ROLE_KEY, role);
       } catch(e) {}
 
       const overlay = document.getElementById('authGateOverlay');
@@ -2901,6 +2944,13 @@
       launchAppContent();
       updateMasterUIState();
 
+      // 권한 변경에 따른 가시성 및 메뉴/목록 즉시 재계산 및 렌더링
+      if (window.BOARD_DATA && window.BOARD_DATA.items) {
+        loadMasterVisibilityOverrides(window.BOARD_DATA.items);
+        renderSidebarMenu(window.BOARD_DATA.menu_sections, window.BOARD_DATA.items);
+        renderCurrentItems();
+      }
+
       if (role === 'master') {
         showToast('👑 마스터 권한으로 로그인되었습니다. 모든 문서 및 관리 기능이 활성화됩니다.', '👑');
       } else {
@@ -2911,6 +2961,7 @@
     function lockSession() {
       try {
         localStorage.removeItem(AUTH_SESSION_KEY);
+        localStorage.removeItem(AUTH_ROLE_KEY);
         sessionStorage.removeItem(AUTH_SESSION_KEY);
         sessionStorage.removeItem(AUTH_ROLE_KEY);
       } catch(e) {}
@@ -3573,9 +3624,9 @@
         actionPrimary = `<a href="${item.url}" target="_blank" class="btn-action btn-action-primary">↗ 열기</a>`;
       }
 
-      let externalUrl = item.url;
+      let externalUrl = encodeURI(item.url);
       if (isMd || isTxt) {
-        externalUrl = `viewer.html?id=${item.id}`;
+        externalUrl = `viewer.html?id=${encodeURIComponent(item.id)}`;
       }
 
       let relatedDocsHtml = '';
@@ -3648,7 +3699,7 @@
             <div class="card-actions">
               ${actionPrimary}
               <a href="${externalUrl}" target="_blank" class="btn-action" title="새 탭으로 열기">↗ 새 탭</a>
-              <a href="${item.url}" download class="btn-action" title="파일 다운로드">💾</a>
+              <a href="${encodeURI(item.url)}" download class="btn-action" title="파일 다운로드">💾</a>
             </div>
           </div>
           ${masterControlBar}
@@ -3795,8 +3846,8 @@
 
       modalTitle.innerHTML = `📑 ${item.title}`;
       modalSubInfo.textContent = `${item.url} (${item.file_size || ''})`;
-      extLink.href = `viewer.html?id=${item.id}`;
-      dlLink.href = item.url;
+      extLink.href = `viewer.html?id=${encodeURIComponent(item.id)}`;
+      dlLink.href = encodeURI(item.url);
       fontCtrl.style.display = 'flex';
       copyBtn.style.display = 'inline-flex';
 
@@ -3806,8 +3857,11 @@
         renderMarkdownReader(item.content);
       } else {
         modalBody.innerHTML = `<div class="empty-state"><h3>문서 불러오는 중...</h3></div>`;
-        fetch(item.url)
-          .then(res => res.text())
+        fetch(encodeURI(item.url))
+          .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.text();
+          })
           .then(text => renderMarkdownReader(text))
           .catch(err => {
             modalBody.innerHTML = `
@@ -3910,6 +3964,8 @@
       }
       currentViewingItemId = itemId || null;
 
+      const safeUrl = encodeURI(url);
+
       const modal = document.getElementById('universalModal');
       const modalTitle = document.getElementById('modalTitle');
       const modalSubInfo = document.getElementById('modalSubInfo');
@@ -3921,8 +3977,8 @@
 
       modalTitle.textContent = title;
       modalSubInfo.textContent = url;
-      extLink.href = url;
-      dlLink.href = url;
+      extLink.href = safeUrl;
+      dlLink.href = safeUrl;
       fontCtrl.style.display = 'none';
       copyBtn.style.display = 'none';
 
@@ -3936,7 +3992,7 @@
           renderCsvTable(rawCsv);
         } else {
           modalBody.innerHTML = `<div class="empty-state"><h3>CSV 로딩 중...</h3></div>`;
-          fetch(url).then(r => r.text()).then(renderCsvTable).catch(e => modalBody.innerHTML = `<p>${e}</p>`);
+          fetch(safeUrl).then(r => r.text()).then(renderCsvTable).catch(e => modalBody.innerHTML = `<p>${e}</p>`);
         }
       } else if (ext === 'txt') {
         fontCtrl.style.display = 'flex';
@@ -3950,7 +4006,7 @@
             </div>`;
         } else {
           modalBody.innerHTML = `<div class="empty-state"><h3>텍스트 로딩 중...</h3></div>`;
-          fetch(url)
+          fetch(safeUrl)
             .then(r => r.text())
             .then(t => {
               currentRawContent = t;
@@ -3962,7 +4018,7 @@
             .catch(e => modalBody.innerHTML = `<div class="empty-state"><h3>내용을 불러올 수 없습니다.</h3><p>${e}</p></div>`);
         }
       } else {
-        modalBody.innerHTML = `<iframe class="modal-iframe" src="${url}"></iframe>`;
+        modalBody.innerHTML = `<iframe class="modal-iframe" src="${safeUrl}"></iframe>`;
       }
 
       modal.classList.add('active');
