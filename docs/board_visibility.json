@@ -2,10 +2,46 @@
   "public_doc_ids": [
     "doc_total_mvp_html",
     "doc_total_mvp_md",
-    "race_doc_mvp",
-    "pit_doc_mvp"
+    "doc_flowchart_html",
+    "doc_master_table_md",
+    "doc_mode_summary_html",
+    "doc_pt_summary_html",
+    "doc_derby_sound_md",
+    "sb_derby_main_html",
+    "sb_derby_voice_261022_html",
+    "data_cue_table",
+    "data_camera_frames",
+    "data_fx_names",
+    "doc_pit_mvp_html",
+    "doc_pit_sim_rules_html",
+    "doc_pit_actions_md",
+    "doc_pit_anim_status_md",
+    "sb_pit_sfx_html",
+    "demo_pit_web_lobby",
+    "doc_farm_mvp_html",
+    "auto_rooster_rumble_pt_멘트_요약_md",
+    "auto_rooster_rumble_pt_멘트_요약_txt",
+    "auto_rooster_rumble_모드_요약_소개_md",
+    "auto_rooster_rumble_모드_요약_소개_pdf",
+    "auto_rumble_farm_mvp_구성안_md",
+    "auto_rumble_farm_기획방향_md",
+    "auto_rumble_pit_mvp_구성안_md",
+    "auto_rumble_pit_기획방향_md",
+    "auto_rumble_pit_웹_로비_기본_구성_요소_정의_md",
+    "auto_rumble_pit_인게임_사운드_구성안_md",
+    "auto_rumble_pit_전투_장면_인게임_구성안_md",
+    "auto_rumble_pit_데모_선수_동작_프롬프트_md",
+    "auto_rumble_pit_전투_시뮬레이션_규칙_정의서_md",
+    "auto_유저_동선_기반_진행_시나리오_및_마케팅_계획_html",
+    "auto_유저_동선_기반_진행_시나리오_및_마케팅_계획_md",
+    "auto_유저_플레이_동선_및_플로우_구성안_html",
+    "auto_유저_플레이_동선_및_플로우_구성안_md",
+    "auto_통합_기획방향_md",
+    "auto_통합_mvp_전체_게임_플로우차트_md"
   ],
   "pinned_doc_ids": [
-    "doc_total_mvp_html"
-  ]
+    "doc_total_mvp_html",
+    "doc_pit_anim_status_md"
+  ],
+  "exported_at": "2026-11-10T13:20:41.021Z"
 }
