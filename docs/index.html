@@ -2262,6 +2262,10 @@
         <span id="themeQuickIcon">☀️</span>
         <span id="themeQuickLabel">라이트 모드</span>
       </button>
+      <div id="masterHeaderBadge" style="display:none; align-items:center; gap:6px;">
+        <span class="badge" style="background:rgba(255,179,0,0.18); color:#ffb300; border:1px solid rgba(255,179,0,0.5); font-weight:700; font-size:0.78rem; padding:4px 8px;">👑 마스터</span>
+        <button class="btn-header" onclick="exportVisibilitySettings()" title="모든 사용자에게 적용할 공개/필독 설정 파일(board_visibility.json) 다운로드" style="border-color:rgba(255,179,0,0.4); color:#ffb300;">💾 설정 내보내기</button>
+      </div>
       <button class="btn-header" onclick="openSettingsModal()" title="화면 및 폰트 설정">
         ⚙️ 설정
       </button>
@@ -2448,6 +2452,25 @@
           </div>
         </div>
 
+        <!-- 마스터 전용: 열람 비밀번호 변경 섹션 (마스터 로그인 시만 표시) -->
+        <div class="settings-group" id="masterPwChangeSection" style="display:none; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+          <label class="settings-label" style="color: var(--accent-cyan); display:flex; align-items:center; gap:6px;">
+            🔑 열람 비밀번호 변경 (마스터 권한)
+          </label>
+          <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 10px;">
+            일반 열람자가 웹보드에 입장할 때 사용하는 비밀번호를 변경합니다.
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <input type="password" id="settingsNewViewPw" class="auth-input" placeholder="새 열람 비밀번호 입력" style="padding:8px 12px; font-size:0.88rem;">
+            <input type="password" id="settingsConfirmViewPw" class="auth-input" placeholder="새 열람 비밀번호 확인" style="padding:8px 12px; font-size:0.88rem;">
+            <div id="settingsPwErrorMsg" class="auth-error-msg"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+              <button type="button" class="auth-link-btn" onclick="resetPasswordToDefault()" style="font-size:0.75rem;">기본값으로 복원</button>
+              <button type="button" class="btn-action btn-action-primary" onclick="saveNewPasswordFromSettings()">💾 비밀번호 변경 저장</button>
+            </div>
+          </div>
+        </div>
+
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;">
           <button class="btn-action" onclick="lockSession()" style="border-color:rgba(255,82,82,0.4); color:#ff8a80;">
             🔒 열람 잠금 (로그아웃)
@@ -2476,52 +2499,6 @@
           확인
         </button>
       </form>
-
-      <div class="auth-links-row" style="margin-top: 6px; justify-content: center;">
-        <button type="button" class="auth-link-btn" onclick="openChangePwModal()">비밀번호 변경</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Change Password Modal -->
-  <div class="modal-overlay" id="changePwModal" onclick="handleChangePwOverlayClick(event)">
-    <div class="modal-container" style="max-width: 360px; height: auto;">
-      <div class="modal-header">
-        <div class="modal-title-box">
-          <h3 style="font-size:0.95rem; color:var(--text-main);">
-            비밀번호 변경
-          </h3>
-        </div>
-        <button class="modal-btn-close" onclick="closeChangePwModal()">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 18px 20px; display:flex; flex-direction:column; gap:12px;">
-        <form id="changePwForm" onsubmit="handleChangePwSubmit(event)" style="display:flex; flex-direction:column; gap:10px;">
-          <div class="auth-input-group">
-            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">마스터 비밀번호</label>
-            <input type="password" id="masterPwInput" class="auth-input" placeholder="마스터 비밀번호" required style="padding:8px 10px; font-size:0.88rem;">
-          </div>
-
-          <div class="auth-input-group">
-            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">새 비밀번호</label>
-            <input type="password" id="newViewPwInput" class="auth-input" placeholder="새 비밀번호" required style="padding:8px 10px; font-size:0.88rem;">
-          </div>
-
-          <div class="auth-input-group">
-            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">새 비밀번호 확인</label>
-            <input type="password" id="confirmViewPwInput" class="auth-input" placeholder="새 비밀번호 확인" required style="padding:8px 10px; font-size:0.88rem;">
-          </div>
-
-          <div class="auth-error-msg" id="changePwErrorMsg"></div>
-
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-            <button type="button" class="auth-link-btn" onclick="resetPasswordToDefault()" style="font-size:0.75rem;">기본값 초기화</button>
-            <div style="display:flex; gap:6px;">
-              <button type="button" class="btn-action" onclick="closeChangePwModal()">취소</button>
-              <button type="submit" class="btn-action btn-action-primary">변경</button>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
   </div>
         </form>
@@ -2569,13 +2546,96 @@
       }, 2600);
     }
 
+    const MASTER_OVERRIDES_KEY = 'rooster_master_visibility_overrides';
+
+    function loadMasterVisibilityOverrides(dataItems) {
+      if (!dataItems) return;
+      try {
+        const raw = localStorage.getItem(MASTER_OVERRIDES_KEY);
+        if (raw) {
+          const overrides = JSON.parse(raw);
+          dataItems.forEach(item => {
+            if (overrides[item.id] !== undefined) {
+              item.is_hidden = overrides[item.id].is_hidden;
+              if (overrides[item.id].is_pinned !== undefined) {
+                if (overrides[item.id].is_pinned) {
+                  pinnedIssueIds.add(item.id);
+                } else {
+                  pinnedIssueIds.delete(item.id);
+                }
+              }
+            }
+          });
+        }
+      } catch(e) {}
+    }
+
+    function saveMasterVisibilityOverrides() {
+      if (!window.BOARD_DATA || !window.BOARD_DATA.items) return;
+      try {
+        const overrides = {};
+        window.BOARD_DATA.items.forEach(item => {
+          overrides[item.id] = {
+            is_hidden: item.is_hidden === true,
+            is_pinned: pinnedIssueIds.has(item.id)
+          };
+        });
+        localStorage.setItem(MASTER_OVERRIDES_KEY, JSON.stringify(overrides));
+      } catch(e) {}
+    }
+
+    function toggleDocVisibility(docId, event) {
+      if (event) event.stopPropagation();
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한만 문서 공개/숨김을 변경할 수 있습니다.', '⚠️');
+        return;
+      }
+      if (!window.BOARD_DATA || !window.BOARD_DATA.items) return;
+      const target = window.BOARD_DATA.items.find(i => i.id === docId);
+      if (!target) return;
+
+      target.is_hidden = !target.is_hidden;
+      saveMasterVisibilityOverrides();
+
+      showToast(`'${target.title}' ➔ ${target.is_hidden ? '🔒 감추기(열람자 비공개)' : '🌐 열람자 공개'} 상태로 변경되었습니다.`, '👁️');
+      renderSidebarMenu(window.BOARD_DATA.menu_sections, window.BOARD_DATA.items);
+      renderCurrentItems();
+    }
+
+    function exportVisibilitySettings() {
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한이 필요합니다.', '⚠️');
+        return;
+      }
+      if (!window.BOARD_DATA || !window.BOARD_DATA.items) return;
+
+      const publicIds = window.BOARD_DATA.items.filter(i => !i.is_hidden).map(i => i.id);
+      const pinnedIds = [...pinnedIssueIds];
+
+      const exportObj = {
+        public_doc_ids: publicIds,
+        pinned_doc_ids: pinnedIds,
+        exported_at: new Date().toISOString()
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "board_visibility.json");
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+
+      showToast('💾 board_visibility.json 파일이 다운로드되었습니다. docs/ 폴더에 넣고 업데이트 배포하시면 모든 열람자에게 적용됩니다.', '🎉');
+    }
+
     // LocalStorage Pinned Issues Persistence
     function loadPinnedIssues(dataItems) {
       pinnedIssueIds.clear();
       // 1. Initial issues from board_data.js
       if (dataItems) {
         dataItems.forEach(i => {
-          if (i.is_issue) pinnedIssueIds.add(i.id);
+          if (i.is_issue || i.is_pinned) pinnedIssueIds.add(i.id);
         });
       }
 
@@ -2589,11 +2649,14 @@
       } catch (e) {
         console.warn('로컬 저장소 로드 오류:', e);
       }
+
+      loadMasterVisibilityOverrides(dataItems);
     }
 
     function savePinnedIssues() {
       try {
         localStorage.setItem('rooster_pinned_issues', JSON.stringify([...pinnedIssueIds]));
+        saveMasterVisibilityOverrides();
       } catch (e) {
         console.warn('로컬 저장소 저장 오류:', e);
       }
@@ -2601,6 +2664,11 @@
 
     function togglePinIssue(itemId, event) {
       if (event) event.stopPropagation();
+
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한만 주요 이슈(필독)를 변경할 수 있습니다.', '⚠️');
+        return;
+      }
 
       const item = window.BOARD_DATA ? window.BOARD_DATA.items.find(i => i.id === itemId) : null;
       const title = item ? item.title : itemId;
@@ -2631,7 +2699,7 @@
       const btn = document.getElementById('btnToggleIssueModal');
       if (!btn) return;
 
-      if (!itemId) {
+      if (!itemId || currentUserRole !== 'master') {
         btn.style.display = 'none';
         return;
       }
@@ -2750,8 +2818,20 @@
       return AUTH_DEFAULT_VIEW_HASH;
     }
 
+    const AUTH_ROLE_KEY          = 'rooster_auth_role';
+    let currentUserRole          = 'viewer'; // 'master' or 'viewer'
+
+    function updateMasterUIState() {
+      const isMaster = (currentUserRole === 'master');
+      const badge = document.getElementById('masterHeaderBadge');
+      if (badge) badge.style.display = isMaster ? 'flex' : 'none';
+
+      const pwSection = document.getElementById('masterPwChangeSection');
+      if (pwSection) pwSection.style.display = isMaster ? 'block' : 'none';
+    }
+
     async function checkSavedAuthSession() {
-      const activeHash = getActiveViewPasswordHash();
+      const activeViewHash = getActiveViewPasswordHash();
       try {
         localStorage.removeItem(AUTH_SESSION_KEY);
         localStorage.removeItem('rooster_auth_remember');
@@ -2759,7 +2839,14 @@
 
       try {
         const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY);
-        if (sessionToken === activeHash) return true;
+        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY);
+        if (sessionToken === AUTH_MASTER_HASH) {
+          currentUserRole = 'master';
+          return true;
+        } else if (sessionToken === activeViewHash) {
+          currentUserRole = (sessionRole === 'master') ? 'master' : 'viewer';
+          return true;
+        }
       } catch(e) {}
 
       return false;
@@ -2777,11 +2864,16 @@
       }
 
       const enteredHash = await hashStringSHA256(enteredPw);
-      const activeHash = getActiveViewPasswordHash();
+      const activeViewHash = getActiveViewPasswordHash();
 
-      if (enteredHash === activeHash) {
+      if (enteredHash === AUTH_MASTER_HASH) {
+        // 마스터 비밀번호로 입력 시 -> 자동으로 마스터 권한 로그인!
         errorMsg.textContent = '';
-        grantAccess(enteredHash);
+        grantAccess(enteredHash, 'master');
+      } else if (enteredHash === activeViewHash) {
+        // 일반 열람 비밀번호로 입력 시 -> 일반 열람자 로그인!
+        errorMsg.textContent = '';
+        grantAccess(enteredHash, 'viewer');
       } else {
         errorMsg.textContent = '❌ 비밀번호가 올바르지 않습니다. 다시 입력해주세요.';
         input.value = '';
@@ -2789,10 +2881,12 @@
       }
     }
 
-    function grantAccess(token) {
+    function grantAccess(token, role) {
       isAppAuthorized = true;
+      currentUserRole = role;
       try {
         sessionStorage.setItem(AUTH_SESSION_KEY, token);
+        sessionStorage.setItem(AUTH_ROLE_KEY, role);
         localStorage.removeItem(AUTH_SESSION_KEY);
         localStorage.removeItem('rooster_auth_remember');
       } catch(e) {}
@@ -2805,16 +2899,24 @@
       }
 
       launchAppContent();
-      showToast('🔓 열람 권한이 승인되었습니다.', '🔑');
+      updateMasterUIState();
+
+      if (role === 'master') {
+        showToast('👑 마스터 권한으로 로그인되었습니다. 모든 문서 및 관리 기능이 활성화됩니다.', '👑');
+      } else {
+        showToast('🔓 열람 권한이 승인되었습니다.', '🔑');
+      }
     }
 
     function lockSession() {
       try {
         localStorage.removeItem(AUTH_SESSION_KEY);
         sessionStorage.removeItem(AUTH_SESSION_KEY);
+        sessionStorage.removeItem(AUTH_ROLE_KEY);
       } catch(e) {}
 
       isAppAuthorized = false;
+      currentUserRole = 'viewer';
       const overlay = document.getElementById('authGateOverlay');
       if (overlay) {
         overlay.style.display = 'flex';
@@ -2828,79 +2930,51 @@
       showToast('🔒 열람 세션이 안전하게 잠겼습니다.', '🔒');
     }
 
-    function openChangePwModal() {
-      document.getElementById('masterPwInput').value = '';
-      document.getElementById('newViewPwInput').value = '';
-      document.getElementById('confirmViewPwInput').value = '';
-      document.getElementById('changePwErrorMsg').textContent = '';
-      document.getElementById('changePwModal').classList.add('active');
-      setTimeout(() => document.getElementById('masterPwInput').focus(), 100);
-    }
-
-    function closeChangePwModal() {
-      document.getElementById('changePwModal').classList.remove('active');
-    }
-
-    function handleChangePwOverlayClick(e) {
-      if (e.target.id === 'changePwModal') closeChangePwModal();
-    }
-
-    async function handleChangePwSubmit(e) {
-      if (e) e.preventDefault();
-      const masterPw = document.getElementById('masterPwInput').value.trim();
-      const newPw = document.getElementById('newViewPwInput').value.trim();
-      const confirmPw = document.getElementById('confirmViewPwInput').value.trim();
-      const errorMsg = document.getElementById('changePwErrorMsg');
-
-      if (!masterPw) {
-        errorMsg.textContent = '마스터 비밀번호를 입력해주세요.';
+    async function saveNewPasswordFromSettings() {
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한이 필요합니다.', '⚠️');
         return;
       }
+      const newPw = document.getElementById('settingsNewViewPw').value.trim();
+      const confirmPw = document.getElementById('settingsConfirmViewPw').value.trim();
+      const errBox = document.getElementById('settingsPwErrorMsg');
+
       if (!newPw) {
-        errorMsg.textContent = '새 열람 비밀번호를 입력해주세요.';
+        errBox.textContent = '새 열람 비밀번호를 입력해주세요.';
+        return;
+      }
+      if (newPw.length < 4) {
+        errBox.textContent = '비밀번호는 최소 4자리 이상이어야 합니다.';
         return;
       }
       if (newPw !== confirmPw) {
-        errorMsg.textContent = '새 비밀번호와 확인 입력이 일치하지 않습니다.';
-        return;
-      }
-
-      const masterHash = await hashStringSHA256(masterPw);
-      if (masterHash !== AUTH_MASTER_HASH) {
-        errorMsg.textContent = '❌ 마스터 비밀번호가 올바르지 않습니다.';
+        errBox.textContent = '새 비밀번호와 확인 입력이 일치하지 않습니다.';
         return;
       }
 
       const newHash = await hashStringSHA256(newPw);
       try {
         localStorage.setItem(AUTH_CUSTOM_VIEW_KEY, newHash);
-        localStorage.removeItem(AUTH_SESSION_KEY);
-        sessionStorage.removeItem(AUTH_SESSION_KEY);
       } catch(e) {}
 
-      closeChangePwModal();
-      showToast('🔑 열람 비밀번호가 변경되었습니다! 새 비밀번호로 로그인하세요.', '✅');
-
-      const gateInput = document.getElementById('gatePasswordInput');
-      if (gateInput) {
-        gateInput.value = '';
-        gateInput.focus();
-      }
+      errBox.textContent = '';
+      document.getElementById('settingsNewViewPw').value = '';
+      document.getElementById('settingsConfirmViewPw').value = '';
+      showToast('🎉 열람 비밀번호가 성공적으로 변경되었습니다.', '🔑');
     }
 
     function resetPasswordToDefault() {
+      if (currentUserRole !== 'master') {
+        showToast('⚠️ 마스터 권한이 필요합니다.', '⚠️');
+        return;
+      }
       if (!confirm('열람 비밀번호를 기본 설정으로 복원하시겠습니까?')) return;
       try {
         localStorage.removeItem(AUTH_CUSTOM_VIEW_KEY);
-        localStorage.removeItem(AUTH_SESSION_KEY);
-        sessionStorage.removeItem(AUTH_SESSION_KEY);
       } catch(e) {}
       showToast('🔄 기본 열람 비밀번호로 복원되었습니다.', '🔄');
-      const gateInput = document.getElementById('gatePasswordInput');
-      if (gateInput) {
-        gateInput.value = '';
-        gateInput.focus();
-      }
+      const errBox = document.getElementById('settingsPwErrorMsg');
+      if (errBox) errBox.textContent = '';
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -3142,6 +3216,7 @@
       if (data.last_sync) {
         document.getElementById('syncDate').textContent = `최근 동기화: ${data.last_sync}`;
       }
+      updateMasterUIState();
       loadPinnedIssues(data.items);
       loadCollapsedSections();
       renderSidebarMenu(data.menu_sections, data.items);
@@ -3263,6 +3338,11 @@
     function getItemsForFilter(filter, allItems) {
       if (!allItems) return [];
       return allItems.filter(i => {
+        // 일반 열람자(viewer)는 숨김(is_hidden) 문서를 전혀 볼 수 없음
+        if (currentUserRole !== 'master' && i.is_hidden) {
+          return false;
+        }
+
         if (filter.is_issue) {
           return pinnedIssueIds.has(i.id);
         }
@@ -3319,6 +3399,10 @@
       const target = window.BOARD_DATA.items.find(i => i.id === docId);
       if (!target) {
         showToast('해당 문서를 찾을 수 없습니다.', '⚠️');
+        return;
+      }
+      if (currentUserRole !== 'master' && target.is_hidden) {
+        showToast('🔒 비공개 문서입니다. 열람 권한이 없습니다.', '🔒');
         return;
       }
       if (target.ext === 'md') {
@@ -3434,8 +3518,14 @@
       const isFinal = item.is_final || (item.badge && item.badge.includes('최종'));
       const isPinned = pinnedIssueIds.has(item.id);
       const isDemo = item.is_demo === true || item.category === 'demos';
+      const isMaster = (currentUserRole === 'master');
 
       let badgesHtml = '';
+      if (isMaster) {
+        badgesHtml += item.is_hidden 
+          ? `<span class="badge" style="background:rgba(239,68,68,0.22); color:#fca5a5; border:1px solid rgba(239,68,68,0.5); font-weight:700;">🔒 숨김</span>`
+          : `<span class="badge" style="background:rgba(16,185,129,0.22); color:#6ee7b7; border:1px solid rgba(16,185,129,0.5); font-weight:700;">🌐 공개</span>`;
+      }
       if (isPinned) {
         badgesHtml += `<span class="badge badge-issue">🚨 필독</span>`;
       }
@@ -3504,16 +3594,39 @@
         `;
       }
 
+      let pinBtnHtml = '';
+      if (isMaster) {
+        pinBtnHtml = `
+          <button class="btn-pin-card ${isPinned ? 'pinned' : ''}" onclick="togglePinIssue('${item.id}', event)" title="${isPinned ? '주요 이슈(필독) 해제' : '주요 이슈(필독) 등록'}">
+            ${isPinned ? '🚨' : '📌'}
+          </button>
+        `;
+      } else if (isPinned) {
+        pinBtnHtml = `<span title="주요 이슈(필독) 문서" style="font-size:0.9rem;">🚨</span>`;
+      }
+
+      let masterControlBar = '';
+      if (isMaster) {
+        masterControlBar = `
+          <div class="card-master-bar" style="display:flex; gap:6px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--border-subtle);">
+            <button class="btn-action" style="flex:1; font-size:0.75rem; padding:4px 6px; ${item.is_hidden ? 'border-color:#34d399; color:#34d399;' : 'border-color:#f87171; color:#f87171;'}" onclick="toggleDocVisibility('${item.id}', event)" title="일반 열람자 공개 여부 전환">
+              ${item.is_hidden ? '👁️ 공개로 전환' : '🙈 감추기(숨김)'}
+            </button>
+            <button class="btn-action" style="flex:1; font-size:0.75rem; padding:4px 6px; ${isPinned ? 'border-color:#ff5722; color:#ff5722;' : 'color:var(--text-secondary);'}" onclick="togglePinIssue('${item.id}', event)" title="주요 이슈(필독) 등록/해제">
+              ${isPinned ? '📌 필독 해제' : '📌 필독 등록'}
+            </button>
+          </div>
+        `;
+      }
+
       return `
-        <div class="card ${isPinned ? 'is-issue' : (isFinal ? 'is-final' : '')} ${isDemo ? 'is-demo' : ''}" data-id="${item.id}">
+        <div class="card ${isPinned ? 'is-issue' : (isFinal ? 'is-final' : '')} ${isDemo ? 'is-demo' : ''} ${item.is_hidden ? 'is-hidden-doc' : ''}" data-id="${item.id}" style="${(isMaster && item.is_hidden) ? 'border-color:rgba(239,68,68,0.35); background:rgba(23,27,40,0.65);' : ''}">
           <div class="card-header">
             <div class="card-title-group">
               ${isDemo ? '<div class="demo-badge-banner">🎮 INTERACTIVE DEMO</div>' : ''}
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
                 <span class="card-mode ${modeClass}">${modeLabel}</span>
-                <button class="btn-pin-card ${isPinned ? 'pinned' : ''}" onclick="togglePinIssue('${item.id}', event)" title="${isPinned ? '주요 이슈(필독) 해제' : '주요 이슈(필독) 등록'}">
-                  ${isPinned ? '🚨' : '📌'}
-                </button>
+                ${pinBtnHtml}
               </div>
               <h4 class="card-title">${item.title}</h4>
             </div>
@@ -3538,6 +3651,7 @@
               <a href="${item.url}" download class="btn-action" title="파일 다운로드">💾</a>
             </div>
           </div>
+          ${masterControlBar}
         </div>
       `;
     }
@@ -3663,6 +3777,10 @@
     function openMarkdownViewer(itemId) {
       const item = window.BOARD_DATA.items.find(i => i.id === itemId);
       if (!item) return;
+      if (currentUserRole !== 'master' && item.is_hidden) {
+        showToast('🔒 비공개 문서입니다. 열람 권한이 없습니다.', '🔒');
+        return;
+      }
 
       currentViewingItemId = itemId;
 
@@ -3783,6 +3901,13 @@
 
     // Universal Modal (Other formats)
     function openViewer(url, title, ext, itemId) {
+      if (itemId && window.BOARD_DATA && window.BOARD_DATA.items) {
+        const docItem = window.BOARD_DATA.items.find(i => i.id === itemId);
+        if (docItem && currentUserRole !== 'master' && docItem.is_hidden) {
+          showToast('🔒 비공개 문서입니다. 열람 권한이 없습니다.', '🔒');
+          return;
+        }
+      }
       currentViewingItemId = itemId || null;
 
       const modal = document.getElementById('universalModal');

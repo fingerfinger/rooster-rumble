@@ -365,8 +365,8 @@
 
     function updatePinBtnUI() {
       const btn = document.getElementById('btnPinDoc');
-      if (!currentItem) {
-        btn.style.display = 'none';
+      if (!currentItem || currentViewerRole !== 'master') {
+        if (btn) btn.style.display = 'none';
         return;
       }
       btn.style.display = 'inline-flex';
@@ -382,6 +382,10 @@
 
     function toggleCurrentDocPin() {
       if (!currentItem) return;
+      if (currentViewerRole !== 'master') {
+        showToast('⚠️ 마스터 권한만 필독 등록을 변경할 수 있습니다.');
+        return;
+      }
       const isPinned = pinnedIssueIds.has(currentItem.id);
       if (isPinned) {
         pinnedIssueIds.delete(currentItem.id);
@@ -402,8 +406,11 @@
     }
 
     const AUTH_DEFAULT_VIEW_HASH = '234db10889b3431b8643d3d5c8b0793f37ffc99c61234cc3647a9391749328e9';
+    const AUTH_MASTER_HASH       = 'babe841284387418613efb043eadeb934c3d691c7a57e4fb9148798f144f63d9';
     const AUTH_CUSTOM_VIEW_KEY   = 'rooster_auth_custom_view_hash';
     const AUTH_SESSION_KEY       = 'rooster_auth_session_token';
+    const AUTH_ROLE_KEY          = 'rooster_auth_role';
+    let currentViewerRole        = 'viewer';
 
     async function hashViewerPw(str) {
       if (window.crypto && crypto.subtle) {
@@ -420,9 +427,17 @@
         localStorage.removeItem(AUTH_SESSION_KEY);
       } catch(e) {}
       try {
-        const activeHash = localStorage.getItem(AUTH_CUSTOM_VIEW_KEY) || AUTH_DEFAULT_VIEW_HASH;
         const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY);
-        return sessionToken === activeHash;
+        const sessionRole  = sessionStorage.getItem(AUTH_ROLE_KEY);
+        const activeHash = localStorage.getItem(AUTH_CUSTOM_VIEW_KEY) || AUTH_DEFAULT_VIEW_HASH;
+        if (sessionToken === AUTH_MASTER_HASH) {
+          currentViewerRole = 'master';
+          return true;
+        } else if (sessionToken === activeHash) {
+          currentViewerRole = (sessionRole === 'master') ? 'master' : 'viewer';
+          return true;
+        }
+        return false;
       } catch(e) {
         return false;
       }
@@ -471,8 +486,19 @@
       const hash = await hashViewerPw(val);
       const activeHash = localStorage.getItem(AUTH_CUSTOM_VIEW_KEY) || AUTH_DEFAULT_VIEW_HASH;
 
-      if (hash === activeHash) {
+      if (hash === AUTH_MASTER_HASH) {
+        currentViewerRole = 'master';
         sessionStorage.setItem(AUTH_SESSION_KEY, hash);
+        sessionStorage.setItem(AUTH_ROLE_KEY, 'master');
+        try { localStorage.removeItem(AUTH_SESSION_KEY); } catch(e) {}
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'flex';
+        document.querySelector('.toc-sidebar').style.display = 'block';
+        loadDocumentContent();
+      } else if (hash === activeHash) {
+        currentViewerRole = 'viewer';
+        sessionStorage.setItem(AUTH_SESSION_KEY, hash);
+        sessionStorage.setItem(AUTH_ROLE_KEY, 'viewer');
         try { localStorage.removeItem(AUTH_SESSION_KEY); } catch(e) {}
         const header = document.querySelector('header');
         if (header) header.style.display = 'flex';
@@ -503,6 +529,23 @@
       updatePinBtnUI();
 
       if (targetItem) {
+        if (currentViewerRole !== 'master' && targetItem.is_hidden) {
+          document.getElementById('articleBody').innerHTML = `
+            <div style="max-width: 440px; margin: 80px auto; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 32px 24px; text-align: center;">
+              <div style="font-size: 2.2rem; margin-bottom: 8px;">🔒</div>
+              <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 6px;">비공개 문서</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                본 문서는 비공개 상태로 마스터 권한자만 열람할 수 있습니다.
+              </p>
+              <a href="index.html" class="btn" style="background: var(--accent-primary); border-color: var(--accent-primary); color: #fff;">
+                웹보드 홈으로 이동
+              </a>
+            </div>
+          `;
+          document.querySelector('.toc-sidebar').style.display = 'none';
+          return;
+        }
+
         document.getElementById('docTitle').textContent = targetItem.title;
         document.getElementById('btnDownload').href = targetItem.url;
         document.title = `${targetItem.title} — ROOSTER RUMBLE`;

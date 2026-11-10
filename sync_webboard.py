@@ -330,6 +330,33 @@ def main():
                     })
             it["related_docs"] = rel_list
 
+    # 3.8 마스터 공개/감추기 및 필독 상태 적용 (board_visibility.json)
+    visibility_path = docs_dir / "board_visibility.json"
+    visibility_data = {"public_doc_ids": [], "pinned_doc_ids": []}
+    if visibility_path.exists():
+        try:
+            with open(visibility_path, "r", encoding="utf-8") as vf:
+                visibility_data = json.load(vf)
+        except Exception:
+            pass
+
+    public_set = set(visibility_data.get("public_doc_ids", []))
+    pinned_set = set(visibility_data.get("pinned_doc_ids", []))
+
+    hidden_count = 0
+    public_count = 0
+    for it in processed_items:
+        # 기본적으로 모든 문서는 감추기(is_hidden=True), 마스터가 명시한 것만 공개(is_hidden=False)
+        is_pub = it["id"] in public_set
+        it["is_hidden"] = not is_pub
+        it["is_pinned"] = it["id"] in pinned_set
+        if it["is_hidden"]:
+            hidden_count += 1
+        else:
+            public_count += 1
+
+    print(f"\n[보안 설정] 문서 상태: 공개 {public_count}개, 감추기(기본) {hidden_count}개, 필독 {len(pinned_set)}개")
+
     # 4. 메타데이터 JS 및 JSON 출력
     print("\n[4/4] 웹보드 배포 데이터 파일 갱신...")
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -375,19 +402,70 @@ def main():
         print(" 🚀 GitHub 원클릭 배포 프로세스 시작")
         print("=" * 64)
         try:
-            # 1. 파일 스테이징
-            subprocess.run(["git", "add", "."], check=True)
-
-            # 2. 변경사항 확인
+            # 1. 현재 변경/신규 파일 목록 조회
             status_res = subprocess.run(["git", "status", "-s"], capture_output=True, text=True, encoding="utf-8", errors="replace")
-            changes = status_res.stdout.strip()
+            raw_lines = [l.rstrip() for l in status_res.stdout.splitlines() if l.strip()]
 
-            diff_res = subprocess.run(["git", "diff", "--cached", "--quiet"])
-            if diff_res.returncode == 0:
+            if not raw_lines:
                 print("\nℹ️ 새로 변경되거나 추가된 파일이 없습니다. (이미 최신 상태)")
             else:
-                print("\n[변경된 파일 목록]")
-                print(changes)
+                print("\n[현재 변경된 파일 목록]")
+                file_items = []
+                for idx, line in enumerate(raw_lines, 1):
+                    # git status -s 형식: ' M filename' 또는 '?? filename'
+                    code = line[:2].strip()
+                    file_name = line[3:].strip().strip('"')
+                    file_items.append((code, file_name))
+                    print(f"  [{idx:2d}] ({code:2s}) {file_name}")
+
+                selected_files = []
+                # 인자로 직접 파일 지정이 없으면 사용자에게 대화형으로 선택
+                if "--all" in sys.argv:
+                    selected_files = [f for _, f in file_items]
+                else:
+                    try:
+                        choice = input(f"\n📝 커밋할 파일 번호를 입력하세요 (예: 1, 3 / 전체는 A 또는 Enter): ").strip()
+                    except Exception:
+                        choice = ""
+
+                    if not choice or choice.upper() == "A":
+                        selected_files = [f for _, f in file_items]
+                        print("  👉 전체 파일을 커밋 대상으로 선택했습니다.")
+                    else:
+                        # 번호 파싱 (예: 1, 3 또는 1-3)
+                        chosen_indices = set()
+                        parts = re.split(r'[, \t]+', choice)
+                        for p in parts:
+                            if '-' in p:
+                                sub = p.split('-')
+                                if len(sub) == 2 and sub[0].isdigit() and sub[1].isdigit():
+                                    for i in range(int(sub[0]), int(sub[1]) + 1):
+                                        if 1 <= i <= len(file_items):
+                                            chosen_indices.add(i - 1)
+                            elif p.isdigit():
+                                val = int(p)
+                                if 1 <= val <= len(file_items):
+                                    chosen_indices.add(val - 1)
+
+                        if not chosen_indices:
+                            print("  ⚠️ 올바른 번호가 선택되지 않아 전체 파일을 대상으로 진행합니다.")
+                            selected_files = [f for _, f in file_items]
+                        else:
+                            selected_files = [file_items[i][1] for i in sorted(chosen_indices)]
+                            # 웹보드 데이터 파일이 변경된 경우 웹보드 동작을 위해 함께 포함
+                            essential_docs = ["docs/board_data.js", "docs/board_data.json", "docs/board_visibility.json"]
+                            for ed in essential_docs:
+                                for _, fn in file_items:
+                                    if fn == ed and fn not in selected_files:
+                                        selected_files.append(fn)
+
+                            print(f"\n  👉 선택된 파일 ({len(selected_files)}개):")
+                            for sf in selected_files:
+                                print(f"     • {sf}")
+
+                # 2. 선택된 파일 스테이징
+                for sf in selected_files:
+                    subprocess.run(["git", "add", sf], check=True)
 
                 commit_msg = f"docs: 웹보드 산출물 업데이트 ({now_str})"
                 if "--msg" in sys.argv:

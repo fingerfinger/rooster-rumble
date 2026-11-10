@@ -1,0 +1,11 @@
+{
+  "public_doc_ids": [
+    "doc_total_mvp_html",
+    "doc_total_mvp_md",
+    "race_doc_mvp",
+    "pit_doc_mvp"
+  ],
+  "pinned_doc_ids": [
+    "doc_total_mvp_html"
+  ]
+}
