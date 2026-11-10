@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoosterRumble CameraEditor</title>
+    <script type="module" crossorigin src="../../assets/cameraEditor-BNNvi0Xh.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/assetStatus-C6QZd9BI.js">
+    <link rel="stylesheet" crossorigin href="../../assets/assetStatus-DNT9S_Im.css">
+    <link rel="stylesheet" crossorigin href="../../assets/cameraEditor-DCK3f7C7.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="title">
+        <p class="eyebrow">CameraEditor</p>
+        <h1>카메라 연출 스크립트 에디터</h1>
+      </div>
+      <div class="script-controls">
+        <label for="raceDataSelect">주행 데이터</label>
+        <select id="raceDataSelect" aria-label="미리보기 주행 데이터 선택"></select>
+        <span class="divider"></span>
+        <select id="scriptSelect" aria-label="카메라 스크립트 선택"></select>
+        <input id="scriptNameInput" type="text" aria-label="스크립트 이름" />
+        <button id="newScriptButton" type="button">새로 만들기</button>
+        <button id="dupScriptButton" type="button">복제</button>
+        <button id="delScriptButton" type="button" class="danger">삭제</button>
+        <span class="divider"></span>
+        <span class="file-label" id="fileLabel">파일: 없음</span>
+        <button id="loadButton" type="button">불러오기</button>
+        <button id="saveButton" type="button">저장하기</button>
+        <input id="importInput" type="file" accept=".json,application/json" hidden />
+        <button id="resetButton" type="button" class="danger">기본값 복원</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="stage">
+        <div class="viewport" id="viewportBox">
+          <canvas id="editorCanvas" aria-label="카메라 에디터 3D 화면"></canvas>
+          <div class="pip-frame" id="pipFrame">
+            <span id="pipLabel">카메라 미리보기</span>
+          </div>
+          <div class="viewport-actions">
+            <button id="viewToggleButton" type="button">미리보기를 메인으로</button>
+            <button id="applyViewButton" type="button">현재 편집 뷰를 키프레임에 적용</button>
+          </div>
+          <div class="hud">
+            <div><span>페이즈</span><strong id="hudPhase">대기</strong></div>
+            <div><span>커서</span><strong id="hudCursor">0.0</strong></div>
+            <div><span>카메라</span><strong id="hudCamera">-</strong></div>
+          </div>
+        </div>
+
+        <div class="transport">
+          <button id="waitButton" type="button">대기 (루프)</button>
+          <button id="playButton" type="button">재생</button>
+          <button id="startButton" type="button">시작 (준비~종료)</button>
+          <select id="speedSelect" aria-label="재생 배속">
+            <option value="1" selected>1×</option>
+            <option value="1.5">1.5×</option>
+            <option value="2">2×</option>
+            <option value="3">3×</option>
+          </select>
+          <strong id="timeLabel">00.0s</strong>
+          <input id="timeSlider" type="range" min="0" max="80" step="0.05" value="0" aria-label="타임라인" />
+          <div class="phase-legend" id="phaseLegend"></div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <nav class="phase-tabs" id="phaseTabs"></nav>
+
+        <div class="key-list-head">
+          <p class="eyebrow">키프레임</p>
+          <div>
+            <button id="addKeyButton" type="button">+ 현재 시점에 추가</button>
+          </div>
+        </div>
+        <ul class="key-list" id="keyList"></ul>
+
+        <div class="inspector" id="inspector">
+          <p class="empty">키프레임을 선택하세요.</p>
+        </div>
+      </aside>
+    </main>
+
+  </body>
+</html>

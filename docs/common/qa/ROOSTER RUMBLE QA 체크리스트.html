@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>ROOSTER RUMBLE - QA 체크리스트</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 14mm 14mm 14mm 14mm;
+      @bottom-right {
+        content: counter(page) " / " counter(pages);
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', 'Pretendard', 'Segoe UI', Roboto, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      line-height: 1.6;
+      font-size: 9.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    
+    /* Cover / Header Section */
+    .doc-header {
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .brand-badge {
+      font-size: 8pt;
+      font-weight: 800;
+      color: #0284c7;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .doc-date {
+      font-size: 8pt;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .doc-title {
+      font-size: 19pt;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .doc-sub {
+      font-size: 10pt;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    /* Notice Box */
+    .notice-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #0284c7;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+    }
+    .notice-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .notice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .notice-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 6px 10px;
+    }
+    .notice-item-title {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .notice-item-desc {
+      font-size: 8pt;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* Mode Section */
+    .mode-section {
+      margin-bottom: 22px;
+    }
+    .mode-section.page-break {
+      page-break-before: always;
+      break-before: page;
+      padding-top: 10px;
+    }
+    .mode-header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .mode-title {
+      font-size: 11.5pt;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mode-tag {
+      font-size: 8pt;
+      background: rgba(245, 158, 11, 0.25);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    /* Category Group */
+    .cat-group {
+      margin-bottom: 14px;
+      page-break-inside: auto;
+    }
+    .cat-header {
+      background: #fef3c7;
+      border-left: 3.5px solid #d97706;
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-size: 9pt;
+      font-weight: 800;
+      color: #92400e;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* QA Card */
+    .qa-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 9px 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .qa-head {
+      margin-bottom: 5px;
+    }
+    .qa-badge {
+      display: inline-block;
+      font-size: 7.8pt;
+      font-weight: 700;
+      color: #b45309;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 1.5px 6px;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+    .qa-question {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.45;
+    }
+    .qa-desc {
+      background: #f8fafc;
+      border-left: 3px solid #d97706;
+      border-radius: 2px;
+      padding: 5px 8px;
+      font-size: 8.5pt;
+      color: #334155;
+      line-height: 1.5;
+      margin-top: 5px;
+    }
+
+    /* Footer meta */
+    .page-footer-meta {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 20px;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.5pt;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="header-top">
+      <span class="brand-badge">ROOSTER RUMBLE SPEC DECK</span>
+      <span class="doc-date">검증 기준: 2026. 10</span>
+    </div>
+    <div class="doc-title">ROOSTER RUMBLE QA 체크리스트</div>
+    <div class="doc-sub">그래픽 &amp; 연출 및 게임성 실무 검증 가이드</div>
+  </div>
+
+  <!-- Development Criteria Notice Box -->
+  <div class="notice-box">
+    <div class="notice-title">■ 시연 버전 개발 기준 및 피드백 반영 방향</div>
+    <div class="notice-grid">
+      <div class="notice-item">
+        <div class="notice-item-title">1. 시스템 안정성 최우선</div>
+        <div class="notice-item-desc">게임 시연 버전은 게임 판정 알고리즘과 배팅 시스템의 안정성을 최우선으로 적용되었습니다.</div>
+      </div>
+      <div class="notice-item">
+        <div class="notice-item-title">2. 피드백용 그래픽 시연</div>
+        <div class="notice-item-desc">게임 그래픽은 피드백 반영을 위해 시연 버전으로 준비되었습니다.</div>
+      </div>
+      <div class="notice-item">
+        <div class="notice-item-title">3. 피드백 기반 룰·연출 고도화</div>
+        <div class="notice-item-desc">경기 세부 룰 및 그래픽/연출 컨셉 의견에 따라 변동성이 큰 부분은 피드백 반영하며 적용 예정입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Derby Race -->
+  <div class="mode-section">
+    <div class="mode-header">
+      <div class="mode-title">🏇 Derby Race (경주 모드) QA 체크리스트</div>
+      <div class="mode-tag">총 15문항 · 5대 핵심 영역</div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ I. 타깃 시장 & 비주얼 아트</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">01 · 북미 타깃 시장 적합성</span>
+          <div class="qa-question">메인 타깃인 북미(미국) 현지 사용자의 시각적 선호도 및 문화적 취향 부합 여부</div>
+        </div>
+        <div class="qa-desc">💡 캐주얼 카툰풍 vs 실사 스포츠풍 선호도 분석, 북미 문화권 닭 캐릭터 친숙도 및 거부감 요소 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">02 · 배경 및 캐릭터 색감 대비</span>
+          <div class="qa-question">트랙 배경(현재 모래/흙 지면)과 캐릭터 간 색감 대비 적정성 및 향후 잔디 트랙 추가 도입에 대한 타당성</div>
+        </div>
+        <div class="qa-desc">💡 다채색 캐릭터와 기본 흙 트랙 간의 시인성 평가 및 추후 잔디 트랙 컨셉 도입에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">03 · 트랙 환경 다양화(날씨·시간대)</span>
+          <div class="qa-question">기본 주간 트랙 외 우천(비), 일몰(노을), 야간 네온 조명 등 환경 컨셉 추가 시 관전 시인성 저해 여부</div>
+        </div>
+        <div class="qa-desc">💡 시간대/기상 변화에 따른 트랙 조명과 6개 레인 캐릭터 분별력 간 영향 평가 및 환경 프리셋 도입 관련 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ II. 캐릭터 모션 & 주행 규칙</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">04 · 캐릭터 모션 세분화 단계</span>
+          <div class="qa-question">현재의 최소 질주 동작 외에 단계별 세부 모션의 추가 구현 범위 및 우선순위</div>
+        </div>
+        <div class="qa-desc">💡 스타트 대기(발구르기/날개털기), 최고속 질주(날개 퍼덕임), 추월 경합(시선 처리), 골인 후 감속 등 세부 모션 적용 범위에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">05 · 주행 이펙트 적용 범위</span>
+          <div class="qa-question">시야 방해를 고려해 최소화된 기본 지면 먼지 효과 외에 허용 가능한 추가 주행 이펙트의 범위</div>
+        </div>
+        <div class="qa-desc">💡 가속 스피드 라인, 발자국 잔상, 바람 궤적, 결승선 섬광 등 추가 연출의 시각적 피로도 및 관전 방해 방지 기준 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">06 · 주행 레인 침범 규정</span>
+          <div class="qa-question">직선 고정 레인 주행 유지 vs 레인 침범(차선 변경) 허용에 따른 돌발 변수와 분석 예측성 간 밸런스 기준</div>
+        </div>
+        <div class="qa-desc">💡 라인 침범 허용 시 경합 연출 강화와 데이터 기반 베팅 분석 신뢰도 저하 간의 절충안에 대한 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ III. 카메라 연출 & 피니시 판정</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">07 · 카메라 워킹 연출 수위</span>
+          <div class="qa-question">기본 트랙 추적 카메라 외 다이내믹 앵글 추가 시 관전 몰입감과 어지러움(시각적 멀미) 방지의 균형선</div>
+        </div>
+        <div class="qa-desc">💡 선두 추적 쿼터뷰, 사이드 횡스크롤 뷰, 결승 정면 로우앵글 전환 빈도 및 카메라 흔들림 억제 기준 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">08 · 피니시 판정 연출 도입 여부</span>
+          <div class="qa-question">1위 결승선 통과 시점의 판정 강조 연출(포토 피니시/슬로우 모션) 도입에 따른 실시간성 저해 및 조작 오인 가능성</div>
+        </div>
+        <div class="qa-desc">💡 슬로우 모션 도입 시 극적 긴장감 제공의 이점과 라이브 진행 왜곡 및 시스템 조작 의심 유발 가능성 간의 득실에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">09 · 리플레이 분석 정보 실효성</span>
+          <div class="qa-question">짧은 경기 시간(약 30초) 대비 리플레이 상세 데이터(역전 마커, 구간 속도 등) 제공의 실효성 여부</div>
+        </div>
+        <div class="qa-desc">💡 빠른 턴 회전율 중심의 경기 특성상 상세 분석 정보가 불필요하게 복잡성을 가중시키는지에 대한 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ IV. 인게임 UI & 관전 정보</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">10 · 트랙 미니맵 배치 위치</span>
+          <div class="qa-question">화면 하단에 배치된 트랙 진행도 미니맵의 메인 3D 관전 시야 방해 여부 및 최적 배치 위치(상단 또는 외곽 코너)</div>
+        </div>
+        <div class="qa-desc">💡 하단 배치 시 주행 화면 가림 현상 평가 및 상단 바 일체형 또는 우측 상단 소형 위젯으로의 레이아웃 재배치 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">11 · 미니맵 순위 변동 이펙트</span>
+          <div class="qa-question">미니맵 상에서 순위 역전(추월) 발생 시 적용할 시각 효과(아이콘 교차, 미세 발광 등)의 적정 연출 강도</div>
+        </div>
+        <div class="qa-desc">💡 순위 변동 인지성을 높이는 미세 하이라이트 연출 적용 여부 및 과도한 점멸로 인한 시선 분산 방지 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">12 · 경기 중 컨디션 표시 방식</span>
+          <div class="qa-question">경기 중 선수의 컨디션 상태 표현 방식(외곽 오라 vs UI 아이콘) 및 베팅 후 정보 제공의 실효성</div>
+        </div>
+        <div class="qa-desc">💡 베팅 마감 후 경기 진행 중에도 유저가 출전 선수의 컨디션 정보에 지속적으로 관심을 가지는지에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">13 · 베팅 UI 전반 시인성</span>
+          <div class="qa-question">베팅 보드의 배당률 표기, 경기 정보 안내, 카운트다운 타이머 등 주요 UI 텍스트의 시인성 및 레이아웃 완성도</div>
+        </div>
+        <div class="qa-desc">💡 폰트 가독성, 모바일 세로/가로 환경 대응, 베팅 마감 임박 시각 안내 방식 및 필수 추가 정보 식별 관련 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ V. 오디오 & 클라이언트 사양</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">14 · 아나운서 중계 톤앤매너</span>
+          <div class="qa-question">현재의 평이한 전통 경마 중계 톤에서 벗어나, e스포츠 및 게임 특성에 맞춘 고조된 톤과 과장된 중계 연출 도입 여부</div>
+        </div>
+        <div class="qa-desc">💡 전문 경마 해설의 안정감 vs 게임형 e스포츠 중계의 오락성 간 타깃 유저 성향에 부합하는 보이스 톤 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">15 · 모바일 품질/사양 타협 기준</span>
+          <div class="qa-question">저사양 모바일 브라우저 호환을 위한 그래픽 품질 타협 수준 재조정 및 최소 기기 사양 상향을 통한 퀄리티 확보 여부</div>
+        </div>
+        <div class="qa-desc">💡 보급형 기기 커버리지 확보를 위한 경량화 유지 vs 그래픽 완성도 중심의 최소 사양 기준 상향 조정 간 손익에 대한 의견 필요</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Rumble Pit -->
+  <div class="mode-section page-break">
+    <div class="mode-header">
+      <div class="mode-title">🥊 Rumble Pit (격투 모드) QA 체크리스트</div>
+      <div class="mode-tag">총 10문항 · 4대 핵심 영역</div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ I. 그래픽 화풍 & 비주얼 연출</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">01 · 대전 캐릭터 화풍 방향</span>
+          <div class="qa-question">캐릭터 화풍의 정식 고도화 방향(아케이드 카툰 렌더 vs 정통 실사 투계) 선택에 대한 의견</div>
+        </div>
+        <div class="qa-desc">💡 대중적 접근성 중심의 캐주얼 카툰풍 vs 격투 매니아층을 겨냥한 정통 실사풍 간의 그래픽 톤앤매너 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">02 · 전투 액션 메커니즘</span>
+          <div class="qa-question">전투 공방 방식의 지향점(게임 요소를 강조한 대전 액션 vs 발싸움 위주의 리얼 투계 스타일) 설정</div>
+        </div>
+        <div class="qa-desc">💡 화려한 스킬 연계 중심의 게임형 대전 액션 vs 실제 닭싸움처럼 킥/발차기 공방 위주의 사실적 투계 연출 간의 방향성에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">03 · 타격 시각 이펙트 연출</span>
+          <div class="qa-question">타격 적중 시 시각 연출의 적정 형태(아케이드 섬광/스파크 vs 물리적 깃털/먼지 비산) 및 배합 비율</div>
+        </div>
+        <div class="qa-desc">💡 SF 2D/3D 히트 섬광 이펙트 vs 물리 기반 깃털 탈락 및 지면 파편 연출의 조화 수준 관련 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ II. 부상 표현 & 타격 연출</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">04 · 부상 및 선혈(피) 표현 수위</span>
+          <div class="qa-question">타깃 유저의 문화적 취향 및 혐오감 완화를 고려한 공격 피격 시 상처 및 혈흔 연출의 허용 범위</div>
+        </div>
+        <div class="qa-desc">💡 유저 혐오감 방지를 위한 유혈(Blood) 표현 배제 및 깃털 손상/멍 자국 수준 순화 방안에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">05 · 히트스톱 연출 및 조작 오인 방지</span>
+          <div class="qa-question">타격감 강화를 위한 프레임 정지(히트스톱)/카메라 쉐이크 적용 시 라이브 진행 왜곡 및 조작 의심 유발 방지 기준</div>
+        </div>
+        <div class="qa-desc">💡 타격 순간의 연출 효과가 실시간 중계의 자연스러움을 해치거나 시스템 조작 의심을 유발하지 않도록 하는 적정 강도 관련 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ III. 아레나 환경 & 카메라 워킹</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">06 · 경기장 배경 컨셉 및 분위기</span>
+          <div class="qa-question">경기장 배경의 아트 컨셉 설정(게임성을 강조한 아케이드 링 vs 사실적인 언더그라운드 투계장)</div>
+        </div>
+        <div class="qa-desc">💡 세련된 조명과 펜스를 갖춘 스포츠 링 분위기 vs 흙바닥과 거친 철망 중심의 리얼 투계장 환경 간의 지향점에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">07 · 방어/그로기 연출과 경기 집중도</span>
+          <div class="qa-question">방어(가드) 및 그로기 모션 도입 시 관전 집중도 방해 여부 및 시스템 조작 의심 유발 가능성</div>
+        </div>
+        <div class="qa-desc">💡 복잡한 상태 모션 추가가 경기 흐름의 속도감을 저해하거나 인위적 승패 조작으로 오인될 소지가 없는지에 대한 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">08 · 다이내믹 카메라 연출 범위</span>
+          <div class="qa-question">고정 관전 시점 외 파이터 거리 연동 줌인/줌아웃 및 피니시 로우 앵글 도입 여부와 시각적 피로도 억제선</div>
+        </div>
+        <div class="qa-desc">💡 다이내믹 앵글 전환에 따른 박진감 향상과 잦은 화면 흔들림으로 인한 어지러움(시각적 멀미) 유발 방지 기준 관련 의견 필요</div>
+      </div>
+    </div>
+
+    <div class="cat-group">
+      <div class="cat-header">■ IV. 전투 규칙 & 베팅 메커니즘</div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">09 · 다운 판정 및 카운트다운 규칙</span>
+          <div class="qa-question">파이터 다운 시 판정 처리 방식(즉시 경기 종료 vs 10초 카운트다운 및 기립 모션 도입)</div>
+        </div>
+        <div class="qa-desc">💡 빠른 경기 회전율 유지와 다운 카운트다운 도입에 따른 역전 서스펜스 강화 간의 경기 규칙 설정 관련 의견 필요</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-head">
+          <span class="qa-badge">10 · 라운드별 추가 베팅 도입 및 형평성</span>
+          <div class="qa-question">라운드 간 추가 베팅(중간 베팅) 도입 시 사전 베팅 예측 성공 유저와의 형평성 유지 및 플랫폼 수수료 수익 간의 절충안</div>
+        </div>
+        <div class="qa-desc">💡 중간 베팅 허용에 따른 배당률 조정이 경기 전 예측 유저의 불만을 유발 가능 성에 대한 의견 필요. (중간 베팅 빠진 다면 수수료 수익 줄어듬)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer-meta">
+    <span>ROOSTER RUMBLE SPECIFICATION DECK - QA CHECKLIST</span>
+    <span>CONFIDENTIAL &amp; PROPRIETARY</span>
+  </div>
+
+</body>
+</html>

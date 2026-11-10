@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROOSTER RUMBLE: 유저 플레이 동선 및 플로우 구성안</title>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-space: #0b0f19;
+      --bg-surface: rgba(15, 23, 42, 0.95);
+      --bg-card: #1e293b;
+      --bg-card-hover: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --cyan: #38bdf8;
+      --rose: #fb7185;
+      --amber: #fbbf24;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    }
+
+    [data-theme="light"] {
+      --bg-space: #f1f5f9;
+      --bg-surface: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-subtle: rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: var(--bg-space);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .header-title h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    .card-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      border-bottom: 2px solid var(--border-subtle);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    ul.bullet-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    ul.bullet-list li::before {
+      content: "•";
+      color: var(--cyan);
+      font-weight: bold;
+      position: absolute;
+      left: 4px;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .styled-table th {
+      background-color: var(--bg-card);
+      color: var(--cyan);
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+
+    .styled-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .styled-table tr:hover {
+      background-color: var(--bg-card-hover);
+    }
+
+    /* Mermaid 렌더링 스케일 미적용 (1:1 고정 폰트 크기 보장) */
+    .mermaid-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .mermaid {
+      display: block;
+    }
+
+    .mermaid svg {
+      max-width: none !important;
+      font-size: 14px !important;
+    }
+
+    .mermaid .node rect,
+    .mermaid .node circle,
+    .mermaid .node polygon {
+      stroke-width: 1.5px !important;
+      rx: 4px;
+      ry: 4px;
+    }
+
+    .mermaid .node .label {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">
+      <h1>🐓 ROOSTER RUMBLE</h1>
+      <p>유저 플레이 동선 및 플로우 구성안</p>
+    </div>
+    <button class="theme-toggle-btn" onclick="toggleTheme()">테마 전환 (Light/Dark)</button>
+  </header>
+
+  <div class="container">
+
+    <!-- 1장: 서비스 형태 정의 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>1. 서비스 형태 2종 (모바일 스토어 서비스 vs VIP 라운지 서비스) 비교</h2>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>서비스 구분</th>
+            <th>📱 모바일 스토어 서비스</th>
+            <th>🌐 VIP 라운지 서비스</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>서비스 목적</strong></td>
+            <td>대중적 접근성, 캐주얼 닭 키우기/대전</td>
+            <td>24시간 실시간 경기 관람, 승자 예측 베팅 및 상금 정산</td>
+          </tr>
+          <tr>
+            <td><strong>서비스 플랫폼</strong></td>
+            <td>모바일 앱스토어 / 구글플레이 앱</td>
+            <td>독립 자체 온라인 웹 브라우저 (PC 및 모바일 웹)</td>
+          </tr>
+          <tr>
+            <td><strong>주력 모드/기능</strong></td>
+            <td>• 럼블 팜 (닭 키우기)<br>• 더비 레이스 (경주 리그)<br>• 럼블 핏 (1대1 링 대전)<br>• 유저 알 거래소</td>
+            <td>• 24시간 달리기 경주 중계 (하루 72회)<br>• 24시간 1대1 링 대전 중계 (하루 48회)<br>• 경기 시작 전/경기 중 실시간 베팅<br>• 독립 웹 코인 및 배당 정산</td>
+          </tr>
+          <tr>
+            <td><strong>수익 모델</strong></td>
+            <td>유료 알 뽑기, 유료 온천 이용료, 광고 3종</td>
+            <td>베팅 수수료 (8% ~ 10%), 유료 온천 이용료</td>
+          </tr>
+          <tr>
+            <td><strong>계정 체계</strong></td>
+            <td>모바일 전용 계정 (구글/애플/게스트)</td>
+            <td>자체 VIP 라운지 웹 전용 계정 (상호 미연동)</td>
+          </tr>
+          <tr>
+            <td><strong>재화 및 DB</strong></td>
+            <td>골드, 보석, 사료, 알 캡슐 (모바일 앱 DB)</td>
+            <td>베팅 코인, 격투 대전 상금 (VIP 라운지 DB)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; font-size: 1.05rem; color: var(--cyan);">1.2 3대 핵심 게임 모드 사양</h3>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>모드 명칭</th>
+            <th>핵심 재미</th>
+            <th>주요 플레이 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🚜 <strong>1. 육성 모드 (럼블 팜)</strong></td>
+            <td>알 부화, 훈련, 온천 케어 및 교배</td>
+            <td>3도장 알 획득, 터치 미니게임, 7종 능력치 훈련, 온천 케어, 2세대 닭 교배</td>
+          </tr>
+          <tr>
+            <td>🏇 <strong>2. 경주 모드 (더비 레이스)</strong></td>
+            <td>6두 달리기 경주, 리그 승강급</td>
+            <td>6단계 모바일 리그, 승점(RP), 주행 기술 6종, 결승선 터치 부스터</td>
+          </tr>
+          <tr>
+            <td>🥊 <strong>3. 격투 모드 (럼블 핏)</strong></td>
+            <td>1대1 링 대전, 실시간 동시 격돌</td>
+            <td>7대 전투 기술 세팅, 3연속 콤보 조합, 동시 격돌, 대전 상금 (150%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2장: 모바일 스토어 서비스 동선 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>2. 모바일 스토어 서비스 전용 유저 플레이 동선 명세</h2>
+      </div>
+
+      <ul class="bullet-list">
+        <li><strong>1단계 (시작 / 첫 경험)</strong>: 앱 설치 및 로그인 ➔ 보상 수령 (기본 닭 1두 + 1,000골드 + 50사료) ➔ 첫 실행 튜토리얼 (터치 부화, 훈련, 경주 승리, 격투 맛보기) ➔ 메인 로비 진입</li>
+        <li><strong>2단계 (초기 정착 / 매일 접속)</strong>: 출석체크 & 광고 2회 시청 (3도장 완료 무료 알 수령) ➔ 알 부화 ➔ 지침 70+ 휴식/온천 케어 ➔ 경주 리그 & 격투 대전 출전</li>
+        <li><strong>3단계 (숙련 / 심화 플레이)</strong>: 보석 뽑기 (300 보석 천장) / 거래소 이용 ➔ 5,000골드 2세대 닭 교배 ➔ 7대 전투 기술 5슬롯 장착 & 3연속 콤보 세팅</li>
+        <li><strong>4단계 (고수 / 마스터)</strong>: 전설 리그 챔피언 도전 및 영구 칭호 20종 장착 ➔ 알 거래소 매매 진행</li>
+      </ul>
+    </div>
+
+    <!-- 3장: VIP 라운지 서비스 동선 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>3. VIP 라운지 서비스 전용 유저 플레이 동선 명세</h2>
+      </div>
+
+      <ul class="bullet-list">
+        <li><strong>1단계 (웹 접속 / 첫 중계 경험)</strong>: 자체 웹 접속 및 계정 생성 ➔ 신규 가입 보상 10,000 베팅 코인 수령 ➔ 24시간 타임 스케줄 확인 ➔ 실시간 관람 & 경기 시작 전 베팅</li>
+        <li><strong>2단계 (베팅 정착 / 매일 접속)</strong>: 경기 진입 전 전적 분석 ➔ 경기 시작 전 베팅 접수 ➔ 경기 중 실시간 베팅 참여 ➔ 수수료(8~10%) 차감 정산금 수령</li>
+        <li><strong>3단계 (고급 베팅 전략)</strong>: 실시간 배당 변동 그래프 분석 ➔ 복승식 & 베팅 마감 직전 베팅 수행</li>
+        <li><strong>4단계 (VIP 토너먼트 마스터)</strong>: 자체 웹 'VIP 베팅 왕중왕전' 참가 ➔ VIP 라운지 베팅 정산 코인 자산 운용 및 랭킹 관리</li>
+      </ul>
+    </div>
+
+    <!-- 4장: Mermaid 플로우차트 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>4. 서비스별 화면 이동 경로</h2>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--cyan); margin-bottom: 12px;">4.1 모바일 스토어 서비스 로비 탭 구조</h3>
+      <div class="mermaid-container">
+        <div class="mermaid">
+          flowchart TD
+              LOBBY["📱 모바일 메인 로비 (상단 HUD + 5대 탭)"]
+              LOBBY --> T1["【1탭】 🚜 육성 모드 (럼블 팜)"]
+              LOBBY --> T2["【2탭】 🏇 경주 리그 (더비 레이스)"]
+              LOBBY --> T3["【3탭】 🥊 격투 대전 (럼블 핏)"]
+              LOBBY --> T4["【4탭】 🛒 상점 & 알 거래소"]
+              LOBBY --> T5["【5탭】 🏆 마이페이지 (칭호/업적)"]
+        </div>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--cyan); margin-top: 24px; margin-bottom: 12px;">4.2 모바일 3대 모드 세부 이동 경로</h3>
+      
+      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 12px 0 8px 0;">[1탭] 육성 모드 (럼블 팜)</h4>
+      <div class="mermaid-container">
+        <div class="mermaid">
+          flowchart TD
+              F1["알 부화기 (10초 미니게임)"] --> F2["7종 능력치 훈련소"]
+              F2 --> F3{"지침 수치 70+ 판정"}
+              F3 -->|지침/부상 발생| F4["닭장 휴식 / 유료 온천 케어"]
+              F3 -->|정상 상태| F5["2세대 닭 교배소 (5,000골드)"]
+        </div>
+      </div>
+
+      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 16px 0 8px 0;">[2탭] 경주 리그 (더비 레이스)</h4>
+      <div class="mermaid-container">
+        <div class="mermaid">
+          flowchart TD
+              D1["6단계 모바일 리그 출전"] --> D2["1,200m 결승선 터치 부스터"]
+              D2 --> D3["RP 승점 & 우승 상금 수령"]
+        </div>
+      </div>
+
+      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 16px 0 8px 0;">[3탭] 격투 대전 (럼블 핏)</h4>
+      <div class="mermaid-container">
+        <div class="mermaid">
+          flowchart TD
+              P1["전투 스킬 5슬롯 & 콤보 세팅"] --> P2["1대1 링 대전 출전"]
+              P2 --> P3["KO승 판정 & 대전 상금 (150%) 수령"]
+        </div>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--rose); margin-top: 28px; margin-bottom: 12px;">4.3 VIP 라운지 서비스 베팅 이동 경로</h3>
+      <div class="mermaid-container">
+        <div class="mermaid">
+          flowchart TD
+              V1["🌐 VIP 라운지 메인 로비 (10,000 코인)"] --> V2["24시간 타임 스케줄 (경주 72회 / 격투 48회)"]
+              V2 --> V3["출전 선수 전적 & 능력치 분석"]
+              V3 --> V4["경기 시작 전 베팅 (단승 / 복승)"]
+              V4 --> V5["24시간 실시간 경기 중계 관람"]
+              V5 --> V6["체력 변동 경기 중 실시간 베팅"]
+              V6 --> V7["경기 종료 & 수수료(8~10%) 차감 정산 수령"]
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true
+      },
+      themeVariables: {
+        fontSize: '14px',
+        fontFamily: 'Pretendard'
+      }
+    });
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', nextTheme);
+    }
+  </script>
+</body>
+</html>

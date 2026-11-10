@@ -1,0 +1,4032 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보안 확인</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Markdown parser CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      /* Dark Theme (Default) */
+      --bg-base: #0c0e14;
+      --bg-sidebar: #12151f;
+      --bg-surface: #171b28;
+      --bg-surface-elevated: #1e2436;
+      --bg-glass: rgba(18, 21, 31, 0.92);
+      
+      --border-subtle: #242b3d;
+      --border-hover: #3b4663;
+      
+      --accent-primary: #ff5722;
+      --accent-primary-hover: #ff7043;
+      --accent-gold: #ffb300;
+      --accent-cyan: #00e5ff;
+      --accent-green: #00e676;
+      --accent-purple: #b388ff;
+      --accent-red: #ff5252;
+      
+      --text-main: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+      
+      --sidebar-width: clamp(300px, 21.5rem, 440px);
+      --header-height: clamp(64px, 4.2rem, 80px);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --transition: all 0.18s ease;
+
+      /* Special Card Theme Colors */
+      --bg-card-final: linear-gradient(180deg, rgba(255, 179, 0, 0.04) 0%, rgba(23, 27, 40, 1) 35%);
+      --border-card-final: rgba(255, 179, 0, 0.35);
+      --bg-card-issue: linear-gradient(180deg, rgba(255, 82, 82, 0.08) 0%, rgba(23, 27, 40, 1) 40%);
+      --border-card-issue: rgba(255, 82, 82, 0.55);
+      --bg-card-demo: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, rgba(20, 24, 36, 0.95) 100%);
+      --border-card-demo: rgba(168, 85, 247, 0.45);
+
+      /* Font scale multiplier */
+      --app-font-scale: 1;
+      --font-base: calc(15px * var(--app-font-scale));
+    }
+
+    /* Light Theme (White Mode) */
+    [data-theme="light"] {
+      --bg-base: #f1f4f9;
+      --bg-sidebar: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f8fafc;
+      --bg-glass: rgba(255, 255, 255, 0.95);
+
+      --border-subtle: #e2e8f0;
+      --border-hover: #cbd5e1;
+
+      --accent-primary: #f2552c;
+      --accent-primary-hover: #e0451a;
+      --accent-gold: #b45309;
+      --accent-cyan: #0284c7;
+      --accent-green: #15803d;
+      --accent-purple: #7e22ce;
+      --accent-red: #dc2626;
+
+      --text-main: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+      /* Special Card Theme Colors (High Contrast White) */
+      --bg-card-final: linear-gradient(180deg, #fffbeb 0%, #ffffff 45%);
+      --border-card-final: #fbbf24;
+      --bg-card-issue: linear-gradient(180deg, #fef2f2 0%, #ffffff 45%);
+      --border-card-issue: #f87171;
+      --bg-card-demo: linear-gradient(180deg, #faf5ff 0%, #ffffff 45%);
+      --border-card-demo: #c084fc;
+    }
+
+    /* Root Font Size & Settings Scaling */
+    html {
+      font-size: 15px;
+    }
+    html[data-font-size="small"] {
+      font-size: 15px;
+      --app-font-scale: 1;
+    }
+    html[data-font-size="large"] {
+      font-size: 17.5px;
+      --app-font-scale: 1.17;
+    }
+    html[data-font-size="xlarge"] {
+      font-size: 20px;
+      --app-font-scale: 1.33;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-size: var(--font-base);
+      line-height: 1.55;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-hover);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-primary);
+    }
+
+    /* Top Global Header */
+    header {
+      height: var(--header-height);
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      font-size: 1.8rem;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent-primary), #ff9100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      box-shadow: 0 0 16px rgba(255, 87, 34, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #fff, #ffcc80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sync-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sync-status .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .btn-header {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-header:hover {
+      background: var(--border-hover);
+      border-color: var(--text-secondary);
+    }
+
+    /* Header Quick Font Zoom Control */
+    .font-zoom-ctrl {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 3px 4px;
+      gap: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-zoom {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+    .btn-zoom:hover {
+      background: var(--bg-surface-elevated);
+      color: var(--accent-cyan);
+    }
+    .btn-zoom-reset {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid transparent;
+      color: var(--text-main);
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      cursor: pointer;
+      border-radius: 4px;
+      min-width: 48px;
+      text-align: center;
+      transition: var(--transition);
+      white-space: nowrap;
+      line-height: 1.3;
+    }
+    .btn-zoom-reset:hover {
+      background: var(--bg-surface-elevated);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    /* Mobile toggle */
+    .btn-menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 1.2rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    /* App Layout */
+    .app-layout {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Sidebar */
+    aside.sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+      z-index: 50;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-inner {
+      padding: 16px 12px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 4px;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .sidebar-actions-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-sidebar-collapse {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-sidebar-collapse:hover {
+      color: var(--accent-cyan);
+      background: rgba(0, 229, 255, 0.08);
+    }
+
+    .menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .menu-group-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      user-select: none;
+      transition: var(--transition);
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .menu-group-header:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .menu-group-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+    .menu-group-header-left span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .menu-group-total-badge {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .menu-group-chevron {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .menu-group.collapsed .menu-group-chevron {
+      transform: rotate(-90deg);
+    }
+    .menu-group.collapsed .menu-group-items {
+      display: none;
+    }
+    .menu-group-items {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+      text-decoration: none;
+      border: 1px solid transparent;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .menu-item:hover {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    .menu-item.active {
+      background: var(--bg-surface-elevated);
+      color: #fff;
+      font-weight: 600;
+      border-color: rgba(255, 87, 34, 0.4);
+      box-shadow: inset 3px 0 0 var(--accent-primary);
+    }
+
+    .menu-item-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-item-left span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .menu-item-icon {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .menu-item-badge {
+      font-size: 0.7rem;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .menu-item.active .menu-item-badge {
+      background: var(--accent-primary);
+      color: #fff;
+    }
+
+    /* Content Area */
+    main.content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-base);
+    }
+
+    .content-topbar {
+      padding: 16px 24px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .current-path-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-sep {
+      color: var(--border-hover);
+    }
+
+    .content-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .content-count {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg-surface-elevated);
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .content-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      width: 280px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 7px 12px 7px 34px;
+      color: var(--text-main);
+      font-size: 0.83rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      font-size: 0.85rem;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: none;
+    }
+
+    .search-clear:hover {
+      color: var(--text-main);
+    }
+
+    .view-toggles {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-base);
+      padding: 3px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-view-toggle {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-view-toggle:hover {
+      color: var(--text-main);
+    }
+
+    .btn-view-toggle.active {
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+    }
+
+    .items-scroll-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(clamp(320px, 24rem, 500px), 1fr));
+      gap: 16px;
+    }
+
+    .items-grid.list-view {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Card Component */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card.is-final {
+      border-color: var(--border-card-final);
+      background: var(--bg-card-final);
+    }
+
+    .card.is-final:hover {
+      border-color: var(--accent-gold);
+      box-shadow: 0 4px 16px rgba(255, 179, 0, 0.2);
+    }
+
+    .card.is-issue {
+      border-color: var(--border-card-issue);
+      background: var(--bg-card-issue);
+      box-shadow: 0 0 14px rgba(255, 82, 82, 0.15);
+    }
+
+    .card.is-issue:hover {
+      border-color: var(--accent-red);
+      box-shadow: 0 4px 20px rgba(255, 82, 82, 0.3);
+    }
+
+    .badge-issue {
+      background: rgba(255, 82, 82, 0.18);
+      color: #ff5252;
+      border: 1px solid rgba(255, 82, 82, 0.45);
+      animation: pulse 2s infinite;
+    }
+
+    .btn-pin-card {
+      background: transparent;
+      border: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: var(--transition);
+      opacity: 0.45;
+    }
+    .btn-pin-card:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+    .btn-pin-card.pinned {
+      opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(255, 82, 82, 0.8));
+    }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--accent-cyan);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 229, 255, 0.25);
+      z-index: 2000;
+      font-size: 0.86rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+    .toast-box.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Sub-category Filter Tabs */
+    .sub-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+    .sub-filter-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .sub-filter-pill:hover {
+      background: #1e2638;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .sub-filter-pill.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+    }
+    .sub-filter-pill .pill-count {
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1px 6px;
+      border-radius: 10px;
+      color: inherit;
+    }
+
+    /* Category Group Sections */
+    .category-section {
+      margin-bottom: 36px;
+    }
+    .section-divider-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(20, 24, 36, 0.9);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      border-top: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .section-divider-header.mode-common { border-left-color: var(--accent-gold); }
+    .section-divider-header.mode-race   { border-left-color: var(--accent-cyan); }
+    .section-divider-header.mode-pit    { border-left-color: var(--accent-primary); }
+    .section-divider-header.mode-farm   { border-left-color: var(--accent-green); }
+    .section-divider-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-divider-count {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Interactive Demo Card Styles */
+    .card.is-demo {
+      border-color: var(--border-card-demo);
+      background: var(--bg-card-demo);
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.12);
+    }
+    .card.is-demo:hover {
+      border-color: var(--accent-purple);
+      box-shadow: 0 8px 30px rgba(168, 85, 247, 0.28);
+      transform: translateY(-3px);
+    }
+    .demo-badge-banner {
+      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .demo-related-box {
+      margin: 10px 14px 14px;
+      padding: 10px 12px;
+      background: rgba(10, 14, 22, 0.8);
+      border: 1px dashed rgba(0, 229, 255, 0.35);
+      border-radius: 8px;
+    }
+    .demo-related-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .demo-related-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .demo-related-btn {
+      background: #182030;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: #e2e8f0;
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 0.73rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      transition: var(--transition);
+      line-height: 1.3;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .demo-related-btn:hover {
+      background: rgba(0, 229, 255, 0.25);
+      border-color: var(--accent-cyan);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* Modal Demo Quickbar */
+    .modal-demo-quickbar {
+      background: #0f1523;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .demo-quickbar-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .demo-quickbar-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .quickbar-btn {
+      background: #1e2638;
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      color: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .quickbar-btn:hover {
+      background: rgba(0, 229, 255, 0.25);
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+
+    .card-header {
+      padding: 14px 16px 6px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-mode {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .mode-common { color: var(--accent-gold); }
+    .mode-race   { color: var(--accent-cyan); }
+    .mode-pit    { color: var(--accent-primary); }
+    .mode-farm   { color: var(--accent-green); }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .badge-primary   { background: rgba(255, 87, 34, 0.15); color: #ff7043; border: 1px solid rgba(255, 87, 34, 0.3); }
+    .badge-success   { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
+    .badge-info      { background: rgba(0, 229, 255, 0.15); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3); }
+    .badge-warning   { background: rgba(255, 179, 0, 0.18); color: #ffca28; border: 1px solid rgba(255, 179, 0, 0.35); }
+    .badge-secondary { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+
+    .card-desc {
+      padding: 0 16px 10px;
+      font-size: 0.81rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .card-preview {
+      width: 100%;
+      height: 160px;
+      background: #080a0f;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .card-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+      cursor: zoom-in;
+    }
+
+    .card-preview:hover img {
+      transform: scale(1.05);
+    }
+
+    .audio-card-player {
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.25);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-play-audio {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .btn-play-audio:hover {
+      background: var(--accent-primary-hover);
+      transform: scale(1.08);
+      box-shadow: 0 0 10px rgba(255, 87, 34, 0.4);
+    }
+
+    .audio-track-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .audio-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .audio-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-cyan);
+      transition: width 0.1s linear;
+    }
+
+    .audio-time-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .card-footer {
+      padding: 10px 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      margin-top: auto;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .btn-action {
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-action:hover {
+      background: var(--border-hover);
+      border-color: var(--text-secondary);
+    }
+
+    .btn-action-primary {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+    }
+
+    .btn-action-primary:hover {
+      background: var(--accent-primary-hover);
+      border-color: var(--accent-primary-hover);
+    }
+
+    /* List View Tweaks */
+    .list-view .card {
+      flex-direction: row;
+      align-items: center;
+      padding: 10px 16px;
+      min-height: 4.4rem;
+      height: auto;
+    }
+    .list-view .card-header { padding: 0; flex: 1.5; }
+    .list-view .card-desc { display: none; }
+    .list-view .card-preview { display: none; }
+    .list-view .audio-card-player {
+      padding: 0;
+      background: transparent;
+      border: none;
+      flex: 1;
+    }
+    .list-view .card-footer {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      flex: 1;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 80px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .empty-state h3 {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    /* =========================================================
+       Advanced Universal Modal & Markdown Viewer
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 8, 12, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 1320px;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), 0 0 40px rgba(0,0,0,0.7);
+    }
+
+    .modal-header {
+      padding: 12px 20px;
+      background: var(--bg-surface-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .modal-title-box {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .modal-title-box h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-title-box p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .btn-font-size {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-font-size:hover {
+      color: #fff;
+      border-color: var(--text-secondary);
+    }
+
+    .modal-btn-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .modal-btn-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .modal-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      background: #0d1117;
+      position: relative;
+    }
+
+    .modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* Markdown Reader Layout (Article + Sidebar TOC) */
+    .md-reader-container {
+      flex: 1;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .md-content-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px 48px;
+      scroll-behavior: smooth;
+    }
+
+    /* GitHub Markdown Dark Theme */
+    .markdown-body {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #c9d1d9;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .markdown-body h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #fff;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 0.3em;
+      margin: 1.2em 0 0.8em;
+    }
+
+    .markdown-body h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #f0f6fc;
+      border-bottom: 1px solid #21262d;
+      padding-bottom: 0.3em;
+      margin: 1.4em 0 0.6em;
+    }
+
+    .markdown-body h3 {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #e6edf3;
+      margin: 1.2em 0 0.5em;
+    }
+
+    .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+      color: #cbd5e1;
+      margin: 1em 0 0.4em;
+    }
+
+    .markdown-body p, .markdown-body ul, .markdown-body ol {
+      margin-bottom: 1em;
+    }
+
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 24px;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.3em;
+    }
+
+    .markdown-body li input[type="checkbox"] {
+      margin-right: 6px;
+      accent-color: var(--accent-primary);
+    }
+
+    .markdown-body a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    .markdown-body a:hover {
+      text-decoration: underline;
+    }
+
+    .markdown-body blockquote {
+      border-left: 4px solid #3b4252;
+      padding: 8px 16px;
+      color: #8b949e;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 0 6px 6px 0;
+      margin: 1em 0;
+    }
+
+    /* GitHub Alert Box Callouts */
+    .gh-alert {
+      border-left: 4px solid;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 1.2em 0;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .gh-alert-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .gh-alert-note      { border-color: #58a6ff; background: rgba(88, 166, 255, 0.08); }
+    .gh-alert-note .gh-alert-title { color: #58a6ff; }
+    .gh-alert-tip       { border-color: #3fb950; background: rgba(63, 185, 80, 0.08); }
+    .gh-alert-tip .gh-alert-title { color: #3fb950; }
+    .gh-alert-important { border-color: #a371f7; background: rgba(163, 113, 247, 0.08); }
+    .gh-alert-important .gh-alert-title { color: #a371f7; }
+    .gh-alert-warning   { border-color: #d29922; background: rgba(210, 153, 34, 0.08); }
+    .gh-alert-warning .gh-alert-title { color: #d29922; }
+    .gh-alert-caution   { border-color: #f85149; background: rgba(248, 81, 73, 0.08); }
+    .gh-alert-caution .gh-alert-title { color: #f85149; }
+
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2em 0;
+      font-size: 0.9rem;
+    }
+    .markdown-body th, .markdown-body td {
+      border: 1px solid #30363d;
+      padding: 8px 14px;
+      text-align: left;
+    }
+    .markdown-body th {
+      background: #161b22;
+      color: #f0f6fc;
+      font-weight: 700;
+    }
+    .markdown-body tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .markdown-body code {
+      background: #161b22;
+      color: #ff7b72;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+    }
+
+    .markdown-body pre {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 1.2em 0;
+      position: relative;
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      color: #e6edf3;
+      padding: 0;
+      font-size: 0.88rem;
+    }
+
+    .markdown-body hr {
+      border: 0;
+      height: 1px;
+      background: #30363d;
+      margin: 2em 0;
+    }
+
+    /* Table of Contents (TOC) Sidebar in Reader */
+    .md-toc-sidebar {
+      width: 260px;
+      border-left: 1px solid #21262d;
+      background: #090d14;
+      padding: 24px 16px;
+      overflow-y: auto;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .md-toc-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .md-toc-link {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .md-toc-link:hover {
+      color: #fff;
+      background: var(--bg-surface);
+    }
+
+    .md-toc-link.toc-h2 {
+      padding-left: 8px;
+      font-weight: 600;
+    }
+
+    .md-toc-link.toc-h3 {
+      padding-left: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .lightbox-img-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    }
+
+    /* Global Audio Floating Bar */
+    .global-audio-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-hover);
+      border-radius: 50px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-lg), 0 0 25px rgba(0, 229, 255, 0.2);
+      z-index: 500;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-width: 90vw;
+      width: 520px;
+    }
+
+    .global-audio-bar.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .global-audio-icon {
+      font-size: 1.4rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    .global-audio-meta {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .global-audio-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .global-audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Settings Modal Styles */
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .settings-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .settings-options-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(130px, 9.5rem, 220px), 1fr));
+      gap: 10px;
+    }
+    .settings-opt-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .settings-opt-btn:hover {
+      background: var(--border-subtle);
+      color: var(--text-main);
+    }
+    .settings-opt-btn.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+    }
+    [data-theme="light"] .settings-opt-btn.active {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      color: #0284c7;
+      box-shadow: 0 0 8px rgba(2, 132, 199, 0.15);
+    }
+    .settings-preview-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    /* Light Theme Detailed High-Contrast Overrides */
+    [data-theme="light"] .brand-title {
+      background: linear-gradient(90deg, #0f172a 0%, #ea580c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    [data-theme="light"] .brand-sub { color: #475569; }
+    [data-theme="light"] .sync-status {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    [data-theme="light"] .btn-header {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #1e293b;
+    }
+    [data-theme="light"] .btn-header:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .font-zoom-ctrl {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    [data-theme="light"] .btn-zoom {
+      color: #475569;
+    }
+    [data-theme="light"] .btn-zoom:hover {
+      background: #f1f5f9;
+      color: #0284c7;
+    }
+    [data-theme="light"] .btn-zoom-reset {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      color: #0f172a;
+    }
+    [data-theme="light"] .btn-zoom-reset:hover {
+      background: #fff7ed;
+      border-color: #fdba74;
+      color: #ea580c;
+    }
+
+    [data-theme="light"] aside.sidebar {
+      background: #ffffff;
+      border-right-color: #e2e8f0;
+    }
+    [data-theme="light"] .sidebar-actions-title { color: #64748b; }
+    [data-theme="light"] .btn-sidebar-collapse { color: #64748b; }
+    [data-theme="light"] .btn-sidebar-collapse:hover { color: #0f172a; }
+    [data-theme="light"] .menu-group-header { color: #334155; }
+    [data-theme="light"] .menu-group-header:hover { color: #0f172a; }
+    [data-theme="light"] .menu-group-total-badge {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .menu-item { color: #334155; }
+    [data-theme="light"] .menu-item:hover {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    [data-theme="light"] .menu-item.active {
+      background: #fff7ed;
+      color: #ea580c;
+      border-color: #fdba74;
+    }
+    [data-theme="light"] .menu-item-badge {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .menu-item.active .menu-item-badge {
+      background: #ffedd5;
+      color: #c2410c;
+      border-color: #fed7aa;
+    }
+
+    [data-theme="light"] .content-topbar {
+      background: #ffffff;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .breadcrumb { color: #64748b; }
+    [data-theme="light"] .content-title { color: #0f172a; }
+    [data-theme="light"] .content-count {
+      background: #f1f5f9;
+      color: #475569;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .search-box {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    [data-theme="light"] .search-input {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    [data-theme="light"] .search-input:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+    [data-theme="light"] .search-icon,
+    [data-theme="light"] .search-clear { color: #64748b; }
+    [data-theme="light"] .search-clear:hover { color: #0f172a; }
+    [data-theme="light"] .view-toggles {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    [data-theme="light"] .btn-view-toggle { color: #64748b; }
+    [data-theme="light"] .btn-view-toggle:hover { color: #0f172a; }
+    [data-theme="light"] .btn-view-toggle.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="light"] .card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="light"] .card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+    [data-theme="light"] .card.is-issue {
+      background: linear-gradient(180deg, #fef2f2 0%, #ffffff 45%) !important;
+      border-color: #f87171 !important;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.12) !important;
+    }
+    [data-theme="light"] .card.is-issue:hover {
+      border-color: #ef4444 !important;
+      box-shadow: 0 6px 22px rgba(239, 68, 68, 0.22) !important;
+    }
+    [data-theme="light"] .badge-issue {
+      background: #fee2e2 !important;
+      color: #dc2626 !important;
+      border-color: #fca5a5 !important;
+    }
+    [data-theme="light"] .card.is-final {
+      background: linear-gradient(180deg, #fffbeb 0%, #ffffff 45%) !important;
+      border-color: #fbbf24 !important;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1) !important;
+    }
+    [data-theme="light"] .card.is-final:hover {
+      border-color: #f59e0b !important;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2) !important;
+    }
+    [data-theme="light"] .card.is-demo {
+      background: linear-gradient(180deg, #faf5ff 0%, #ffffff 45%) !important;
+      border-color: #c084fc !important;
+      box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1) !important;
+    }
+    [data-theme="light"] .card.is-demo:hover {
+      border-color: #a855f7 !important;
+      box-shadow: 0 6px 22px rgba(168, 85, 247, 0.22) !important;
+    }
+
+    [data-theme="light"] .card-title { color: #0f172a; }
+    [data-theme="light"] .card-desc { color: #334155; }
+    [data-theme="light"] .card-meta { color: #64748b; }
+    [data-theme="light"] .card-footer { border-top-color: #f1f5f9; }
+    [data-theme="light"] .btn-pin-card { color: #64748b; }
+    [data-theme="light"] .btn-pin-card.pinned {
+      filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6));
+    }
+
+    [data-theme="light"] .mode-common { color: #b45309; }
+    [data-theme="light"] .mode-race   { color: #0284c7; }
+    [data-theme="light"] .mode-pit    { color: #dc2626; }
+    [data-theme="light"] .mode-farm   { color: #15803d; }
+
+    [data-theme="light"] .badge-primary   { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+    [data-theme="light"] .badge-success   { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    [data-theme="light"] .badge-info      { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    [data-theme="light"] .badge-warning   { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    [data-theme="light"] .badge-secondary { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    [data-theme="light"] .btn-action {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #1e293b;
+    }
+    [data-theme="light"] .btn-action:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    [data-theme="light"] .btn-action.btn-action-primary {
+      background: linear-gradient(135deg, #f2552c, #ea580c);
+      border-color: #f2552c;
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .card-preview {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .audio-card-player {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .audio-time-row { color: #64748b; }
+    [data-theme="light"] .audio-progress-bar { background: #e2e8f0; }
+
+    [data-theme="light"] .section-divider-header {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .section-divider-title { color: #0f172a; }
+    [data-theme="light"] .section-divider-count {
+      background: #f1f5f9;
+      color: #475569;
+      border-color: #e2e8f0;
+    }
+
+    [data-theme="light"] .sub-filter-pill {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #475569;
+    }
+    [data-theme="light"] .sub-filter-pill:hover {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    [data-theme="light"] .sub-filter-pill.active {
+      background: #e0f2fe;
+      color: #0284c7;
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.15);
+    }
+    [data-theme="light"] .sub-filter-pill .pill-count {
+      background: rgba(2, 132, 199, 0.1);
+      color: #0284c7;
+    }
+
+    [data-theme="light"] .modal-overlay {
+      background: rgba(15, 23, 42, 0.65);
+    }
+    [data-theme="light"] .modal-container {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    [data-theme="light"] .modal-header {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .modal-title-box h3 { color: #0f172a; }
+    [data-theme="light"] .modal-title-box p { color: #64748b; }
+    [data-theme="light"] .btn-font-size {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    [data-theme="light"] .btn-font-size:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    [data-theme="light"] .modal-btn-close { color: #64748b; }
+    [data-theme="light"] .modal-btn-close:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    [data-theme="light"] .modal-body { background: #ffffff; }
+
+    [data-theme="light"] .markdown-body { color: #1e293b; }
+    [data-theme="light"] .markdown-body h1, 
+    [data-theme="light"] .markdown-body h2, 
+    [data-theme="light"] .markdown-body h3 {
+      color: #0f172a;
+      border-bottom-color: #e2e8f0;
+    }
+    [data-theme="light"] .markdown-body code {
+      background: #f1f5f9;
+      color: #c2410c;
+    }
+    [data-theme="light"] .markdown-body pre {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+    [data-theme="light"] .markdown-body pre code {
+      background: transparent;
+      color: #1e293b;
+    }
+    [data-theme="light"] pre#renderedText {
+      background: #f8fafc !important;
+      color: #0f172a !important;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .md-toc-sidebar {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .md-toc-header { color: #64748b; }
+    [data-theme="light"] .md-toc-link { color: #475569; }
+    [data-theme="light"] .md-toc-link:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    [data-theme="light"] .md-toc-link.toc-h3 { color: #64748b; }
+
+    [data-theme="light"] .demo-related-box {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    [data-theme="light"] .demo-related-title { color: #0284c7; }
+    [data-theme="light"] .demo-related-btn {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    [data-theme="light"] .demo-related-btn:hover {
+      background: #e0f2fe;
+      color: #0284c7;
+      border-color: #38bdf8;
+    }
+
+    [data-theme="light"] .modal-demo-quickbar {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    [data-theme="light"] .demo-quickbar-label { color: #0284c7; }
+    [data-theme="light"] .quickbar-btn {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+    [data-theme="light"] .quickbar-btn:hover {
+      background: #e0f2fe;
+      border-color: #38bdf8;
+      color: #0284c7;
+    }
+
+    [data-theme="light"] .global-audio-bar {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #cbd5e1;
+      color: #0f172a;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    [data-theme="light"] .toast-box {
+      background: #ffffff;
+      border-color: var(--accent-primary);
+      color: #0f172a;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @media (max-width: 900px) {
+      aside.sidebar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-lg);
+      }
+      aside.sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      .btn-menu-toggle {
+        display: block;
+      }
+      .items-grid {
+        grid-template-columns: 1fr;
+      }
+      .search-box {
+        width: 100%;
+      }
+      .content-topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .content-controls {
+        justify-content: space-between;
+      }
+      .md-toc-sidebar {
+        display: none;
+      }
+      .md-content-scroll {
+        padding: 24px 16px;
+      }
+    }
+
+    /* =========================================================
+       Security Auth Gate Overlay Styles
+       ========================================================= */
+    .auth-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: #090b10;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.25s ease;
+    }
+    .auth-gate-box {
+      width: 100%;
+      max-width: 320px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .auth-gate-icon {
+      font-size: 2.6rem;
+      width: 68px;
+      height: 68px;
+      background: linear-gradient(135deg, var(--accent-primary), #ff9100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      margin: 0 auto;
+      box-shadow: 0 0 25px rgba(255, 87, 34, 0.35);
+    }
+    .auth-gate-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .auth-gate-desc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .auth-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    .auth-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+      letter-spacing: 0.12em;
+    }
+    .auth-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+    }
+    .auth-checkbox-label {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .auth-btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-primary), #ea580c);
+      color: #fff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 14px rgba(255, 87, 34, 0.3);
+    }
+    .auth-btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255, 87, 34, 0.45);
+    }
+    .auth-error-msg {
+      font-size: 0.8rem;
+      color: #ff5252;
+      font-weight: 600;
+      min-height: 18px;
+      text-align: center;
+    }
+    .auth-links-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-size: 0.78rem;
+      margin-top: 4px;
+    }
+    .auth-link-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      transition: var(--transition);
+      font-size: 0.78rem;
+    }
+    .auth-link-btn:hover {
+      color: var(--accent-cyan);
+    }
+
+    [data-theme="light"] .auth-gate-overlay {
+      background: #f1f4f9;
+    }
+    [data-theme="light"] .auth-gate-box {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    }
+    [data-theme="light"] .auth-input {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Header -->
+  <header>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="btn-menu-toggle" onclick="toggleMobileSidebar()" title="메뉴 열기/닫기">☰</button>
+      <a href="#" class="brand-group" onclick="selectMenuItem('view_final'); return false;">
+        <div class="brand-icon">🐓</div>
+        <div>
+          <div class="brand-title">ROOSTER RUMBLE</div>
+          <div class="brand-sub">산출물 웹보드 & 마크다운 뷰어</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="header-right">
+      <div class="sync-status">
+        <span class="dot"></span>
+        <span id="syncDate">2026-11-10</span>
+      </div>
+      <div class="font-zoom-ctrl" title="전체 글자 크기 조절 (배율 클릭 시 100% 복원)">
+        <button class="btn-zoom" onclick="changeGlobalFontScale(-1)" title="글자 작게 (A-)">A-</button>
+        <button class="btn-zoom-reset" onclick="resetGlobalFontScale()" title="기본 크기(100%)로 초기화">
+          <span id="headerFontScaleLabel">100%</span>
+        </button>
+        <button class="btn-zoom" onclick="changeGlobalFontScale(1)" title="글자 크게 (A+)">A+</button>
+      </div>
+      <button class="btn-header" id="btnThemeQuickToggle" onclick="toggleTheme()" title="화이트/다크 모드 빠른 전환">
+        <span id="themeQuickIcon">☀️</span>
+        <span id="themeQuickLabel">라이트 모드</span>
+      </button>
+      <button class="btn-header" onclick="openSettingsModal()" title="화면 및 폰트 설정">
+        ⚙️ 설정
+      </button>
+      <button class="btn-header" onclick="lockSession()" title="열람 세션 잠금 / 로그아웃" style="border-color: rgba(255, 82, 82, 0.4); color: #ff8a80;">
+        🔒 잠금
+      </button>
+    </div>
+  </header>
+
+  <!-- App Layout: Left Sidebar + Right Content -->
+  <div class="app-layout">
+
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-inner" id="sidebarMenu">
+        <!-- Sidebar dynamically rendered -->
+      </div>
+    </aside>
+
+    <!-- Right Main Content Area -->
+    <main class="content-area">
+      <!-- Content Topbar -->
+      <div class="content-topbar">
+        <div class="current-path-info">
+          <div class="breadcrumb" id="breadcrumb">
+            <span>홈</span>
+            <span class="breadcrumb-sep">›</span>
+            <span id="bcMode">빠른 모아보기</span>
+            <span class="breadcrumb-sep">›</span>
+            <span id="bcSub">최종 확정본</span>
+          </div>
+          <div class="content-title">
+            <span id="currentViewTitle">⭐ 최종 확정본만 모아보기</span>
+            <span class="content-count" id="currentViewCount">0개</span>
+          </div>
+        </div>
+
+        <div class="content-controls">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="문서명, 키워드 검색..." oninput="handleSearch(this.value)">
+            <button id="searchClear" class="search-clear" onclick="clearSearch()">✕</button>
+          </div>
+
+          <div class="view-toggles">
+            <button class="btn-view-toggle active" id="btnViewGrid" title="그리드 보기" onclick="setViewMode('grid')">▦</button>
+            <button class="btn-view-toggle" id="btnViewList" title="목록 보기" onclick="setViewMode('list')">▤</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Items List -->
+      <div class="items-scroll-wrap">
+        <div id="subFilterContainer"></div>
+        <div class="items-grid" id="itemsGrid">
+          <!-- Dynamic cards -->
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Global Audio Player Floating Bar -->
+  <div class="global-audio-bar" id="globalAudioBar">
+    <div class="global-audio-icon">🎵</div>
+    <div class="global-audio-meta">
+      <div class="global-audio-title" id="globalAudioTitle">곡 명칭</div>
+      <div class="audio-time-row">
+        <span id="globalAudioCurrent">00:00</span>
+        <span id="globalAudioDuration">00:00</span>
+      </div>
+      <div class="audio-progress-bar" onclick="seekGlobalAudio(event)">
+        <div class="audio-progress-fill" id="globalAudioProgress"></div>
+      </div>
+    </div>
+    <div class="global-audio-controls">
+      <button class="btn-play-audio" id="btnGlobalPlay" onclick="toggleGlobalAudio()">❚❚</button>
+      <button class="modal-btn-close" onclick="closeGlobalAudio()" title="닫기">✕</button>
+    </div>
+  </div>
+
+  <!-- Universal Modal / Markdown Reader -->
+  <div class="modal-overlay" id="universalModal" onclick="handleModalOverlayClick(event)">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <h3 id="modalTitle">문서 뷰어</h3>
+          <p id="modalSubInfo">경로</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-header" id="btnToggleIssueModal" onclick="toggleCurrentModalIssue()" title="주요 이슈(필독) 등록 / 해제" style="border-color: rgba(255, 82, 82, 0.4); color: #ff8a80;">
+            📌 필독 등록
+          </button>
+          <div id="modalFontControls" style="display: none; align-items: center; gap: 4px;">
+            <button class="btn-font-size" onclick="adjustFontSize(-1)" title="글자 작게">A-</button>
+            <button class="btn-font-size" onclick="adjustFontSize(1)" title="글자 크게">A+</button>
+          </div>
+          <button class="btn-header" id="btnCopyContent" style="display: none;" onclick="copyCurrentContent()" title="전체 본문 복사">
+            📋 복사
+          </button>
+          <a id="modalExternalLink" href="#" target="_blank" class="btn-header" title="새 탭으로 열기">
+            ↗ 새 탭
+          </a>
+          <a id="modalDownloadLink" href="#" download class="btn-header" title="파일 다운로드">
+            💾 다운로드
+          </a>
+          <button class="modal-btn-close" onclick="closeModal()">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Webboard Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" onclick="handleSettingsOverlayClick(event)">
+    <div class="modal-container" style="max-width: 520px; height: auto; max-height: 85vh;">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <h3 style="font-size:1.05rem; color:var(--text-main); display:flex; align-items:center; gap:8px;">
+            ⚙️ 웹보드 화면 설정
+          </h3>
+        </div>
+        <button class="modal-btn-close" onclick="closeSettingsModal()">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 24px; display:flex; flex-direction:column; gap:22px;">
+        
+        <!-- 테마 설정 -->
+        <div class="settings-group">
+          <label class="settings-label">🌓 화면 테마</label>
+          <div class="settings-options-row">
+            <button class="settings-opt-btn" id="optThemeDark" onclick="applyTheme('dark')">
+              🌙 다크 모드 (기본)
+            </button>
+            <button class="settings-opt-btn" id="optThemeLight" onclick="applyTheme('light')">
+              ☀️ 화이트 모드
+            </button>
+          </div>
+        </div>
+
+        <!-- 글자 크기 설정 (+/- 스텝퍼 및 프리셋) -->
+        <div class="settings-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label class="settings-label" style="margin-bottom:0;">🔤 글자 크기 조절 (+/- 및 프리셋)</label>
+            <span id="fontSizeDisplay" style="font-size:0.85rem; color:var(--accent-cyan); font-weight:700;">100% (15px)</span>
+          </div>
+
+          <!-- +/- 미세 조절 스텝퍼 -->
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <button class="settings-opt-btn" style="flex:1;" onclick="changeGlobalFontScale(-1)" title="글자 1단계 축소 (A-)">
+              ➖ 작게 (A-)
+            </button>
+            <button class="settings-opt-btn" style="flex:1;" onclick="resetGlobalFontScale()" title="기본 크기(100%)로 복원">
+              🔄 100% 복원
+            </button>
+            <button class="settings-opt-btn" style="flex:1;" onclick="changeGlobalFontScale(1)" title="글자 1단계 확대 (A+)">
+              ➕ 크게 (A+)
+            </button>
+          </div>
+
+          <!-- 빠른 프리셋 선택 -->
+          <div class="settings-options-row">
+            <button class="settings-opt-btn" id="optFontSmall" onclick="setGlobalFontPx(15)">
+              보통 (100%)
+            </button>
+            <button class="settings-opt-btn" id="optFontLarge" onclick="setGlobalFontPx(17.5)">
+              크게 (117%)
+            </button>
+            <button class="settings-opt-btn" id="optFontXlarge" onclick="setGlobalFontPx(20)">
+              아주 크게 (133%)
+            </button>
+          </div>
+        </div>
+
+        <!-- 미리보기 샘플 -->
+        <div class="settings-preview-box">
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">미리보기 예시:</div>
+          <div style="font-size: 1.05rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+            🐓 ROOSTER RUMBLE 통합 MVP 기획서
+          </div>
+          <div style="font-size: 0.86rem; color:var(--text-secondary); line-height:1.5;">
+            경주/격투/농장 3개 모드 전체 루프 및 마스터 기획이 총망라된 최종 확정 산출물입니다.
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:6px; flex-wrap:wrap;">
+          <button class="btn-action" onclick="lockSession()" style="border-color:rgba(255,82,82,0.4); color:#ff8a80;">
+            🔒 열람 잠금 (로그아웃)
+          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-action" onclick="resetSettings()">🔄 기본값 복원</button>
+            <button class="btn-action btn-action-primary" onclick="closeSettingsModal()">완료</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Access Gate Overlay -->
+  <div class="auth-gate-overlay" id="authGateOverlay">
+    <div class="auth-gate-box">
+      <form id="authGateForm" onsubmit="handleAuthSubmit(event)">
+        <div class="auth-input-group">
+          <input type="password" id="gatePasswordInput" class="auth-input" placeholder="비밀번호 입력" autocomplete="current-password" autofocus required>
+        </div>
+
+        <div class="auth-error-msg" id="gateErrorMsg"></div>
+
+        <button type="submit" class="auth-btn-submit" style="margin-top: 10px;">
+          확인
+        </button>
+      </form>
+
+      <div class="auth-links-row" style="margin-top: 6px; justify-content: center;">
+        <button type="button" class="auth-link-btn" onclick="openChangePwModal()">비밀번호 변경</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" id="changePwModal" onclick="handleChangePwOverlayClick(event)">
+    <div class="modal-container" style="max-width: 360px; height: auto;">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <h3 style="font-size:0.95rem; color:var(--text-main);">
+            비밀번호 변경
+          </h3>
+        </div>
+        <button class="modal-btn-close" onclick="closeChangePwModal()">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 18px 20px; display:flex; flex-direction:column; gap:12px;">
+        <form id="changePwForm" onsubmit="handleChangePwSubmit(event)" style="display:flex; flex-direction:column; gap:10px;">
+          <div class="auth-input-group">
+            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">마스터 비밀번호</label>
+            <input type="password" id="masterPwInput" class="auth-input" placeholder="마스터 비밀번호" required style="padding:8px 10px; font-size:0.88rem;">
+          </div>
+
+          <div class="auth-input-group">
+            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">새 비밀번호</label>
+            <input type="password" id="newViewPwInput" class="auth-input" placeholder="새 비밀번호" required style="padding:8px 10px; font-size:0.88rem;">
+          </div>
+
+          <div class="auth-input-group">
+            <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-main);">새 비밀번호 확인</label>
+            <input type="password" id="confirmViewPwInput" class="auth-input" placeholder="새 비밀번호 확인" required style="padding:8px 10px; font-size:0.88rem;">
+          </div>
+
+          <div class="auth-error-msg" id="changePwErrorMsg"></div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+            <button type="button" class="auth-link-btn" onclick="resetPasswordToDefault()" style="font-size:0.75rem;">기본값 초기화</button>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="btn-action" onclick="closeChangePwModal()">취소</button>
+              <button type="submit" class="btn-action btn-action-primary">변경</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div class="toast-box" id="toastBox">
+    <span id="toastIcon">🚨</span>
+    <span id="toastMsg">알림 메시지</span>
+  </div>
+
+  <audio id="coreAudioPlayer" preload="none"></audio>
+  <script src="board_data.js"></script>
+
+  <script>
+    let activeMenuId = 'view_issues';
+    let searchQuery = '';
+    let viewMode = 'grid';
+    let currentPlayingItem = null;
+    let currentRawContent = '';
+    let currentFontSize = 15;
+    let currentViewingItemId = null;
+    let pinnedIssueIds = new Set();
+
+    const audioElement = document.getElementById('coreAudioPlayer');
+    const globalAudioBar = document.getElementById('globalAudioBar');
+
+    // Toast Notification System
+    let toastTimer = null;
+    function showToast(msg, icon = '🚨') {
+      const box = document.getElementById('toastBox');
+      const iconEl = document.getElementById('toastIcon');
+      const msgEl = document.getElementById('toastMsg');
+      if (!box) return;
+
+      iconEl.textContent = icon;
+      msgEl.textContent = msg;
+      box.classList.add('show');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.remove('show');
+      }, 2600);
+    }
+
+    // LocalStorage Pinned Issues Persistence
+    function loadPinnedIssues(dataItems) {
+      pinnedIssueIds.clear();
+      // 1. Initial issues from board_data.js
+      if (dataItems) {
+        dataItems.forEach(i => {
+          if (i.is_issue) pinnedIssueIds.add(i.id);
+        });
+      }
+
+      // 2. Merge with user localStorage
+      try {
+        const saved = localStorage.getItem('rooster_pinned_issues');
+        if (saved) {
+          const arr = JSON.parse(saved);
+          arr.forEach(id => pinnedIssueIds.add(id));
+        }
+      } catch (e) {
+        console.warn('로컬 저장소 로드 오류:', e);
+      }
+    }
+
+    function savePinnedIssues() {
+      try {
+        localStorage.setItem('rooster_pinned_issues', JSON.stringify([...pinnedIssueIds]));
+      } catch (e) {
+        console.warn('로컬 저장소 저장 오류:', e);
+      }
+    }
+
+    function togglePinIssue(itemId, event) {
+      if (event) event.stopPropagation();
+
+      const item = window.BOARD_DATA ? window.BOARD_DATA.items.find(i => i.id === itemId) : null;
+      const title = item ? item.title : itemId;
+
+      if (pinnedIssueIds.has(itemId)) {
+        pinnedIssueIds.delete(itemId);
+        savePinnedIssues();
+        showToast(`'${title}' 항목이 주요 이슈(필독)에서 해제되었습니다.`, 'ℹ️');
+      } else {
+        pinnedIssueIds.add(itemId);
+        savePinnedIssues();
+        showToast(`'${title}' 항목이 주요 이슈(필독)에 등록되었습니다!`, '🚨');
+      }
+
+      // Update UI components
+      updateModalPinButton(itemId);
+      renderSidebarMenu(window.BOARD_DATA.menu_sections, window.BOARD_DATA.items);
+      renderCurrentItems();
+    }
+
+    function toggleCurrentModalIssue() {
+      if (currentViewingItemId) {
+        togglePinIssue(currentViewingItemId);
+      }
+    }
+
+    function updateModalPinButton(itemId) {
+      const btn = document.getElementById('btnToggleIssueModal');
+      if (!btn) return;
+
+      if (!itemId) {
+        btn.style.display = 'none';
+        return;
+      }
+      btn.style.display = 'inline-flex';
+
+      const isPinned = pinnedIssueIds.has(itemId);
+      if (isPinned) {
+        btn.innerHTML = '🚨 필독 해제';
+        btn.style.borderColor = 'rgba(255, 82, 82, 0.8)';
+        btn.style.color = '#ff5252';
+        btn.style.background = 'rgba(255, 82, 82, 0.15)';
+      } else {
+        btn.innerHTML = '📌 필독 등록';
+        btn.style.borderColor = 'rgba(255, 82, 82, 0.35)';
+        btn.style.color = '#ff8a80';
+        btn.style.background = 'transparent';
+      }
+    }
+
+    // =========================================================
+    // Security Access Gate & Password Management System
+    // =========================================================
+    const AUTH_DEFAULT_VIEW_HASH = '234db10889b3431b8643d3d5c8b0793f37ffc99c61234cc3647a9391749328e9';
+    const AUTH_MASTER_HASH       = 'babe841284387418613efb043eadeb934c3d691c7a57e4fb9148798f144f63d9';
+    const AUTH_CUSTOM_VIEW_KEY   = 'rooster_auth_custom_view_hash';
+    const AUTH_SESSION_KEY       = 'rooster_auth_session_token';
+
+    let isAppAuthorized = false;
+    let appContentLaunched = false;
+
+    async function hashStringSHA256(str) {
+      if (window.crypto && crypto.subtle) {
+        const msgBuffer = new TextEncoder().encode(str);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      } else {
+        return fallbackSha256(str);
+      }
+    }
+
+    function fallbackSha256(ascii) {
+      function rightRotate(value, amount) {
+        return (value >>> amount) | (value << (32 - amount));
+      }
+      var mathPow = Math.pow;
+      var maxWord = mathPow(2, 32);
+      var lengthProperty = 'length';
+      var i, j;
+      var result = '';
+      var words = [];
+      var asciiBitLength = ascii[lengthProperty] * 8;
+      var hash = [];
+      var k = [];
+      var primeCounter = 0;
+      var isComposite = {};
+      for (var candidate = 2; primeCounter < 64; candidate++) {
+        if (!isComposite[candidate]) {
+          for (i = 0; i < 313; i += candidate) {
+            isComposite[i] = candidate;
+          }
+          hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+          k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+        }
+      }
+      ascii += '\x80';
+      while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+      for (i = 0; i < ascii[lengthProperty]; i++) {
+        j = ascii.charCodeAt(i);
+        if (j >> 8) return;
+        words[i >> 2] |= j << ((3 - i) % 4) * 8;
+      }
+      words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+      words[words[lengthProperty]] = (asciiBitLength | 0);
+      for (j = 0; j < words[lengthProperty];) {
+        var w = words.slice(j, j += 16);
+        var oldHash = hash;
+        hash = hash.slice(0, 8);
+        for (i = 0; i < 64; i++) {
+          var i2 = i + j;
+          var w15 = w[i - 15], w2 = w[i - 2];
+          var a = hash[0], e = hash[4];
+          var temp1 = hash[7]
+            + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+            + ((e & hash[5]) ^ ((~e) & hash[6]))
+            + k[i]
+            + (w[i] = (i < 16) ? w[i] : (
+              w[i - 16]
+              + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+              + w[i - 7]
+              + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+            ) | 0);
+          var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+            + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+          hash = [(temp1 + temp2) | 0].concat(hash);
+          hash[4] = (hash[4] + temp1) | 0;
+        }
+        for (i = 0; i < 8; i++) {
+          hash[i] = (hash[i] + oldHash[i]) | 0;
+        }
+      }
+      for (i = 0; i < 8; i++) {
+        for (i2 = 3; i2 >= 0; i2--) {
+          var c = (hash[i] >> (i2 * 8)) & 255;
+          result += ((c < 16) ? 0 : '') + c.toString(16);
+        }
+      }
+      return result;
+    }
+
+    function getActiveViewPasswordHash() {
+      try {
+        const custom = localStorage.getItem(AUTH_CUSTOM_VIEW_KEY);
+        if (custom && custom.length === 64) return custom;
+      } catch(e) {}
+      return AUTH_DEFAULT_VIEW_HASH;
+    }
+
+    async function checkSavedAuthSession() {
+      const activeHash = getActiveViewPasswordHash();
+      try {
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        localStorage.removeItem('rooster_auth_remember');
+      } catch(e) {}
+
+      try {
+        const sessionToken = sessionStorage.getItem(AUTH_SESSION_KEY);
+        if (sessionToken === activeHash) return true;
+      } catch(e) {}
+
+      return false;
+    }
+
+    async function handleAuthSubmit(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('gatePasswordInput');
+      const errorMsg = document.getElementById('gateErrorMsg');
+      const enteredPw = input.value.trim();
+
+      if (!enteredPw) {
+        errorMsg.textContent = '비밀번호를 입력해주세요.';
+        return;
+      }
+
+      const enteredHash = await hashStringSHA256(enteredPw);
+      const activeHash = getActiveViewPasswordHash();
+
+      if (enteredHash === activeHash) {
+        errorMsg.textContent = '';
+        grantAccess(enteredHash);
+      } else {
+        errorMsg.textContent = '❌ 비밀번호가 올바르지 않습니다. 다시 입력해주세요.';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function grantAccess(token) {
+      isAppAuthorized = true;
+      try {
+        sessionStorage.setItem(AUTH_SESSION_KEY, token);
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        localStorage.removeItem('rooster_auth_remember');
+      } catch(e) {}
+
+      const overlay = document.getElementById('authGateOverlay');
+      if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => overlay.style.display = 'none', 260);
+      }
+
+      launchAppContent();
+      showToast('🔓 열람 권한이 승인되었습니다.', '🔑');
+    }
+
+    function lockSession() {
+      try {
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        sessionStorage.removeItem(AUTH_SESSION_KEY);
+      } catch(e) {}
+
+      isAppAuthorized = false;
+      const overlay = document.getElementById('authGateOverlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        overlay.style.pointerEvents = 'auto';
+        setTimeout(() => overlay.style.opacity = '1', 10);
+        document.getElementById('gatePasswordInput').value = '';
+        document.getElementById('gateErrorMsg').textContent = '';
+        document.getElementById('gatePasswordInput').focus();
+      }
+      closeSettingsModal();
+      showToast('🔒 열람 세션이 안전하게 잠겼습니다.', '🔒');
+    }
+
+    function openChangePwModal() {
+      document.getElementById('masterPwInput').value = '';
+      document.getElementById('newViewPwInput').value = '';
+      document.getElementById('confirmViewPwInput').value = '';
+      document.getElementById('changePwErrorMsg').textContent = '';
+      document.getElementById('changePwModal').classList.add('active');
+      setTimeout(() => document.getElementById('masterPwInput').focus(), 100);
+    }
+
+    function closeChangePwModal() {
+      document.getElementById('changePwModal').classList.remove('active');
+    }
+
+    function handleChangePwOverlayClick(e) {
+      if (e.target.id === 'changePwModal') closeChangePwModal();
+    }
+
+    async function handleChangePwSubmit(e) {
+      if (e) e.preventDefault();
+      const masterPw = document.getElementById('masterPwInput').value.trim();
+      const newPw = document.getElementById('newViewPwInput').value.trim();
+      const confirmPw = document.getElementById('confirmViewPwInput').value.trim();
+      const errorMsg = document.getElementById('changePwErrorMsg');
+
+      if (!masterPw) {
+        errorMsg.textContent = '마스터 비밀번호를 입력해주세요.';
+        return;
+      }
+      if (!newPw) {
+        errorMsg.textContent = '새 열람 비밀번호를 입력해주세요.';
+        return;
+      }
+      if (newPw !== confirmPw) {
+        errorMsg.textContent = '새 비밀번호와 확인 입력이 일치하지 않습니다.';
+        return;
+      }
+
+      const masterHash = await hashStringSHA256(masterPw);
+      if (masterHash !== AUTH_MASTER_HASH) {
+        errorMsg.textContent = '❌ 마스터 비밀번호가 올바르지 않습니다.';
+        return;
+      }
+
+      const newHash = await hashStringSHA256(newPw);
+      try {
+        localStorage.setItem(AUTH_CUSTOM_VIEW_KEY, newHash);
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        sessionStorage.removeItem(AUTH_SESSION_KEY);
+      } catch(e) {}
+
+      closeChangePwModal();
+      showToast('🔑 열람 비밀번호가 변경되었습니다! 새 비밀번호로 로그인하세요.', '✅');
+
+      const gateInput = document.getElementById('gatePasswordInput');
+      if (gateInput) {
+        gateInput.value = '';
+        gateInput.focus();
+      }
+    }
+
+    function resetPasswordToDefault() {
+      if (!confirm('열람 비밀번호를 기본 설정으로 복원하시겠습니까?')) return;
+      try {
+        localStorage.removeItem(AUTH_CUSTOM_VIEW_KEY);
+        localStorage.removeItem(AUTH_SESSION_KEY);
+        sessionStorage.removeItem(AUTH_SESSION_KEY);
+      } catch(e) {}
+      showToast('🔄 기본 열람 비밀번호로 복원되었습니다.', '🔄');
+      const gateInput = document.getElementById('gatePasswordInput');
+      if (gateInput) {
+        gateInput.value = '';
+        gateInput.focus();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadUserSettings();
+      setupAudioEvents();
+
+      const passed = await checkSavedAuthSession();
+      if (passed) {
+        isAppAuthorized = true;
+        const overlay = document.getElementById('authGateOverlay');
+        if (overlay) overlay.style.display = 'none';
+        launchAppContent();
+      } else {
+        isAppAuthorized = false;
+        const overlay = document.getElementById('authGateOverlay');
+        if (overlay) overlay.style.display = 'flex';
+        const input = document.getElementById('gatePasswordInput');
+        if (input) setTimeout(() => input.focus(), 150);
+      }
+    });
+
+    function launchAppContent() {
+      if (appContentLaunched) return;
+      appContentLaunched = true;
+      document.title = 'ROOSTER RUMBLE — 산출물 아카이브 & 웹보드';
+
+      if (typeof window.BOARD_DATA !== 'undefined') {
+        initApp(window.BOARD_DATA);
+      } else {
+        fetch('board_data.json')
+          .then(res => res.json())
+          .then(data => initApp(data))
+          .catch(err => {
+            console.error('데이터 로드 실패:', err);
+            document.getElementById('itemsGrid').innerHTML = `
+              <div class="empty-state">
+                <h3>⚠️ 메타데이터 파일을 불러올 수 없습니다.</h3>
+                <p>python sync_webboard.py 를 먼저 실행해주세요.</p>
+              </div>`;
+          });
+      }
+    }
+
+    // User Settings (Theme & Font Size)
+    const THEME_STORAGE_KEY = 'rooster_webboard_theme';
+    const FONT_STORAGE_KEY = 'rooster_webboard_font_size';
+    const FONT_PX_STORAGE_KEY = 'rooster_webboard_font_px';
+    const BASE_FONT_PX = 15;
+    let currentTheme = 'dark';
+    let currentFontPx = 15;
+
+    function loadUserSettings() {
+      try {
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          currentTheme = savedTheme;
+        } else {
+          currentTheme = 'dark';
+        }
+      } catch (e) {
+        currentTheme = 'dark';
+      }
+      applyTheme(currentTheme, false);
+
+      try {
+        const savedPx = localStorage.getItem(FONT_PX_STORAGE_KEY);
+        if (savedPx && !isNaN(savedPx)) {
+          currentFontPx = parseFloat(savedPx);
+        } else {
+          const legacySize = localStorage.getItem(FONT_STORAGE_KEY);
+          if (legacySize === 'large') currentFontPx = 17.5;
+          else if (legacySize === 'xlarge') currentFontPx = 20;
+          else currentFontPx = 15;
+        }
+      } catch (e) {
+        currentFontPx = 15;
+      }
+      setGlobalFontPx(currentFontPx, false);
+    }
+
+    function applyTheme(theme, showNotice = true) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+      } catch (e) {}
+
+      const quickIcon = document.getElementById('themeQuickIcon');
+      const quickLabel = document.getElementById('themeQuickLabel');
+      if (quickIcon && quickLabel) {
+        if (theme === 'light') {
+          quickIcon.textContent = '🌙';
+          quickLabel.textContent = '다크 모드';
+        } else {
+          quickIcon.textContent = '☀️';
+          quickLabel.textContent = '화이트 모드';
+        }
+      }
+
+      const btnDark = document.getElementById('optThemeDark');
+      const btnLight = document.getElementById('optThemeLight');
+      if (btnDark && btnLight) {
+        btnDark.classList.toggle('active', theme === 'dark');
+        btnLight.classList.toggle('active', theme === 'light');
+      }
+
+      if (showNotice) {
+        showToast(theme === 'light' ? '☀️ 화이트 모드로 전환되었습니다.' : '🌙 다크 모드로 전환되었습니다.', '🌓');
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme, true);
+    }
+
+    function setGlobalFontPx(px, showNotice = true) {
+      currentFontPx = Math.max(12, Math.min(22, Math.round(px * 10) / 10));
+      document.documentElement.style.fontSize = currentFontPx + 'px';
+
+      const pct = Math.round((currentFontPx / BASE_FONT_PX) * 100);
+
+      // 1. 헤더 배율 라벨 갱신
+      const headerLabel = document.getElementById('headerFontScaleLabel');
+      if (headerLabel) {
+        headerLabel.textContent = pct + '%';
+      }
+
+      // 2. 설정 모달 디스플레이 갱신
+      const display = document.getElementById('fontSizeDisplay');
+      if (display) {
+        display.textContent = `${pct}% (${currentFontPx}px)`;
+      }
+
+      // 3. 프리셋 버튼 활성화 표시
+      const btnSmall = document.getElementById('optFontSmall');
+      const btnLarge = document.getElementById('optFontLarge');
+      const btnXlarge = document.getElementById('optFontXlarge');
+      if (btnSmall) btnSmall.classList.toggle('active', Math.abs(currentFontPx - 15) < 0.3);
+      if (btnLarge) btnLarge.classList.toggle('active', Math.abs(currentFontPx - 17.5) < 0.3);
+      if (btnXlarge) btnXlarge.classList.toggle('active', Math.abs(currentFontPx - 20) < 0.3);
+
+      // 4. 로컬 스토리지 저장
+      try {
+        localStorage.setItem(FONT_PX_STORAGE_KEY, currentFontPx);
+        localStorage.setItem(FONT_STORAGE_KEY, pct <= 105 ? 'small' : (pct <= 125 ? 'large' : 'xlarge'));
+      } catch (e) {}
+
+      if (showNotice) {
+        showToast(`🔤 글자 크기: ${pct}% (${currentFontPx}px)`, '🔤');
+      }
+    }
+
+    function changeGlobalFontScale(delta) {
+      setGlobalFontPx(currentFontPx + delta, true);
+    }
+
+    function resetGlobalFontScale() {
+      setGlobalFontPx(15, false);
+      showToast('🔤 글자 크기가 기본값 (100%)으로 복원되었습니다.', '🔄');
+    }
+
+    function applyFontSize(size, showNotice = true) {
+      if (size === 'large') setGlobalFontPx(17.5, showNotice);
+      else if (size === 'xlarge') setGlobalFontPx(20, showNotice);
+      else setGlobalFontPx(15, showNotice);
+    }
+
+    function resetSettings() {
+      applyTheme('dark', false);
+      resetGlobalFontScale();
+      showToast('화면 설정이 기본값으로 초기화되었습니다.', '🔄');
+    }
+
+    function openSettingsModal() {
+      document.getElementById('settingsModal').classList.add('active');
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('active');
+    }
+
+    function handleSettingsOverlayClick(e) {
+      if (e.target.id === 'settingsModal') closeSettingsModal();
+    }
+
+    const COLLAPSED_STORAGE_KEY = 'rooster_collapsed_sections';
+    let collapsedSectionIds = new Set();
+
+    function loadCollapsedSections() {
+      try {
+        const raw = localStorage.getItem(COLLAPSED_STORAGE_KEY);
+        if (raw) {
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) collapsedSectionIds = new Set(arr);
+        }
+      } catch (e) {
+        console.warn('접힘 상태 로드 오류:', e);
+      }
+    }
+
+    function saveCollapsedSections() {
+      try {
+        localStorage.setItem(COLLAPSED_STORAGE_KEY, JSON.stringify([...collapsedSectionIds]));
+      } catch (e) {
+        console.warn('접힘 상태 저장 오류:', e);
+      }
+    }
+
+    function toggleSectionCollapse(sectionId) {
+      if (collapsedSectionIds.has(sectionId)) {
+        collapsedSectionIds.delete(sectionId);
+      } else {
+        collapsedSectionIds.add(sectionId);
+      }
+      saveCollapsedSections();
+
+      const el = document.getElementById(`menuGroup-${sectionId}`);
+      if (el) {
+        el.classList.toggle('collapsed', collapsedSectionIds.has(sectionId));
+      }
+    }
+
+    function setAllSectionsCollapse(collapseAll) {
+      if (!window.BOARD_DATA || !window.BOARD_DATA.menu_sections) return;
+      window.BOARD_DATA.menu_sections.forEach(sec => {
+        if (collapseAll) {
+          collapsedSectionIds.add(sec.id);
+        } else {
+          collapsedSectionIds.delete(sec.id);
+        }
+        const el = document.getElementById(`menuGroup-${sec.id}`);
+        if (el) el.classList.toggle('collapsed', collapseAll);
+      });
+      saveCollapsedSections();
+    }
+
+    function initApp(data) {
+      if (data.last_sync) {
+        document.getElementById('syncDate').textContent = `최근 동기화: ${data.last_sync}`;
+      }
+      loadPinnedIssues(data.items);
+      loadCollapsedSections();
+      renderSidebarMenu(data.menu_sections, data.items);
+      selectMenuItem('view_issues');
+    }
+
+    function stripLeadingEmoji(str) {
+      if (!str) return '';
+      return str.replace(/^[\p{Emoji}\p{Extended_Pictographic}\uFE0F\u200D\s]+/u, '').trim();
+    }
+
+    function renderSidebarMenu(sections, items) {
+      const container = document.getElementById('sidebarMenu');
+      if (!sections || sections.length === 0) return;
+
+      const toolbarHtml = `
+        <div class="sidebar-actions">
+          <span class="sidebar-actions-title">카테고리 메뉴</span>
+          <div>
+            <button class="btn-sidebar-collapse" onclick="setAllSectionsCollapse(false)" title="모든 카테고리 펼치기">모두 펼치기</button>
+            <span style="color:var(--border-subtle); margin:0 2px;">|</span>
+            <button class="btn-sidebar-collapse" onclick="setAllSectionsCollapse(true)" title="모든 카테고리 접기">모두 접기</button>
+          </div>
+        </div>
+      `;
+
+      const sectionsHtml = sections.map(section => {
+        let totalCount = 0;
+        const itemsHtml = section.items.map(item => {
+          const count = getItemsForFilter(item.filter, items).length;
+          totalCount += count;
+          const cleanTitle = stripLeadingEmoji(item.title);
+          return `
+            <div class="menu-item ${item.id === activeMenuId ? 'active' : ''}" 
+                 id="menuItem-${item.id}"
+                 onclick="selectMenuItem('${item.id}')">
+              <div class="menu-item-left">
+                <span class="menu-item-icon">${item.icon || '📄'}</span>
+                <span>${cleanTitle}</span>
+              </div>
+              <span class="menu-item-badge">${count}</span>
+            </div>
+          `;
+        }).join('');
+
+        const isCollapsed = collapsedSectionIds.has(section.id);
+
+        return `
+          <div class="menu-group ${isCollapsed ? 'collapsed' : ''}" id="menuGroup-${section.id}">
+            <div class="menu-group-header" onclick="toggleSectionCollapse('${section.id}')" title="클릭하여 대항목 접기/펼치기">
+              <div class="menu-group-header-left">
+                <span>${section.title}</span>
+                <span class="menu-group-total-badge">${totalCount}</span>
+              </div>
+              <span class="menu-group-chevron">▼</span>
+            </div>
+            <div class="menu-group-items">
+              ${itemsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = toolbarHtml + sectionsHtml;
+    }
+
+    function getMenuItemConfig(menuId) {
+      if (!window.BOARD_DATA || !window.BOARD_DATA.menu_sections) return null;
+      for (const sec of window.BOARD_DATA.menu_sections) {
+        for (const item of sec.items) {
+          if (item.id === menuId) {
+            return { item, section: sec };
+          }
+        }
+      }
+      return null;
+    }
+
+    let activeSubFilter = 'all';
+
+    function selectMenuItem(menuId) {
+      activeMenuId = menuId;
+      activeSubFilter = 'all'; // 서브 필터 초기화
+
+      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`menuItem-${menuId}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      const cfg = getMenuItemConfig(menuId);
+      if (cfg) {
+        // 선택된 메뉴가 속한 대항목이 접혀있다면 자동으로 펼치기
+        if (collapsedSectionIds.has(cfg.section.id)) {
+          collapsedSectionIds.delete(cfg.section.id);
+          saveCollapsedSections();
+          const groupEl = document.getElementById(`menuGroup-${cfg.section.id}`);
+          if (groupEl) groupEl.classList.remove('collapsed');
+        }
+
+        const cleanSec = stripLeadingEmoji(cfg.section.title);
+        const cleanSub = stripLeadingEmoji(cfg.item.title);
+        document.getElementById('bcMode').textContent = cleanSec;
+        document.getElementById('bcSub').textContent = cleanSub;
+        document.getElementById('currentViewTitle').innerHTML = `${cfg.item.icon || ''} ${cleanSub}`.trim();
+      }
+
+      document.getElementById('sidebar').classList.remove('mobile-open');
+      renderCurrentItems();
+    }
+
+    function toggleMobileSidebar() {
+      document.getElementById('sidebar').classList.toggle('mobile-open');
+    }
+
+    function setSubFilter(subMode) {
+      activeSubFilter = subMode;
+      renderCurrentItems();
+    }
+
+    function getItemsForFilter(filter, allItems) {
+      if (!allItems) return [];
+      return allItems.filter(i => {
+        if (filter.is_issue) {
+          return pinnedIssueIds.has(i.id);
+        }
+        if (filter.is_demo) {
+          return i.is_demo === true || i.category === 'demos';
+        }
+        if (filter.is_final && !i.is_final && !(i.badge && (i.badge.includes('최종') || i.badge.includes('마스터') || i.badge.includes('MVP')))) {
+          return false;
+        }
+        if (filter.game_mode && i.game_mode !== filter.game_mode) {
+          return false;
+        }
+        if (filter.subcat && i.subcat !== filter.subcat) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
+      renderCurrentItems();
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      searchQuery = '';
+      document.getElementById('searchClear').style.display = 'none';
+      renderCurrentItems();
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      document.getElementById('btnViewGrid').classList.toggle('active', mode === 'grid');
+      document.getElementById('btnViewList').classList.toggle('active', mode === 'list');
+      const grid = document.getElementById('itemsGrid');
+      grid.classList.toggle('list-view', mode === 'list');
+    }
+
+    function getDocIcon(ext) {
+      if (ext === 'md') return '📑';
+      if (ext === 'html' || ext === 'htm') return '🌐';
+      if (ext === 'csv' || ext === 'json') return '📊';
+      if (ext === 'txt') return '📝';
+      if (ext === 'mp3' || ext === 'wav' || ext === 'ogg') return '🔊';
+      if (ext === 'png' || ext === 'jpg' || ext === 'jpeg') return '🖼️';
+      return '📄';
+    }
+
+    function openDocById(docId, event) {
+      if (event) event.stopPropagation();
+      if (!window.BOARD_DATA || !window.BOARD_DATA.items) return;
+      const target = window.BOARD_DATA.items.find(i => i.id === docId);
+      if (!target) {
+        showToast('해당 문서를 찾을 수 없습니다.', '⚠️');
+        return;
+      }
+      if (target.ext === 'md') {
+        openMarkdownViewer(target.id);
+      } else {
+        openViewer(target.url, target.title, target.ext, target.id);
+      }
+    }
+
+    function openDemoViewer(itemId) {
+      if (!window.BOARD_DATA || !window.BOARD_DATA.items) return;
+      const item = window.BOARD_DATA.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      currentViewingItemId = itemId;
+      const modal = document.getElementById('universalModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubInfo = document.getElementById('modalSubInfo');
+      const modalBody = document.getElementById('modalBody');
+      const extLink = document.getElementById('modalExternalLink');
+      const dlLink = document.getElementById('modalDownloadLink');
+      const fontCtrl = document.getElementById('modalFontControls');
+      const copyBtn = document.getElementById('btnCopyContent');
+
+      modalTitle.innerHTML = `🎮 ${item.title}`;
+      modalSubInfo.textContent = item.url;
+      extLink.href = item.url;
+      dlLink.href = item.url;
+      fontCtrl.style.display = 'none';
+      copyBtn.style.display = 'none';
+      updateModalPinButton(itemId);
+
+      let quickbarHtml = '';
+      if (item.related_docs && item.related_docs.length > 0) {
+        quickbarHtml = `
+          <div class="modal-demo-quickbar">
+            <span class="demo-quickbar-label">🔗 유관 핵심 문서 & 규격 바로가기:</span>
+            <div class="demo-quickbar-links">
+              ${item.related_docs.map(doc => `
+                <button class="quickbar-btn" onclick="openDocById('${doc.id}', event)">
+                  ${getDocIcon(doc.ext)} ${escapeHtml(doc.title)}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      modalBody.innerHTML = `
+        <div style="display:flex; flex-direction:column; height:100%; width:100%;">
+          ${quickbarHtml}
+          <iframe class="modal-iframe" src="${item.url}" style="flex:1; width:100%; height:100%; border:none; min-height:75vh;"></iframe>
+        </div>
+      `;
+
+      modal.classList.add('active');
+    }
+
+    function renderSubFilterBar(items) {
+      const container = document.getElementById('subFilterContainer');
+      if (!container) return;
+
+      const eligible = ['view_final', 'view_all', 'view_demos'].includes(activeMenuId);
+      if (!eligible) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const counts = {
+        all: items.length,
+        common: items.filter(i => i.game_mode === 'common').length,
+        race: items.filter(i => i.game_mode === 'race').length,
+        pit: items.filter(i => i.game_mode === 'pit').length,
+        farm: items.filter(i => i.game_mode === 'farm').length
+      };
+
+      const tabs = [
+        { id: 'all', label: '전체 모아보기', icon: '🌟', count: counts.all },
+        { id: 'common', label: '공통 / 통합', icon: '🌟', count: counts.common },
+        { id: 'race', label: 'Derby Race', icon: '🏇', count: counts.race },
+        { id: 'pit', label: 'Rumble Pit', icon: '🥊', count: counts.pit },
+        { id: 'farm', label: 'Rumble Farm', icon: '🌾', count: counts.farm }
+      ].filter(t => t.id === 'all' || t.count > 0);
+
+      container.innerHTML = `
+        <div class="sub-filter-bar">
+          ${tabs.map(t => `
+            <button class="sub-filter-pill ${activeSubFilter === t.id ? 'active' : ''}" onclick="setSubFilter('${t.id}')">
+              <span>${t.icon} ${t.label}</span>
+              <span class="pill-count">${t.count}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function renderCardHtml(item) {
+      const modeClass = `mode-${item.game_mode}`;
+      const modeLabel = {
+        common: '통합 / 공통',
+        race: 'Derby Race (경주)',
+        pit: 'Rumble Pit (격투)',
+        farm: 'Rumble Farm (농장)'
+      }[item.game_mode] || item.game_mode;
+
+      const isAudioFile = item.ext === 'mp3' || item.ext === 'wav' || item.ext === 'ogg';
+      const isImageFile = item.ext === 'png' || item.ext === 'jpg' || item.ext === 'jpeg' || item.ext === 'webp';
+      const isHtml = item.ext === 'html' || item.ext === 'htm';
+      const isMd = item.ext === 'md';
+      const isCsv = item.ext === 'csv';
+      const isTxt = item.ext === 'txt';
+      const isPdf = item.ext === 'pdf';
+      const isFinal = item.is_final || (item.badge && item.badge.includes('최종'));
+      const isPinned = pinnedIssueIds.has(item.id);
+      const isDemo = item.is_demo === true || item.category === 'demos';
+
+      let badgesHtml = '';
+      if (isPinned) {
+        badgesHtml += `<span class="badge badge-issue">🚨 필독</span>`;
+      }
+      if (isDemo) {
+        badgesHtml += `<span class="badge" style="background:rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.4);">🎮 데모</span>`;
+      }
+      if (item.badge) {
+        badgesHtml += `<span class="badge badge-${item.badge_type || 'secondary'}">${item.badge}</span>`;
+      }
+
+      let previewHtml = '';
+      if (isImageFile) {
+        previewHtml = `
+          <div class="card-preview" onclick="openLightbox('${item.url}', '${item.title.replace(/'/g, "\\'")}', '${item.id}')">
+            <img src="${item.url}" alt="${item.title}" loading="lazy">
+          </div>`;
+      } else if (isAudioFile) {
+        previewHtml = `
+          <div class="audio-card-player" id="audioPlayer-${item.id}">
+            <button class="btn-play-audio" onclick="playAudioItem('${item.id}')" id="playBtn-${item.id}">▶</button>
+            <div class="audio-track-info">
+              <div class="audio-time-row">
+                <span id="currentTime-${item.id}">00:00</span>
+                <span id="duration-${item.id}">음원 준비</span>
+              </div>
+              <div class="audio-progress-bar" onclick="seekAudioItem(event, '${item.id}')">
+                <div class="audio-progress-fill" id="progress-${item.id}"></div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      let actionPrimary = '';
+      if (isDemo) {
+        actionPrimary = `<button class="btn-action btn-action-primary" style="background: linear-gradient(135deg, #7c3aed, #9333ea); border-color: #a855f7; color:#fff;" onclick="openDemoViewer('${item.id}')">🎮 데모 실행</button>`;
+      } else if (isImageFile) {
+        actionPrimary = `<button class="btn-action btn-action-primary" onclick="openLightbox('${item.url}', '${item.title.replace(/'/g, "\\'")}', '${item.id}')">🔍 확대보기</button>`;
+      } else if (isAudioFile) {
+        actionPrimary = `<button class="btn-action btn-action-primary" onclick="playAudioItem('${item.id}')">▶ 바로재생</button>`;
+      } else if (isMd) {
+        actionPrimary = `<button class="btn-action btn-action-primary" onclick="openMarkdownViewer('${item.id}')">📖 문서 읽기</button>`;
+      } else if (isHtml || isCsv || isPdf || isTxt) {
+        actionPrimary = `<button class="btn-action btn-action-primary" onclick="openViewer('${item.url}', '${item.title.replace(/'/g, "\\'")}', '${item.ext}', '${item.id}')">📖 바로보기</button>`;
+      } else {
+        actionPrimary = `<a href="${item.url}" target="_blank" class="btn-action btn-action-primary">↗ 열기</a>`;
+      }
+
+      let externalUrl = item.url;
+      if (isMd || isTxt) {
+        externalUrl = `viewer.html?id=${item.id}`;
+      }
+
+      let relatedDocsHtml = '';
+      if (item.related_docs && item.related_docs.length > 0) {
+        relatedDocsHtml = `
+          <div class="demo-related-box">
+            <div class="demo-related-title">🔗 유관 핵심 기획 & 데이터 바로가기</div>
+            <div class="demo-related-list">
+              ${item.related_docs.map(doc => `
+                <button class="demo-related-btn" onclick="openDocById('${doc.id}', event)" title="${doc.title}">
+                  ${getDocIcon(doc.ext)} ${escapeHtml(doc.title)}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="card ${isPinned ? 'is-issue' : (isFinal ? 'is-final' : '')} ${isDemo ? 'is-demo' : ''}" data-id="${item.id}">
+          <div class="card-header">
+            <div class="card-title-group">
+              ${isDemo ? '<div class="demo-badge-banner">🎮 INTERACTIVE DEMO</div>' : ''}
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                <span class="card-mode ${modeClass}">${modeLabel}</span>
+                <button class="btn-pin-card ${isPinned ? 'pinned' : ''}" onclick="togglePinIssue('${item.id}', event)" title="${isPinned ? '주요 이슈(필독) 해제' : '주요 이슈(필독) 등록'}">
+                  ${isPinned ? '🚨' : '📌'}
+                </button>
+              </div>
+              <h4 class="card-title">${item.title}</h4>
+            </div>
+            <div class="card-badges">
+              ${badgesHtml}
+            </div>
+          </div>
+
+          ${previewHtml}
+
+          <p class="card-desc">${item.desc || ''}</p>
+
+          ${relatedDocsHtml}
+
+          <div class="card-footer">
+            <div class="card-meta">
+              <span>${item.file_size || ''}</span> • <span>${item.updated_at || ''}</span>
+            </div>
+            <div class="card-actions">
+              ${actionPrimary}
+              <a href="${externalUrl}" target="_blank" class="btn-action" title="새 탭으로 열기">↗ 새 탭</a>
+              <a href="${item.url}" download class="btn-action" title="파일 다운로드">💾</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCurrentItems() {
+      const cfg = getMenuItemConfig(activeMenuId);
+      if (!cfg || !window.BOARD_DATA) return;
+
+      let items = getItemsForFilter(cfg.item.filter, window.BOARD_DATA.items);
+
+      if (searchQuery) {
+        items = items.filter(item => {
+          const matchTitle = item.title && item.title.toLowerCase().includes(searchQuery);
+          const matchDesc = item.desc && item.desc.toLowerCase().includes(searchQuery);
+          const matchTags = item.tags && item.tags.some(t => t.toLowerCase().includes(searchQuery));
+          const matchUrl = item.url && item.url.toLowerCase().includes(searchQuery);
+          return matchTitle || matchDesc || matchTags || matchUrl;
+        });
+      }
+
+      items.sort((a, b) => {
+        const aIssue = pinnedIssueIds.has(a.id) ? 1 : 0;
+        const bIssue = pinnedIssueIds.has(b.id) ? 1 : 0;
+        if (bIssue !== aIssue) return bIssue - aIssue;
+        const aDemo = (a.is_demo || a.category === 'demos') ? 1 : 0;
+        const bDemo = (b.is_demo || b.category === 'demos') ? 1 : 0;
+        if (bDemo !== aDemo) return bDemo - aDemo;
+        const aFinal = (a.is_final || (a.badge && a.badge.includes('최종'))) ? 1 : 0;
+        const bFinal = (b.is_final || (b.badge && b.badge.includes('최종'))) ? 1 : 0;
+        if (bFinal !== aFinal) return bFinal - aFinal;
+        return (b.bytes || 0) - (a.bytes || 0);
+      });
+
+      // 서브 필터 탭 바 렌더링
+      renderSubFilterBar(items);
+
+      // 서브 필터 적용 (all이 아닌 경우 해당 모드만)
+      let displayItems = items;
+      if (activeSubFilter !== 'all' && ['view_final', 'view_all', 'view_demos'].includes(activeMenuId)) {
+        displayItems = items.filter(i => i.game_mode === activeSubFilter);
+      }
+
+      document.getElementById('currentViewCount').textContent = `${displayItems.length}개 항목`;
+
+      const grid = document.getElementById('itemsGrid');
+      if (displayItems.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h3>🔍 등록된 산출물이 없습니다.</h3>
+            <p>${activeMenuId === 'view_issues' ? '문서를 열람할 때 상단의 [📌 필독 등록] 버튼을 누르면 이 카테고리에 모아집니다.' : '검색어가 입력되어 있다면 지우거나 다른 메뉴를 선택해보세요.'}</p>
+          </div>`;
+        return;
+      }
+
+      // view_final 또는 view_all 이면서 activeSubFilter가 'all'일 때는 모드별 섹션으로 그룹화 표시!
+      const shouldGroup = (activeMenuId === 'view_final' || activeMenuId === 'view_all') && activeSubFilter === 'all' && !searchQuery;
+
+      if (shouldGroup) {
+        const groups = [
+          { mode: 'common', title: '공통 / 통합 핵심 산출물 (Core & QA)', icon: '🌟' },
+          { mode: 'race', title: 'Derby Race (경주 모드 핵심 산출물)', icon: '🏇' },
+          { mode: 'pit', title: 'Rumble Pit (격투 모드 핵심 산출물)', icon: '🥊' },
+          { mode: 'farm', title: 'Rumble Farm (농장 모드 핵심 기획)', icon: '🌾' }
+        ];
+
+        let html = '';
+        groups.forEach(g => {
+          const groupItems = displayItems.filter(i => i.game_mode === g.mode);
+          if (groupItems.length > 0) {
+            html += `
+              <div class="category-section" id="sec-group-${g.mode}" style="grid-column: 1 / -1;">
+                <div class="section-divider-header mode-${g.mode}">
+                  <div class="section-divider-title">
+                    <span>${g.icon}</span>
+                    <span>${stripLeadingEmoji(g.title)}</span>
+                  </div>
+                  <span class="section-divider-count">${groupItems.length}개 산출물</span>
+                </div>
+                <div class="items-grid ${viewMode === 'list' ? 'list-view' : ''}" style="margin-bottom: 24px;">
+                  ${groupItems.map(renderCardHtml).join('')}
+                </div>
+              </div>
+            `;
+          }
+        });
+        grid.innerHTML = html;
+      } else {
+        grid.innerHTML = displayItems.map(renderCardHtml).join('');
+      }
+    }
+
+    // Advanced Markdown Reader
+    function parseCustomMarkdown(mdText) {
+      if (typeof marked === 'undefined') {
+        return `<pre>${mdText}</pre>`;
+      }
+
+      let processed = mdText.replace(
+        /> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n((?:> .*(?:\n|$))*)/gi,
+        (match, type, content) => {
+          const typeLower = type.toLowerCase();
+          const titleMap = {
+            note: '📌 Note',
+            tip: '💡 Tip',
+            important: '❗ Important',
+            warning: '⚠️ Warning',
+            caution: '🛑 Caution'
+          };
+          const cleanContent = content.replace(/^> ?/gm, '');
+          return `<div class="gh-alert gh-alert-${typeLower}"><div class="gh-alert-title">${titleMap[typeLower] || type}</div>${cleanContent}</div>\n\n`;
+        }
+      );
+
+      marked.setOptions({
+        gfm: true,
+        breaks: true,
+        headerIds: true
+      });
+
+      return marked.parse(processed);
+    }
+
+    function openMarkdownViewer(itemId) {
+      const item = window.BOARD_DATA.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      currentViewingItemId = itemId;
+
+      const modal = document.getElementById('universalModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubInfo = document.getElementById('modalSubInfo');
+      const modalBody = document.getElementById('modalBody');
+      const extLink = document.getElementById('modalExternalLink');
+      const dlLink = document.getElementById('modalDownloadLink');
+      const fontCtrl = document.getElementById('modalFontControls');
+      const copyBtn = document.getElementById('btnCopyContent');
+
+      modalTitle.innerHTML = `📑 ${item.title}`;
+      modalSubInfo.textContent = `${item.url} (${item.file_size || ''})`;
+      extLink.href = `viewer.html?id=${item.id}`;
+      dlLink.href = item.url;
+      fontCtrl.style.display = 'flex';
+      copyBtn.style.display = 'inline-flex';
+
+      updateModalPinButton(itemId);
+
+      if (item.content) {
+        renderMarkdownReader(item.content);
+      } else {
+        modalBody.innerHTML = `<div class="empty-state"><h3>문서 불러오는 중...</h3></div>`;
+        fetch(item.url)
+          .then(res => res.text())
+          .then(text => renderMarkdownReader(text))
+          .catch(err => {
+            modalBody.innerHTML = `
+              <div class="empty-state">
+                <h3>문서를 직접 로드할 수 없습니다.</h3>
+                <p>로컬 브라우저 보안 또는 경로 문제일 수 있습니다. [새 탭] 또는 [다운로드] 버튼을 이용해주세요.</p>
+                <p style="font-size:0.75rem; color:#f85149; margin-top:8px;">${err}</p>
+              </div>`;
+          });
+      }
+
+      modal.classList.add('active');
+    }
+
+    function renderMarkdownReader(rawText) {
+      currentRawContent = rawText;
+      const modalBody = document.getElementById('modalBody');
+
+      const htmlContent = parseCustomMarkdown(rawText);
+
+      modalBody.innerHTML = `
+        <div class="md-reader-container">
+          <div class="md-content-scroll" id="mdScrollWrap">
+            <article class="markdown-body" id="renderedMarkdown" style="font-size: ${currentFontSize}px;">
+              ${htmlContent}
+            </article>
+          </div>
+          <aside class="md-toc-sidebar" id="mdTocSidebar">
+            <div class="md-toc-header">📑 문서 목차 (TOC)</div>
+            <div id="tocLinksList" style="display:flex; flex-direction:column; gap:2px;"></div>
+          </aside>
+        </div>
+      `;
+
+      setTimeout(buildTableOfContents, 50);
+    }
+
+    function buildTableOfContents() {
+      const container = document.getElementById('renderedMarkdown');
+      const tocList = document.getElementById('tocLinksList');
+      if (!container || !tocList) return;
+
+      const headings = container.querySelectorAll('h1, h2, h3');
+      if (headings.length === 0) {
+        tocList.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">목차 항목이 없습니다.</span>`;
+        return;
+      }
+
+      let tocHtml = '';
+      headings.forEach((h, idx) => {
+        const id = h.id || `heading-${idx}`;
+        h.id = id;
+        const tag = h.tagName.toLowerCase();
+        const text = h.textContent.trim();
+        tocHtml += `
+          <a href="#${id}" class="md-toc-link toc-${tag}" onclick="scrollToHeading('${id}'); return false;">
+            ${text}
+          </a>
+        `;
+      });
+      tocList.innerHTML = tocHtml;
+    }
+
+    function scrollToHeading(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function adjustFontSize(delta) {
+      currentFontSize = Math.max(12, Math.min(24, currentFontSize + delta));
+      const targetMd = document.getElementById('renderedMarkdown');
+      if (targetMd) {
+        targetMd.style.fontSize = currentFontSize + 'px';
+      }
+      const targetTxt = document.getElementById('renderedText');
+      if (targetTxt) {
+        targetTxt.style.fontSize = currentFontSize + 'px';
+      }
+    }
+
+    function copyCurrentContent() {
+      if (!currentRawContent) return;
+      navigator.clipboard.writeText(currentRawContent).then(() => {
+        const btn = document.getElementById('btnCopyContent');
+        btn.textContent = '✅ 복사됨!';
+        setTimeout(() => btn.textContent = '📋 복사', 1800);
+      });
+    }
+
+    // Universal Modal (Other formats)
+    function openViewer(url, title, ext, itemId) {
+      currentViewingItemId = itemId || null;
+
+      const modal = document.getElementById('universalModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubInfo = document.getElementById('modalSubInfo');
+      const modalBody = document.getElementById('modalBody');
+      const extLink = document.getElementById('modalExternalLink');
+      const dlLink = document.getElementById('modalDownloadLink');
+      const fontCtrl = document.getElementById('modalFontControls');
+      const copyBtn = document.getElementById('btnCopyContent');
+
+      modalTitle.textContent = title;
+      modalSubInfo.textContent = url;
+      extLink.href = url;
+      dlLink.href = url;
+      fontCtrl.style.display = 'none';
+      copyBtn.style.display = 'none';
+
+      updateModalPinButton(itemId);
+
+      const item = itemId ? window.BOARD_DATA.items.find(i => i.id === itemId) : null;
+
+      if (ext === 'csv') {
+        const rawCsv = (item && item.content) ? item.content : '';
+        if (rawCsv) {
+          renderCsvTable(rawCsv);
+        } else {
+          modalBody.innerHTML = `<div class="empty-state"><h3>CSV 로딩 중...</h3></div>`;
+          fetch(url).then(r => r.text()).then(renderCsvTable).catch(e => modalBody.innerHTML = `<p>${e}</p>`);
+        }
+      } else if (ext === 'txt') {
+        fontCtrl.style.display = 'flex';
+        copyBtn.style.display = 'inline-flex';
+        const rawTxt = (item && item.content) ? item.content : '';
+        currentRawContent = rawTxt;
+        if (rawTxt) {
+          modalBody.innerHTML = `
+            <div class="md-content-scroll" style="width: 100%;">
+              <pre id="renderedText" style="color: #e6edf3; font-family: 'JetBrains Mono', 'Pretendard', monospace; font-size: ${currentFontSize}px; line-height: 1.7; padding: 32px 40px; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word; background: #0d1117; max-width: 960px; margin: 0 auto; border-radius: 8px;">${escapeHtml(rawTxt)}</pre>
+            </div>`;
+        } else {
+          modalBody.innerHTML = `<div class="empty-state"><h3>텍스트 로딩 중...</h3></div>`;
+          fetch(url)
+            .then(r => r.text())
+            .then(t => {
+              currentRawContent = t;
+              modalBody.innerHTML = `
+                <div class="md-content-scroll" style="width: 100%;">
+                  <pre id="renderedText" style="color: #e6edf3; font-family: 'JetBrains Mono', 'Pretendard', monospace; font-size: ${currentFontSize}px; line-height: 1.7; padding: 32px 40px; white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word; background: #0d1117; max-width: 960px; margin: 0 auto; border-radius: 8px;">${escapeHtml(t)}</pre>
+                </div>`;
+            })
+            .catch(e => modalBody.innerHTML = `<div class="empty-state"><h3>내용을 불러올 수 없습니다.</h3><p>${e}</p></div>`);
+        }
+      } else {
+        modalBody.innerHTML = `<iframe class="modal-iframe" src="${url}"></iframe>`;
+      }
+
+      modal.classList.add('active');
+    }
+
+    function renderCsvTable(csvText) {
+      const modalBody = document.getElementById('modalBody');
+      const rows = csvText.trim().split('\n').map(r => r.split(','));
+      if (rows.length === 0) return;
+      let table = '<div class="md-content-scroll"><table style="width:100%; border-collapse:collapse; color:#e6edf3; font-size:0.85rem;"><thead><tr>';
+      rows[0].forEach(th => table += `<th style="background:#1e2436; padding:8px 12px; border:1px solid #30363d; text-align:left;">${escapeHtml(th.trim())}</th>`);
+      table += '</tr></thead><tbody>';
+      for (let i = 1; i < rows.length; i++) {
+        table += '<tr style="border-bottom:1px solid #21262d;">';
+        rows[i].forEach(td => table += `<td style="padding:6px 12px; border:1px solid #242b3d;">${escapeHtml(td.trim())}</td>`);
+        table += '</tr>';
+      }
+      table += '</tbody></table></div>';
+      modalBody.innerHTML = table;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function openLightbox(url, title, itemId) {
+      currentViewingItemId = itemId || null;
+
+      const modal = document.getElementById('universalModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubInfo = document.getElementById('modalSubInfo');
+      const modalBody = document.getElementById('modalBody');
+      const extLink = document.getElementById('modalExternalLink');
+      const dlLink = document.getElementById('modalDownloadLink');
+      const fontCtrl = document.getElementById('modalFontControls');
+      const copyBtn = document.getElementById('btnCopyContent');
+
+      modalTitle.textContent = title;
+      modalSubInfo.textContent = url;
+      extLink.href = url;
+      dlLink.href = url;
+      fontCtrl.style.display = 'none';
+      copyBtn.style.display = 'none';
+
+      updateModalPinButton(itemId);
+
+      modalBody.innerHTML = `
+        <div class="lightbox-img-wrap">
+          <img src="${url}" class="lightbox-img" alt="${title}">
+        </div>`;
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('universalModal');
+      modal.classList.remove('active');
+      document.getElementById('modalBody').innerHTML = '';
+      currentRawContent = '';
+      currentViewingItemId = null;
+    }
+
+    function handleModalOverlayClick(e) {
+      if (e.target.id === 'universalModal') closeModal();
+    }
+
+    // Audio Playback Engine
+    function setupAudioEvents() {
+      audioElement.addEventListener('timeupdate', () => {
+        const cur = audioElement.currentTime;
+        const dur = audioElement.duration || 0;
+        const pct = dur > 0 ? (cur / dur) * 100 : 0;
+
+        document.getElementById('globalAudioCurrent').textContent = formatAudioTime(cur);
+        document.getElementById('globalAudioDuration').textContent = formatAudioTime(dur);
+        document.getElementById('globalAudioProgress').style.width = pct + '%';
+
+        if (currentPlayingItem) {
+          const cardCur = document.getElementById(`currentTime-${currentPlayingItem.id}`);
+          const cardProg = document.getElementById(`progress-${currentPlayingItem.id}`);
+          if (cardCur) cardCur.textContent = formatAudioTime(cur);
+          if (cardProg) cardProg.style.width = pct + '%';
+        }
+      });
+
+      audioElement.addEventListener('loadedmetadata', () => {
+        const dur = audioElement.duration || 0;
+        document.getElementById('globalAudioDuration').textContent = formatAudioTime(dur);
+        if (currentPlayingItem) {
+          const cardDur = document.getElementById(`duration-${currentPlayingItem.id}`);
+          if (cardDur) cardDur.textContent = formatAudioTime(dur);
+        }
+      });
+
+      audioElement.addEventListener('ended', resetAudioPlayState);
+
+      audioElement.addEventListener('pause', () => {
+        document.getElementById('btnGlobalPlay').textContent = '▶';
+        if (currentPlayingItem) {
+          const btn = document.getElementById(`playBtn-${currentPlayingItem.id}`);
+          if (btn) btn.textContent = '▶';
+        }
+      });
+
+      audioElement.addEventListener('play', () => {
+        document.getElementById('btnGlobalPlay').textContent = '❚❚';
+        if (currentPlayingItem) {
+          const btn = document.getElementById(`playBtn-${currentPlayingItem.id}`);
+          if (btn) btn.textContent = '❚❚';
+        }
+      });
+    }
+
+    function playAudioItem(itemId) {
+      const item = window.BOARD_DATA.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      if (currentPlayingItem && currentPlayingItem.id === itemId) {
+        if (audioElement.paused) audioElement.play();
+        else audioElement.pause();
+        return;
+      }
+
+      if (currentPlayingItem) {
+        const prevBtn = document.getElementById(`playBtn-${currentPlayingItem.id}`);
+        if (prevBtn) prevBtn.textContent = '▶';
+      }
+
+      currentPlayingItem = item;
+      audioElement.src = item.url;
+      audioElement.play();
+
+      document.getElementById('globalAudioTitle').textContent = item.title;
+      globalAudioBar.classList.add('active');
+
+      const btn = document.getElementById(`playBtn-${item.id}`);
+      if (btn) btn.textContent = '❚❚';
+    }
+
+    function toggleGlobalAudio() {
+      if (audioElement.src) {
+        if (audioElement.paused) audioElement.play();
+        else audioElement.pause();
+      }
+    }
+
+    function closeGlobalAudio() {
+      audioElement.pause();
+      globalAudioBar.classList.remove('active');
+      resetAudioPlayState();
+    }
+
+    function seekGlobalAudio(e) {
+      if (!audioElement.duration) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audioElement.currentTime = pos * audioElement.duration;
+    }
+
+    function seekAudioItem(e, itemId) {
+      if (!audioElement.duration || !currentPlayingItem || currentPlayingItem.id !== itemId) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audioElement.currentTime = pos * audioElement.duration;
+    }
+
+    function resetAudioPlayState() {
+      if (currentPlayingItem) {
+        const btn = document.getElementById(`playBtn-${currentPlayingItem.id}`);
+        const prog = document.getElementById(`progress-${currentPlayingItem.id}`);
+        if (btn) btn.textContent = '▶';
+        if (prog) prog.style.width = '0%';
+      }
+      document.getElementById('globalAudioProgress').style.width = '0%';
+    }
+
+    function formatAudioTime(sec) {
+      if (!sec || isNaN(sec)) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeSettingsModal();
+      }
+    });
+  </script>
+</body>
+</html>

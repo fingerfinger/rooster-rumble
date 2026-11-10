@@ -1,0 +1,575 @@
+{
+  "_comment": "서버 응답 mock. 각 results 항목은 서버가 behaviorId로 DB 조회를 마친 개별 behavior를 포함한다. 클라이언트는 별도 조회 없이 그대로 재생한다.",
+  "races": [
+    {
+      "raceId": "RR-DEMO-A",
+      "trackLength": 184,
+      "roster": [
+        { "id": "blazing-wing", "lane": 0 },
+        { "id": "night-hawk", "lane": 1 },
+        { "id": "red-bullet", "lane": 2 },
+        { "id": "iron-cluck", "lane": 3 },
+        { "id": "sunny-cluck", "lane": 4 },
+        { "id": "mad-rooster", "lane": 5 }
+      ],
+      "raceTimeData": {
+        "raceStartAt": "2026-06-16T12:00:00.000Z",
+        "seed": "rr-demo-a",
+        "results": [
+          {
+            "chickenId": "red-bullet",
+            "rank": 1,
+            "finishTimeMs": 31050,
+            "behavior": {
+              "behaviorId": 2,
+              "style": "late-surge",
+              "curve": [
+                { "u": 0, "speed": 0.94, "stamina": 100 },
+                { "u": 0.25, "speed": 0.96, "stamina": 76 },
+                { "u": 0.5, "speed": 0.99, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.1, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "iron-cluck",
+            "rank": 2,
+            "finishTimeMs": 31400,
+            "behavior": {
+              "behaviorId": 3,
+              "style": "fast-start",
+              "curve": [
+                { "u": 0, "speed": 1.09, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 0.98, "stamina": 53 },
+                { "u": 0.75, "speed": 0.95, "stamina": 30 },
+                { "u": 1, "speed": 0.92, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "blazing-wing",
+            "rank": 3,
+            "finishTimeMs": 31800,
+            "behavior": {
+              "behaviorId": 0,
+              "style": "steady",
+              "curve": [
+                { "u": 0, "speed": 1.01, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 1.01, "stamina": 53 },
+                { "u": 0.75, "speed": 0.99, "stamina": 30 },
+                { "u": 1, "speed": 0.97, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "sunny-cluck",
+            "rank": 4,
+            "finishTimeMs": 32100,
+            "behavior": {
+              "behaviorId": 4,
+              "style": "mid-charge",
+              "curve": [
+                { "u": 0, "speed": 0.95, "stamina": 100 },
+                { "u": 0.25, "speed": 1.03, "stamina": 76 },
+                { "u": 0.5, "speed": 1.1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.02, "stamina": 30 },
+                { "u": 1, "speed": 0.94, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "night-hawk",
+            "rank": 5,
+            "finishTimeMs": 32410,
+            "behavior": {
+              "behaviorId": 1,
+              "style": "pace",
+              "curve": [
+                { "u": 0, "speed": 0.96, "stamina": 100 },
+                { "u": 0.25, "speed": 1.01, "stamina": 76 },
+                { "u": 0.5, "speed": 1.05, "stamina": 53 },
+                { "u": 0.75, "speed": 1.03, "stamina": 30 },
+                { "u": 1, "speed": 0.98, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "mad-rooster",
+            "rank": 6,
+            "finishTimeMs": 32850,
+            "behavior": {
+              "behaviorId": 5,
+              "style": "shadow",
+              "curve": [
+                { "u": 0, "speed": 0.97, "stamina": 100 },
+                { "u": 0.25, "speed": 0.98, "stamina": 76 },
+                { "u": 0.5, "speed": 1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.08, "stamina": 9 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "raceId": "RR-DEMO-B",
+      "trackLength": 184,
+      "roster": [
+        { "id": "goliath", "lane": 0 },
+        { "id": "even-keel", "lane": 1 },
+        { "id": "wild-card", "lane": 2 },
+        { "id": "thunder-strike", "lane": 3 },
+        { "id": "shadow-feather", "lane": 4 },
+        { "id": "speedy-phoenix", "lane": 5 }
+      ],
+      "raceTimeData": {
+        "raceStartAt": "2026-06-16T13:00:00.000Z",
+        "seed": "rr-demo-b",
+        "results": [
+          {
+            "chickenId": "speedy-phoenix",
+            "rank": 1,
+            "finishTimeMs": 31050,
+            "behavior": {
+              "behaviorId": 2,
+              "style": "late-surge",
+              "curve": [
+                { "u": 0, "speed": 0.94, "stamina": 100 },
+                { "u": 0.25, "speed": 0.96, "stamina": 76 },
+                { "u": 0.5, "speed": 0.99, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.1, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "even-keel",
+            "rank": 2,
+            "finishTimeMs": 31400,
+            "behavior": {
+              "behaviorId": 4,
+              "style": "mid-charge",
+              "curve": [
+                { "u": 0, "speed": 0.95, "stamina": 100 },
+                { "u": 0.25, "speed": 1.03, "stamina": 76 },
+                { "u": 0.5, "speed": 1.1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.02, "stamina": 30 },
+                { "u": 1, "speed": 0.94, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "shadow-feather",
+            "rank": 3,
+            "finishTimeMs": 31800,
+            "behavior": {
+              "behaviorId": 1,
+              "style": "pace",
+              "curve": [
+                { "u": 0, "speed": 0.96, "stamina": 100 },
+                { "u": 0.25, "speed": 1.01, "stamina": 76 },
+                { "u": 0.5, "speed": 1.05, "stamina": 53 },
+                { "u": 0.75, "speed": 1.03, "stamina": 30 },
+                { "u": 1, "speed": 0.98, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "goliath",
+            "rank": 4,
+            "finishTimeMs": 32100,
+            "behavior": {
+              "behaviorId": 3,
+              "style": "fast-start",
+              "curve": [
+                { "u": 0, "speed": 1.09, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 0.98, "stamina": 53 },
+                { "u": 0.75, "speed": 0.95, "stamina": 30 },
+                { "u": 1, "speed": 0.92, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "thunder-strike",
+            "rank": 5,
+            "finishTimeMs": 32410,
+            "behavior": {
+              "behaviorId": 0,
+              "style": "steady",
+              "curve": [
+                { "u": 0, "speed": 1.01, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 1.01, "stamina": 53 },
+                { "u": 0.75, "speed": 0.99, "stamina": 30 },
+                { "u": 1, "speed": 0.97, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "wild-card",
+            "rank": 6,
+            "finishTimeMs": 32850,
+            "behavior": {
+              "behaviorId": 5,
+              "style": "shadow",
+              "curve": [
+                { "u": 0, "speed": 0.97, "stamina": 100 },
+                { "u": 0.25, "speed": 0.98, "stamina": 76 },
+                { "u": 0.5, "speed": 1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.08, "stamina": 9 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "raceId": "RR-DEMO-C",
+      "trackLength": 184,
+      "roster": [
+        { "id": "russian-roulette", "lane": 0 },
+        { "id": "rapid-road", "lane": 1 },
+        { "id": "endurance", "lane": 2 },
+        { "id": "blue-ribbon", "lane": 3 },
+        { "id": "aero-dash", "lane": 4 },
+        { "id": "silent-killer", "lane": 5 }
+      ],
+      "raceTimeData": {
+        "raceStartAt": "2026-06-16T14:00:00.000Z",
+        "seed": "rr-demo-c",
+        "results": [
+          {
+            "chickenId": "russian-roulette",
+            "rank": 1,
+            "finishTimeMs": 31050,
+            "behavior": {
+              "behaviorId": 5,
+              "style": "shadow",
+              "curve": [
+                { "u": 0, "speed": 0.97, "stamina": 100 },
+                { "u": 0.25, "speed": 0.98, "stamina": 76 },
+                { "u": 0.5, "speed": 1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.08, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "endurance",
+            "rank": 2,
+            "finishTimeMs": 31400,
+            "behavior": {
+              "behaviorId": 3,
+              "style": "fast-start",
+              "curve": [
+                { "u": 0, "speed": 1.09, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 0.98, "stamina": 53 },
+                { "u": 0.75, "speed": 0.95, "stamina": 30 },
+                { "u": 1, "speed": 0.92, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "aero-dash",
+            "rank": 3,
+            "finishTimeMs": 31800,
+            "behavior": {
+              "behaviorId": 2,
+              "style": "late-surge",
+              "curve": [
+                { "u": 0, "speed": 0.94, "stamina": 100 },
+                { "u": 0.25, "speed": 0.96, "stamina": 76 },
+                { "u": 0.5, "speed": 0.99, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.1, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "rapid-road",
+            "rank": 4,
+            "finishTimeMs": 32100,
+            "behavior": {
+              "behaviorId": 0,
+              "style": "steady",
+              "curve": [
+                { "u": 0, "speed": 1.01, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 1.01, "stamina": 53 },
+                { "u": 0.75, "speed": 0.99, "stamina": 30 },
+                { "u": 1, "speed": 0.97, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "silent-killer",
+            "rank": 5,
+            "finishTimeMs": 32410,
+            "behavior": {
+              "behaviorId": 1,
+              "style": "pace",
+              "curve": [
+                { "u": 0, "speed": 0.96, "stamina": 100 },
+                { "u": 0.25, "speed": 1.01, "stamina": 76 },
+                { "u": 0.5, "speed": 1.05, "stamina": 53 },
+                { "u": 0.75, "speed": 1.03, "stamina": 30 },
+                { "u": 1, "speed": 0.98, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "blue-ribbon",
+            "rank": 6,
+            "finishTimeMs": 32850,
+            "behavior": {
+              "behaviorId": 4,
+              "style": "mid-charge",
+              "curve": [
+                { "u": 0, "speed": 0.95, "stamina": 100 },
+                { "u": 0.25, "speed": 1.03, "stamina": 76 },
+                { "u": 0.5, "speed": 1.1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.02, "stamina": 30 },
+                { "u": 1, "speed": 0.94, "stamina": 9 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "raceId": "RR-DEMO-D",
+      "trackLength": 184,
+      "roster": [
+        { "id": "stability", "lane": 0 },
+        { "id": "chaos", "lane": 1 },
+        { "id": "wind-runner", "lane": 2 },
+        { "id": "golden-crest", "lane": 3 },
+        { "id": "stone-wall", "lane": 4 },
+        { "id": "iron-heel", "lane": 5 }
+      ],
+      "raceTimeData": {
+        "raceStartAt": "2026-06-16T15:00:00.000Z",
+        "seed": "rr-demo-d",
+        "results": [
+          {
+            "chickenId": "golden-crest",
+            "rank": 1,
+            "finishTimeMs": 31050,
+            "behavior": {
+              "behaviorId": 2,
+              "style": "late-surge",
+              "curve": [
+                { "u": 0, "speed": 0.94, "stamina": 100 },
+                { "u": 0.25, "speed": 0.96, "stamina": 76 },
+                { "u": 0.5, "speed": 0.99, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.1, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "chaos",
+            "rank": 2,
+            "finishTimeMs": 31400,
+            "behavior": {
+              "behaviorId": 5,
+              "style": "shadow",
+              "curve": [
+                { "u": 0, "speed": 0.97, "stamina": 100 },
+                { "u": 0.25, "speed": 0.98, "stamina": 76 },
+                { "u": 0.5, "speed": 1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.08, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "stone-wall",
+            "rank": 3,
+            "finishTimeMs": 31800,
+            "behavior": {
+              "behaviorId": 3,
+              "style": "fast-start",
+              "curve": [
+                { "u": 0, "speed": 1.09, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 0.98, "stamina": 53 },
+                { "u": 0.75, "speed": 0.95, "stamina": 30 },
+                { "u": 1, "speed": 0.92, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "iron-heel",
+            "rank": 4,
+            "finishTimeMs": 32100,
+            "behavior": {
+              "behaviorId": 1,
+              "style": "pace",
+              "curve": [
+                { "u": 0, "speed": 0.96, "stamina": 100 },
+                { "u": 0.25, "speed": 1.01, "stamina": 76 },
+                { "u": 0.5, "speed": 1.05, "stamina": 53 },
+                { "u": 0.75, "speed": 1.03, "stamina": 30 },
+                { "u": 1, "speed": 0.98, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "stability",
+            "rank": 5,
+            "finishTimeMs": 32410,
+            "behavior": {
+              "behaviorId": 4,
+              "style": "mid-charge",
+              "curve": [
+                { "u": 0, "speed": 0.95, "stamina": 100 },
+                { "u": 0.25, "speed": 1.03, "stamina": 76 },
+                { "u": 0.5, "speed": 1.1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.02, "stamina": 30 },
+                { "u": 1, "speed": 0.94, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "wind-runner",
+            "rank": 6,
+            "finishTimeMs": 32850,
+            "behavior": {
+              "behaviorId": 0,
+              "style": "steady",
+              "curve": [
+                { "u": 0, "speed": 1.01, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 1.01, "stamina": 53 },
+                { "u": 0.75, "speed": 0.99, "stamina": 30 },
+                { "u": 1, "speed": 0.97, "stamina": 9 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "raceId": "RR-DEMO-E",
+      "trackLength": 184,
+      "roster": [
+        { "id": "marathoner", "lane": 0 },
+        { "id": "sprint-master", "lane": 1 },
+        { "id": "dust-spur", "lane": 2 },
+        { "id": "feather-dash", "lane": 3 },
+        { "id": "last-spurter", "lane": 4 },
+        { "id": "perfect-balance", "lane": 5 }
+      ],
+      "raceTimeData": {
+        "raceStartAt": "2026-06-16T16:00:00.000Z",
+        "seed": "rr-demo-e",
+        "results": [
+          {
+            "chickenId": "last-spurter",
+            "rank": 1,
+            "finishTimeMs": 31050,
+            "behavior": {
+              "behaviorId": 1,
+              "style": "pace",
+              "curve": [
+                { "u": 0, "speed": 0.96, "stamina": 100 },
+                { "u": 0.25, "speed": 1.01, "stamina": 76 },
+                { "u": 0.5, "speed": 1.05, "stamina": 53 },
+                { "u": 0.75, "speed": 1.03, "stamina": 30 },
+                { "u": 1, "speed": 0.98, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "sprint-master",
+            "rank": 2,
+            "finishTimeMs": 31400,
+            "behavior": {
+              "behaviorId": 2,
+              "style": "late-surge",
+              "curve": [
+                { "u": 0, "speed": 0.94, "stamina": 100 },
+                { "u": 0.25, "speed": 0.96, "stamina": 76 },
+                { "u": 0.5, "speed": 0.99, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.1, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "marathoner",
+            "rank": 3,
+            "finishTimeMs": 31800,
+            "behavior": {
+              "behaviorId": 3,
+              "style": "fast-start",
+              "curve": [
+                { "u": 0, "speed": 1.09, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 0.98, "stamina": 53 },
+                { "u": 0.75, "speed": 0.95, "stamina": 30 },
+                { "u": 1, "speed": 0.92, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "perfect-balance",
+            "rank": 4,
+            "finishTimeMs": 32100,
+            "behavior": {
+              "behaviorId": 4,
+              "style": "mid-charge",
+              "curve": [
+                { "u": 0, "speed": 0.95, "stamina": 100 },
+                { "u": 0.25, "speed": 1.03, "stamina": 76 },
+                { "u": 0.5, "speed": 1.1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.02, "stamina": 30 },
+                { "u": 1, "speed": 0.94, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "dust-spur",
+            "rank": 5,
+            "finishTimeMs": 32410,
+            "behavior": {
+              "behaviorId": 5,
+              "style": "shadow",
+              "curve": [
+                { "u": 0, "speed": 0.97, "stamina": 100 },
+                { "u": 0.25, "speed": 0.98, "stamina": 76 },
+                { "u": 0.5, "speed": 1, "stamina": 53 },
+                { "u": 0.75, "speed": 1.04, "stamina": 30 },
+                { "u": 1, "speed": 1.08, "stamina": 9 }
+              ]
+            }
+          },
+          {
+            "chickenId": "feather-dash",
+            "rank": 6,
+            "finishTimeMs": 32850,
+            "behavior": {
+              "behaviorId": 0,
+              "style": "steady",
+              "curve": [
+                { "u": 0, "speed": 1.01, "stamina": 100 },
+                { "u": 0.25, "speed": 1.02, "stamina": 76 },
+                { "u": 0.5, "speed": 1.01, "stamina": 53 },
+                { "u": 0.75, "speed": 0.99, "stamina": 30 },
+                { "u": 1, "speed": 0.97, "stamina": 9 }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

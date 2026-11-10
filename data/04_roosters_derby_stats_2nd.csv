@@ -1,0 +1,31 @@
+﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),종합 평가 (Overall),속도 (Speed),출발 (Start),지구력 (Stamina),집중력 (Focus),기질 (Temper),근성 (Guts)
+블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,345,66,79,44,52,59,45
+썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,349,67,84,39,53,63,43
+래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,346,56,77,51,50,63,49
+윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,333,68,76,43,54,46,46
+페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,335,77,80,38,57,40,43
+나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,325,57,34,73,57,31,73
+섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,313,48,38,64,43,59,61
+사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,307,48,33,61,46,56,63
+아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,320,53,44,68,48,44,63
+라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,320,56,38,66,53,40,67
+레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,338,64,69,51,51,51,52
+스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,339,63,70,49,54,50,53
+에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,342,63,66,49,50,62,52
+골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,346,65,75,50,55,49,52
+스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,343,70,71,52,57,38,55
+아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,333,58,56,65,54,48,52
+골리앗-(-goliath),골리앗 (Goliath),자재,323,52,52,64,49,55,51
+엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,332,61,57,61,56,45,52
+스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,322,51,51,67,48,54,51
+마라토너-(-marathoner),마라토너 (Marathoner),자재,331,59,57,62,55,47,51
+서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,330,69,63,56,54,38,50
+이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,333,66,66,55,54,43,49
+블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,331,67,62,54,55,42,51
+스태빌리티-(-stability),스태빌리티 (Stability),선입,332,65,63,59,54,39,52
+퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,335,68,65,54,56,41,51
+매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,336,58,59,47,53,72,47
+와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,340,50,64,55,50,73,48
+러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,327,57,56,42,48,81,43
+카오스-(-chaos),카오스 (Chaos),변칙,350,54,72,55,48,77,44
+더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,354,50,65,56,54,78,51

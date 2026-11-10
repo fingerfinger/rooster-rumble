@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoosterRumble RaceReplayDemo</title>
+    <script type="module" crossorigin src="../../assets/raceReplayDemo-r9ePVXbf.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/assetStatus-C6QZd9BI.js">
+    <link rel="stylesheet" crossorigin href="../../assets/assetStatus-DNT9S_Im.css">
+    <link rel="stylesheet" crossorigin href="../../assets/raceReplayDemo-BpH2CKYt.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="stage">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">RaceReplayDemo</p>
+            <h1>서버 스크립트 기반 Web3D 레이스 재생</h1>
+          </div>
+          <div class="status-pill" id="raceStatus">재생 준비</div>
+        </div>
+
+        <div class="viewer">
+          <canvas id="raceCanvas" aria-label="3D 닭레이스 재생 화면"></canvas>
+          <div class="countdown" id="countdown" hidden><span id="countdownText"></span></div>
+          <div class="race-overlay" id="raceOverlay" hidden>
+            <div class="rank-strip" id="rankStrip" aria-label="레인 순위"></div>
+            <div class="race-bar">
+              <span class="race-bar-cap">S</span>
+              <div class="race-bar-track">
+                <div class="race-bar-fill" id="raceBarFill"></div>
+                <div class="race-bar-knob" id="raceBarKnob"></div>
+              </div>
+              <span class="race-bar-cap">F</span>
+            </div>
+          </div>
+          <div class="result-panel" id="resultPanel" hidden>
+            <p>Finish Order</p>
+            <ul id="resultList" class="arrival-list"></ul>
+          </div>
+        </div>
+
+        <div class="progress-shell">
+          <div class="progress-track" id="progressTrack" title="클릭/드래그/휠로 원하는 시점부터 재생">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="readout">
+            <div class="readout-item">
+              <span>레이스 시간</span>
+              <strong id="timeLabel">00.0s</strong>
+            </div>
+            <div class="readout-item grow">
+              <span>페이즈 · 연출</span>
+              <strong id="cameraLabel">대기</strong>
+            </div>
+          </div>
+          <div class="controls">
+            <select id="scriptSelect" aria-label="카메라 연출 스크립트 선택"></select>
+            <select id="ratioSelect" aria-label="화면 비율 선택"></select>
+            <label class="toggle"><input id="hFramingToggle" type="checkbox" checked /> 가로 기준 프레이밍</label>
+            <button id="restartButton" type="button">처음부터 (대기)</button>
+            <button id="startButton" type="button">시작 (준비~종료)</button>
+            <button id="joinButton" type="button">중간 접속 (레이스 합류)</button>
+            <button id="pauseButton" type="button">일시정지</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <p class="eyebrow">서버에서 받은 RaceReplayScript</p>
+        <h2>영상 파일이 아니라 상태 복원용 악보</h2>
+        <p>
+          서버 mock(`replayData.json`)에서 여러 레이스 중 하나를 랜덤으로 불러옵니다. roster(닭 id+레인)로 뷰어를
+          초기화하고, 준비 진입 시 각 닭의 behavior가 포함된 raceTimeData를 받아 `t`초 시점의
+          닭 위치·카메라 연출을 계산합니다.
+          새로고침하면 다른 레이스(다른 우승 레인)가 나옵니다.
+        </p>
+        <div class="rank-board" id="rankBoard"></div>
+        <pre><code id="scriptPreview"></code></pre>
+      </aside>
+    </main>
+
+  </body>
+</html>

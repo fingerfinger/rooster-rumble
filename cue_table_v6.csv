@@ -1,0 +1,103 @@
+id,mode,source,event,level,when,camera_s2,shake,fx,flash_s,hitstop_s,ui,sound,cooldown_s,fallback_shake,stage,note
+F01,fight,cue,fight.intro,2,always,F_INTRO,-,FX_Start_01,0,0,INTRO_VS,CROWD_SWELL,0,-,1,경기 첫머리 · BETS CLOSED 표시 3초와 겹친다 · 두 닭이 링 가운데로 나오는 입장 먼지
+F02,fight,cue,fight.first_hit,2,always,-,-,-,0,0,-,CROWD_OH,0,-,1,흔들림은 같은 순간의 F03 · F05가 낸다
+F03,fight,cue,fight.hit,1,always,-,Hit_S,FX_Hit_01+FX_Attack_01,0.06,0,HP_DROP,SFX_Hit_S+SFX_Attack,0,-,1,가장 자주 나오는 사건 · 작게 · 번쩍임은 맞은 닭 몸
+F04,fight,cue,fight.double,2,always,-,Hit_Double,FX_Hit_01+FX_Attack_01,0.06,0,HP_DROP,SFX_Hit_Double+SFX_Attack,0,-,1,명중 뒤의 두 번째 발 · 체력 띠가 두 번에 나눠 줄어든다
+F05,fight,cue,fight.crit,3,always,F_PUNCH_IN,Crit_L,FX_Hit_01+FX_Crit_01,0.12,0.08,HP_DROP_BIG,SFX_Crit+CROWD_ROAR+SFX_Attack,5,Hit_Double,1,타격감 묶음이 한 순간에 · 번쩍임은 맞은 닭 몸(툰 셰이더) · 간격 안의 두 번째 결정타는 대신 쓰는 흔들림으로
+F06,fight,cue,fight.combo,2,always,-,-,-,0,0,-,CROWD_SWELL,0,-,1,연속 명중 · 소리만
+F07,fight,cue,fight.swing,2,always,-,-,-,0,0,-,CROWD_SWELL,0,-,1,우세가 뒤바뀜 · 소리만
+F08,fight,cue,fight.swing,3,always,F_TIGHT,Crowd_Stomp,-,0,0,-,CROWD_ROAR,6,-,1,마지막 10초의 뒤바뀜 · 절정의 함성
+F09,fight,cue,fight.danger,2,always,-,-,-,0,0,HP_DANGER,CROWD_OH,0,-,1,남은 체력이 위기 기준값 아래 · 체력 띠에 흰 굵은 테(붉게 바꾸지 않고 깜박이지 않는다)
+F10,fight,cue,fight.rally,2,always,F_LOW_PUSH,Rally_Rumble,FX_Rally_01,0,0,-,SFX_Rally,3,-,1,투혼 · 점점 세지는 잔떨림
+F11,fight,cue,fight.last10,2,always,F_TIGHT,Climax_Rumble,LT_EdgeDim,0,0,CLOCK_LAST10,CROWD_SWELL,0,-,1,절정 연출 · 가장자리가 어두워지고 함성이 오른다 / 2b-2: 점점 세지는 잔떨림(Climax_Rumble — 마지막 10초 동안)
+F12,fight,record,miss,-,always,-,-,FX_Miss_01,0,0,-,SFX_Miss,0,-,1,빗나감에는 흔들림을 붙이지 않는다(아트 바이블)
+F13,fight,cue,fight.ko,3,always,F_PULL_BACK,KO_Slam,FX_Ko_01,0,0,RESULT_CALL,SFX_Ko+CROWD_ROAR+SFX_Win,0,-,1,쓰러짐 · 멀어지며 멈춤
+F14,fight,cue,fight.ko_crit,3,always,F_PULL_BACK,KO_Slam,FX_Ko_01,0,0,RESULT_CALL,SFX_Ko+CROWD_ROAR+SFX_Win,0,-,1,결정타로 쓰러짐 · 1초 앞의 F05와 한 쌍
+F15,fight,cue,fight.flee,3,always,F_WINNER,-,-,0,0,RESULT_CALL,CROWD_ROAR+SFX_Win,0,-,1,전의 상실 · 흔들지 않고 이긴 닭을 잡는다
+F16,fight,cue,fight.decision,3,always,F_WINNER,-,-,0,0,RESULT_CALL,SFX_Bell+CROWD_ROAR+SFX_Win,0,-,1,시간 종료 판정
+F17,fight,cue,fight.draw,3,always,F_BOTH_WIDE,-,FX_Draw_01,0,0,RESULT_CALL,SFX_Bell,0,-,1,타블라 · 중립 흰빛
+F18,fight,cue,fight.upset,3,always,-,Upset_Jolt,FX_Upset_01,0,0,UPSET_TAG,CROWD_GASP,0,-,2,이변 · 시작 배당이 붙는 2단계부터 · 화면 글자 UPSET / 2b-2: 기울임 충격 + 금빛 번쩍(UPSET_TAG · CROWD_GASP와 한 순간에)
+F19,fight,cue,fight.miss,*,always,-,-,-,0,0,-,-,0,-,1,대사만(빈 시간의 말) · 흙먼지는 F12(기록)가 낸다
+F20,fight,cue,fight.status,*,always,-,-,-,0,0,-,-,0,-,1,대사만(빈 시간 — 지금 앞선 쪽) · 체력 띠가 이미 보인다
+F21,fight,cue,fight.status_even,*,always,-,-,-,0,0,-,-,0,-,1,대사만(빈 시간 — 아직 팽팽함)
+F22,fight,cue,fight.circle,*,always,-,-,-,0,0,-,-,0,-,1,대사만(빈 시간 — 탐색)
+F23,fight,cue,fight.edge,*,always,-,-,-,0,0,-,-,0,-,1,대사만 · 상성 표시는 화면 흐름의 EDGE 자리
+F24,fight,cue,fight.env.hot,*,always,-,-,-,0,0,-,-,0,-,1,대사만 · 더운 날의 빛은 경기 화면이 열릴 때부터 이어진다
+F25,fight,cue,fight.env.cold,*,always,-,-,-,0,0,-,-,0,-,1,대사만 · 추운 날의 입김은 경기 화면이 열릴 때부터 이어진다
+F26,fight,cue,preview.fight.welcome,*,always,-,-,-,0,0,-,-,0,-,2,베팅 시간의 대사 · 대진 화면에는 3D 장면이 없어 대사와 자막만
+F27,fight,cue,fight.counter,2,always,F_COUNTER,-,-,0,0,tag.counter,SFX_Hit_S+SFX_Attack+SFX_Hit_Double@80,0,-,1,[가설 · fight_vocab_v1] 카운터 — 상대가 0.15초 안에 쳤는데 나만 맞힘(친 닭). 카메라 후보 F_COUNTER · 배지 COUNTER! · 소리 겹침
+F28,fight,cue,fight.clash,3,always,F_CLASH,-,FX_Clash_01,0,0,tag.clash,SFX_Hit_Double+SFX_Crit@80+CROWD_GASP,0,-,1,[가설] 격돌(크로스 카운터) — 둘 다 0.15초 안에 맞힘(both). 카메라 후보 F_CLASH · 배지 CLASH!
+F29,fight,cue,fight.guard_break,3,always,F_COUNTER,-,FX_GuardBreak_01,0,0,tag.guard_break,CROWD_OH,0,-,1,[가설] 가드 브레이크 — 버티기로 2회 연속 받은 뒤의 결정타(맞은 닭). 배지 GUARD BREAK! · GUARD → +50ms CRIT 겹침 / 소리는 관중만(결정타 묶음 F05가 같은 순간 SFX_Crit · SFX_Attack을 이미 냄 — 겹침 안 함 · 실기기 확인)
+F30,fight,cue,fight.groggy,2,always,-,-,-,0,0,-,-,0,-,1,[가설] 스탠딩 그로기 — 결정타 뒤 0.8초(맞은 닭). 소리 · 배지만(흔들림 없음 — 결정타 묶음이 이미 냄) / 소리 없음(모든 결정타 순간에 CROWD_OH가 더 나던 것 — 결정타 소리는 F05 그대로 · 실기기 확인)
+F31,fight,cue,fight.wall,2,always,-,-,FX_Wall_01,0,0,tag.wall,CROWD_GASP+SFX_Hit_Double@80,0,-,1,[가설] 벽 격돌 — 벽 구역(zone=wall)에서 맞은 결정타(맞은 닭). 벽 이펙트 · 배지 WALL IMPACT!
+F32,fight,cue,fight.parry,2,always,-,-,-,0,0,react.parry,SFX_Whoosh,0,-,1,[가설] 맞발톱 쳐내기 — 빗나감 직후 1.0초 안에 되받음(쳐낸 닭 = 되받는 닭). 배지 PARRY · GUARD_GEN → +80ms 겹침 후보
+R01,race,cue,race.start,2,always,R_START_WIDE,-,FX_RaceStart_01,0,0,-,SFX_Gate+CROWD_SWELL,0,-,2,출발
+R02,race,cue,race.early_leader,1,always,R_LEADER,-,-,0,0,POSITIONS_LEAD,-,0,-,2,처음 선두
+R03,race,cue,race.lead,2,always,R_LEADER,-,-,0,0,POSITIONS_SWAP,CROWD_OH,0,-,2,선두 바뀜
+R04,race,cue,race.lead_late,3,always,R_FINISH_FRONT,Crowd_Stomp,-,0,0,POSITIONS_SWAP,CROWD_ROAR,6,-,2,마지막 20m의 선두 바뀜 · 절정
+R05,race,cue,race.close_gap,2,always,-,-,-,0,0,-,CROWD_SWELL,0,-,2,격차가 좁혀짐
+R06,race,cue,race.side_by_side,2,always,R_DUEL,-,-,0,0,-,CROWD_SWELL,0,-,2,나란히 달림
+R07,race,cue,race.side_by_side,3,always,R_DUEL,Crowd_Stomp,-,0,0,-,CROWD_ROAR,6,-,2,마지막 20m에서 나란히 · 절정
+R08,race,cue,race.stretch,2,always,R_FINISH_FRONT,Climax_Rumble,LT_EdgeDim,0,0,STRETCH_BAND,CROWD_SWELL,0,-,2,마지막 직선 · 절정 연출의 시작 / 2b-2: 점점 세지는 잔떨림(Climax_Rumble — 결승까지)
+R09,race,cue,race.stretch,3,always,R_FINISH_FRONT,Crowd_Stomp,LT_EdgeDim,0,0,STRETCH_BAND,CROWD_ROAR,6,-,2,마지막 직선에 들어설 때 선두 둘이 1m 안
+R10,race,cue,race.runaway,2,always,R_LEADER,-,-,0,0,-,CROWD_OH,0,-,2,독주
+R11,race,cue,race.charge,2,always,-,-,-,0,0,POSITIONS_SWAP,CROWD_OH,0,-,2,뒤에서 치고 올라옴
+R12,race,cue,race.charge,3,always,R_DUEL,Crowd_Stomp,-,0,0,POSITIONS_SWAP,CROWD_ROAR,6,-,2,마지막 20m에서 치고 올라옴 · 절정
+R13,race,cue,race.fav_fade,2,always,-,-,-,0,0,-,CROWD_GASP,0,-,2,인기 닭이 처짐 · 시작 배당이 붙는 2단계
+R14,race,cue,race.sprint,2,always,-,Sprint_Rush,-,0,0,-,-,0,-,2,앞선 셋의 스퍼트 · 결승선까지 잔떨림
+R15,race,record,sprint,-,always,-,-,FX_Sprint_01,0,0,-,SFX_Spurt,0,-,2,여섯 마리 모두의 스퍼트 · 뒤로 날리는 깃털과 흙 줄
+R16,race,cue,race.stumble,2,on_camera,-,Stumble_Bump,-,0,0,-,CROWD_OH,0,-,2,그 닭이 화면에 잡혔을 때만 흔든다
+R17,race,record,stumble,-,always,-,-,FX_Stumble_01,0,0,-,SFX_Stumble,0,-,2,모든 헛디딤의 흙 튐
+R18,race,record,finish,-,always,-,-,-,0,0,POSITIONS_FINAL,SFX_LineCross,0,-,2,결승선을 지날 때마다 순위 줄이 굳는다
+R19,race,cue,race.photo,3,always,R_PHOTO_STILL,Finish_Burst,FX_Finish_01,0,0,PHOTO_INSET,SFX_Shutter+CROWD_ROAR,0,-,2,사진 판정 · 정지 그림은 작은 창 · 경기 화면은 계속 흐른다
+R20,race,cue,race.win,3,always,R_WINNER,Finish_Burst,FX_Finish_01,0,0,RESULT_CALL,CROWD_ROAR,0,-,2,1등
+R21,race,cue,race.win_runaway,3,always,R_WINNER,Finish_Burst,FX_Finish_01,0,0,RESULT_CALL,CROWD_ROAR,0,-,2,크게 앞선 1등
+R22,race,cue,race.win_upset,3,always,R_WINNER,Upset_Jolt,FX_Finish_01+FX_Upset_01,0,0,UPSET_TAG,CROWD_ROAR+CROWD_GASP,0,-,2,이변 · 화면 글자 UPSET / 2b-2: 결승 테이프 위에 금빛 번쩍 + 기울임 충격(Finish_Burst 대신)
+R23,race,cue,race.win_photo,3,always,R_WINNER,-,-,0,0,RESULT_CALL,CROWD_ROAR,0,-,2,사진 판정 뒤의 1등 · 흔들림은 R19가 이미 냈다
+R24,race,cue,race.dead_heat,3,always,R_PHOTO_STILL,Finish_Burst,FX_Finish_01,0,0,PHOTO_INSET,SFX_Shutter+CROWD_ROAR,0,-,2,동착
+R25,race,cue,race.dead_heat_who,2,always,-,-,-,0,0,RESULT_CALL,-,0,-,2,동착한 두 닭
+R26,race,cue,race.placings,2,always,-,-,-,0,0,POSITIONS_FINAL,-,0,-,2,2등 · 3등
+R27,race,cue,race.timeout,*,always,-,-,-,0,0,POSITIONS_REMAIN,-,0,-,2,편성 시간 안에 못 들어온 닭 · 순위 줄에 남은 거리(m) · 이펙트 없음(아트 바이블 15장)
+R28,race,cue,race.order_call,*,always,-,-,-,0,0,-,-,0,-,2,대사만(빈 시간 — 지금의 순위) · 순위 줄이 이미 보인다
+R29,race,cue,race.early,*,always,-,-,-,0,0,-,-,0,-,2,대사만(출발 직후의 짧은 말)
+R30,race,cue,race.leader_call,*,always,-,-,-,0,0,-,-,0,-,2,대사만(짧은 선두 부르기)
+R31,race,cue,race.run_in,*,always,-,-,-,0,0,-,-,0,-,2,대사만(마지막 20m의 짧은 외침) · 절정 연출은 R08 · R09가 낸다
+R32,race,cue,race.edge,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 상성 표시는 화면 흐름의 EDGE 자리
+R33,race,cue,race.env.clear,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 날씨는 경기 화면이 열릴 때부터 보인다(7장)
+R34,race,cue,race.env.rain,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 빗줄기는 경기 화면이 열릴 때부터
+R35,race,cue,race.env.snow,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 눈은 경기 화면이 열릴 때부터
+R36,race,cue,race.env.hot,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 아지랑이는 경기 화면이 열릴 때부터
+R37,race,cue,race.env.cold,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 입김은 경기 화면이 열릴 때부터
+R38,race,cue,race.env.head,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 깃발과 흙먼지가 바람 쪽으로(경기 화면이 열릴 때부터)
+R39,race,cue,race.env.tail,*,always,-,-,-,0,0,-,-,0,-,2,대사만 · 깃발과 흙먼지가 바람 쪽으로(경기 화면이 열릴 때부터)
+R40,race,cue,preview.race.welcome,*,always,-,-,-,0,0,-,-,0,-,2,베팅 시간의 대사 · 대진 화면에는 3D 장면이 없어 대사와 자막만
+R41,race,cue,preview.longshot,*,always,-,-,-,0,0,-,-,0,-,2,베팅 시간의 대사 · 대사와 자막만
+A01,any,cue,preview.favorite,*,always,-,-,-,0,0,-,-,0,-,2,베팅 시간의 대사(두 모드) · 대사와 자막만
+A02,any,cue,preview.open,*,always,-,-,-,0,0,-,-,0,-,2,베팅 시작 · 화면은 화면 흐름 문서의 BETTING
+A03,any,cue,preview.close,*,always,-,-,-,0,0,-,-,0,-,2,마감 10초 전 · 남은 시간 칸의 모습은 화면 흐름 · 아트 바이블의 LAST CALL
+A04,any,cue,preview.closed,*,always,-,-,-,0,0,-,-,0,-,2,베팅 마감 · 경기 화면으로 넘어가며 F01 · R01과 이어진다
+E01,fight,env,temp.hot,*,always,-,-,-,0,0,-,-,0,-,2,더운 날(record.env.temp = hot) — [2026-10-23] 아지랑이(FX_HeatHaze_01) 뺌 — 배경 전체에 노란 입자가 깔려서. 줄은 둔다(F24 대사와 짝). 영역은 OnMatchLoaded에서 env 줄을 읽는다
+E02,fight,env,temp.cold,*,always,-,-,FX_Breath_01,0,0,-,-,0,-,2,추운 날 — 입김(F25 대사와 짝)
+E03,race,env,weather.rain,*,always,-,-,FX_Rain_01,0,0,-,SFX_Rain,0,-,2,비 오는 날 — 빗줄기(R34 대사와 짝) · 빗소리는 관중 곡선 아래에 깐다
+E04,race,env,weather.snow,*,always,-,-,FX_Snow_01,0,0,-,-,0,-,2,눈 오는 날 — 눈송이(R35 대사와 짝)
+E05,race,env,temp.hot,*,always,-,-,FX_HeatHaze_01,0,0,-,-,0,-,2,더운 날 — 아지랑이(R36 대사와 짝)
+E06,race,env,temp.cold,*,always,-,-,FX_Breath_01,0,0,-,-,0,-,2,추운 날 — 입김(R37 대사와 짝)
+E07,race,env,wind.head,*,always,-,Wind_Sway,FX_WindDust_01,0,0,-,SFX_Wind,0,-,2,앞바람 — 흙먼지가 달리는 방향의 반대로 흐른다 · 바람 소리 · 가로의 느린 흔들림(세기 = wind_level)(R38 대사와 짝)
+E08,race,env,wind.tail,*,always,-,Wind_Sway,FX_WindDust_01,0,0,-,SFX_Wind,0,-,2,뒷바람 — 흙먼지가 달리는 방향으로(R39 대사와 짝)
+H01,any,phase,highlight,-,always,F_HIGHLIGHT+R_HIGHLIGHT,Highlight_Pulse,LT_Highlight,0,0,HIGHLIGHT,SFX_Whoosh,0,-,2,"결과 15초의 느린 화면(48~54초 — 세션의 OnHighlightStart · OnHighlightEnd) — 위아래 검은 띠 + 가장자리(W2) · HIGHLIGHT 표시(W3) · 바람 소리 한 번과 관중 낮춤(W4). 카메라는 F_HIGHLIGHT · R_HIGHLIGHT / 2b-2 당일 손질(W2의 바라는 것): 느린 화면 틀을 자료로 — 격투 F_HIGHLIGHT · 레이스 R_HIGHLIGHT('+'로 여럿, 그 모드의 것)"
+H02,any,phase,result.screen,-,always,-,-,-,0,0,-,SFX_Win+CROWD_ROAR,0,-,2,[2026-10-28] 느린 화면이 끝나고 결과 화면(S6 RESULT)이 열릴 때 — 승리 효과음(SFX_Cock_Win) + 함성 한 번(Commentator.OnHighlightEnd · 결과 화면 소리 보강). 카메라 · 연출은 손대지 않는다
+H03,any,phase,result.screen.draw,-,always,-,-,-,0,0,-,CROWD_OH,0,-,2,무승부의 결과 화면 — 탄식 한 번(승리 효과음 없음)
+G01,fight,phase,intro.a,-,always,F_INTRO_A,-,FX_Intro_01,0,0,INTRO_A,SFX_Intro,0,-,2,등장 씬 앞 5초(S2 ENTRANCE StageTime 0 ~ intro/2 — 서버 틈 · 꾸러미 밖): 메론 등장 — 카메라 F_INTRO_A · 발밑 먼지 · 등장 소리 · 이름판(UI) · 아나운서 등장 대사는 서버 pre_lines(intro.meron)
+G02,fight,phase,intro.b,-,always,F_INTRO_B,-,FX_Intro_01,0,0,INTRO_B,SFX_Intro,0,-,2,[D-7] 등장 씬 뒤 5초(intro/2 ~ intro): 왈라 등장 — 대사는 pre_lines(intro.wala)
+G03,fight,phase,intro.vs,-,always,F_VS,-,-,0,0,INTRO_VS2,-,0,-,2,[D-7] 카운트다운의 바탕(S3 COUNTDOWN 0~3): 두 닭이 마주 선 링 전체 · UI의 VS 판(두 이름 · 숫자)
+G04,fight,phase,countdown.3,-,always,-,-,-,0,0,COUNT_3,SFX_Count_3,0,-,2,[D-7] 카운트다운 3(S3 StageTime 0)
+G05,fight,phase,countdown.2,-,always,-,-,-,0,0,COUNT_2,SFX_Count_2,0,-,2,[D-7] 2(StageTime 1)
+G06,fight,phase,countdown.1,-,always,-,-,-,0,0,COUNT_1,SFX_Count_1,0,-,2,[D-7] 1(StageTime 2)
+G07,fight,phase,countdown.go,-,always,-,-,-,0,0,COUNT_GO,SFX_Fight,0,-,2,[D-7] FIGHT!(StageTime 3 = 경기 시작 — 꾸러미 0초 · F01과 같은 순간) — UI는 INTRO_VS의 VS 자리에 count.go를 잠깐
+G08,fight,phase,finish.call,-,always,-,-,-,0,0,FINISH_CALL,-,0,-,2,결과 발표 3초(45~HighlightStart)의 FINISH 띠(KO! · DECISION · DRAW — 글자 finish.ko · finish.decision · finish.draw · 전의 상실(flee)도 KO! — 가설): 폰은 큰 막대 왼쪽 위(MatchHud.PresentResult · HudView.finishTag) · TV는 결과 막대 안 오른쪽 끝(TvHud) · UI가 OnResultPhase에서 이 줄의 ui 칸을 센다. 소리 · 카메라는 아트 담당(CUTS · FX 탭)
+G09,race,phase,intro.lane,-,always,R_INTRO_LANE,-,FX_Intro_01,0,0,INTRO_LANE,SFX_Intro,0,-,2,[가설] 레이스 등장(S2 ENTRANCE — 서버 틈 · 꾸러미 밖): 레인 1 → 6 차례(한 마리 = 등장 길이 ÷ 6초 · 지금 레인 n = floor(StageTime ÷ (등장 길이 ÷ 6)) + 1) — 카메라 R_INTRO_LANE(그 레인) · 이름판 INTRO_LANE(UI — 시안 RC02) · 레인마다 등장 소리 · 아나운서 등장 대사는 서버 pre_lines
+G10,race,phase,countdown.3,-,always,R_GATE,-,-,0,0,COUNT_3,SFX_Count_3,0,-,2,[가설] 레이스 카운트다운 3(S3 StageTime 0) — 게이트 틀 R_GATE · 숫자 조각은 격투와 같은 count_3(시안 RC03)
+G11,race,phase,countdown.2,-,always,-,-,-,0,0,COUNT_2,SFX_Count_2,0,-,2,레이스 카운트다운 2(S3 StageTime 1)
+G12,race,phase,countdown.1,-,always,-,-,-,0,0,COUNT_1,SFX_Count_1,0,-,2,레이스 카운트다운 1(S3 StageTime 2)
+G13,race,phase,countdown.go,-,always,-,-,FX_GateBurst_01,0,0,START_POP,SFX_Gun+SFX_Beep,0,-,2,[가설] START(StageTime 3 = 경기 0초 · R01 race.start와 같은 순간 — 카메라 · 이펙트 · 게이트 소리는 R01) — UI는 START 그림(count.start · 조각 race_start) 0~0.8초(격투 IntroGoSeconds와 같은 값) · 출발총 SFX_Gun(파일 없으면 합성)
+R42,race,cue,race.finish_first,3,always,-,-,-,0,0,FINISH_RACE,SFX_Fanfare,0,-,2,[가설] 1등이 결승선을 지나는 순간(result.time — race_vocab_v1.vocab_cues가 꾸러미 cue에 덧붙임 · 동착도 첫 결승 순간) — UI FINISH! 그림(finish.race · 조각 race_finish · 시안 RC07) ~ +2.5초 · 팡파레(5.75초 원샷 — 파일 없으면 합성) · 카메라 · 흔들림 · 이펙트 · 관중은 같은 순간의 R20~R24(race.win 계열)가 맡는다

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROOSTER RUMBLE: 유저 동선 기반 진행 시나리오 및 마케팅 계획</title>
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-space: #0b0f19;
+      --bg-surface: rgba(15, 23, 42, 0.95);
+      --bg-card: #1e293b;
+      --bg-card-hover: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --cyan: #38bdf8;
+      --rose: #fb7185;
+      --amber: #fbbf24;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    }
+
+    [data-theme="light"] {
+      --bg-space: #f1f5f9;
+      --bg-surface: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-subtle: rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: var(--bg-space);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .header-title h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    .card-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      border-bottom: 2px solid var(--border-subtle);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header h2 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    ul.bullet-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    ul.bullet-list li::before {
+      content: "•";
+      color: var(--cyan);
+      font-weight: bold;
+      position: absolute;
+      left: 4px;
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .styled-table th {
+      background-color: var(--bg-card);
+      color: var(--cyan);
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+
+    .styled-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .styled-table tr:hover {
+      background-color: var(--bg-card-hover);
+    }
+
+    /* Mermaid 렌더링 적정 비율 및 간트차트 겹침 완전 방지 CSS */
+    .mermaid-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      margin: 16px 0;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .mermaid {
+      display: block;
+      width: 100%;
+      min-width: 900px;
+    }
+
+    .mermaid svg {
+      width: 100% !important;
+      min-width: 900px !important;
+      height: auto !important;
+      font-size: 14px !important;
+    }
+
+    .mermaid .gantt-section-title {
+      font-weight: 700 !important;
+      fill: var(--cyan) !important;
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border-left: 4px solid var(--cyan);
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+    }
+
+    .timeline-card-rose {
+      border-left-color: var(--rose);
+    }
+
+    .timeline-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">
+      <h1>🐓 ROOSTER RUMBLE</h1>
+      <p>유저 동선 기반 진행 시나리오 및 마케팅 계획</p>
+    </div>
+    <button class="theme-toggle-btn" onclick="toggleTheme()">테마 전환 (Light/Dark)</button>
+  </header>
+
+  <div class="container">
+
+    <!-- 1장: 마케팅 5단계 모형 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>1. 서비스 방식별 마케팅 & 운영 전략 기본 방향 (5단계 모형)</h2>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>5단계 마케팅 단계</th>
+            <th>📱 모바일 스토어 서비스 마케팅</th>
+            <th>🌐 VIP 라운지 서비스 마케팅</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🎯 <strong>1. 유저 유입 (신규 유치)</strong></td>
+            <td>• 구글/애플 스토어 사전예약<br>• 틱톡/릴스 알 부화 숏폼 광고<br>• 스토어 검색 최적화</td>
+            <td>• 자체 VIP 안내 페이지 연동<br>• Free 10,000 코인 지급 홍보<br>• 스포츠/베팅 커뮤니티 유치</td>
+          </tr>
+          <tr>
+            <td>⚡ <strong>2. 초기 정착 (첫 경험)</strong></td>
+            <td>• 첫 실행 튜토리얼 웰컴 보상<br>• 10초 터치 부화 손맛 경험<br>• 경주/격투 첫 우승 상금 2배 광고</td>
+            <td>• 경기 전 베팅 튜토리얼/정산<br>• 첫 배당 정산 쾌감 부여<br>• 실시간 24시간 관람 중계 제공</td>
+          </tr>
+          <tr>
+            <td>🔁 <strong>3. 지속 재방문 (매일 접속)</strong></td>
+            <td>• 3도장 일일 무료 알 수급<br>• 6단계 리그 승강급 & 퀘스트<br>• 2세대 닭 교배 & 온천 케어</td>
+            <td>• 24시간 타임 스케줄 중계<br>• 경기 중 실시간 배당 변동<br>• 정기 베팅 토너먼트 개최</td>
+          </tr>
+          <tr>
+            <td>💰 <strong>4. 매출 과금 (매출 결제)</strong></td>
+            <td>• 유료 알 뽑기 (300 보석 천장)<br>• 유료 온천 이용료<br>• 보상형 광고 3종 수익</td>
+            <td>• 베팅 수수료 정산 (8% ~ 10%)<br>• 유료 온천 이용료</td>
+          </tr>
+          <tr>
+            <td>📢 <strong>5. 소문내기 (친구 추천)</strong></td>
+            <td>• 유저 알 거래소 매매<br>• 칭호 자랑 라운지 인증</td>
+            <td>• 배당 수익 캡처 라운지 인증<br>• VIP 토너먼트 스폰서십</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2장: 모바일 진행 시나리오 & 마케팅 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>2. 모바일 스토어 서비스 진행 시나리오 및 마케팅 계획</h2>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-title">1일 차 ~ 30일 차+ 진행 시나리오</div>
+        <ul class="bullet-list">
+          <li><strong>1일 차 (앱 설치 및 우승 경험)</strong>: 앱 다운로드 및 소셜 로그인 ➔ 기본 닭 1두 + 1,000 골드 + 50 사료 수령 ➔ 알 부화 미니게임 수행 ➔ 달리기 경주 리그 출전 및 결승선 부스터 연타 1위 우승 ➔ 상금 2배 광고 시청 팝업 수행 (상금 200% 증액)</li>
+          <li><strong>3일 차 (3도장 알 수급 & 온천 케어)</strong>: 출석체크(+1) 및 광고 2회 시청(+2, 5분 대기시간) ➔ 3도장 무료 알 수령 ➔ 경주/격투 출전 지침 75(FATIGUED 능력치 -15%) 도달 ➔ 광고 시청(-20 회복) 또는 무료 닭장 휴식 진입</li>
+          <li><strong>7일 차 (리그 승격 & 2세대 닭 교배)</strong>: 모바일 리그 RP 누적 승격 및 보상 골드 수령 ➔ 훈련 완수 닭 2두 선택 ➔ 5,000 골드 소모 2세대 닭 교배 (능력치 90% 계승 & 50% 패시브 유전 알 수령)</li>
+          <li><strong>14일 차 ~ 30일 차+ (전설 리그 & 거래소 매매)</strong>: 7대 전투 스킬 세팅 & 3연속 콤보 완성 ➔ 1대1 격투 KO승 대전 상금(150%) 수령 ➔ 전설 리그 챔피언 등극 ➔ 알 거래소(5% 수수료) 서브 알 등록 및 재화 회수</li>
+        </ul>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--amber); margin-top: 16px; margin-bottom: 8px;">전용 마케팅 집행 계획</h3>
+      <ul class="bullet-list">
+        <li><strong>스토어 검색 최적화 & 사전예약</strong>: 구글/애플 사전예약 등록, 사전예약자 대상 한정 알 캡슐 1개 + 3,000 골드 지급</li>
+        <li><strong>숏폼 영상 광고</strong>: 틱톡/릴스/유튜브 숏폼 15초 영상 제작 (알 터치 부화 장면 & 결승선 부스터 대역전 장면 연출) 집행</li>
+        <li><strong>크리에이터 스폰서십</strong>: 게임 스트리머 대상 모바일 1대1 럼블 핏 대전 라이브 방송 스폰서십 집행</li>
+      </ul>
+    </div>
+
+    <!-- 3장: VIP 라운지 진행 시나리오 & 마케팅 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>3. VIP 라운지 서비스 진행 시나리오 및 마케팅 계획</h2>
+      </div>
+
+      <div class="timeline-card timeline-card-rose">
+        <div class="timeline-title" style="color: var(--rose);">1일 차 ~ 30일 차+ VIP 라운지 시나리오</div>
+        <ul class="bullet-list">
+          <li><strong>1일 차 (웹 접속 및 코인 사용)</strong>: 자체 웹 접속 및 회원가입 ➔ 10,000 Free 코인 수령 ➔ 24시간 타임 스케줄 확인 ➔ 경기 시작 전 베팅 수행 및 배당 정산 확인</li>
+          <li><strong>3일 차 (사전 분석 & 정산)</strong>: 출전 선수 세부 능력치/전적 분석 ➔ 단승/복승 프리매치 사전 베팅 ➔ 경기 완료 후 정산 수수료(8% ~ 10%) 차감 정산금 자동 수령</li>
+          <li><strong>7일 차 (경기 중 실시간 베팅)</strong>: 격투 경기 진행 중 잔여 체력 변동 연동 실시간 배당 베팅 ➔ 5초 전 베팅 마감 타이밍 베팅 수행</li>
+          <li><strong>14일 차 ~ 30일 차+ (VIP 토너먼트)</strong>: 자체 웹 'VIP 베팅 왕중왕전' 참가 ➔ 웹 코인 수급 ➔ VIP 라운지 베팅 정산 코인 자산 운용 및 랭킹 관리</li>
+        </ul>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--rose); margin-top: 16px; margin-bottom: 8px;">전용 마케팅 집행 계획</h3>
+      <ul class="bullet-list">
+        <li><strong>VIP 안내 페이지 & Free 코인</strong>: 독립 안내 페이지 가입 시 10,000 Free 코인 지급 프로모션 집행</li>
+        <li><strong>스포츠 & 베팅 커뮤니티 유치</strong>: 스포츠 승예 유저 대상 웹 배너 광고 집행, 24시간 경주(72회) 및 격투(48회) 생중계 안내</li>
+        <li><strong>VIP 라이브 베팅 왕중왕전 토너먼트</strong>: 정기 주간 웹 베팅 랭킹전 개최 ➔ 상위 우승자 대상 웹 코인 보상 및 명예의 전당 등재</li>
+      </ul>
+
+      <h3 style="font-size: 1rem; color: var(--rose); margin-top: 20px; margin-bottom: 8px;">3대 모드별 차별화 마케팅 실행 전략</h3>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>대상 게임 모드</th>
+            <th>핵심 재미 키워드</th>
+            <th>마케팅 소스 및 실행 방안</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🚜 <strong>1. 육성 모드 (럼블 팜)</strong></td>
+            <td>알 터치 부화, 2세대 유전 교배</td>
+            <td>• 틱톡/릴스 15초 터치 부화 숏폼 유포<br>• 일일 무료 알 홍보</td>
+          </tr>
+          <tr>
+            <td>🏇 <strong>2. 경주 모드 (더비 레이스)</strong></td>
+            <td>6두 폭풍 달리기, 피니시 터치 부스터</td>
+            <td>• 피니시 터치 부스터 연타 플레이 영상 인피드 집행<br>• 리그 승급 축하 라운지 이벤트</td>
+          </tr>
+          <tr>
+            <td>🥊 <strong>3. 격투 모드 (럼블 핏)</strong></td>
+            <td>1대1 링 타격감, 3연속 콤보 격돌</td>
+            <td>• 3연속 콤보 타격 하이라이트 영상 제작<br>• 스트리머 1대1 대전 스폰서십 방송 집행</td>
+          </tr>
+          <tr>
+            <td>🎲 <strong>(온라인 연계) VIP 라운지 서비스</strong></td>
+            <td>24시간 실시간 중계, 라이브 배당 정산</td>
+            <td>• 웹 Free 10,000 코인 지급 프로모션<br>• VIP 라운지 안내 페이지 홍보 캠페인</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4장: 릴리즈 로드맵 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>4. 서비스 방식별 런칭 & 스토어/라운지 연계 일정표</h2>
+      </div>
+
+      <div class="mermaid-container">
+        <div class="mermaid">
+          gantt
+              dateFormat  YYYY-MM-DD
+              axisFormat  %m/%d
+              title 모바일 스토어 서비스 vs VIP 라운지 서비스 분리 런칭 일정표
+              
+              section 📱 모바일 스토어 서비스
+              스토어 사전예약 & 티징         :a1, 2026-09-20, 15d
+              CBT (모바일 3모드 체험단)      :a2, 2026-10-05, 10d
+              앱스토어/구글플레이 정식 런칭  :a3, 2026-10-25, 1d
+              모바일 대규모 유저 유치 캠페인 :a4, 2026-10-25, 14d
+              
+              section 🌐 VIP 라운지 서비스
+              VIP 안내 페이지 티징           :b1, 2026-09-25, 15d
+              웹 베팅 사전 등록 프로모션     :b2, 2026-10-10, 10d
+              독립 온라인 웹 서비스 정식 오픈:b3, 2026-10-25, 1d
+              제1회 VIP 베팅 왕중왕전 개최   :b4, 2026-11-10, 10d
+        </div>
+      </div>
+
+      <!-- 일정 상세 명세 카드 표 -->
+      <table class="styled-table" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>마일스톤 단계</th>
+            <th>진행 일정</th>
+            <th>주요 수행 과업 및 혜택 명세</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4" style="vertical-align: middle;"><strong>📱 모바일 스토어 서비스</strong></td>
+            <td>1. 사전예약 & 티징</td>
+            <td>2026-09-20 ~ 2026-10-04 (15일)</td>
+            <td>양대 스토어 사전예약 등록, 사전예약자 전원 한정 알 캡슐 + 3,000골드 지급</td>
+          </tr>
+          <tr>
+            <td>2. CBT (3모드 체험단)</td>
+            <td>2026-10-05 ~ 2026-10-14 (10일)</td>
+            <td>모바일 3모드 체험단 검증 및 네트워크/타격감 밸런싱 테스트</td>
+          </tr>
+          <tr>
+            <td>3. 글로벌 정식 런칭</td>
+            <td>2026-10-25 (D-Day)</td>
+            <td>앱스토어/구글플레이 오픈, 기본 닭 1두 + 1,000골드 + 50사료 웰컴 보상 지급</td>
+          </tr>
+          <tr>
+            <td>4. 대규모 유치 캠페인</td>
+            <td>2026-10-25 ~ 2026-11-07 (14일)</td>
+            <td>틱톡/릴스 15초 터치 부화 숏폼 유포 및 게임 스트리머 1v1 대전 스폰서십</td>
+          </tr>
+          <tr>
+            <td rowspan="4" style="vertical-align: middle;"><strong>🌐 VIP 라운지 서비스</strong></td>
+            <td>1. VIP 안내 페이지 티징</td>
+            <td>2026-09-25 ~ 2026-10-09 (15일)</td>
+            <td>자체 웹 안내 페이지 연동, 가입 사전 신청 시 Free 10,000 코인 홍보</td>
+          </tr>
+          <tr>
+            <td>2. 웹 사전 등록 프로모션</td>
+            <td>2026-10-10 ~ 2026-10-19 (10일)</td>
+            <td>스포츠/베팅 커뮤니티 유치, 24시간 실시간 중계 스케줄 사전 공개</td>
+          </tr>
+          <tr>
+            <td>3. 온라인 웹 정식 오픈</td>
+            <td>2026-10-25 (D-Day)</td>
+            <td>독립 웹 서비스 오픈, 24시간 실시간 관람 중계 및 경기 시작 전 베팅 가동</td>
+          </tr>
+          <tr>
+            <td>4. 제1회 VIP 왕중왕전</td>
+            <td>2026-11-10 ~ 2026-11-19 (10일)</td>
+            <td>주간 베팅 랭킹전 개최, 상위 우승자 웹 코인 보상 및 명예의 전당 등재</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5장: 과금 모델 -->
+    <div class="card-section">
+      <div class="section-header">
+        <h2>5. 서비스 방식별 재접속 & 매출 과금 모델</h2>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>과금 모델</th>
+            <th>서비스 적용 대상</th>
+            <th>과금 유도 전략 & 정산 규칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>① 유료 알 뽑기 (30~300 보석)</strong></td>
+            <td>📱 모바일 스토어 서비스</td>
+            <td>상점 300 보석 (10연속) 결제 시 전설 알 100% 천장 적용</td>
+          </tr>
+          <tr>
+            <td><strong>② 유료 온천 이용 (50 보석 / 5,000골드)</strong></td>
+            <td>📱 모바일 스토어 서비스 / 🌐 VIP 라운지 서비스</td>
+            <td>경기 전/후 지침 70+ 및 부상 발생 시 24시간 컨디션 100 최상 완충 제안</td>
+          </tr>
+          <tr>
+            <td><strong>③ 알 거래소 수수료 (5% 수수료)</strong></td>
+            <td>📱 모바일 스토어 서비스</td>
+            <td>유저 간 2세대 알 매매 체결 시 5% 정액 수수료 차감 정산</td>
+          </tr>
+          <tr>
+            <td><strong>④ 베팅 수수료 (8% ~ 10%)</strong></td>
+            <td>🌐 VIP 라운지 서비스</td>
+            <td>경주(하루 72회) & 격투(하루 48회) 중계 배당 정산 시 8%~10% 수수료 차감</td>
+          </tr>
+          <tr>
+            <td><strong>⑤ 보상형 광고 3종 (광고 수익)</strong></td>
+            <td>📱 모바일 스토어 서비스</td>
+            <td>3도장 알 수급, 경주 상금 2배, 지침 -20 회복 광고 시청 수익 창출</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      gantt: {
+        useMaxWidth: true,
+        leftPadding: 220,
+        barHeight: 28,
+        barGap: 8,
+        topPadding: 45,
+        sidePadding: 40,
+        axisFormat: '%m/%d'
+      },
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true
+      },
+      themeVariables: {
+        fontSize: '14px',
+        fontFamily: 'Pretendard'
+      }
+    });
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', nextTheme);
+    }
+  </script>
+</body>
+</html>

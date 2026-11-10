@@ -1,0 +1,14 @@
+name,uses,direction,strength,strength_end,duration_s,speed,decay,repeat,tilt_deg,mode,note
+Hit_S,격투 · 명중(hit),along,2,2,0.12,fast,punch,1,0,fight,가장 자주 나오므로 작게. 맞은 쪽으로 밀리듯
+Hit_Double,격투 · 연타(double),along,3,3,0.20,fast,punch,2,0,fight,맞은 쪽으로 두 번
+Crit_L,격투 · 결정타(crit),along+vertical+tilt,7,7,0.35,normal,punch,1,1.5,fight,화면 멈춤 0.08초와 함께(멈춤은 연결표 hitstop_s) · 기울임 1.5도(가설 — 연출 편집기에서 고친다)
+KO_Slam,격투 · 쓰러짐(ko),down,8,8,0.50,slow,punch,1,2.5,fight,아래로 쿵. 뒤에 카메라가 멀어지며 정지(2단계) · 기울임 2.5도(가설)
+Rally_Rumble,격투 · 투혼(rally),all,2,4,0.80,fast,rise,1,0,fight,모든 방향의 잔떨림이 점점 세진다
+Stumble_Bump,레이스 · 헛디딤(stumble),vertical,3,3,0.15,normal,punch,1,0,race,그 닭이 화면에 잡혔을 때만
+Sprint_Rush,레이스 · 스퍼트(sprint),forward,2,2,0,fast,ease,1,0,race,달리는 방향의 잔떨림 — 지속 0 = 사건이 이어지는 동안(결승선까지)
+Finish_Burst,레이스 · 결승(finish),all,6,6,0.30,normal,punch,1,1.0,race,모든 방향 · 기울임 1.0도(가설)
+Crowd_Stomp,두 모드 · 절정의 함성,vertical,2,2,1.0,slow,ease,1,0,both,위아래의 낮은 울림. 넣을지는 들어 보고
+Wind_Sway,레이스 · 바람 부는 날(env wind.head · wind.tail),horizontal,1,1,0,slow,ease,1,0,race,바람 부는 날 — 가로의 아주 느린 흔들림. 지속 0 = 경기가 이어지는 동안(출발부터 1등 결승까지). 세기는 기록의 wind_level(1~3)을 W2가 곱한다(가설)
+Highlight_Pulse,두 모드 · 하이라이트 시작(phase highlight),vertical,2,2,0.4,slow,ease,1,0,both,결과 15초의 느린 화면이 시작될 때 한 번 낮게 울린다(48초)
+Climax_Rumble,두 모드 · 절정(fight.last10 · race.stretch),all,1,3,0,fast,rise,1,0,both,절정 구간에 점점 세지는 잔떨림 — 지속 0 = 절정이 이어지는 동안(마지막 10초 · 마지막 직선). 넣을지는 들어 보고
+Upset_Jolt,두 모드 · 이변(fight.upset · race.win_upset),all+tilt,5,5,0.45,normal,punch,1,2.0,both,이변 — 기울임 2도를 섞은 한 번의 충격. 이긴 쪽의 시작 배당이 기준 이상일 때만 온다

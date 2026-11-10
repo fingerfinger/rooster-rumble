@@ -1,0 +1,31 @@
+﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),격투 스타일 (Fight Style),힘 (STR),민첩 (DEX),활력 (VIT),정신력 (MEN),행운 (LCK),잠재력 (POT),1차 스탯 합계 (Total)
+블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,아웃파이터,56,77,54,43,68,37,335
+썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,아웃파이터,55,83,47,45,75,30,335
+래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,아웃파이터,35,68,63,42,83,44,335
+윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,아웃파이터,62,80,53,48,43,30,316
+페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,아웃파이터,75,91,44,47,29,30,316
+나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,브롤러,84,52,81,70,0,30,317
+섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,브롤러,71,41,74,50,58,30,324
+사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,브롤러,80,37,66,58,48,30,319
+아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,브롤러,64,55,80,50,36,30,315
+라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,브롤러,79,52,72,63,19,30,315
+레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,인파이터,64,73,59,46,48,30,320
+스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,인파이터,59,75,54,51,46,30,315
+에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,인파이터,74,65,56,48,63,30,336
+골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,인파이터,52,82,57,48,48,30,317
+스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,인파이터,67,83,60,52,23,30,315
+아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,밸런서,61,63,71,50,43,30,318
+골리앗-(-goliath),골리앗 (Goliath),자재,밸런서,56,54,72,46,58,30,316
+엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,밸런서,64,67,65,52,37,30,315
+스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,밸런서,56,52,77,44,57,30,316
+마라토너-(-marathoner),마라토너 (Marathoner),자재,밸런서,61,66,66,51,41,30,315
+서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,밸런서,74,74,67,47,23,30,315
+이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,밸런서,65,74,66,47,34,30,316
+블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,밸런서,72,70,63,52,29,30,316
+스태빌리티-(-stability),스태빌리티 (Stability),선입,밸런서,64,72,72,49,28,30,315
+퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,밸런서,67,75,63,52,29,30,316
+매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,테크니션,71,57,49,59,63,30,329
+와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,테크니션,40,61,64,51,78,30,324
+러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,테크니션,82,49,41,54,77,32,335
+카오스-(-chaos),카오스 (Chaos),변칙,테크니션,38,69,68,42,89,30,336
+더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,테크니션,34,57,59,55,87,46,338

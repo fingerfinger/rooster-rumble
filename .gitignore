@@ -1,0 +1,23 @@
+# Antigravity & IDE
+.gemini/
+.idea/
+.vscode/
+
+# OS temporary files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary backups and archives
+*.zip
+*.tmp
+*.bak

@@ -1,0 +1,31 @@
+﻿선수 ID (ID),선수 이름 (Name),격투 스타일 (Fight Style),공격력 (POW),방어력 (DEF),최대 체력 (Max HP),회복력 (REC),기술력 (TEC),근성 (GRT)
+블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),아웃파이터,53,63,726,50,58,44
+썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),아웃파이터,53,64,640,46,59,42
+래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),아웃파이터,40,53,788,56,56,47
+윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),아웃파이터,56,65,714,50,58,45
+페더-대시-(-feather-dash),페더 대시 (Feather Dash),아웃파이터,66,74,650,45,63,43
+나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),브롤러,75,62,1038,68,48,64
+섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),브롤러,65,53,942,58,37,51
+사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),브롤러,69,53,880,56,38,54
+아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),브롤러,63,58,988,61,43,52
+라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),브롤러,72,61,938,61,46,58
+레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),인파이터,64,58,778,49,52,45
+스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),인파이터,61,57,718,48,54,47
+에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),인파이터,68,57,768,48,49,46
+골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),인파이터,59,59,734,49,56,46
+스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),인파이터,68,64,794,52,58,49
+아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),밸런서,55,56,892,56,49,50
+골리앗-(-goliath),골리앗 (Goliath),밸런서,50,50,892,56,44,48
+엔듀어런스-(-endurance),엔듀어런스 (Endurance),밸런서,58,59,838,54,51,50
+스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),밸런서,50,49,942,58,43,48
+마라토너-(-marathoner),마라토너 (Marathoner),밸런서,56,57,842,54,51,50
+서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),밸런서,65,65,878,54,53,48
+이븐-킬-(-even-keel),이븐 킬 (Even Keel),밸런서,60,62,850,53,53,47
+블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),밸런서,63,63,834,53,53,50
+스태빌리티-(-stability),스태빌리티 (Stability),밸런서,59,61,908,57,52,50
+퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),밸런서,61,64,824,53,55,50
+매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),테크니션,60,53,692,48,58,51
+와일드-카드-(-wild-card),와일드 카드 (Wild Card),테크니션,42,45,780,53,57,49
+러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),테크니션,65,52,638,43,53,47
+카오스-(-chaos),카오스 (Chaos),테크니션,43,49,816,53,57,45
+더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),테크니션,41,45,750,55,61,54

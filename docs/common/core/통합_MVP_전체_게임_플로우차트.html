@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROOSTER RUMBLE: 통합 MVP 마스터 게임 플로우 차트</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+  <style>
+    :root {
+      --bg-space: #070b14;
+      --bg-surface: rgba(15, 23, 42, 0.95);
+      --bg-card: #1e293b;
+      --bg-glass: rgba(30, 41, 59, 0.8);
+      --bg-glass-hover: rgba(51, 65, 85, 0.95);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --cyan: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.25);
+      --green: #34d399;
+      --green-glow: rgba(52, 211, 153, 0.25);
+      --purple: #c084fc;
+      --purple-glow: rgba(192, 132, 252, 0.25);
+      --rose: #fb7185;
+      --rose-glow: rgba(251, 113, 133, 0.25);
+      --amber: #fbbf24;
+      --amber-glow: rgba(251, 191, 36, 0.25);
+      
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --border-focus: #38bdf8;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    [data-theme="light"] {
+      --bg-space: #f8fafc;
+      --bg-surface: rgba(255, 255, 255, 0.95);
+      --bg-card: #ffffff;
+      --bg-glass: rgba(241, 245, 249, 0.9);
+      --bg-glass-hover: rgba(226, 232, 240, 0.95);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-subtle: rgba(0, 0, 0, 0.12);
+      --border-focus: #0284c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg-space);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* 사이버 테크 배경 */
+    .grid-bg {
+      background-image: 
+        radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.07) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
+        linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* 상단 네비게이션 헤더 */
+    header.navbar {
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 100;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-icon {
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
+    }
+    .brand-title h1 {
+      font-size: 1.12rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #38bdf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .brand-title p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* 목차 열기 버튼 */
+    .btn-toc-toggle {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: var(--bg-glass);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+    .btn-toc-toggle:hover {
+      background: var(--cyan);
+      color: #070b14;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 4px 8px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+    .ctrl-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .ctrl-btn:hover {
+      background: var(--bg-glass-hover);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .zoom-badge {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--cyan);
+      padding: 2px 8px;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-doc {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      color: #070b14;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      border: none;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+    .btn-doc:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+    }
+    .btn-theme {
+      padding: 6px 10px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.15s;
+    }
+
+    /* 플로우 캔버스 영역 */
+    main.flow-stage {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      cursor: grab;
+      display: flex;
+    }
+    main.flow-stage:active {
+      cursor: grabbing;
+    }
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #canvas-container svg {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      display: block;
+      shape-rendering: geometricPrecision;
+      text-rendering: geometricPrecision;
+    }
+
+    /* =========================================================================
+       좌측 6대 대항목 목차 드로어 (TOC Drawer)
+       ========================================================================= */
+    aside.toc-drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 360px;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-subtle);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    aside.toc-drawer.open {
+      transform: translateX(0);
+    }
+    .toc-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+    }
+    .toc-header h2 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-toc {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .btn-close-toc:hover { color: var(--text-main); }
+
+    .toc-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+      scrollbar-width: thin;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .toc-content::-webkit-scrollbar { width: 4px; }
+    .toc-content::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 4px; }
+
+    /* 대항목 네비게이션 카드 */
+    .toc-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .toc-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--cyan);
+      opacity: 0.6;
+      transition: width 0.2s;
+    }
+    .toc-card:hover {
+      background: var(--bg-glass-hover);
+      border-color: var(--cyan);
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .toc-card:hover::before { width: 6px; }
+
+    .toc-card.farm::before { background: var(--green); }
+    .toc-card.farm:hover { border-color: var(--green); }
+    .toc-card.derby::before { background: var(--purple); }
+    .toc-card.derby:hover { border-color: var(--purple); }
+    .toc-card.pit::before { background: var(--rose); }
+    .toc-card.pit:hover { border-color: var(--rose); }
+    .toc-card.meta::before { background: var(--amber); }
+    .toc-card.meta:hover { border-color: var(--amber); }
+
+    .toc-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .toc-card-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .toc-card-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .link-spec-btn {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.15s;
+    }
+    .link-spec-btn:hover {
+      background: var(--cyan);
+      color: #070b14;
+      border-color: var(--cyan);
+    }
+
+    /* 하단 퀵 독 */
+    footer.dock-bar {
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .dock-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .dock-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .dock-links::-webkit-scrollbar { display: none; }
+    
+    .dock-btn {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .dock-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-glow);
+    }
+    .dock-btn.farm:hover { border-color: var(--green); color: var(--green); background: var(--green-glow); }
+    .dock-btn.derby:hover { border-color: var(--purple); color: var(--purple); background: var(--purple-glow); }
+    .dock-btn.pit:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-glow); }
+    .dock-btn.meta:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
+
+    /* =========================================================================
+       Mermaid SVG 최고급 네온 & 직관적 화살표 스타일링
+       ========================================================================= */
+    .mermaid .cluster rect {
+      rx: 14px !important;
+      ry: 14px !important;
+      stroke-width: 1.5px !important;
+      fill-opacity: 0.25 !important;
+      backdrop-filter: blur(8px);
+      transition: stroke 0.3s;
+    }
+    .mermaid .node rect, .mermaid .node polygon, .mermaid .node circle {
+      rx: 8px !important;
+      ry: 8px !important;
+      stroke-width: 1.5px !important;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+      transition: all 0.2s ease;
+    }
+    .mermaid .node:hover rect, .mermaid .node:hover polygon, .mermaid .node:hover circle {
+      stroke-width: 2.5px !important;
+      filter: drop-shadow(0 0 16px var(--cyan));
+      cursor: pointer;
+    }
+
+    /* 포커스 대상 노드 황금색 펄스 애니메이션 */
+    @keyframes pulse-highlight {
+      0% { filter: drop-shadow(0 0 20px #fbbf24) brightness(1.4); stroke: #fbbf24 !important; stroke-width: 4.5px !important; }
+      100% { filter: drop-shadow(0 0 45px #38bdf8) brightness(1.7); stroke: #38bdf8 !important; stroke-width: 5.5px !important; }
+    }
+    .target-highlight rect, .target-highlight polygon, .target-highlight circle {
+      animation: pulse-highlight 0.5s ease-in-out infinite alternate !important;
+    }
+    .target-highlight text {
+      fill: #ffffff !important;
+      font-weight: 900 !important;
+    }
+    
+    /* 부드러운 연결선 */
+    .mermaid .edgePath path {
+      stroke: rgba(148, 163, 184, 0.75) !important;
+      stroke-width: 2.2px !important;
+      stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+      transition: stroke 0.2s, stroke-width 0.2s;
+    }
+    .mermaid .edgePath:hover path {
+      stroke: var(--cyan) !important;
+      stroke-width: 3.5px !important;
+      filter: drop-shadow(0 0 8px var(--cyan));
+    }
+    
+    /* SVG 화살표 헤드 */
+    .mermaid marker path {
+      fill: #38bdf8 !important;
+      stroke: none !important;
+      transform: scale(1.1);
+    }
+    
+    .mermaid .edgeLabel {
+      background-color: var(--bg-surface) !important;
+      border-radius: 6px !important;
+      padding: 2px 8px !important;
+      border: 1px solid var(--border-subtle) !important;
+      font-weight: 800 !important;
+      font-size: 11.5px !important;
+      color: #38bdf8 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    }
+    .mermaid text {
+      font-family: "Pretendard", sans-serif !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+<body class="grid-bg">
+
+  <!-- 상단 네비게이션 -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <button class="btn-toc-toggle" onclick="toggleTocDrawer()" title="대항목 목차 열기/닫기">
+        <span>📑 플로우 목차 (6대 대항목)</span>
+      </button>
+      <span class="brand-icon">🐓</span>
+      <div class="brand-title">
+        <h1>ROOSTER RUMBLE</h1>
+        <p>통합 MVP 단일 거대 마스터 플로우 차트</p>
+      </div>
+    </div>
+
+    <!-- 뷰포트 조작 툴바 -->
+    <div class="nav-controls">
+      <button class="ctrl-btn" onclick="zoomIn()" title="확대">🔍 +</button>
+      <button class="ctrl-btn" onclick="zoomOut()" title="축소">🔍 -</button>
+      <span class="zoom-badge" id="zoom-text">100%</span>
+      <button class="ctrl-btn" onclick="resetZoom()" title="화면 맞춤">🔄 맞춤</button>
+      <button class="ctrl-btn" onclick="toggleFullScreen()" title="전체화면">⛶ 전체화면</button>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="nav-actions">
+      <a href="통합_MVP_구성안.html" target="_blank" class="btn-doc" title="통합 기획서 전문 새 창 열기">
+        <span>📖 세부기획서 전문 ↗</span>
+      </a>
+      <button class="btn-theme" onclick="toggleTheme()" title="다크/라이트 테마 전환">
+        <span id="theme-icon">☀️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 메인 플로우 캔버스 및 목차 드로어 -->
+  <main class="flow-stage" id="flow-stage">
+    
+    <!-- 좌측 6대 대항목 목차 드로어 (TOC Drawer) -->
+    <aside class="toc-drawer" id="toc-drawer">
+      <div class="toc-header">
+        <h2>📑 6대 대항목 목차 (TOC)</h2>
+        <button class="btn-close-toc" onclick="toggleTocDrawer()" title="목차 닫기">✕</button>
+      </div>
+      <div class="toc-content">
+        
+        <!-- [1] 온보딩 -->
+        <div class="toc-card" onclick="jumpToMajorSection('START')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">🚪 1. 유저 인입 &amp; 온보딩</div>
+            <a href="통합_MVP_구성안.html#13-모바일-버전-vs-온라인-버전-기능-및-서비스-전략-비교" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §1.3 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            로그인 인증(API-1) ➔ 모바일 튜토리얼 / 웹 크레딧(10,000C) 분기
+          </div>
+        </div>
+
+        <!-- [2] 럼블 팜 -->
+        <div class="toc-card farm" onclick="jumpToMajorSection('ACQUIRE_PATH')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">🌾 2. 럼블 팜: 알 &amp; 부화</div>
+            <a href="통합_MVP_구성안.html#sec-2" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §2 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            알 4대 수급 ➔ 인큐베이터 ➔ 10초 터치 미니게임 ➔ 1차 스탯 초기 분배
+          </div>
+        </div>
+
+        <!-- [3] 육성/훈련/교배/케어 -->
+        <div class="toc-card" onclick="jumpToMajorSection('ROOSTER_ROSTER')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">🧬 3. 육성, 훈련, 교배 &amp; 케어</div>
+            <a href="통합_MVP_구성안.html#24-훈련-시스템-종목별-소모대기시간-능력치-상승-및-2차-파생-연동-프로세스" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §2.4~2.5 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            7종 훈련 ➔ 2세대 교배 ➔ 피로도/부상 상태머신 ➔ 프리미엄 스파 완충
+          </div>
+        </div>
+
+        <!-- [4] 더비 레이스 -->
+        <div class="toc-card derby" onclick="jumpToMajorSection('DERBY_SCHED')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">🏇 4. 더비 레이스 (6두 경주)</div>
+            <a href="통합_MVP_구성안.html#sec-3" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §3 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            일 72회 6두 매칭 ➔ 모바일 6단계 리그 / 웹 승자 베팅 ➔ 물리 연산 &amp; 정산
+          </div>
+        </div>
+
+        <!-- [5] 럼블 핏 -->
+        <div class="toc-card pit" onclick="jumpToMajorSection('PIT_SCHED')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">🥊 5. 럼블 핏 (1v1 격투)</div>
+            <a href="통합_MVP_구성안.html#sec-4" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §4 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            일 48회 1v1 대진 ➔ 1초 1틱 AI 전투 ➔ 라이브 베팅 ➔ 파이트 머니 정산
+          </div>
+        </div>
+
+        <!-- [6] 메타 경제 -->
+        <div class="toc-card meta" onclick="jumpToMajorSection('QUEST_SYS')">
+          <div class="toc-card-header">
+            <div class="toc-card-title">💎 6. 메타 경제 &amp; 리텐션</div>
+            <a href="통합_MVP_구성안.html#27-일일주간-퀘스트-및-영구-누적-업적-시스템" target="_blank" class="link-spec-btn" onclick="event.stopPropagation()">기획서 §2.6~2.7 ↗</a>
+          </div>
+          <div class="toc-card-sub">
+            일일/주간 퀘스트 ➔ 칭호 20종/업적 ➔ 파산 긴급 구제 ➔ 재투자 선순환
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- SVG 캔버스 컨테이너 -->
+    <div id="canvas-container">
+      <pre class="mermaid" id="master-mermaid">
+flowchart TD
+    %% =========================================================================
+    %% SECTION 1: 유저 인입 및 온보딩
+    %% =========================================================================
+    subgraph SEC_ENTRY ["【1】 유저 인입 및 플랫폼 온보딩 (Entry & Onboarding)"]
+        START(("🎮 게임 시작")) --> AUTH["API-1: 유저 인증 및 로그인<br/>(POST /api/v1/auth/login)"]
+        AUTH --> CHK_PLATFORM{"접속 플랫폼"}
+        
+        CHK_PLATFORM -->|📱 모바일 앱| MOB_CHECK{"신규 유저 여부"}
+        MOB_CHECK -->|신규| MOB_TUTORIAL["튜토리얼 진행 & 기본 보상<br/>- 기본 닭 1두 지급<br/>- 1,000 Gold / 50 Feed"]
+        MOB_CHECK -->|기존| MOB_LOBBY["모바일 메인 로비 진입<br/>(Top HUD + 5대 하단 탭)"]
+        MOB_TUTORIAL --> MOB_LOBBY
+
+        CHK_PLATFORM -->|🌐 온라인 웹| WEB_CHECK{"지갑 연동 / 계정 확인"}
+        WEB_CHECK --> WEB_INIT["웹 로비 진입 & 크레딧 지급<br/>- 10,000 베팅 Credit 부여<br/>- 실시간 경기 중계 & 베팅 슬립"]
+    end
+
+    %% =========================================================================
+    %% SECTION 2: 럼블 팜 - 알 획득 및 부화
+    %% =========================================================================
+    subgraph SEC_FARM_EGG ["【2】 럼블 팜: 알 획득 및 부화 시스템 (Egg & Hatching)"]
+        MOB_LOBBY --> ACQUIRE_PATH{"알 획득 경로 선택"}
+        
+        ACQUIRE_PATH -->|출석 / 광고| EGG_STAMP["단일 통합 3스탬프 적립<br/>- 일일 출석 시 +1 적립<br/>- 광고 시청 시 +1 (일 2회)"]
+        EGG_STAMP --> CHK_STAMP{"3스탬프 달성?"}
+        CHK_STAMP -->|YES| EGG_NATURAL["무료 일반 알 (Natural) 획득<br/>- 잠재력: 30~45 / 부화 10분"]
+        CHK_STAMP -->|NO| MOB_LOBBY
+
+        ACQUIRE_PATH -->|상점 가차| EGG_GACHA["알 가차 65종 마스터<br/>- Superior (30 Gem, POT 46~60)<br/>- Rare (100 Gem, POT 61~80)<br/>- Legendary (300 Gem / 10연차 천장)"]
+        ACQUIRE_PATH -->|유저 거래소| EGG_MARKET["API-유저 거래소 (t_market_trade)<br/>- Gold 매매 체결 (5% 수수료)"]
+        
+        EGG_NATURAL --> EGG_INV["인벤토리 보관<br/>[상태: EGG_WAITING]"]
+        EGG_GACHA --> EGG_INV
+        EGG_MARKET --> EGG_INV
+        
+        EGG_INV --> INCUBATE["인큐베이터 슬롯 안치 [상태: INCUBATING]<br/>- 등급별 부화 타이머 가동"]
+        INCUBATE --> MINI_GAME_TRIG{"부화 시간 50% 경과"}
+        
+        MINI_GAME_TRIG --> MINI_GAME["10초 터치 미니게임 팝업<br/>- S등급: 부화시간 -20% 단축<br/>- A등급: -12% / B: -5% / C: 0%"]
+        MINI_GAME --> HATCH_EXEC["부화 완료 & 스탯 연산<br/>(POST /farm/incubator/hatch)<br/>[상태: HATCHED]"]
+        
+        HATCH_EXEC --> STAT_GEN["1차 기본 스탯 초기 생성 분배<br/>- 잠재력(POT) 균등 난수 확정<br/>- 5대 스탯 = Clamp(POT*0.65 ± 3, 10, POT)<br/>- 성별 50% 부여 (수탉 HEN / 암탉 ROOSTER)"]
+        STAT_GEN --> ROOSTER_REG["선수단 등록 완료 [상태: IDLE]"]
+    end
+
+    %% =========================================================================
+    %% SECTION 3: 육성, 훈련, 교배 및 케어
+    %% =========================================================================
+    subgraph SEC_CARE_TRAIN ["【3】 육성, 훈련, 교배 & 케어 루프 (Care & Training & Breeding)"]
+        ROOSTER_REG --> ROOSTER_ROSTER["보유 닭 선수단 (t_rooster_farm) [IDLE]"]
+        ROOSTER_ROSTER --> ACT_CHOICE{"활동 선택"}
+        
+        ACT_CHOICE -->|능력치 훈련| TRAIN_START["훈련 종목 선택 (경주3종 / 격투4종)<br/>(POST /farm/training/start)<br/>- 사료 & 골드 소모 [상태: TRAINING]"]
+        TRAIN_START --> TRAIN_TIMER["훈련 타이머 가동 (15~30분)"]
+        TRAIN_TIMER --> TRAIN_CLAIM["훈련 결과 수령 (POST /training/claim)<br/>- 1차 스탯 상승 (POT 상한선 제어)<br/>- 2차 경주/격투 파생 스탯 실시간 재연산<br/>- 피로도 +15 누적"]
+        TRAIN_CLAIM --> STATE_CHECK
+        
+        ACT_CHOICE -->|2세대 교배| BREED_CHECK{"교배 조건 검증<br/>- 수탉 1두 + 암탉 1두 1쌍<br/>- 각 닭 breeding_count < 5회<br/>- 부상/쿨다운 없음"}
+        BREED_CHECK -->|충족| BREED_EXEC["종계 2세대 교배 실행<br/>(POST /farm/breeding/exec)<br/>- 5,000 Gold + 교배 토큰 1개<br/>[상태: BREEDING_LOCKED]"]
+        BREED_EXEC --> BREED_GEN["2세대 유전 공식 연산<br/>- 기본스탯 = Clamp(부모합90% ± 난수, 10, 100)<br/>- 잠재력상한 = Round(Max(부모A,B)*1.05)<br/>- 패시브 50% 유전 / 15% 돌연변이"]
+        BREED_GEN --> HERITAGE_EGG["교배 혈통 알 (Heritage Egg) 생성"]
+        HERITAGE_EGG --> EGG_INV
+        BREED_GEN --> BREED_AFTER["부모 닭 후속 처리<br/>- breeding_count += 1<br/>- 24시간 쿨다운 [BREEDING_COOLDOWN]"]
+        BREED_AFTER --> ROOSTER_ROSTER
+
+        STATE_CHECK{"피로도 및 부상 판정"}
+        STATE_CHECK -->|피로도 < 70| IDLE_RET["정상 대기 [상태: IDLE]"]
+        IDLE_RET --> ROOSTER_ROSTER
+        STATE_CHECK -->|피로도 70~89| STATE_FATIGUE["피로 누적 [FATIGUED]<br/>(경기 출전 시 스탯 -15% 페널티)"]
+        STATE_CHECK -->|피로도 90+ 출전| INJURY_ROLL{"부상 발생 확률 검증<br/>(30% 난수 판정)"}
+        INJURY_ROLL -->|부상 발생| STATE_INJURY["부상 상태 [INJURED]<br/>(출전 및 훈련 전면 불가)"]
+        INJURY_ROLL -->|생존| STATE_FATIGUE
+        
+        STATE_FATIGUE --> CARE_CHOICE{"케어 방식 선택"}
+        CARE_CHOICE -->|무료 닭장| COOP_REST["일반 닭장 무료 대기<br/>- 시간당 피로도 -10 감소"]
+        COOP_REST --> ROOSTER_ROSTER
+        CARE_CHOICE -->|보상형 광고| AD_REST["피로도 광고 (-20 즉시 회복, 일3회)"]
+        AD_REST --> ROOSTER_ROSTER
+        CARE_CHOICE -->|프리미엄 스파| SPA_EXEC
+        STATE_INJURY --> SPA_EXEC["프리미엄 스파 입욕 (POST /spa/enter)<br/>- 50 Gem 또는 5,000 Gold<br/>[상태: RESTING]"]
+        SPA_EXEC --> SPA_DONE["스파 완료 케어 즉시 적용<br/>- 피로도 0 완충 & 부상 즉시 완치<br/>- 24시간 '최상(100)' 컨디션 부여 [IDLE 복귀]"]
+        SPA_DONE --> ROOSTER_ROSTER
+    end
+
+    %% =========================================================================
+    %% SECTION 4: 더비 레이스
+    %% =========================================================================
+    subgraph SEC_DERBY_RACE ["【4】 더비 레이스: 6두 경주 & 온/오프라인 통합 (Derby Race)"]
+        DERBY_SCHED["24시간 타임 스케줄 (일 72회, 20분 간격)<br/>(GET /api/v1/derby/schedule)"] --> DERBY_MATCH["6두 자동 매칭 알고리즘 (4단계 완화)<br/>- match_score 격차 ±10~±20<br/>- 게이트 1~6번 시드 난수 배정"]
+        DERBY_MATCH --> DERBY_BRANCH{"참여 모드 분기"}
+
+        DERBY_BRANCH -->|📱 모바일 리그 출전| MOB_LEAGUE_ENTER["6단계 리그 출전 [IN_MATCH]<br/>(루키 ~ 챔피언십)"]
+        MOB_LEAGUE_ENTER --> DERBY_SIM_MOB["1,200m 경주 레이스 시뮬레이션<br/>- 주행 스타일 6종 가중치 반영<br/>- 결승 100m 터치 부스터 (+5% 순간 가속)"]
+        DERBY_SIM_MOB --> MOB_LEAGUE_RES["경주 종료 순위 확정<br/>- 순위별 승점(RP) 가산/차감<br/>- 우승 상금 Gold 지급 (광고 2배 찬스)<br/>- 피로도 +15 누적"]
+        MOB_LEAGUE_RES --> MOB_SEASON_CHECK{"주간 랭킹 마감 여부<br/>(매주 월 00:00)"}
+        MOB_SEASON_CHECK -->|정산| MOB_REWARD_CLAIM["리그 승강급 반영 & 시즌 보상 수령<br/>(Gold, Gem, 사료, 알 티켓, 칭호)"]
+        MOB_SEASON_CHECK -->|진행| STATE_CHECK
+        MOB_REWARD_CLAIM --> STATE_CHECK
+
+        DERBY_BRANCH -->|🌐 온라인 웹 베팅| WEB_BET_OPEN["배팅 접수 [서버 상태: BettingOpen]<br/>- Win (단승) / Quinella (복승) 선택<br/>- 3열 2행 선수 카드 & 배당률 롤링"]
+        WEB_BET_OPEN --> WEB_BET_INPUT["베팅 슬립 금액 입력 & 체결<br/>(POST /api/v1/derby/bet)<br/>- 최소 10 ~ 최대 10,000 Credit"]
+        WEB_BET_INPUT --> DERBY_LOCK{"경기 시작 30초 전"}
+        DERBY_LOCK -->|마감| WEB_BET_CLOSED["베팅 마감 [서버: BettingClosed]"]
+        WEB_BET_CLOSED --> DERBY_PHYSICS["서버 경주 물리 연산 [RaceResultComputed]<br/>- 스타일 가중 스탯 산출<br/>- 기본시간 20s - (가중스탯-60)*0.05s ± 난수<br/>- 1/1000초(ms) 단위 도착 순위 확정"]
+        DERBY_PHYSICS --> DERBY_WS["실시간 텔레메트리 브로드캐스트<br/>(WebSocket 'derby:telemetry' 초당 10회)<br/>- 130m 트랙 3D 시각 보간"]
+        DERBY_WS --> DERBY_PAYOUT["배당금 정산 트랜잭션 [PayoutCommitted]<br/>- 수수료 10% 차감, 1.01~99.00배 Clamp<br/>- 멱등성 키 'payout:raceId:userId' 기록"]
+        DERBY_PAYOUT --> DERBY_PUB["결과 공개 [서버: ResultPublished]"]
+        DERBY_PUB --> DERBY_CLAIM_UI["유저 배당금 수령 (POST /derby/claim)<br/>- 30일 유효기간 내 Claim"]
+        DERBY_CLAIM_UI --> WEB_INIT
+    end
+
+    %% =========================================================================
+    %% SECTION 5: 럼블 핏
+    %% =========================================================================
+    subgraph SEC_RUMBLE_PIT ["【5】 럼블 핏: 1v1 격투 & 사전/라이브 베팅 (Rumble Pit)"]
+        PIT_SCHED["24시간 대진표 (일 48회, 30분 간격)<br/>(GET /api/v1/pit/matches)"] --> PIT_MATCH["1v1 자동 매칭 알고리즘 (3단계 완화)<br/>- 격투종합지수 격차 ±10~±20<br/>- Red / Blue 코너 시드 배정"]
+        PIT_MATCH --> PIT_BRANCH{"참여 모드 분기"}
+
+        PIT_BRANCH -->|🥊 1v1 선수 출전| PIT_FIGHTER_ENTER["선수 링 입장 [상태: IN_MATCH]<br/>- 파이팅 스타일 5종 매트릭스"]
+        PIT_BRANCH -->|🌐 웹 프리매치| PIT_PRE_BET["프리매치 사전 베팅 (경기 3분 전 오픈)<br/>- 머니라인(승자) 배당 베팅"]
+        PIT_FIGHTER_ENTER --> COMBAT_SIM["1대1 링 격투 개시 (3R 2선승제, R당 45초)"]
+        PIT_PRE_BET --> COMBAT_SIM
+
+        COMBAT_SIM --> ROUND_LOOP["라운드 진행 (매 1초 1틱 서버 AI 연산)<br/>(WebSocket 'pit:combat_tick' 초당 1회)"]
+        ROUND_LOOP --> TICK_AI["스타일 5종 기반 액션 결정<br/>(부리/발차기/가드/패링/스텝)"]
+        TICK_AI --> DAMAGE_CALC["Hitbox & 데미지 공식 연산<br/>- 데미지 = Max(공격력*치명타배율 - 방어력, 1)<br/>- 패링 시 1.5배 역카운터 / 가드 시 -50%<br/>- 치명타 확률 Min(TEC*0.3%, 30%)"]
+        
+        DAMAGE_CALC --> HP_CHECK{"체력(HP) = 0 ?"}
+        HP_CHECK -->|YES| LAST_STAND_CHK{"투지 버티기 (Last Stand) 판정<br/>(근성 GRT * 0.5% 확률)"}
+        LAST_STAND_CHK -->|성공| HP_SURVIVE["체력 1 남기고 생존 & 전투 지속"]
+        HP_SURVIVE --> TICK_AI
+        LAST_STAND_CHK -->|실패| KO_DOWN["라운드 KO 다운 판정"]
+
+        HP_CHECK -->|NO| TIME_CHECK{"45초 만료?"}
+        TIME_CHECK -->|진행| TICK_AI
+        TIME_CHECK -->|타임아웃| ROUND_END_DEC["체력 우위 판정승 (동률 시 TEC 비교)"]
+
+        KO_DOWN --> ROUND_SETTLE["15초 휴식 & 체력 회복<br/>(MaxHP * REC/200)"]
+        ROUND_END_DEC --> ROUND_SETTLE
+
+        ROUND_SETTLE --> LIVE_BET_OPEN["인플레이 라이브 베팅 오픈<br/>(WebSocket 'pit:live_odds')<br/>- 잔여 체력 비율 기반 동적 배당 롤링"]
+        LIVE_BET_OPEN --> LIVE_BET_LOCK{"5초 전 베팅 락"}
+        LIVE_BET_LOCK --> LIVE_BET_CLOSE["라이브 슬립 잠금"]
+
+        ROUND_SETTLE --> MATCH_SETTLE_CHK{"2선승 달성 여부"}
+        MATCH_SETTLE_CHK -->|NO| ROUND_LOOP
+        MATCH_SETTLE_CHK -->|YES| PIT_FINAL_RES["최종 경기 승패 확정 & 정산"]
+
+        PIT_FINAL_RES --> PIT_PAYOUT_FIGHTER["출전 선수 파이트 머니 정산<br/>- 기본료 80% + 승리상금 70% (총 150%)<br/>- 피로도 +25 누적"]
+        PIT_FINAL_RES --> PIT_PAYOUT_BET["온라인 베팅 배당금 정산<br/>- 플랫폼 수수료 8% 차감 (1.01~50.00배)"]
+        PIT_PAYOUT_FIGHTER --> STATE_CHECK
+        PIT_PAYOUT_BET --> WEB_INIT
+    end
+
+    %% =========================================================================
+    %% SECTION 6: 메타 경제 & 리텐션
+    %% =========================================================================
+    subgraph SEC_META_ECONOMY ["【6】 메타 경제 순환 & 리텐션 루프 (Meta Economy)"]
+        ROOSTER_ROSTER --> QUEST_SYS["일일 5종 / 주간 4종 퀘스트 시스템"]
+        QUEST_SYS --> CLAIM_Q["퀘스트 보상 수령 (Gold, Gem, 사료, 알)"]
+        ROOSTER_ROSTER --> ACHIEVE_SYS["영구 업적 8종 & 칭호 20종 마스터"]
+        ACHIEVE_SYS --> TITLE_EQUIP["대표 칭호 장착 (패시브 버프 상시 부여)"]
+        
+        CLAIM_Q --> USER_WALLET["유저 자산 풀 (Gold / Gem / Feed / Credit)"]
+        TITLE_EQUIP --> USER_WALLET
+
+        USER_WALLET --> BANKRUPT_CHK{"골드 < 100G (파산 위기?)"}
+        BANKRUPT_CHK -->|YES| FREE_RECHARGE["광고 무료 충전소 (1,000G 긴급 지원)"]
+        FREE_RECHARGE --> USER_WALLET
+        BANKRUPT_CHK -->|NO| REINVEST["자산 재투자 선순환<br/>- 유료 알 뽑기 / 스파 온천 / 교배<br/>➔ 상위 선수 육성 ➔ 상위 리그/고배당 도전"]
+        REINVEST --> ACQUIRE_PATH
+    end
+
+    %% =========================================================================
+    %% 네온 테마 스타일 클래스
+    %% =========================================================================
+    classDef entryStyle fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef farmStyle fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef trainStyle fill:#451a03,stroke:#fbbf24,stroke-width:2px,color:#f8fafc;
+    classDef derbyStyle fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#f8fafc;
+    classDef pitStyle fill:#4c0519,stroke:#fb7185,stroke-width:2px,color:#f8fafc;
+    classDef metaStyle fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#f8fafc;
+    classDef decisionStyle fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+
+    class START,AUTH,MOB_CHECK,MOB_TUTORIAL,MOB_LOBBY,WEB_CHECK,WEB_INIT entryStyle;
+    class ACQUIRE_PATH,EGG_STAMP,EGG_NATURAL,EGG_GACHA,EGG_MARKET,EGG_INV,INCUBATE,MINI_GAME,HATCH_EXEC,STAT_GEN,ROOSTER_REG farmStyle;
+    class ROOSTER_ROSTER,TRAIN_START,TRAIN_TIMER,TRAIN_CLAIM,BREED_CHECK,BREED_EXEC,BREED_GEN,HERITAGE_EGG,BREED_AFTER,STATE_FATIGUE,STATE_INJURY,COOP_REST,AD_REST,SPA_EXEC,SPA_DONE,IDLE_RET trainStyle;
+    class DERBY_SCHED,DERBY_MATCH,MOB_LEAGUE_ENTER,DERBY_SIM_MOB,MOB_LEAGUE_RES,MOB_REWARD_CLAIM,WEB_BET_OPEN,WEB_BET_INPUT,WEB_BET_CLOSED,DERBY_PHYSICS,DERBY_WS,DERBY_PAYOUT,DERBY_PUB,DERBY_CLAIM_UI derbyStyle;
+    class PIT_SCHED,PIT_MATCH,PIT_FIGHTER_ENTER,PIT_PRE_BET,COMBAT_SIM,ROUND_LOOP,TICK_AI,DAMAGE_CALC,HP_SURVIVE,KO_DOWN,ROUND_SETTLE,LIVE_BET_OPEN,LIVE_BET_CLOSE,PIT_FINAL_RES,PIT_PAYOUT_FIGHTER,PIT_PAYOUT_BET pitStyle;
+    class QUEST_SYS,CLAIM_Q,ACHIEVE_SYS,TITLE_EQUIP,USER_WALLET,FREE_RECHARGE,REINVEST metaStyle;
+    class CHK_PLATFORM,CHK_STAMP,MINI_GAME_TRIG,ACT_CHOICE,STATE_CHECK,INJURY_ROLL,CARE_CHOICE,DERBY_BRANCH,MOB_SEASON_CHECK,DERBY_LOCK,PIT_BRANCH,HP_CHECK,LAST_STAND_CHK,TIME_CHECK,LIVE_BET_LOCK,MATCH_SETTLE_CHK,BANKRUPT_CHK decisionStyle;
+      </pre>
+    </div>
+  </main>
+
+  <!-- 하단 세부 기획서 퀵 링크 독 -->
+  <footer class="dock-bar">
+    <div class="dock-title">
+      <span>📑 세부 기획서 새 창 열기:</span>
+    </div>
+    <div class="dock-links">
+      <a href="통합_MVP_구성안.html#11-프로젝트-핵심-요약-amp-5대-수익화bm-모델" target="_blank" class="dock-btn">
+        §1 개요 &amp; 5대 BM ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-2" target="_blank" class="dock-btn farm">
+        §2 [육성] 럼블 팜 명세 ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-3" target="_blank" class="dock-btn derby">
+        §3 [경주] 더비 레이스 명세 ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-4" target="_blank" class="dock-btn pit">
+        §4 [격투] 럼블 핏 명세 ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-5" target="_blank" class="dock-btn meta">
+        §5 데이터 DB &amp; API 17종 ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-6" target="_blank" class="dock-btn">
+        §6 메인 화면 &amp; 오류처리 ↗
+      </a>
+      <a href="통합_MVP_구성안.html#sec-7" target="_blank" class="dock-btn">
+        §7 BGM/SFX 사운드 규격 ↗
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // 목차 드로어 열기/닫기
+    function toggleTocDrawer() {
+      const drawer = document.getElementById('toc-drawer');
+      drawer.classList.toggle('open');
+    }
+
+    // 테마 토글
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      document.getElementById('theme-icon').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Mermaid 렌더링
+    let panZoomInstance = null;
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 45,
+        rankSpacing: 55
+      }
+    });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const svgElement = document.querySelector('#canvas-container svg');
+        if (svgElement) {
+          panZoomInstance = svgPanZoom(svgElement, {
+            zoomEnabled: true,
+            controlIconsEnabled: false,
+            fit: true,
+            center: true,
+            minZoom: 0.05,
+            maxZoom: 10,
+            onZoom: function(scale) {
+              const zoomBadge = document.getElementById('zoom-text');
+              if (zoomBadge) {
+                zoomBadge.textContent = Math.round(scale * 100) + '%';
+              }
+            }
+          });
+          
+          panZoomInstance.fit();
+          panZoomInstance.center();
+          document.getElementById('zoom-text').textContent = Math.round(panZoomInstance.getZoom() * 100) + '%';
+        }
+      }, 500);
+    });
+
+    function zoomIn() {
+      if (panZoomInstance) panZoomInstance.zoomIn();
+    }
+
+    function zoomOut() {
+      if (panZoomInstance) panZoomInstance.zoomOut();
+    }
+
+    function resetZoom() {
+      if (panZoomInstance) {
+        panZoomInstance.reset();
+        panZoomInstance.fit();
+        panZoomInstance.center();
+      }
+    }
+
+    function toggleFullScreen() {
+      const target = document.getElementById('flow-stage');
+      if (!document.fullscreenElement) {
+        target.requestFullscreen().catch(err => alert(`전체화면 오류: ${err.message}`));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // =========================================================================
+    // 실제 픽셀 화면 좌표 기반 무결점 센터링 알고리즘 (Zero Offset Center Math)
+    // =========================================================================
+    function jumpToMajorSection(nodeKey) {
+      if (!panZoomInstance) return;
+
+      const svg = document.querySelector('#canvas-container svg');
+      if (!svg) return;
+
+      // 1. 정확한 대상 노드 탐색 (Node g 태그)
+      const allNodes = Array.from(svg.querySelectorAll('g.node'));
+      let targetNode = allNodes.find(g => {
+        const id = g.id || '';
+        return id === `flowchart-${nodeKey}` || id.startsWith(`flowchart-${nodeKey}-`) || id.includes(`-${nodeKey}-`);
+      });
+
+      // 텍스트 기반 폴백
+      if (!targetNode) {
+        const textElements = Array.from(svg.querySelectorAll('g.node text, g.node span, g.node p'));
+        const matched = textElements.find(t => t.textContent.includes(nodeKey));
+        if (matched) {
+          targetNode = matched.closest('g.node');
+        }
+      }
+
+      if (!targetNode) {
+        console.error('Target node not found:', nodeKey);
+        return;
+      }
+
+      // 2. 먼저 원하는 최적 줌 배율(1.3x) 설정
+      const targetZoom = 1.3;
+      panZoomInstance.zoom(targetZoom);
+
+      // 3. 브라우저 실제 화면 픽셀 BoundingClientRect 계산
+      const stageRect = document.getElementById('flow-stage').getBoundingClientRect();
+      const nodeRect = targetNode.getBoundingClientRect();
+
+      // 화면상의 목표 위치 (스테이지 가로 50% 중앙, 세로 40% 위치)
+      const targetScreenX = stageRect.left + stageRect.width / 2;
+      const targetScreenY = stageRect.top + stageRect.height * 0.40;
+
+      // 현재 노드의 실제 화면 중심 위치
+      const currentScreenX = nodeRect.left + nodeRect.width / 2;
+      const currentScreenY = nodeRect.top + nodeRect.height / 2;
+
+      // 필요한 실제 픽셀 이동량(Delta)
+      const deltaX = targetScreenX - currentScreenX;
+      const deltaY = targetScreenY - currentScreenY;
+
+      // 4. panBy로 정확하게 델타만큼 이동
+      panZoomInstance.panBy({ x: deltaX, y: deltaY });
+
+      // 5. 황금색 네온 펄스 애니메이션 부여
+      document.querySelectorAll('.target-highlight').forEach(e => e.classList.remove('target-highlight'));
+      targetNode.classList.add('target-highlight');
+      setTimeout(() => {
+        targetNode.classList.remove('target-highlight');
+      }, 3500);
+
+      // 6. 줌 텍스트 업데이트
+      document.getElementById('zoom-text').textContent = Math.round(targetZoom * 100) + '%';
+    }
+  </script>
+</body>
+</html>

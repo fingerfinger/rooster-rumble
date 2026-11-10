@@ -1,0 +1,1278 @@
+{
+  "version": 1,
+  "scripts": [
+    {
+      "id": "broadcast-01",
+      "name": "live-01",
+      "blend": {
+        "phaseTransitionSec": 0.8
+      },
+      "phases": [
+        {
+          "state": "waiting",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  6,
+                  1.5,
+                  -1
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 15,
+              "pos": {
+                "space": "target",
+                "target": "lane5",
+                "offset": [
+                  6,
+                  1.5,
+                  1
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane5",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 30,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  6,
+                  1.5,
+                  -1
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0
+              },
+              "move": "hold"
+            }
+          ]
+        },
+        {
+          "state": "ready",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -77,
+                  3,
+                  0
+                ]
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 2.5,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -77,
+                  3,
+                  0
+                ]
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 5,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": 15,
+                "sideM": 10,
+                "heightM": 4,
+                "target": "lane2"
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            }
+          ]
+        },
+        {
+          "state": "race",
+          "domain": "progress",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": -4,
+                "sideM": 6.5,
+                "heightM": 3,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "track"
+            },
+            {
+              "at": 0.2,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": 15,
+                "sideM": 10,
+                "heightM": 4,
+                "target": "lane2"
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.4,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": 0,
+                "sideM": 16,
+                "heightM": 8,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "track"
+            },
+            {
+              "at": 0.5,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": 0,
+                "sideM": 16,
+                "heightM": 8,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.65,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": -13,
+                "sideM": 16,
+                "heightM": 8,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.75,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": -13,
+                "sideM": 16,
+                "heightM": 8,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.86,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "aheadM": 0,
+                "sideM": 15,
+                "heightM": 7,
+                "target": "leader"
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "track"
+            },
+            {
+              "at": 1,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "aheadM": 0,
+                "sideM": 15,
+                "heightM": 7,
+                "progress": 1
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "hold"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "script-exojkd",
+      "name": "live-02",
+      "blend": {
+        "phaseTransitionSec": 0.7
+      },
+      "phases": [
+        {
+          "state": "waiting",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  5,
+                  1.5,
+                  -2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 12,
+              "pos": {
+                "space": "target",
+                "target": "lane5",
+                "offset": [
+                  5,
+                  1.5,
+                  2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane5",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 24,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  5,
+                  1.5,
+                  -2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0
+              },
+              "move": "hold"
+            }
+          ]
+        },
+        {
+          "state": "ready",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -76,
+                  3.2,
+                  10
+                ]
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 2.5,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -68,
+                  2.2,
+                  6.5
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 5,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "lane2",
+                "aheadM": 10,
+                "sideM": 8.5,
+                "heightM": 3.2
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": -0.2
+              },
+              "move": "glide",
+              "ease": "smooth"
+            }
+          ]
+        },
+        {
+          "state": "race",
+          "domain": "progress",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "lane2",
+                "aheadM": 14.0,
+                "sideM": 10.0,
+                "heightM": 3.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 0.06,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 11.0,
+                "sideM": 9.5,
+                "heightM": 2.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.12,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  6.5,
+                  1.6,
+                  3.2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.18,
+              "pos": {
+                "space": "target",
+                "target": "rank2",
+                "offset": [
+                  6.0,
+                  1.5,
+                  3.5
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.24,
+              "pos": {
+                "space": "target",
+                "target": "rank3",
+                "offset": [
+                  7.0,
+                  1.8,
+                  4.0
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.3,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 8.0,
+                "sideM": 14.0,
+                "heightM": 6.2
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.36,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 6.0,
+                "sideM": 10.5,
+                "heightM": 3.0
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.42,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 2.0,
+                "sideM": 9.8,
+                "heightM": 2.2
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.48,
+              "pos": {
+                "space": "target",
+                "target": "rank2",
+                "offset": [
+                  5.8,
+                  1.5,
+                  3.0
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.54,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  5.5,
+                  1.5,
+                  2.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.6,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 4.0,
+                "sideM": 15.0,
+                "heightM": 6.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": -0.2
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.66,
+              "pos": {
+                "space": "target",
+                "target": "rank3",
+                "offset": [
+                  6.2,
+                  1.6,
+                  3.4
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank3",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.72,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 10.0,
+                "sideM": 10.5,
+                "heightM": 3.2
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.78,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 9.0,
+                "sideM": 13.5,
+                "heightM": 5.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": -0.2
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.84,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 6.5,
+                "sideM": 9.5,
+                "heightM": 2.4
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.9,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 3.5,
+                "sideM": 8.8,
+                "heightM": 2.0
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.94,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 2.5,
+                "sideM": 8.5,
+                "heightM": 1.9
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.97,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 2.0,
+                "sideM": 8.5,
+                "heightM": 1.9
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 0.988,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 1.0,
+                "aheadM": 8.0,
+                "sideM": 12.5,
+                "heightM": 4.8
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "finishLine"
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 1,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 1.0,
+                "aheadM": 8.0,
+                "sideM": 12.5,
+                "heightM": 4.8
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "finishLine"
+              },
+              "move": "hold"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "script-pzequ0",
+      "name": "live-03",
+      "blend": {
+        "phaseTransitionSec": 0.6
+      },
+      "phases": [
+        {
+          "state": "waiting",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  4.2,
+                  1.3,
+                  -1.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 10,
+              "pos": {
+                "space": "target",
+                "target": "lane5",
+                "offset": [
+                  4.2,
+                  1.3,
+                  1.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane5",
+                "aim": -0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 20,
+              "pos": {
+                "space": "target",
+                "target": "lane0",
+                "offset": [
+                  4.2,
+                  1.3,
+                  -1.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane0",
+                "aim": 0.1
+              },
+              "move": "hold"
+            }
+          ]
+        },
+        {
+          "state": "ready",
+          "domain": "time",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -60,
+                  1.2,
+                  0
+                ]
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 2.8,
+              "pos": {
+                "space": "world",
+                "xyz": [
+                  -64,
+                  1.4,
+                  0
+                ]
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 5,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 0.08,
+                "aheadM": 0,
+                "sideM": 1.2,
+                "heightM": 1.4
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "startGate"
+              },
+              "move": "glide",
+              "ease": "smooth"
+            }
+          ]
+        },
+        {
+          "state": "race",
+          "domain": "progress",
+          "keys": [
+            {
+              "at": 0,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 0.08,
+                "aheadM": 0,
+                "sideM": 0.5,
+                "heightM": 1.4
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 0.05,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 10.0,
+                "sideM": 7.5,
+                "heightM": 2.0
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.11,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  5.8,
+                  1.3,
+                  2.5
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.15
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.17,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  6.2,
+                  1.4,
+                  -2.5
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.23,
+              "pos": {
+                "space": "target",
+                "target": "rank2",
+                "offset": [
+                  5.8,
+                  1.4,
+                  2.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0.15
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.29,
+              "pos": {
+                "space": "target",
+                "target": "rank3",
+                "offset": [
+                  6.0,
+                  1.5,
+                  3.2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank3",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.35,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 12.0,
+                "sideM": 12.5,
+                "heightM": 7.2
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.41,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 9.0,
+                "sideM": 9.5,
+                "heightM": 2.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": -0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.47,
+              "pos": {
+                "space": "target",
+                "target": "rank2",
+                "offset": [
+                  6.5,
+                  1.4,
+                  2.8
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.53,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  5.2,
+                  1.1,
+                  2.2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.2
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.59,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 6.0,
+                "sideM": 14.5,
+                "heightM": 5.8
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": -0.15
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.65,
+              "pos": {
+                "space": "target",
+                "target": "rank3",
+                "offset": [
+                  6.2,
+                  1.5,
+                  3.2
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "rank2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.71,
+              "pos": {
+                "space": "target",
+                "target": "leader",
+                "offset": [
+                  6.5,
+                  1.5,
+                  -2.5
+                ]
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.77,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 9.5,
+                "sideM": 10.0,
+                "heightM": 2.6
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": -0.1
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.83,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 10.0,
+                "sideM": 13.0,
+                "heightM": 5.5
+              },
+              "look": {
+                "mode": "target",
+                "target": "lane2",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.89,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 6.5,
+                "sideM": 9.2,
+                "heightM": 2.1
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.94,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 4.0,
+                "sideM": 8.8,
+                "heightM": 1.9
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "smooth"
+            },
+            {
+              "at": 0.97,
+              "pos": {
+                "space": "rail",
+                "anchor": "target",
+                "target": "leader",
+                "aheadM": 2.5,
+                "sideM": 8.5,
+                "heightM": 1.8
+              },
+              "look": {
+                "mode": "target",
+                "target": "leader",
+                "aim": 0
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 0.988,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 1.0,
+                "aheadM": 8.5,
+                "sideM": 12.0,
+                "heightM": 4.6
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "finishLine"
+              },
+              "move": "glide",
+              "ease": "easeOut"
+            },
+            {
+              "at": 1,
+              "pos": {
+                "space": "rail",
+                "anchor": "trackProgress",
+                "progress": 1.0,
+                "aheadM": 8.5,
+                "sideM": 12.0,
+                "heightM": 4.6
+              },
+              "look": {
+                "mode": "world",
+                "anchor": "finishLine"
+              },
+              "move": "hold"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

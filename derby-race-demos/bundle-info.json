@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-10-13T06:31:18.048Z",
+  "entries": [
+    "demos/cameraEditor/index.html",
+    "demos/raceReplayDemo/index.html"
+  ],
+  "assetSource": "apps/client/src/features/race",
+  "catalogSource": "apps/mock-server/src/fixtures/chickenCatalog.json"
+}

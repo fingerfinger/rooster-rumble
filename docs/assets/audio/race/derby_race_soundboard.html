@@ -1,0 +1,2535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏇 ROOSTER RUMBLE - Derby Race 경주 사운드보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --border-color: #1e293b;
+      --border-highlight: #10b981;
+      --primary-green: #10b981;
+      --primary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7;
+      --accent-orange: #f97316;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 28px 20px 60px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    header.header {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.10) 50%, rgba(245, 158, 11, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-title h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+    }
+    .header-title h1 .badge {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      background: var(--primary-green);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header-title p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+    .volume-slider-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .volume-slider-box input[type="range"] {
+      width: 100px;
+      accent-color: var(--primary-green);
+      cursor: pointer;
+    }
+    .btn-global {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-global:hover {
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .btn-global.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+    }
+
+    /* Top Panels (Demo & BGM) */
+    .top-panel {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .demo-panel {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+    .bgm-panel {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .panel-title-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-title-area h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .tab-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tab-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-pill:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .tab-pill.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+    }
+    .tab-pill.active-gold {
+      background: var(--accent-gold);
+      color: #000;
+      font-weight: 700;
+      border-color: var(--accent-gold);
+    }
+    .panel-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 12px 18px;
+      border-radius: 8px;
+    }
+    .panel-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      max-width: 750px;
+    }
+    .panel-desc strong {
+      color: #fff;
+    }
+    .panel-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-play-lg {
+      background: var(--primary-green);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-play-lg:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    .btn-play-lg.btn-gold {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-highlight);
+    }
+    .filter-btn.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+    .card.playing {
+      border-color: var(--primary-green);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, var(--bg-card) 100%);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .card-id {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 2px;
+    }
+    .card-meta {
+      display: flex;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .category-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .badge-gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.2); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.4); }
+    .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .badge-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .badge-orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4); }
+    .badge-red { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    .card-script {
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin: 8px 0 10px 0;
+    }
+    .script-eng {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #38bdf8;
+      font-style: italic;
+    }
+    .script-kor {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .card-desc {
+      font-size: 0.80rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    /* Waveform Box */
+    .wave-box {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+    .wave-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 2px;
+      transition: height 0.15s ease, background 0.2s ease;
+    }
+    .card.playing .wave-bar {
+      background: var(--primary-green);
+      animation: waveDance 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes waveDance {
+      0% { height: 4px; }
+      100% { height: 26px; }
+    }
+
+    /* Player Controls */
+    .card-player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .btn-play {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-green);
+      border: none;
+      color: #fff;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-play:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+    }
+    .timeline-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .seek-bar {
+      width: 100%;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--border-color);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary-green);
+      cursor: pointer;
+    }
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.70rem;
+      color: var(--text-dim);
+    }
+    .btn-action-icon {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-action-icon:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Race Simulator Panel */
+    .simulator-panel {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .simulator-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .simulator-sub {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 14px;
+    }
+    .combo-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .combo-card:hover {
+      border-color: var(--primary-blue);
+      background: rgba(59, 130, 246, 0.08);
+    }
+    .combo-info h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .combo-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .btn-combo-trigger {
+      background: var(--primary-blue);
+      border: none;
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .btn-combo-trigger:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Specs Panel */
+    .specs-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .specs-panel h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .specs-table th, .specs-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    .specs-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .specs-table td strong {
+      color: #fff;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(16, 185, 129, 0.95);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-title">
+      <h1>
+        🏇 ROOSTER RUMBLE <span class="badge">Derby Race 사운드보드</span>
+      </h1>
+      <p>
+        인게임 BGM 3종 + 합본 1종, 주행/관중/카운트다운 SFX 11종, 영문 아나운서 중계 27종, 풀 레이스 시뮬레이션 데모 3종 통합 인터랙티브 청음실
+      </p>
+    </div>
+    <div class="header-controls">
+      <div class="volume-slider-box">
+        <span>마스터 볼륨</span>
+        <input type="range" id="masterVolume" min="0" max="1" step="0.05" value="0.9" oninput="changeMasterVolume(this.value)">
+      </div>
+      <button class="btn-global" onclick="stopAllAudio()">⏹ 전체 정지</button>
+      <button class="btn-global" id="showcaseBtn" onclick="toggleShowcase()">▶ 전곡 순차 청음</button>
+    </div>
+  </header>
+
+  <!-- 1. FULL RACE COMBAT SIMULATION DEMO PANEL (3 SAMPLES) -->
+  <section class="top-panel demo-panel">
+    <div class="panel-header">
+      <div class="panel-title-area">
+        <span style="font-size:1.35rem;">🏆</span>
+        <h3>[풀 레이스 시뮬레이션 데모] 인게임 26초 + 팡파레 3종 실전 트랙</h3>
+        <span style="background:var(--primary-green); color:#fff; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:4px;">32.55초 마스터</span>
+      </div>
+      <div class="tab-pills">
+        <button class="tab-pill active" id="pill-demo-1" onclick="selectDemoTrack('1')">샘플 1 (5번 우승)</button>
+        <button class="tab-pill" id="pill-demo-2" onclick="selectDemoTrack('2')">샘플 2 (4번 역전승)</button>
+        <button class="tab-pill" id="pill-demo-3" onclick="selectDemoTrack('3')">샘플 3 (6번 대역전)</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="panel-desc">
+        <div id="demo-title" style="font-weight:700; color:#fff; margin-bottom:4px;">[샘플 1] 5번 수탉 와이어 투 와이어 완승 시나리오 (32.55초)</div>
+        <div id="demo-timeline" style="font-size:0.78rem; color:var(--text-muted); line-height:1.4;">
+          0.0s 스타트건 ➔ 0.8s 출발 콜 ➔ 3.9s 3번 선두 ➔ 9.1s 5번 외곽 급상승 & 역전 ➔ 15.2s 직선주로 스퍼트 ➔ 22.5s 슬로우모션 BGM 페이드아웃 + 관중 크레센도 + 초박빙 판독 콜 ➔ 25.5s 결승선 돌파 대환호 + 5번 우승 콜 ➔ 결과 팡파레 5.75s 전곡 완주
+        </div>
+      </div>
+      <div class="panel-controls">
+        <div class="volume-slider-box">
+          <span>데모 볼륨</span>
+          <input type="range" id="demoVolume" min="0" max="1" step="0.05" value="0.85" oninput="changeDemoVolume(this.value)">
+        </div>
+        <button class="btn-play-lg" id="btnDemoPlay" onclick="toggleDemoPlay()">▶ 데모 재생</button>
+        <a class="btn-action-icon" id="demoDownload" href="demo/demo_race_simulation_26s.mp3" download title="데모 MP3 다운로드">💾</a>
+        <audio id="demoAudioPlayer" preload="auto"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. BGM CONTROLLER PANEL (3 THEMES) -->
+  <section class="top-panel bgm-panel">
+    <div class="panel-header">
+      <div class="panel-title-area">
+        <span style="font-size:1.35rem;">🎵</span>
+        <h3>[배경음악 BGM 컨트롤러] 경기 상황별 오케스트라 3종</h3>
+      </div>
+      <div class="tab-pills">
+        <button class="tab-pill active-gold" id="pill-bgm-lobby" onclick="selectBgmTrack('bgm_lobby')">로비/베팅 테마</button>
+        <button class="tab-pill" id="pill-bgm-race" onclick="selectBgmTrack('bgm_race')">인게임 질주 테마</button>
+        <button class="tab-pill" id="pill-bgm-result" onclick="selectBgmTrack('bgm_result')">결과 정산 팡파레</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="panel-desc">
+        <div id="bgm-title" style="font-weight:700; color:#fff; margin-bottom:4px;">로비 & 베팅 테마 (110BPM 챔버 오케스트라)</div>
+        <div id="bgm-desc" style="font-size:0.78rem; color:var(--text-muted); line-height:1.4;">
+          피치카토 바이올린, 프렌치 호른, 피아노, 콘트라베이스 편성의 편안하고 고급스러운 베팅 및 대기 분위기 조성. (무한 루프)
+        </div>
+      </div>
+      <div class="panel-controls">
+        <div class="volume-slider-box">
+          <span>BGM 볼륨</span>
+          <input type="range" id="bgmVolume" min="0" max="1" step="0.05" value="0.65" oninput="changeBgmVolume(this.value)">
+        </div>
+        <button class="btn-play-lg btn-gold" id="btnBgmPlay" onclick="toggleBgmPlay()">▶ BGM 재생</button>
+        <a class="btn-action-icon" id="bgmDownload" href="bgm/bgm_lobby_theme.mp3" download title="BGM MP3 다운로드">💾</a>
+        <audio id="bgmAudioPlayer" loop preload="auto"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">전체 보기 (42종)</button>
+    <button class="filter-btn" onclick="filterCategory('bgm', this)">공식 BGM (4종)</button>
+    <button class="filter-btn" onclick="filterCategory('sfx', this)">주행/관중/출발 SFX (11종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_num', this)">선수 번호 호명 (6종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_w1', this)">W-1 출발/늦출발 (5종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_w2', this)">W-2 초반 선두 (3종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_w3', this)">W-3 중반 역전/접전 (4종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_w4', this)">W-4 직선주로 스퍼트 (4종)</button>
+    <button class="filter-btn" onclick="filterCategory('vo_w5', this)">W-5 골인/판독/우승 (5종)</button>
+  </div>
+
+  <!-- SOUNDBOARD GRID (39 CARDS) -->
+  <div class="grid" id="soundGrid">
+
+    <!-- Card: bgm_lobby -->
+    <div class="card" data-category="bgm" id="card-bgm_lobby">
+      <div class="card-top">
+        <div>
+          <div class="card-id">bgm_lobby</div>
+          <div class="card-title">로비 & 베팅 테마 (Lobby Theme)</div>
+          <div class="card-meta">
+            <span id="dur-meta-bgm_lobby">30.0s</span>
+            <span>587 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">BGM (Loop)</span>
+      </div>
+      <div class="card-desc">110BPM 챔버 오케스트라 (피치카토 바이올린, 프렌치 호른, 피아노, 콘트라베이스). 편안하고 고급스러운 베팅 및 대기 분위기 조성.</div>
+      <div class="wave-box" id="wave-bgm_lobby"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('bgm_lobby', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('bgm_lobby', this.value)">
+          <div class="time-display">
+            <span id="cur-bgm_lobby">0.0s</span>
+            <span id="dur-bgm_lobby">30.0s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-bgm_lobby" href="bgm/bgm_lobby_theme.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-bgm_lobby" preload="auto"></audio>
+    </div>
+
+    <!-- Card: bgm_race -->
+    <div class="card" data-category="bgm" id="card-bgm_race">
+      <div class="card-top">
+        <div>
+          <div class="card-id">bgm_race</div>
+          <div class="card-title">인게임 질주 테마 (Race Sprint Theme)</div>
+          <div class="card-meta">
+            <span id="dur-meta-bgm_race">30.0s</span>
+            <span>704 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">BGM (Loop)</span>
+      </div>
+      <div class="card-desc">150BPM 브라스 & 스트링스 오케스트라 질주 테마. 16비트 바이올린 리듬과 드럼/베이스 비트로 박진감 넘치는 26초 경기 연출.</div>
+      <div class="wave-box" id="wave-bgm_race"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('bgm_race', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('bgm_race', this.value)">
+          <div class="time-display">
+            <span id="cur-bgm_race">0.0s</span>
+            <span id="dur-bgm_race">30.0s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-bgm_race" href="bgm/bgm_ingame_race.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-bgm_race" preload="auto"></audio>
+    </div>
+
+    <!-- Card: bgm_result -->
+    <div class="card" data-category="bgm" id="card-bgm_result">
+      <div class="card-top">
+        <div>
+          <div class="card-id">bgm_result</div>
+          <div class="card-title">결과 정산 팡파레 (Victory Fanfare)</div>
+          <div class="card-meta">
+            <span id="dur-meta-bgm_result">5.75s</span>
+            <span>135 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">BGM (One-shot)</span>
+      </div>
+      <div class="card-desc">트럼펫/트롬본 중심의 승리 축하 팡파레. 우승 확정 직후 중간 컷 없이 5.75초 전곡 100% 연주 후 자연스러운 잔향 마감.</div>
+      <div class="wave-box" id="wave-bgm_result"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('bgm_result', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('bgm_result', this.value)">
+          <div class="time-display">
+            <span id="cur-bgm_result">0.0s</span>
+            <span id="dur-bgm_result">5.75s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-bgm_result" href="bgm/bgm_result_theme.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-bgm_result" preload="auto"></audio>
+    </div>
+
+    <!-- Card: bgm_race_crowd -->
+    <div class="card" data-category="bgm" id="card-bgm_race_crowd">
+      <div class="card-top">
+        <div>
+          <div class="card-id">bgm_race_crowd</div>
+          <div class="card-title">인게임 질주 테마 + 관중 함성 (BGM with Crowd)</div>
+          <div class="card-meta">
+            <span id="dur-meta-bgm_race_crowd">30.0s</span>
+            <span>705 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">BGM+함성 (Sample)</span>
+      </div>
+      <div class="card-desc">150BPM 브라스 질주 테마에 야외 스타디움 관중 함성이 믹싱된 일체형 샘플 BGM 트랙.</div>
+      <div class="wave-box" id="wave-bgm_race_crowd"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('bgm_race_crowd', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('bgm_race_crowd', this.value)">
+          <div class="time-display">
+            <span id="cur-bgm_race_crowd">0.0s</span>
+            <span id="dur-bgm_race_crowd">30.0s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-bgm_race_crowd" href="bgm/bgm_ingame_race_with_crowd.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-bgm_race_crowd" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_ready -->
+    <div class="card" data-category="sfx" id="card-sfx_race_ready">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_ready</div>
+          <div class="card-title">출발 준비 음성 (Ready Voice)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_ready">0.40s</span>
+            <span>10 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">출발 보이스</span>
+      </div>
+      <div class="card-desc">신호총과 분리된 단독 "Ready..." 음성. 출발 카운트다운 진입 시 단독 재생.</div>
+      <div class="wave-box" id="wave-sfx_race_ready"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_ready', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_ready', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_ready">0.0s</span>
+            <span id="dur-sfx_race_ready">0.40s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_ready" href="sfx/sfx_race_ready.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_ready" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_countdown_beep -->
+    <div class="card" data-category="sfx" id="card-sfx_race_countdown_beep">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_countdown_beep</div>
+          <div class="card-title">3초 카운트다운 비프 벨 (Race Countdown Beep)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_countdown_beep">0.25s</span>
+            <span>7 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">카운트다운</span>
+      </div>
+      <div class="card-desc">자동차 레이싱 게임 스타일 1046Hz(C6) 고주파 비프 벨 단독음. 3... 2... 1... 카운트 시 1초 간격 1회씩 재생.</div>
+      <div class="wave-box" id="wave-sfx_race_countdown_beep"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_countdown_beep', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_countdown_beep', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_countdown_beep">0.0s</span>
+            <span id="dur-sfx_race_countdown_beep">0.25s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_countdown_beep" href="sfx/sfx_race_countdown_beep.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_countdown_beep" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_go_beep -->
+    <div class="card" data-category="sfx" id="card-sfx_race_go_beep">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_go_beep</div>
+          <div class="card-title">출발 GO 비프 (Race GO Beep)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_go_beep">0.48s</span>
+            <span>12 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">출발 비프음</span>
+      </div>
+      <div class="card-desc">자동차 레이싱 스타일 2093Hz(C7) 출발 고음 비프음 단독 사운드. 3초 카운트다운 비프(1046Hz) 대비 1옥타브 높은 단독 'GO!' 출발 신호음.</div>
+      <div class="wave-box" id="wave-sfx_race_go_beep"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_go_beep', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_go_beep', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_go_beep">0.0s</span>
+            <span id="dur-sfx_race_go_beep">0.48s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_go_beep" href="sfx/sfx_race_go_beep.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_go_beep" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_startgun -->
+    <div class="card" data-category="sfx" id="card-sfx_race_startgun">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_startgun</div>
+          <div class="card-title">출발 신호총 단발 (Start Gunshot)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_startgun">0.48s</span>
+            <span>12 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">스타트건</span>
+      </div>
+      <div class="card-desc">비프음 없이 순수한 9mm 피스톨 단발 격발음 ("탕!!"). 신호총 단독 발포 또는 GO 비프와 독립 레이어 합성 가능.</div>
+      <div class="wave-box" id="wave-sfx_race_startgun"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_startgun', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_startgun', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_startgun">0.0s</span>
+            <span id="dur-sfx_race_startgun">0.48s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_startgun" href="sfx/sfx_race_startgun.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_startgun" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_crowd_cheer -->
+    <div class="card" data-category="sfx" id="card-sfx_crowd_cheer">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_crowd_cheer</div>
+          <div class="card-title">야외 경기장 관중 함성 앰비언스</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_crowd_cheer">8.05s</span>
+            <span>189 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">관중 앰비언스</span>
+      </div>
+      <div class="card-desc">출발 서지(0.68) ➔ 중반 기본 응원(0.48) ➔ 결승 15m 크레센도(0.80) ➔ 골인 대환호(0.82) 동적 볼륨 제어.</div>
+      <div class="wave-box" id="wave-sfx_crowd_cheer"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_crowd_cheer', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_crowd_cheer', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_crowd_cheer">0.0s</span>
+            <span id="dur-sfx_crowd_cheer">8.05s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_crowd_cheer" href="sfx/sfx_crowd_cheer.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_crowd_cheer" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_heartbeat -->
+    <div class="card" data-category="sfx" id="card-sfx_race_heartbeat">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_heartbeat</div>
+          <div class="card-title">슬로우모션 심장 박동음 (Heartbeat)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_heartbeat">2.04s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">특수 연출</span>
+      </div>
+      <div class="card-desc">저역 흉강 공명 Lub/Dub 이중 박동. 결승선 앞 극적 긴장감 연출용 옵션 에셋.</div>
+      <div class="wave-box" id="wave-sfx_race_heartbeat"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_heartbeat', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_heartbeat', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_heartbeat">0.0s</span>
+            <span id="dur-sfx_race_heartbeat">2.04s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_heartbeat" href="sfx/sfx_race_heartbeat.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_heartbeat" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_gallop_1 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_gallop_1">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_gallop_1</div>
+          <div class="card-title">수탉 발굽/지면 마찰음 (Type A)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_gallop_1">0.39s</span>
+            <span>9 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">주행 발소리</span>
+      </div>
+      <div class="card-desc">모래 트랙 지면 마찰 텍스처. 1200Hz LPF 적용, 배경 질주음 뒤에 은은하게 묻히는 리듬 레이어.</div>
+      <div class="wave-box" id="wave-sfx_race_gallop_1"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_gallop_1', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_gallop_1', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_gallop_1">0.0s</span>
+            <span id="dur-sfx_race_gallop_1">0.39s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_gallop_1" href="sfx/sfx_race_gallop_1.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_gallop_1" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_gallop_2 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_gallop_2">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_gallop_2</div>
+          <div class="card-title">수탉 발굽/지면 마찰음 (Type B)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_gallop_2">0.39s</span>
+            <span>9 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">주행 발소리</span>
+      </div>
+      <div class="card-desc">다중 레인 위상차 분산용 발소리 레이어. 6마리 수탉의 질주 입체감을 부여하는 지면 럼블.</div>
+      <div class="wave-box" id="wave-sfx_race_gallop_2"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_gallop_2', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_gallop_2', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_gallop_2">0.0s</span>
+            <span id="dur-sfx_race_gallop_2">0.39s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_gallop_2" href="sfx/sfx_race_gallop_2.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_gallop_2" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_gallop_3 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_gallop_3">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_gallop_3</div>
+          <div class="card-title">수탉 발굽/지면 마찰음 (Type C)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_gallop_3">0.39s</span>
+            <span>9 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">주행 발소리</span>
+      </div>
+      <div class="card-desc">고속 질주 시 지면을 박차고 나가는 발톱 텍스처. 레인별 패닝(-0.35~+0.40) 분산 적용.</div>
+      <div class="wave-box" id="wave-sfx_race_gallop_3"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_gallop_3', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_gallop_3', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_gallop_3">0.0s</span>
+            <span id="dur-sfx_race_gallop_3">0.39s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_gallop_3" href="sfx/sfx_race_gallop_3.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_gallop_3" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_cluck_1 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_cluck_1">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_cluck_1</div>
+          <div class="card-title">수탉 단발 기합 ("쾍-!")</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_cluck_1">0.39s</span>
+            <span>9 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">수탉 기합</span>
+      </div>
+      <div class="card-desc">0.39초 단발 호흡. 주행 중 순위 경합 및 순간적인 힘을 실을 때 발동하는 짧은 기합.</div>
+      <div class="wave-box" id="wave-sfx_race_cluck_1"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_cluck_1', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_cluck_1', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_cluck_1">0.0s</span>
+            <span id="dur-sfx_race_cluck_1">0.39s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_cluck_1" href="sfx/sfx_race_cluck_1.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_cluck_1" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_cluck_2 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_cluck_2">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_cluck_2</div>
+          <div class="card-title">수탉 2~3연타 호흡 ("꼬꼬꼭-!")</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_cluck_2">0.60s</span>
+            <span>14 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">수탉 기합</span>
+      </div>
+      <div class="card-desc">0.60초 2~3연타 호흡. 중반 직선 주로 진입 전 템포를 올리며 질주할 때 출력.</div>
+      <div class="wave-box" id="wave-sfx_race_cluck_2"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_cluck_2', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_cluck_2', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_cluck_2">0.0s</span>
+            <span id="dur-sfx_race_cluck_2">0.60s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_cluck_2" href="sfx/sfx_race_cluck_2.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_cluck_2" preload="auto"></audio>
+    </div>
+
+    <!-- Card: sfx_race_cluck_3 -->
+    <div class="card" data-category="sfx" id="card-sfx_race_cluck_3">
+      <div class="card-top">
+        <div>
+          <div class="card-id">sfx_race_cluck_3</div>
+          <div class="card-title">성체 수탉 풀 포효 ("꼬끼오오오-!")</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_race_cluck_3">1.78s</span>
+            <span>42 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-green">풀 포효</span>
+      </div>
+      <div class="card-desc">1.78초 성체 수탉의 위풍당당한 풀 포효. 결승선 15m 앞 라스트 스퍼트 시 폭발적 발동.</div>
+      <div class="wave-box" id="wave-sfx_race_cluck_3"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_race_cluck_3', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_race_cluck_3', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_race_cluck_3">0.0s</span>
+            <span id="dur-sfx_race_cluck_3">1.78s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_race_cluck_3" href="sfx/sfx_race_cluck_3.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_race_cluck_3" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_01 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_01</div>
+          <div class="card-title">선수 번호 호명: 1번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_01">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 1!"</div>
+        <div class="script-kor">1번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 1번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_01">0.0s</span>
+            <span id="dur-vo_rooster_num_01">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_01" href="voice/vo_rooster_num_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_02 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_02</div>
+          <div class="card-title">선수 번호 호명: 2번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_02">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 2!"</div>
+        <div class="script-kor">2번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 2번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_02">0.0s</span>
+            <span id="dur-vo_rooster_num_02">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_02" href="voice/vo_rooster_num_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_03 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_03</div>
+          <div class="card-title">선수 번호 호명: 3번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_03">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 3!"</div>
+        <div class="script-kor">3번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 3번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_03">0.0s</span>
+            <span id="dur-vo_rooster_num_03">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_03" href="voice/vo_rooster_num_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_04 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_04">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_04</div>
+          <div class="card-title">선수 번호 호명: 4번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_04">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 4!"</div>
+        <div class="script-kor">4번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 4번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_04"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_04', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_04', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_04">0.0s</span>
+            <span id="dur-vo_rooster_num_04">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_04" href="voice/vo_rooster_num_04.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_04" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_05 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_05">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_05</div>
+          <div class="card-title">선수 번호 호명: 5번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_05">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 5!"</div>
+        <div class="script-kor">5번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 5번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_05"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_05', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_05', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_05">0.0s</span>
+            <span id="dur-vo_rooster_num_05">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_05" href="voice/vo_rooster_num_05.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_05" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_rooster_num_06 -->
+    <div class="card" data-category="vo_num" id="card-vo_rooster_num_06">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_rooster_num_06</div>
+          <div class="card-title">선수 번호 호명: 6번</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_rooster_num_06">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-cyan">번호 호명</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Number 6!"</div>
+        <div class="script-kor">6번!</div>
+      </div>
+      <div class="card-desc">상황 중계 멘트 직전/직후 조합하여 6번 수탉을 지칭할 때 사용.</div>
+      <div class="wave-box" id="wave-vo_rooster_num_06"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_rooster_num_06', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_rooster_num_06', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_rooster_num_06">0.0s</span>
+            <span id="dur-vo_rooster_num_06">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_rooster_num_06" href="voice/vo_rooster_num_06.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_rooster_num_06" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_start_01 -->
+    <div class="card" data-category="vo_w1" id="card-vo_us_start_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_start_01</div>
+          <div class="card-title">W-1 출발: 힘찬 출발</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_start_01">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-1 출발</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"And away they go!"</div>
+        <div class="script-kor">일제히 힘차게 출발합니다!</div>
+      </div>
+      <div class="card-desc">신호총 발포 직후 정상 출발 선언 (우선순위 P2).</div>
+      <div class="wave-box" id="wave-vo_us_start_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_start_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_start_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_start_01">0.0s</span>
+            <span id="dur-vo_us_start_01">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_start_01" href="voice/vo_us_start_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_start_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_start_02 -->
+    <div class="card" data-category="vo_w1" id="card-vo_us_start_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_start_02</div>
+          <div class="card-title">W-1 출발: 경기 시작</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_start_02">1.24s</span>
+            <span>58 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-1 출발</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"And they're off in Rooster Rumble!"</div>
+        <div class="script-kor">루스터 럼블, 경주가 시작되었습니다!</div>
+      </div>
+      <div class="card-desc">신호총 발포 직후 타이틀 연계 공식 출발 선언 (우선순위 P2).</div>
+      <div class="wave-box" id="wave-vo_us_start_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_start_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_start_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_start_02">0.0s</span>
+            <span id="dur-vo_us_start_02">1.24s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_start_02" href="voice/vo_us_start_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_start_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_start_03 -->
+    <div class="card" data-category="vo_w1" id="card-vo_us_start_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_start_03</div>
+          <div class="card-title">W-1 출발: 스타트 질주</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_start_03">1.25s</span>
+            <span>59 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-1 출발</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Off the mark and away they sprint!"</div>
+        <div class="script-kor">출발선을 차고 수탉들이 튀어나갑니다!</div>
+      </div>
+      <div class="card-desc">출발선을 박차고 나가는 역동적 출발 콜 (우선순위 P2).</div>
+      <div class="wave-box" id="wave-vo_us_start_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_start_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_start_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_start_03">0.0s</span>
+            <span id="dur-vo_us_start_03">1.25s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_start_03" href="voice/vo_us_start_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_start_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_flinch_01 -->
+    <div class="card" data-category="vo_w1" id="card-vo_us_flinch_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_flinch_01</div>
+          <div class="card-title">W-1 늦출발: 출발 삐끗</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_flinch_01">1.87s</span>
+            <span>88 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-red">W-1 늦출발</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Bad break! Stumbled off the line!"</div>
+        <div class="script-kor">출발이 삐끗합니다! 출발선에서 멈칫하네요!</div>
+      </div>
+      <div class="card-desc">선수 중 늦출발(Flinch) 발생 시 긴급 상황 콜 (우선순위 P2).</div>
+      <div class="wave-box" id="wave-vo_us_flinch_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_flinch_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_flinch_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_flinch_01">0.0s</span>
+            <span id="dur-vo_us_flinch_01">1.87s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_flinch_01" href="voice/vo_us_flinch_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_flinch_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_flinch_02 -->
+    <div class="card" data-category="vo_w1" id="card-vo_us_flinch_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_flinch_02</div>
+          <div class="card-title">W-1 늦출발: 초반 거리 손실</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_flinch_02">1.41s</span>
+            <span>66 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-red">W-1 늦출발</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Awkward start, losing ground early!"</div>
+        <div class="script-kor">스타트 불안정! 초반 거리가 벌어집니다!</div>
+      </div>
+      <div class="card-desc">스타트 실패로 후미 낙오 수탉 발생 시 출력 (우선순위 P2).</div>
+      <div class="wave-box" id="wave-vo_us_flinch_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_flinch_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_flinch_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_flinch_02">0.0s</span>
+            <span id="dur-vo_us_flinch_02">1.41s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_flinch_02" href="voice/vo_us_flinch_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_flinch_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_early_01 -->
+    <div class="card" data-category="vo_w2" id="card-vo_us_early_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_early_01</div>
+          <div class="card-title">W-2 초반: 빠른 순발력 선두</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_early_01">1.29s</span>
+            <span>61 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-2 초반</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Showing early speed to take the lead!"</div>
+        <div class="script-kor">빠른 순발력으로 선두를 잡습니다!</div>
+      </div>
+      <div class="card-desc">4.0s~9.0s 구간 초반 선두 장악 수탉 호출 (우선순위 P3).</div>
+      <div class="wave-box" id="wave-vo_us_early_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_early_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_early_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_early_01">0.0s</span>
+            <span id="dur-vo_us_early_01">1.29s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_early_01" href="voice/vo_us_early_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_early_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_early_02 -->
+    <div class="card" data-category="vo_w2" id="card-vo_us_early_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_early_02</div>
+          <div class="card-title">W-2 초반: 선두 도주</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_early_02">1.12s</span>
+            <span>53 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-2 초반</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Grabs the lead early on!"</div>
+        <div class="script-kor">초반 선두로 나섭니다!</div>
+      </div>
+      <div class="card-desc">초반 앞서나가는 선두 수탉 중계 (우선순위 P3).</div>
+      <div class="wave-box" id="wave-vo_us_early_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_early_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_early_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_early_02">0.0s</span>
+            <span id="dur-vo_us_early_02">1.12s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_early_02" href="voice/vo_us_early_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_early_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_early_03 -->
+    <div class="card" data-category="vo_w2" id="card-vo_us_early_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_early_03</div>
+          <div class="card-title">W-2 초반: 페이스 리드</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_early_03">1.15s</span>
+            <span>54 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-blue">W-2 초반</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Setting the pace out front!"</div>
+        <div class="script-kor">선두에서 경주를 이끌어갑니다!</div>
+      </div>
+      <div class="card-desc">선두 자리에서 페이스를 조율하는 선행마 콜 (우선순위 P3).</div>
+      <div class="wave-box" id="wave-vo_us_early_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_early_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_early_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_early_03">0.0s</span>
+            <span id="dur-vo_us_early_03">1.15s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_early_03" href="voice/vo_us_early_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_early_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_over_01 -->
+    <div class="card" data-category="vo_w3" id="card-vo_us_over_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_over_01</div>
+          <div class="card-title">W-3 중반: 선두 탈환</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_over_01">1.03s</span>
+            <span>48 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-purple">W-3 역전</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Takes over the lead!"</div>
+        <div class="script-kor">선두를 빼앗아냅니다!</div>
+      </div>
+      <div class="card-desc">9.0s~15.0s 구간 선두가 뒤바뀌는 결정적 순간 출력 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_over_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_over_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_over_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_over_01">0.0s</span>
+            <span id="dur-vo_us_over_01">1.03s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_over_01" href="voice/vo_us_over_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_over_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_over_02 -->
+    <div class="card" data-category="vo_w3" id="card-vo_us_over_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_over_02</div>
+          <div class="card-title">W-3 중반: 파워풀 서지</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_over_02">1.15s</span>
+            <span>54 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-purple">W-3 역전</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Makes a powerful surge!"</div>
+        <div class="script-kor">거세게 치고 올라옵니다!</div>
+      </div>
+      <div class="card-desc">외곽에서 가속 페달을 밟으며 맹렬히 진격할 때 출력 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_over_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_over_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_over_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_over_02">0.0s</span>
+            <span id="dur-vo_us_over_02">1.15s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_over_02" href="voice/vo_us_over_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_over_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_over_03 -->
+    <div class="card" data-category="vo_w3" id="card-vo_us_over_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_over_03</div>
+          <div class="card-title">W-3 중반: 선두 급부상</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_over_03">1.04s</span>
+            <span>49 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-purple">W-3 역전</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Surging to the front!"</div>
+        <div class="script-kor">맹렬하게 선두로 치고 나섭니다!</div>
+      </div>
+      <div class="card-desc">후방에서 순식간에 선두권으로 치고 올라오는 연출 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_over_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_over_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_over_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_over_03">0.0s</span>
+            <span id="dur-vo_us_over_03">1.04s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_over_03" href="voice/vo_us_over_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_over_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_side_01 -->
+    <div class="card" data-category="vo_w3" id="card-vo_us_side_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_side_01</div>
+          <div class="card-title">W-3 중반: 나란한 접전</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_side_01">1.08s</span>
+            <span>51 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-purple">W-3 접전</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Head-to-head in a battle!"</div>
+        <div class="script-kor">팽팽하게 맞서며 치열한 접전입니다!</div>
+      </div>
+      <div class="card-desc">두 마리 수탉이 목차/코차로 나란히 달리는 접전 상황 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_side_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_side_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_side_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_side_01">0.0s</span>
+            <span id="dur-vo_us_side_01">1.08s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_side_01" href="voice/vo_us_side_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_side_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_stretch_01 -->
+    <div class="card" data-category="vo_w4" id="card-vo_us_stretch_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_stretch_01</div>
+          <div class="card-title">W-4 스퍼트: 직선주로 진입</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_stretch_01">1.06s</span>
+            <span>50 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-orange">W-4 스퍼트</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Down the stretch they come!"</div>
+        <div class="script-kor">마지막 직선주로로 일제히 접어듭니다!</div>
+      </div>
+      <div class="card-desc">15.0s~22.5s 구간 마지막 직선 주로 진입 선언 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_stretch_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_stretch_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_stretch_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_stretch_01">0.0s</span>
+            <span id="dur-vo_us_stretch_01">1.06s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_stretch_01" href="voice/vo_us_stretch_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_stretch_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_stretch_02 -->
+    <div class="card" data-category="vo_w4" id="card-vo_us_stretch_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_stretch_02</div>
+          <div class="card-title">W-4 스퍼트: 결승선 리드</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_stretch_02">1.06s</span>
+            <span>50 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-orange">W-4 스퍼트</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Leading them to the wire!"</div>
+        <div class="script-kor">선두로 결승선을 향해 질주합니다!</div>
+      </div>
+      <div class="card-desc">결승선을 앞두고 선두를 유지하며 달리는 수탉 콜 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_stretch_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_stretch_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_stretch_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_stretch_02">0.0s</span>
+            <span id="dur-vo_us_stretch_02">1.06s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_stretch_02" href="voice/vo_us_stretch_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_stretch_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_stretch_03 -->
+    <div class="card" data-category="vo_w4" id="card-vo_us_stretch_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_stretch_03</div>
+          <div class="card-title">W-4 스퍼트: 전원 결승선 질주</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_stretch_03">1.12s</span>
+            <span>53 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-orange">W-4 스퍼트</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"They're sprinting for the wire!"</div>
+        <div class="script-kor">결승선을 향해 전원 스퍼트합니다!</div>
+      </div>
+      <div class="card-desc">모든 수탉이 남은 체력을 쏟아붓는 총력전 상황 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_stretch_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_stretch_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_stretch_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_stretch_03">0.0s</span>
+            <span id="dur-vo_us_stretch_03">1.12s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_stretch_03" href="voice/vo_us_stretch_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_stretch_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_stretch_chui -->
+    <div class="card" data-category="vo_w4" id="card-vo_us_stretch_chui">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_stretch_chui</div>
+          <div class="card-title">W-4 스퍼트: 후방 맹추격</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_stretch_chui">1.12s</span>
+            <span>53 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-orange">W-4 추입</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Charging hard from behind!"</div>
+        <div class="script-kor">뒤쪽에서 무서운 속도로 맹추격합니다!</div>
+      </div>
+      <div class="card-desc">후방 추입형 수탉이 막판 스피드로 좁혀오는 상황 (우선순위 P1).</div>
+      <div class="wave-box" id="wave-vo_us_stretch_chui"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_stretch_chui', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_stretch_chui', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_stretch_chui">0.0s</span>
+            <span id="dur-vo_us_stretch_chui">1.12s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_stretch_chui" href="voice/vo_us_stretch_chui.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_stretch_chui" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_win_01 -->
+    <div class="card" data-category="vo_w5" id="card-vo_us_win_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_win_01</div>
+          <div class="card-title">W-5 우승: 와이어 투 와이어</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_win_01">1.04s</span>
+            <span>49 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">W-5 우승</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Wins it wire-to-wire!"</div>
+        <div class="script-kor">처음부터 끝까지 앞서며 우승을 차지합니다!</div>
+      </div>
+      <div class="card-desc">초반 선두를 끝까지 지킨 완승 연출 (우선순위 P0).</div>
+      <div class="wave-box" id="wave-vo_us_win_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_win_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_win_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_win_01">0.0s</span>
+            <span id="dur-vo_us_win_01">1.04s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_win_01" href="voice/vo_us_win_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_win_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_win_02 -->
+    <div class="card" data-category="vo_w5" id="card-vo_us_win_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_win_02</div>
+          <div class="card-title">W-5 우승: 결승선 완승</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_win_02">1.21s</span>
+            <span>57 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">W-5 우승</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"It is all victory at the wire!"</div>
+        <div class="script-kor">결승선 앞 완벽한 승리를 거둡니다!</div>
+      </div>
+      <div class="card-desc">결승선에서 극적인 승리를 거머쥔 챔피언 선언 (우선순위 P0).</div>
+      <div class="wave-box" id="wave-vo_us_win_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_win_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_win_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_win_02">0.0s</span>
+            <span id="dur-vo_us_win_02">1.21s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_win_02" href="voice/vo_us_win_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_win_02" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_win_03 -->
+    <div class="card" data-category="vo_w5" id="card-vo_us_win_03">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_win_03</div>
+          <div class="card-title">W-5 우승: 럼블 챔피언</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_win_03">1.29s</span>
+            <span>61 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-gold">W-5 우승</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Takes the victory in Rooster Rumble!"</div>
+        <div class="script-kor">루스터 럼블의 챔피언에 등극합니다!</div>
+      </div>
+      <div class="card-desc">대회 공식 챔피언 등극 피날레 선언 (우선순위 P0).</div>
+      <div class="wave-box" id="wave-vo_us_win_03"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_win_03', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_win_03', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_win_03">0.0s</span>
+            <span id="dur-vo_us_win_03">1.29s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_win_03" href="voice/vo_us_win_03.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_win_03" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_photo_01 -->
+    <div class="card" data-category="vo_w5" id="card-vo_us_photo_01">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_photo_01</div>
+          <div class="card-title">W-5 판독: 동시 돌파 접전</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_photo_01">1.91s</span>
+            <span>89 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-red">W-5 판독</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Too close to call! They cross the line together!"</div>
+        <div class="script-kor">판가름하기 어렵습니다! 거의 동시에 통과합니다!</div>
+      </div>
+      <div class="card-desc">22.5s 슬로우모션 진입 시 동시 통과 초박빙 상황 콜 (우선순위 P0).</div>
+      <div class="wave-box" id="wave-vo_us_photo_01"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_photo_01', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_photo_01', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_photo_01">0.0s</span>
+            <span id="dur-vo_us_photo_01">1.91s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_photo_01" href="voice/vo_us_photo_01.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_photo_01" preload="auto"></audio>
+    </div>
+
+    <!-- Card: vo_us_photo_02 -->
+    <div class="card" data-category="vo_w5" id="card-vo_us_photo_02">
+      <div class="card-top">
+        <div>
+          <div class="card-id">vo_us_photo_02</div>
+          <div class="card-title">W-5 판독: 코차 사진 판독</div>
+          <div class="card-meta">
+            <span id="dur-meta-vo_us_photo_02">1.74s</span>
+            <span>81 KB</span>
+          </div>
+        </div>
+        <span class="category-badge badge-red">W-5 판독</span>
+      </div>
+      <div class="card-script">
+        <div class="script-eng">"Nose to nose at the wire! Who took it?!"</div>
+        <div class="script-kor">부리와 부리가 나란히 통과! 과연 승자는 누구인가!</div>
+      </div>
+      <div class="card-desc">극단적 코차(Nose) 판독으로 긴장감을 극대화하는 콜 (우선순위 P0).</div>
+      <div class="wave-box" id="wave-vo_us_photo_02"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('vo_us_photo_02', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('vo_us_photo_02', this.value)">
+          <div class="time-display">
+            <span id="cur-vo_us_photo_02">0.0s</span>
+            <span id="dur-vo_us_photo_02">1.74s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-vo_us_photo_02" href="voice/vo_us_photo_02.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-vo_us_photo_02" preload="auto"></audio>
+    </div>
+
+  </div>
+
+  <!-- IN-GAME RACE SCENARIO SIMULATOR -->
+  <section class="simulator-panel">
+    <div class="simulator-title">🔥 인게임 레이스 시나리오 시뮬레이터 (5대 실전 시퀀스 믹서)</div>
+    <div class="simulator-sub">
+      실제 게임 플레이 중 발생하는 복합 오디오(스타트건 ➔ 보이스 ➔ 수탉 기합/발소리 ➔ 관중 환호 ➔ 팡파레) 시차 연계를 원클릭으로 체험
+    </div>
+    <div class="combo-grid">
+
+      <!-- Seq 1 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 1] 카운트다운 & GO 비프 + 스타트건 출발</h4>
+          <p>Ready ➔ 3·2·1 비프 ➔ GO 비프 & 총소리 + 출발 콜</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_race_ready', 'sfx_race_countdown_beep', 'sfx_race_countdown_beep', 'sfx_race_countdown_beep', 'sfx_race_go_beep', 'sfx_race_startgun', 'vo_us_start_01'], [0, 600, 1400, 2200, 3000, 3000, 3400])">
+          ⚡ 카운트 & 출발
+        </button>
+      </div>
+
+      <!-- Seq 2 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 2] 초반 선두 호명 & 페이스 리드</h4>
+          <p>3번 호명 ➔ 0.3초 후 "Setting the pace out front!"</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['vo_rooster_num_03', 'vo_us_early_03'], [0, 300])">
+          ⚡ 시퀀스 재생
+        </button>
+      </div>
+
+      <!-- Seq 3 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 3] 중반 외곽 파워풀 서지 & 선두 역전</h4>
+          <p>5번 호명 ➔ 0.3s 서지 콜 ➔ 0.6s 선두 탈환 콜</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['vo_rooster_num_05', 'vo_us_over_02', 'vo_us_over_01'], [0, 300, 900])">
+          ⚡ 시퀀스 재생
+        </button>
+      </div>
+
+      <!-- Seq 4 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 4] 직선주로 전원 스퍼트 & 수탉 포효</h4>
+          <p>직선주로 콜 ➔ 0.4s 성체 수탉 풀 포효 + 관중 서지</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['vo_us_stretch_01', 'sfx_race_cluck_3', 'sfx_crowd_cheer'], [0, 400, 400])">
+          ⚡ 시퀀스 재생
+        </button>
+      </div>
+
+      <!-- Seq 5 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 5] 초박빙 포토피니시 ➔ 5번 우승 팡파레</h4>
+          <p>판독 콜 ➔ 1.5s 5번 우승 콜 ➔ 0.6s 결과 팡파레</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['vo_us_photo_02', 'vo_us_win_01', 'bgm_result', 'sfx_crowd_cheer'], [0, 1500, 2200, 2200])">
+          🏆 피날레 재생
+        </button>
+      </div>
+
+      <!-- Seq 6 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[시퀀스 6] 6번 늦출발 사고 & 기적의 역전승</h4>
+          <p>6번 호명 ➔ 늦출발 사고 콜 ➔ 1.2s 챔피언 등극 콜</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['vo_rooster_num_06', 'vo_us_flinch_01', 'vo_us_win_03'], [0, 300, 1600])">
+          🏆 대역전 재생
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS TABLE -->
+  <section class="specs-panel">
+    <h3>📊 ROOSTER RUMBLE: Derby Race 사운드 아키텍처 및 오디오 규격</h3>
+    <table class="specs-table">
+      <thead>
+        <tr>
+          <th>레이어 구분</th>
+          <th>대상 에셋</th>
+          <th>기준 볼륨 및 덕킹 정책</th>
+          <th>오디오 포맷 사양</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Layer 4 (UI/System)</strong></td>
+          <td>버튼 클릭, 베팅 확정, 당첨금 카운트업</td>
+          <td>0 dB (상시 최상위 출력, 덕킹 미적용)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 3 (Voice)</strong></td>
+          <td>영문 장내 아나운서 중계 27종</td>
+          <td>-1 dB ~ 0 dB (BGM/SFX 덕킹 제어 트리거 발동)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 2 (주행/출발 SFX)</strong></td>
+          <td>레디, 카운트 비프, GO 비프, 스타트건, 수탉 발굽 3종, 기합 3종, 심장박동</td>
+          <td>-6 dB ~ -12 dB (보이스 출력 시 -3dB~-4dB 가벼운 감쇄)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 1 (BGM)</strong></td>
+          <td>로비 테마, 인게임 질주 테마, 결과 팡파레, 질주+관중 합본</td>
+          <td>-4 dB ~ -6 dB (보이스 출력 시 -5.7dB 감쇄, 결승 15m 전 페이드아웃)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 0 (관중)</strong></td>
+          <td>야외 경기장 관중 함성 앰비언스</td>
+          <td>출발 서지(0.68) ➔ 기본(0.48) ➔ 크레센도(0.80) ➔ 대환호(0.82)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+        <tr>
+          <td><strong>Full Simulation</strong></td>
+          <td>풀 레이스 시뮬레이션 데모 3종</td>
+          <td>32.55초 마스터 트랙 (26초 주행 + 5.75초 결과 팡파레 100% 완주)</td>
+          <td>Stereo, 44.1kHz, 192kbps MP3</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // 에셋 데이터베이스
+  const cardData = [{"id": "bgm_lobby", "file": "bgm/bgm_lobby_theme.mp3", "title": "로비 & 베팅 테마 (Lobby Theme)", "dur": "30.0s", "size": "587 KB", "cat": "bgm", "badge": "BGM (Loop)", "badge_class": "badge-gold", "desc": "110BPM 챔버 오케스트라 (피치카토 바이올린, 프렌치 호른, 피아노, 콘트라베이스). 편안하고 고급스러운 베팅 및 대기 분위기 조성."}, {"id": "bgm_race", "file": "bgm/bgm_ingame_race.mp3", "title": "인게임 질주 테마 (Race Sprint Theme)", "dur": "30.0s", "size": "704 KB", "cat": "bgm", "badge": "BGM (Loop)", "badge_class": "badge-gold", "desc": "150BPM 브라스 & 스트링스 오케스트라 질주 테마. 16비트 바이올린 리듬과 드럼/베이스 비트로 박진감 넘치는 26초 경기 연출."}, {"id": "bgm_result", "file": "bgm/bgm_result_theme.mp3", "title": "결과 정산 팡파레 (Victory Fanfare)", "dur": "5.75s", "size": "135 KB", "cat": "bgm", "badge": "BGM (One-shot)", "badge_class": "badge-gold", "desc": "트럼펫/트롬본 중심의 승리 축하 팡파레. 우승 확정 직후 중간 컷 없이 5.75초 전곡 100% 연주 후 자연스러운 잔향 마감."}, {"id": "bgm_race_crowd", "file": "bgm/bgm_ingame_race_with_crowd.mp3", "title": "인게임 질주 테마 + 관중 함성 (BGM with Crowd)", "dur": "30.0s", "size": "705 KB", "cat": "bgm", "badge": "BGM+함성 (Sample)", "badge_class": "badge-gold", "desc": "150BPM 브라스 질주 테마에 야외 스타디움 관중 함성이 믹싱된 일체형 샘플 BGM 트랙."}, {"id": "sfx_race_ready", "file": "sfx/sfx_race_ready.mp3", "title": "출발 준비 음성 (Ready Voice)", "dur": "0.40s", "size": "10 KB", "cat": "sfx", "badge": "출발 보이스", "badge_class": "badge-green", "desc": "신호총과 분리된 단독 \"Ready...\" 음성. 출발 카운트다운 진입 시 단독 재생."}, {"id": "sfx_race_countdown_beep", "file": "sfx/sfx_race_countdown_beep.mp3", "title": "3초 카운트다운 비프 벨 (Race Countdown Beep)", "dur": "0.25s", "size": "7 KB", "cat": "sfx", "badge": "카운트다운", "badge_class": "badge-green", "desc": "자동차 레이싱 게임 스타일 1046Hz(C6) 고주파 비프 벨 단독음. 3... 2... 1... 카운트 시 1초 간격 1회씩 재생."}, {"id": "sfx_race_go_beep", "file": "sfx/sfx_race_go_beep.mp3", "title": "출발 GO 비프 (Race GO Beep)", "dur": "0.48s", "size": "12 KB", "cat": "sfx", "badge": "출발 비프음", "badge_class": "badge-green", "desc": "자동차 레이싱 스타일 2093Hz(C7) 출발 고음 비프음 단독 사운드. 3초 카운트다운 비프(1046Hz) 대비 1옥타브 높은 단독 'GO!' 출발 신호음."}, {"id": "sfx_race_startgun", "file": "sfx/sfx_race_startgun.mp3", "title": "출발 신호총 단발 (Start Gunshot)", "dur": "0.48s", "size": "12 KB", "cat": "sfx", "badge": "스타트건", "badge_class": "badge-green", "desc": "비프음 없이 순수한 9mm 피스톨 단발 격발음 (\"탕!!\"). 신호총 단독 발포 또는 GO 비프와 독립 레이어 합성 가능."}, {"id": "sfx_crowd_cheer", "file": "sfx/sfx_crowd_cheer.mp3", "title": "야외 경기장 관중 함성 앰비언스", "dur": "8.05s", "size": "189 KB", "cat": "sfx", "badge": "관중 앰비언스", "badge_class": "badge-green", "desc": "출발 서지(0.68) ➔ 중반 기본 응원(0.48) ➔ 결승 15m 크레센도(0.80) ➔ 골인 대환호(0.82) 동적 볼륨 제어."}, {"id": "sfx_race_heartbeat", "file": "sfx/sfx_race_heartbeat.mp3", "title": "슬로우모션 심장 박동음 (Heartbeat)", "dur": "2.04s", "size": "48 KB", "cat": "sfx", "badge": "특수 연출", "badge_class": "badge-green", "desc": "저역 흉강 공명 Lub/Dub 이중 박동. 결승선 앞 극적 긴장감 연출용 옵션 에셋."}, {"id": "sfx_race_gallop_1", "file": "sfx/sfx_race_gallop_1.mp3", "title": "수탉 발굽/지면 마찰음 (Type A)", "dur": "0.39s", "size": "9 KB", "cat": "sfx", "badge": "주행 발소리", "badge_class": "badge-green", "desc": "모래 트랙 지면 마찰 텍스처. 1200Hz LPF 적용, 배경 질주음 뒤에 은은하게 묻히는 리듬 레이어."}, {"id": "sfx_race_gallop_2", "file": "sfx/sfx_race_gallop_2.mp3", "title": "수탉 발굽/지면 마찰음 (Type B)", "dur": "0.39s", "size": "9 KB", "cat": "sfx", "badge": "주행 발소리", "badge_class": "badge-green", "desc": "다중 레인 위상차 분산용 발소리 레이어. 6마리 수탉의 질주 입체감을 부여하는 지면 럼블."}, {"id": "sfx_race_gallop_3", "file": "sfx/sfx_race_gallop_3.mp3", "title": "수탉 발굽/지면 마찰음 (Type C)", "dur": "0.39s", "size": "9 KB", "cat": "sfx", "badge": "주행 발소리", "badge_class": "badge-green", "desc": "고속 질주 시 지면을 박차고 나가는 발톱 텍스처. 레인별 패닝(-0.35~+0.40) 분산 적용."}, {"id": "sfx_race_cluck_1", "file": "sfx/sfx_race_cluck_1.mp3", "title": "수탉 단발 기합 (\"쾍-!\")", "dur": "0.39s", "size": "9 KB", "cat": "sfx", "badge": "수탉 기합", "badge_class": "badge-green", "desc": "0.39초 단발 호흡. 주행 중 순위 경합 및 순간적인 힘을 실을 때 발동하는 짧은 기합."}, {"id": "sfx_race_cluck_2", "file": "sfx/sfx_race_cluck_2.mp3", "title": "수탉 2~3연타 호흡 (\"꼬꼬꼭-!\")", "dur": "0.60s", "size": "14 KB", "cat": "sfx", "badge": "수탉 기합", "badge_class": "badge-green", "desc": "0.60초 2~3연타 호흡. 중반 직선 주로 진입 전 템포를 올리며 질주할 때 출력."}, {"id": "sfx_race_cluck_3", "file": "sfx/sfx_race_cluck_3.mp3", "title": "성체 수탉 풀 포효 (\"꼬끼오오오-!\")", "dur": "1.78s", "size": "42 KB", "cat": "sfx", "badge": "풀 포효", "badge_class": "badge-green", "desc": "1.78초 성체 수탉의 위풍당당한 풀 포효. 결승선 15m 앞 라스트 스퍼트 시 폭발적 발동."}, {"id": "vo_rooster_num_01", "file": "voice/vo_rooster_num_01.mp3", "title": "선수 번호 호명: 1번", "eng": "Number 1!", "kor": "1번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 1번 수탉을 지칭할 때 사용."}, {"id": "vo_rooster_num_02", "file": "voice/vo_rooster_num_02.mp3", "title": "선수 번호 호명: 2번", "eng": "Number 2!", "kor": "2번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 2번 수탉을 지칭할 때 사용."}, {"id": "vo_rooster_num_03", "file": "voice/vo_rooster_num_03.mp3", "title": "선수 번호 호명: 3번", "eng": "Number 3!", "kor": "3번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 3번 수탉을 지칭할 때 사용."}, {"id": "vo_rooster_num_04", "file": "voice/vo_rooster_num_04.mp3", "title": "선수 번호 호명: 4번", "eng": "Number 4!", "kor": "4번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 4번 수탉을 지칭할 때 사용."}, {"id": "vo_rooster_num_05", "file": "voice/vo_rooster_num_05.mp3", "title": "선수 번호 호명: 5번", "eng": "Number 5!", "kor": "5번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 5번 수탉을 지칭할 때 사용."}, {"id": "vo_rooster_num_06", "file": "voice/vo_rooster_num_06.mp3", "title": "선수 번호 호명: 6번", "eng": "Number 6!", "kor": "6번!", "dur": "1.03s", "size": "48 KB", "cat": "vo_num", "badge": "번호 호명", "badge_class": "badge-cyan", "desc": "상황 중계 멘트 직전/직후 조합하여 6번 수탉을 지칭할 때 사용."}, {"id": "vo_us_start_01", "file": "voice/vo_us_start_01.mp3", "title": "W-1 출발: 힘찬 출발", "eng": "And away they go!", "kor": "일제히 힘차게 출발합니다!", "dur": "1.03s", "size": "48 KB", "cat": "vo_w1", "badge": "W-1 출발", "badge_class": "badge-blue", "desc": "신호총 발포 직후 정상 출발 선언 (우선순위 P2)."}, {"id": "vo_us_start_02", "file": "voice/vo_us_start_02.mp3", "title": "W-1 출발: 경기 시작", "eng": "And they're off in Rooster Rumble!", "kor": "루스터 럼블, 경주가 시작되었습니다!", "dur": "1.24s", "size": "58 KB", "cat": "vo_w1", "badge": "W-1 출발", "badge_class": "badge-blue", "desc": "신호총 발포 직후 타이틀 연계 공식 출발 선언 (우선순위 P2)."}, {"id": "vo_us_start_03", "file": "voice/vo_us_start_03.mp3", "title": "W-1 출발: 스타트 질주", "eng": "Off the mark and away they sprint!", "kor": "출발선을 차고 수탉들이 튀어나갑니다!", "dur": "1.25s", "size": "59 KB", "cat": "vo_w1", "badge": "W-1 출발", "badge_class": "badge-blue", "desc": "출발선을 박차고 나가는 역동적 출발 콜 (우선순위 P2)."}, {"id": "vo_us_flinch_01", "file": "voice/vo_us_flinch_01.mp3", "title": "W-1 늦출발: 출발 삐끗", "eng": "Bad break! Stumbled off the line!", "kor": "출발이 삐끗합니다! 출발선에서 멈칫하네요!", "dur": "1.87s", "size": "88 KB", "cat": "vo_w1", "badge": "W-1 늦출발", "badge_class": "badge-red", "desc": "선수 중 늦출발(Flinch) 발생 시 긴급 상황 콜 (우선순위 P2)."}, {"id": "vo_us_flinch_02", "file": "voice/vo_us_flinch_02.mp3", "title": "W-1 늦출발: 초반 거리 손실", "eng": "Awkward start, losing ground early!", "kor": "스타트 불안정! 초반 거리가 벌어집니다!", "dur": "1.41s", "size": "66 KB", "cat": "vo_w1", "badge": "W-1 늦출발", "badge_class": "badge-red", "desc": "스타트 실패로 후미 낙오 수탉 발생 시 출력 (우선순위 P2)."}, {"id": "vo_us_early_01", "file": "voice/vo_us_early_01.mp3", "title": "W-2 초반: 빠른 순발력 선두", "eng": "Showing early speed to take the lead!", "kor": "빠른 순발력으로 선두를 잡습니다!", "dur": "1.29s", "size": "61 KB", "cat": "vo_w2", "badge": "W-2 초반", "badge_class": "badge-blue", "desc": "4.0s~9.0s 구간 초반 선두 장악 수탉 호출 (우선순위 P3)."}, {"id": "vo_us_early_02", "file": "voice/vo_us_early_02.mp3", "title": "W-2 초반: 선두 도주", "eng": "Grabs the lead early on!", "kor": "초반 선두로 나섭니다!", "dur": "1.12s", "size": "53 KB", "cat": "vo_w2", "badge": "W-2 초반", "badge_class": "badge-blue", "desc": "초반 앞서나가는 선두 수탉 중계 (우선순위 P3)."}, {"id": "vo_us_early_03", "file": "voice/vo_us_early_03.mp3", "title": "W-2 초반: 페이스 리드", "eng": "Setting the pace out front!", "kor": "선두에서 경주를 이끌어갑니다!", "dur": "1.15s", "size": "54 KB", "cat": "vo_w2", "badge": "W-2 초반", "badge_class": "badge-blue", "desc": "선두 자리에서 페이스를 조율하는 선행마 콜 (우선순위 P3)."}, {"id": "vo_us_over_01", "file": "voice/vo_us_over_01.mp3", "title": "W-3 중반: 선두 탈환", "eng": "Takes over the lead!", "kor": "선두를 빼앗아냅니다!", "dur": "1.03s", "size": "48 KB", "cat": "vo_w3", "badge": "W-3 역전", "badge_class": "badge-purple", "desc": "9.0s~15.0s 구간 선두가 뒤바뀌는 결정적 순간 출력 (우선순위 P1)."}, {"id": "vo_us_over_02", "file": "voice/vo_us_over_02.mp3", "title": "W-3 중반: 파워풀 서지", "eng": "Makes a powerful surge!", "kor": "거세게 치고 올라옵니다!", "dur": "1.15s", "size": "54 KB", "cat": "vo_w3", "badge": "W-3 역전", "badge_class": "badge-purple", "desc": "외곽에서 가속 페달을 밟으며 맹렬히 진격할 때 출력 (우선순위 P1)."}, {"id": "vo_us_over_03", "file": "voice/vo_us_over_03.mp3", "title": "W-3 중반: 선두 급부상", "eng": "Surging to the front!", "kor": "맹렬하게 선두로 치고 나섭니다!", "dur": "1.04s", "size": "49 KB", "cat": "vo_w3", "badge": "W-3 역전", "badge_class": "badge-purple", "desc": "후방에서 순식간에 선두권으로 치고 올라오는 연출 (우선순위 P1)."}, {"id": "vo_us_side_01", "file": "voice/vo_us_side_01.mp3", "title": "W-3 중반: 나란한 접전", "eng": "Head-to-head in a battle!", "kor": "팽팽하게 맞서며 치열한 접전입니다!", "dur": "1.08s", "size": "51 KB", "cat": "vo_w3", "badge": "W-3 접전", "badge_class": "badge-purple", "desc": "두 마리 수탉이 목차/코차로 나란히 달리는 접전 상황 (우선순위 P1)."}, {"id": "vo_us_stretch_01", "file": "voice/vo_us_stretch_01.mp3", "title": "W-4 스퍼트: 직선주로 진입", "eng": "Down the stretch they come!", "kor": "마지막 직선주로로 일제히 접어듭니다!", "dur": "1.06s", "size": "50 KB", "cat": "vo_w4", "badge": "W-4 스퍼트", "badge_class": "badge-orange", "desc": "15.0s~22.5s 구간 마지막 직선 주로 진입 선언 (우선순위 P1)."}, {"id": "vo_us_stretch_02", "file": "voice/vo_us_stretch_02.mp3", "title": "W-4 스퍼트: 결승선 리드", "eng": "Leading them to the wire!", "kor": "선두로 결승선을 향해 질주합니다!", "dur": "1.06s", "size": "50 KB", "cat": "vo_w4", "badge": "W-4 스퍼트", "badge_class": "badge-orange", "desc": "결승선을 앞두고 선두를 유지하며 달리는 수탉 콜 (우선순위 P1)."}, {"id": "vo_us_stretch_03", "file": "voice/vo_us_stretch_03.mp3", "title": "W-4 스퍼트: 전원 결승선 질주", "eng": "They're sprinting for the wire!", "kor": "결승선을 향해 전원 스퍼트합니다!", "dur": "1.12s", "size": "53 KB", "cat": "vo_w4", "badge": "W-4 스퍼트", "badge_class": "badge-orange", "desc": "모든 수탉이 남은 체력을 쏟아붓는 총력전 상황 (우선순위 P1)."}, {"id": "vo_us_stretch_chui", "file": "voice/vo_us_stretch_chui.mp3", "title": "W-4 스퍼트: 후방 맹추격", "eng": "Charging hard from behind!", "kor": "뒤쪽에서 무서운 속도로 맹추격합니다!", "dur": "1.12s", "size": "53 KB", "cat": "vo_w4", "badge": "W-4 추입", "badge_class": "badge-orange", "desc": "후방 추입형 수탉이 막판 스피드로 좁혀오는 상황 (우선순위 P1)."}, {"id": "vo_us_win_01", "file": "voice/vo_us_win_01.mp3", "title": "W-5 우승: 와이어 투 와이어", "eng": "Wins it wire-to-wire!", "kor": "처음부터 끝까지 앞서며 우승을 차지합니다!", "dur": "1.04s", "size": "49 KB", "cat": "vo_w5", "badge": "W-5 우승", "badge_class": "badge-gold", "desc": "초반 선두를 끝까지 지킨 완승 연출 (우선순위 P0)."}, {"id": "vo_us_win_02", "file": "voice/vo_us_win_02.mp3", "title": "W-5 우승: 결승선 완승", "eng": "It is all victory at the wire!", "kor": "결승선 앞 완벽한 승리를 거둡니다!", "dur": "1.21s", "size": "57 KB", "cat": "vo_w5", "badge": "W-5 우승", "badge_class": "badge-gold", "desc": "결승선에서 극적인 승리를 거머쥔 챔피언 선언 (우선순위 P0)."}, {"id": "vo_us_win_03", "file": "voice/vo_us_win_03.mp3", "title": "W-5 우승: 럼블 챔피언", "eng": "Takes the victory in Rooster Rumble!", "kor": "루스터 럼블의 챔피언에 등극합니다!", "dur": "1.29s", "size": "61 KB", "cat": "vo_w5", "badge": "W-5 우승", "badge_class": "badge-gold", "desc": "대회 공식 챔피언 등극 피날레 선언 (우선순위 P0)."}, {"id": "vo_us_photo_01", "file": "voice/vo_us_photo_01.mp3", "title": "W-5 판독: 동시 돌파 접전", "eng": "Too close to call! They cross the line together!", "kor": "판가름하기 어렵습니다! 거의 동시에 통과합니다!", "dur": "1.91s", "size": "89 KB", "cat": "vo_w5", "badge": "W-5 판독", "badge_class": "badge-red", "desc": "22.5s 슬로우모션 진입 시 동시 통과 초박빙 상황 콜 (우선순위 P0)."}, {"id": "vo_us_photo_02", "file": "voice/vo_us_photo_02.mp3", "title": "W-5 판독: 코차 사진 판독", "eng": "Nose to nose at the wire! Who took it?!", "kor": "부리와 부리가 나란히 통과! 과연 승자는 누구인가!", "dur": "1.74s", "size": "81 KB", "cat": "vo_w5", "badge": "W-5 판독", "badge_class": "badge-red", "desc": "극단적 코차(Nose) 판독으로 긴장감을 극대화하는 콜 (우선순위 P0)."}];
+  const demoData = [{"id": "demo_sample_1", "file": "demo/demo_race_simulation_26s.mp3", "title": "[샘플 1] 5번 수탉 와이어 투 와이어 완승 시나리오", "winner": "5번 우승", "dur": "32.55초", "size": "763 KB", "timeline": "0.0s 레디/스타트건 ➔ 0.8s 출발 콜 ➔ 3.9s 3번 선두 ➔ 9.1s 5번 외곽 급상승 & 역전 ➔ 15.2s 직선주로 스퍼트 ➔ 22.5s 슬로우모션 BGM 페이드아웃 + 관중 크레센도 + 초박빙 판독 콜 ➔ 25.5s 결승선 돌파 대환호 + 5번 우승 콜 ➔ 결과 팡파레 5.75s 전곡 완주"}, {"id": "demo_sample_2", "file": "demo/demo_race_simulation_sample_2.mp3", "title": "[샘플 2] 4번 수탉 후방 폭풍 추입 코차 극적 역전승 시나리오", "winner": "4번 우승", "dur": "32.55초", "size": "763 KB", "timeline": "0.0s 레디/스타트건 ➔ 0.8s 출발 콜 ➔ 1번 초반 도주 vs 3번 압박 ➔ 14.8s 4번 수탉 후방 맹추격 ➔ 18.5s 4번 결승선 스퍼트 & 포효 ➔ 22.5s 슬로우모션 동시 돌파 콜 ➔ 25.5s 결승선 돌파 ➔ 4번 코차 우승 콜 + 결과 팡파레 5.75s 전곡 완주"}, {"id": "demo_sample_3", "file": "demo/demo_race_simulation_sample_3.mp3", "title": "[샘플 3] 6번 수탉 출발 실수 극복 기적의 대역전승 시나리오", "winner": "6번 우승", "dur": "32.55초", "size": "763 KB", "timeline": "0.0s 레디/스타트건 ➔ 0.8s 6번 늦출발 사고 콜 ➔ 5.2s 2번 단독 선두 ➔ 7.8s 6번의 무서운 뒷심 추격 및 선두 탈환 ➔ 15.1s 2번 vs 6번 데드히트 ➔ 22.5s 슬로우모션 판독 ➔ 25.5s 결승 돌파 ➔ 6번 대역전 우승 콜 + 결과 팡파레 5.75s 완주"}];
+  const bgmData = [{"id": "bgm_lobby", "file": "bgm/bgm_lobby_theme.mp3", "title": "로비 & 베팅 테마 (Lobby Theme)", "dur": "30.0s", "size": "587 KB", "cat": "bgm", "badge": "BGM (Loop)", "badge_class": "badge-gold", "desc": "110BPM 챔버 오케스트라 (피치카토 바이올린, 프렌치 호른, 피아노, 콘트라베이스). 편안하고 고급스러운 베팅 및 대기 분위기 조성."}, {"id": "bgm_race", "file": "bgm/bgm_ingame_race.mp3", "title": "인게임 질주 테마 (Race Sprint Theme)", "dur": "30.0s", "size": "704 KB", "cat": "bgm", "badge": "BGM (Loop)", "badge_class": "badge-gold", "desc": "150BPM 브라스 & 스트링스 오케스트라 질주 테마. 16비트 바이올린 리듬과 드럼/베이스 비트로 박진감 넘치는 26초 경기 연출."}, {"id": "bgm_result", "file": "bgm/bgm_result_theme.mp3", "title": "결과 정산 팡파레 (Victory Fanfare)", "dur": "5.75s", "size": "135 KB", "cat": "bgm", "badge": "BGM (One-shot)", "badge_class": "badge-gold", "desc": "트럼펫/트롬본 중심의 승리 축하 팡파레. 우승 확정 직후 중간 컷 없이 5.75초 전곡 100% 연주 후 자연스러운 잔향 마감."}, {"id": "bgm_race_crowd", "file": "bgm/bgm_ingame_race_with_crowd.mp3", "title": "인게임 질주 테마 + 관중 함성 (BGM with Crowd)", "dur": "30.0s", "size": "705 KB", "cat": "bgm", "badge": "BGM+함성 (Sample)", "badge_class": "badge-gold", "desc": "150BPM 브라스 질주 테마에 야외 스타디움 관중 함성이 믹싱된 일체형 샘플 BGM 트랙."}];
+
+  const prefixPrimary = "";
+  const prefixFallback = "../";
+
+  let masterVol = 0.9;
+  let activeAudios = [];
+  let isShowcasing = false;
+  let showcaseIndex = 0;
+  const sfxList = cardData.map(c => c.id);
+
+  // Audio Source Helper with Multi-Candidate Fallback
+  function setAudioSrcWithFallback(audioEl, relPath) {
+    const candidates = [
+      prefixPrimary + relPath,
+      prefixFallback + relPath,
+      prefixFallback + relPath.replace('demo/', ''),
+      'assets/audio/' + relPath,
+      'assets/audio/' + relPath.replace('demo/', ''),
+      'assets/audio/race/' + relPath
+    ];
+
+    let cIdx = 0;
+    audioEl.src = candidates[0];
+
+    audioEl.onerror = function() {
+      cIdx++;
+      if (cIdx < candidates.length) {
+        audioEl.src = candidates[cIdx];
+      }
+    };
+  }
+
+  // Initialize Wave Bars
+  document.querySelectorAll('.wave-box').forEach(box => {
+    for (let i = 0; i < 28; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      bar.style.animationDelay = (i * 0.03) + 's';
+      box.appendChild(bar);
+    }
+  });
+
+  // Initialize Card Audio Elements
+  cardData.forEach(item => {
+    const id = item.id;
+    const audio = document.getElementById('audio-' + id);
+    const card = document.getElementById('card-' + id);
+    if (!audio || !card) return;
+
+    setAudioSrcWithFallback(audio, item.file);
+    audio.volume = masterVol;
+
+    const btnPlay = card.querySelector('.btn-play');
+    const seekBar = card.querySelector('.seek-bar');
+    const curTime = document.getElementById('cur-' + id);
+    const durTime = document.getElementById('dur-' + id);
+
+    audio.addEventListener('loadedmetadata', () => {
+      durTime.textContent = audio.duration.toFixed(2) + 's';
+      const durMeta = document.getElementById('dur-meta-' + id);
+      if (durMeta) durMeta.textContent = audio.duration.toFixed(2) + 's';
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+        curTime.textContent = audio.currentTime.toFixed(1) + 's';
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      card.classList.add('playing');
+      btnPlay.textContent = '⏸';
+      if (!activeAudios.includes(audio)) activeAudios.push(audio);
+    });
+
+    audio.addEventListener('pause', () => {
+      card.classList.remove('playing');
+      btnPlay.textContent = '▶';
+    });
+
+    audio.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      btnPlay.textContent = '▶';
+      seekBar.value = 0;
+      curTime.textContent = '0.0s';
+      activeAudios = activeAudios.filter(a => a !== audio);
+
+      if (isShowcasing) {
+        showcaseIndex++;
+        if (showcaseIndex < sfxList.length) {
+          setTimeout(() => playSingle(sfxList[showcaseIndex]), 250);
+        } else {
+          isShowcasing = false;
+          document.getElementById('showcaseBtn').classList.remove('active');
+          document.getElementById('showcaseBtn').textContent = '▶ 전곡 순차 청음';
+          showToast('전체 39종 순차 청음 완료');
+        }
+      }
+    });
+  });
+
+  // Top Demo Controller
+  let curDemoKey = '1';
+  let demoVol = 0.85;
+  const demoAudio = document.getElementById('demoAudioPlayer');
+  const btnDemoPlay = document.getElementById('btnDemoPlay');
+
+  function selectDemoTrack(key) {
+    curDemoKey = key;
+    const idx = parseInt(key) - 1;
+    const info = demoData[idx] || demoData[0];
+
+    document.querySelectorAll('.tab-pill[id^="pill-demo-"]').forEach(b => b.classList.remove('active'));
+    const activePill = document.getElementById('pill-demo-' + key);
+    if (activePill) activePill.classList.add('active');
+
+    document.getElementById('demo-title').textContent = info.title + ' (' + info.dur + ')';
+    document.getElementById('demo-timeline').textContent = info.timeline;
+
+    const wasPlaying = !demoAudio.paused;
+    demoAudio.pause();
+    demoAudio.currentTime = 0;
+    setAudioSrcWithFallback(demoAudio, info.file);
+    document.getElementById('demoDownload').href = prefixPrimary + info.file;
+    demoAudio.load();
+
+    if (btnDemoPlay) btnDemoPlay.textContent = '▶ 데모 재생';
+    showToast(info.winner + ' 시뮬레이션 데모 트랙 선택');
+
+    if (wasPlaying) {
+      demoAudio.play().then(() => {
+        btnDemoPlay.textContent = '⏸ 데모 일시정지';
+      }).catch(e => console.error(e));
+    }
+  }
+
+  function toggleDemoPlay() {
+    if (!demoAudio.src) selectDemoTrack(curDemoKey);
+
+    if (demoAudio.paused) {
+      demoAudio.volume = demoVol;
+      demoAudio.play().then(() => {
+        btnDemoPlay.textContent = '⏸ 데모 일시정지';
+        showToast('풀 레이스 시뮬레이션 데모 재생 시작');
+      }).catch(e => console.error(e));
+    } else {
+      demoAudio.pause();
+      btnDemoPlay.textContent = '▶ 데모 재생';
+      showToast('데모 일시정지 완료');
+    }
+  }
+
+  function changeDemoVolume(val) {
+    demoVol = parseFloat(val);
+    demoAudio.volume = demoVol;
+  }
+
+  demoAudio.addEventListener('ended', () => {
+    btnDemoPlay.textContent = '▶ 데모 재생';
+    showToast('시뮬레이션 데모 트랙 완주');
+  });
+
+  // Top BGM Controller
+  let curBgmId = 'bgm_lobby';
+  let bgmVol = 0.65;
+  const bgmAudio = document.getElementById('bgmAudioPlayer');
+  const btnBgmPlay = document.getElementById('btnBgmPlay');
+
+  function selectBgmTrack(id) {
+    curBgmId = id;
+    const info = bgmData.find(b => b.id === id) || bgmData[0];
+
+    document.querySelectorAll('.tab-pill[id^="pill-bgm-"]').forEach(b => {
+      b.classList.remove('active-gold');
+      b.style.fontWeight = 'normal';
+    });
+    const activePill = document.getElementById('pill-' + id);
+    if (activePill) {
+      activePill.classList.add('active-gold');
+    }
+
+    document.getElementById('bgm-title').textContent = info.title;
+    document.getElementById('bgm-desc').textContent = info.desc;
+
+    const wasPlaying = !bgmAudio.paused;
+    bgmAudio.pause();
+    bgmAudio.currentTime = 0;
+    setAudioSrcWithFallback(bgmAudio, info.file);
+    bgmAudio.loop = (id !== 'bgm_result');
+    document.getElementById('bgmDownload').href = prefixPrimary + info.file;
+    bgmAudio.load();
+
+    if (btnBgmPlay) btnBgmPlay.textContent = '▶ BGM 재생';
+    showToast(info.title + ' 선택 완료');
+
+    if (wasPlaying) {
+      bgmAudio.play().then(() => {
+        btnBgmPlay.textContent = '⏸ BGM 일시정지';
+      }).catch(e => console.error(e));
+    }
+  }
+
+  function toggleBgmPlay() {
+    if (!bgmAudio.src) selectBgmTrack(curBgmId);
+
+    if (bgmAudio.paused) {
+      bgmAudio.volume = bgmVol;
+      bgmAudio.play().then(() => {
+        btnBgmPlay.textContent = '⏸ BGM 일시정지';
+        showToast('배경음악 재생 시작');
+      }).catch(e => console.error(e));
+    } else {
+      bgmAudio.pause();
+      btnBgmPlay.textContent = '▶ BGM 재생';
+      showToast('BGM 일시정지 완료');
+    }
+  }
+
+  function changeBgmVolume(val) {
+    bgmVol = parseFloat(val);
+    bgmAudio.volume = bgmVol;
+  }
+
+  bgmAudio.addEventListener('ended', () => {
+    if (!bgmAudio.loop) {
+      btnBgmPlay.textContent = '▶ BGM 재생';
+      showToast('결과 팡파레 연주 완료');
+    }
+  });
+
+  // General Play / Seek / Volume Controls
+  function playSingle(id) {
+    const audio = document.getElementById('audio-' + id);
+    if (audio) {
+      audio.currentTime = 0;
+      audio.volume = masterVol;
+      audio.play().catch(e => console.error(e));
+    }
+  }
+
+  function togglePlay(id, btn) {
+    const audio = document.getElementById('audio-' + id);
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.volume = masterVol;
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  function seekAudio(id, pct) {
+    const audio = document.getElementById('audio-' + id);
+    if (audio && audio.duration) {
+      audio.currentTime = (pct / 100) * audio.duration;
+    }
+  }
+
+  function changeMasterVolume(val) {
+    masterVol = parseFloat(val);
+    cardData.forEach(item => {
+      const audio = document.getElementById('audio-' + item.id);
+      if (audio) audio.volume = masterVol;
+    });
+  }
+
+  function stopAllAudio() {
+    isShowcasing = false;
+    document.getElementById('showcaseBtn').classList.remove('active');
+    document.getElementById('showcaseBtn').textContent = '▶ 전곡 순차 청음';
+
+    demoAudio.pause();
+    demoAudio.currentTime = 0;
+    if (btnDemoPlay) btnDemoPlay.textContent = '▶ 데모 재생';
+
+    bgmAudio.pause();
+    bgmAudio.currentTime = 0;
+    if (btnBgmPlay) btnBgmPlay.textContent = '▶ BGM 재생';
+
+    cardData.forEach(item => {
+      const audio = document.getElementById('audio-' + item.id);
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+    activeAudios = [];
+    showToast('모든 오디오 재생 정지 완료');
+  }
+
+  function toggleShowcase() {
+    const btn = document.getElementById('showcaseBtn');
+    if (isShowcasing) {
+      stopAllAudio();
+    } else {
+      stopAllAudio();
+      isShowcasing = true;
+      showcaseIndex = 0;
+      btn.classList.add('active');
+      btn.textContent = '⏹ 순차 청음 정지';
+      showToast('39종 순차 청음 시작');
+      playSingle(sfxList[0]);
+    }
+  }
+
+  // Multi-track Combo Simulator
+  function playCombo(ids, delays) {
+    showToast('레이스 시나리오 시퀀스 재생 중...');
+    ids.forEach((id, idx) => {
+      const delay = delays[idx] || 0;
+      setTimeout(() => {
+        const orig = document.getElementById('audio-' + id);
+        if (orig) {
+          const clone = orig.cloneNode();
+          clone.volume = masterVol;
+          clone.play().catch(e => console.error(e));
+          const card = document.getElementById('card-' + id);
+          if (card) {
+            card.classList.add('playing');
+            setTimeout(() => card.classList.remove('playing'), 600);
+          }
+        }
+      }, delay);
+    });
+  }
+
+  // Filter Categories
+  function filterCategory(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.card').forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-category') === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  // Initial Setup
+  selectDemoTrack('1');
+  selectBgmTrack('bgm_lobby');
+</script>
+</body>
+</html>

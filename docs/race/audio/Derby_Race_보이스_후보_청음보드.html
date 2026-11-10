@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏇 Derby Race - 격정적 아나운서 보이스 후보 비교 청음보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --border-color: #1e293b;
+      --primary-green: #10b981;
+      --primary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 30px 20px 80px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 1280px; margin: 0 auto; }
+    header.header {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(245, 158, 11, 0.12) 50%, rgba(59, 130, 246, 0.10));
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .header-title h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--accent-red);
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .header-desc {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 0.92rem;
+    }
+    .notice-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-left: 4px solid var(--accent-gold);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .voice-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .voice-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: var(--bg-card-hover);
+    }
+    .voice-card.current {
+      border-color: rgba(148, 163, 184, 0.4);
+      opacity: 0.85;
+    }
+    .voice-card.recommended {
+      border-color: rgba(16, 185, 129, 0.7);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+    }
+    .voice-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .badge-current { background: #475569; color: #f1f5f9; }
+    .badge-rec { background: var(--primary-green); color: #fff; }
+    .badge-power { background: var(--accent-red); color: #fff; }
+    .badge-speed { background: var(--primary-blue); color: #fff; }
+    .badge-derby { background: var(--accent-purple); color: #fff; }
+
+    .voice-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .voice-header .voice-id {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-family: monospace;
+    }
+    .voice-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      min-height: 40px;
+    }
+    .audio-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(7, 13, 24, 0.6);
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .audio-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .row-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      width: 75px;
+      flex-shrink: 0;
+    }
+    .row-text {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      flex-grow: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .btn-play-sm {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .btn-play-sm:hover {
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+      color: #fff;
+    }
+    .btn-play-sm.playing {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+    .comparison-table-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .comparison-table-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    table.comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    table.comp-table th, table.comp-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+    }
+    table.comp-table th {
+      background: rgba(15, 23, 42, 0.9);
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    table.comp-table tr:hover {
+      background: rgba(30, 41, 59, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-title">
+        <h1>🏇 ROOSTER RUMBLE: Derby Race 아나운서 보이스 교체 후보 청음보드</h1>
+        <span class="tag">AI Voice Shootout</span>
+      </div>
+      <p class="header-desc">
+        기존 평이한 톤의 <code>en-US-GuyNeural</code> 음성을 대체하여, 결승선 라스트 스퍼트와 골인 판독 시 극적인 긴장감을 주는 격정적 보이스 후보군 5종을 비교 청취할 수 있습니다.
+      </p>
+    </header>
+
+    <div class="notice-box">
+      <strong>💡 청음 가이드</strong>: 각 카드별로 <strong>[출발 멘트]</strong>, <strong>[직선주로 스퍼트]</strong>, <strong>[골인 초박빙 판독]</strong> 3개 핵심 구간의 음원을 직접 들어보고, 프로젝트에 가장 어울리는 보이스를 선정할 수 있습니다.
+    </div>
+
+    <div class="voice-grid">
+      <!-- 0. 기존 음성 (Guy) -->
+      <div class="voice-card current">
+        <span class="voice-badge badge-current">현재 작업본</span>
+        <div class="voice-header">
+          <h3>Guy (기존 작업 음성)</h3>
+          <div class="voice-id">en-US-GuyNeural</div>
+        </div>
+        <div class="voice-desc">
+          뉴스/안내형 차분한 톤. 속도를 높여도 발성과 호흡이 안정적이나 격정적 긴장감 및 샤우팅 임팩트 부족.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-GuyNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-GuyNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-GuyNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. 추천 1: Brian Multilingual (중후 & 파워) -->
+      <div class="voice-card recommended">
+        <span class="voice-badge badge-rec">강력 추천 1순위</span>
+        <div class="voice-header">
+          <h3>Brian Multi (중후한 파워 캐스터)</h3>
+          <div class="voice-id">en-US-BrianMultilingualNeural</div>
+        </div>
+        <div class="voice-desc">
+          가장 높은 RMS 음압(0.093)과 묵직한 바리톤. 결승선에서 굵직하고 압도적인 전달력 발휘.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-BrianMultilingualNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-BrianMultilingualNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-BrianMultilingualNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 추천 2: Christopher (단단한 스포츠톤) -->
+      <div class="voice-card">
+        <span class="voice-badge badge-power">단단한 에너지</span>
+        <div class="voice-header">
+          <h3>Christopher (남성적 스포츠 톤)</h3>
+          <div class="voice-id">en-US-ChristopherNeural</div>
+        </div>
+        <div class="voice-desc">
+          단단하고 날카로운 발음. 미국 메이저 스포츠 및 레슬링 링 아나운서 스타일의 호소력.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-ChristopherNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-ChristopherNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-ChristopherNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 추천 3: Andrew Multilingual (고속 & 하이텐션) -->
+      <div class="voice-card">
+        <span class="voice-badge badge-speed">스피드 & 고속 중계</span>
+        <div class="voice-header">
+          <h3>Andrew Multi (스피디 하이텐션)</h3>
+          <div class="voice-id">en-US-AndrewMultilingualNeural</div>
+        </div>
+        <div class="voice-desc">
+          가장 빠른 템포(2.23s)와 또렷한 어택감. 촌철살인으로 치고 나가는 쾌속 경주 중계에 최적화.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-AndrewMultilingualNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-AndrewMultilingualNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-US-AndrewMultilingualNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 추천 4: Ryan (영국 정통 더비 톤) -->
+      <div class="voice-card">
+        <span class="voice-badge badge-derby">영국 정통 더비</span>
+        <div class="voice-header">
+          <h3>Ryan (영국식 클래식 경마)</h3>
+          <div class="voice-id">en-GB-RyanNeural</div>
+        </div>
+        <div class="voice-desc">
+          영국 엡섬 더비 / 로열 애스콧 느낌의 전통적인 경마 중계 억양. 리드미컬하고 세련된 박진감.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-GB-RyanNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-GB-RyanNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-GB-RyanNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 추천 5: William Multilingual (호주식 스타디움 톤) -->
+      <div class="voice-card">
+        <span class="voice-badge badge-power">스타디움 울림</span>
+        <div class="voice-header">
+          <h3>William Multi (오세아니아 스타디움)</h3>
+          <div class="voice-id">en-AU-WilliamMultilingualNeural</div>
+        </div>
+        <div class="voice-desc">
+          야외 거대 경기장 특유의 호쾌하고 거친 발성. 와일드한 닭싸움/경주 분위기에 잘 부합.
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="row-label">출발 (W-1)</span>
+            <span class="row-text">"And they're off in Rooster Rumble!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-AU-WilliamMultilingualNeural_start.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">스퍼트 (W-4)</span>
+            <span class="row-text">"Down the stretch they come!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-AU-WilliamMultilingualNeural_stretch.mp3', this)">▶</button>
+          </div>
+          <div class="audio-row">
+            <span class="row-label">판독 (W-5)</span>
+            <span class="row-text">"Nose to nose at the wire! Who took it?!"</span>
+            <button class="btn-play-sm" onclick="playAudio('../../assets/audio/race/voice_samples/en-AU-WilliamMultilingualNeural_finish.mp3', this)">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 비교 요약 테이블 -->
+    <div class="comparison-table-section">
+      <h2>📊 후보군 보이스 기술 및 연출 비교</h2>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>보이스 ID</th>
+            <th>음색 및 연출 성향</th>
+            <th>RMS 음압</th>
+            <th>스피드 / 어택</th>
+            <th>종합 평가 및 추천도</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>기존</td>
+            <td><code>en-US-GuyNeural</code></td>
+            <td>안정적이고 차분한 아나운서/뉴스 톤</td>
+            <td>0.078</td>
+            <td>보통</td>
+            <td>평이함 (긴장감/박진감 부족)</td>
+          </tr>
+          <tr style="background: rgba(16, 185, 129, 0.1);">
+            <td><strong>후보 1</strong></td>
+            <td><strong><code>en-US-BrianMultilingualNeural</code></strong></td>
+            <td><strong>중후하고 굵직한 바리톤 파워 톤</strong></td>
+            <td><strong>0.093 (최고)</strong></td>
+            <td><strong>강함</strong></td>
+            <td><strong>★ 1순위 추천 (압도적 전달력과 묵직함)</strong></td>
+          </tr>
+          <tr>
+            <td>후보 2</td>
+            <td><code>en-US-ChristopherNeural</code></td>
+            <td>단단하고 거친 미국식 메이저 스포츠 톤</td>
+            <td>0.079</td>
+            <td>단단함</td>
+            <td>2순위 추천 (호소력 있는 샤우팅)</td>
+          </tr>
+          <tr>
+            <td>후보 3</td>
+            <td><code>en-US-AndrewMultilingualNeural</code></td>
+            <td>스피디하고 날카로운 하이텐션 톤</td>
+            <td>0.089</td>
+            <td>매우 빠름</td>
+            <td>3순위 추천 (속도감 있는 경주 연출)</td>
+          </tr>
+          <tr>
+            <td>후보 4</td>
+            <td><code>en-GB-RyanNeural</code></td>
+            <td>영국 전통 경마(더비) 특유의 리드미컬 톤</td>
+            <td>0.081</td>
+            <td>리듬감</td>
+            <td>클래식 더비 콘셉트에 적합</td>
+          </tr>
+          <tr>
+            <td>후보 5</td>
+            <td><code>en-AU-WilliamMultilingualNeural</code></td>
+            <td>와일드하고 시원한 야외 경기장 톤</td>
+            <td>0.082</td>
+            <td>호쾌함</td>
+            <td>수탉 경주의 거친 느낌과 조화</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let currentAudio = null;
+    let currentButton = null;
+
+    function playAudio(path, btn) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if (currentButton) {
+          currentButton.textContent = '▶';
+          currentButton.classList.remove('playing');
+        }
+        if (currentButton === btn) {
+          currentAudio = null;
+          currentButton = null;
+          return;
+        }
+      }
+
+      currentAudio = new Audio(path);
+      currentButton = btn;
+      btn.textContent = '■';
+      btn.classList.add('playing');
+
+      currentAudio.play().catch(e => {
+        console.error('Audio play error:', e);
+        btn.textContent = '▶';
+        btn.classList.remove('playing');
+      });
+
+      currentAudio.onended = () => {
+        btn.textContent = '▶';
+        btn.classList.remove('playing');
+        currentAudio = null;
+        currentButton = null;
+      };
+    }
+  </script>
+</body>
+</html>

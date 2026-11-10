@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROOSTER RUMBLE: 격투 모드(Rumble Pit) 전투 시뮬레이션 규칙 정의서 (v1.2.0)</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<style>
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-accent: #334155;
+  --text-main: #f8fafc;
+  --text-heading: #ffffff;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --primary: #f43f5e;
+  --primary-hover: #e11d48;
+  --primary-tint: rgba(244, 63, 94, 0.15);
+  --accent-blue: #38bdf8;
+  --accent-green: #34d399;
+  --accent-amber: #fbbf24;
+  --accent-purple: #c084fc;
+  --border: #334155;
+  --code-bg: #090d16;
+  --code-text: #f43f5e;
+  --inline-code-bg: rgba(51, 65, 85, 0.5);
+  --table-th-bg: rgba(15, 23, 42, 0.7);
+  --table-hover: rgba(51, 65, 85, 0.4);
+  --formula-bg: rgba(30, 41, 59, 0.7);
+  --formula-desc-bg: rgba(15, 23, 42, 0.5);
+  --sidebar-header-bg: rgba(15, 23, 42, 0.6);
+  --modal-overlay: rgba(0, 0, 0, 0.75);
+  --sidebar-width: 320px;
+}
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-accent: #f1f5f9;
+  --text-main: #0f172a;
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --primary: #e11d48;
+  --primary-hover: #be123c;
+  --primary-tint: rgba(225, 29, 72, 0.1);
+  --accent-blue: #0284c7;
+  --accent-green: #059669;
+  --accent-amber: #d97706;
+  --accent-purple: #9333ea;
+  --border: #e2e8f0;
+  --code-bg: #f8fafc;
+  --code-text: #be123c;
+  --inline-code-bg: #e2e8f0;
+  --table-th-bg: #f1f5f9;
+  --table-hover: #f8fafc;
+  --formula-bg: #ffffff;
+  --formula-desc-bg: #f8fafc;
+  --sidebar-header-bg: #f8fafc;
+  --modal-overlay: rgba(15, 23, 42, 0.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.65;
+  display: flex;
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+aside.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.sidebar-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--sidebar-header-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-title h2 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary);
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sidebar-title p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 2px 0 0 0;
+}
+.theme-toggle-btn {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+.theme-toggle-btn:hover {
+  background: var(--primary-tint);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.sidebar-toolbar {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sidebar-search input {
+  width: 100%;
+  padding: 7px 10px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.sidebar-search input:focus { border-color: var(--primary); }
+.sidebar-actions { display: flex; justify-content: space-between; gap: 6px; }
+.action-btn {
+  flex: 1;
+  padding: 4px 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.action-btn:hover {
+  color: var(--text-main);
+  border-color: var(--primary);
+  background: var(--bg-accent);
+}
+nav.toc-nav { flex: 1; overflow-y: auto; padding: 12px 10px; }
+.toc-nav ul { list-style: none; padding-left: 0; margin: 0; }
+.toc-group { margin-bottom: 4px; border-radius: 6px; }
+.toc-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+.toc-group-header:hover { background-color: var(--bg-accent); }
+.toc-group-header a.nav-h1 {
+  flex: 1;
+  display: block;
+  padding: 7px 10px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toc-toggle-icon {
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  user-select: none;
+  transition: transform 0.2s ease, color 0.15s;
+}
+.toc-toggle-icon:hover { color: var(--primary); }
+.toc-group.open .toc-toggle-icon { transform: rotate(90deg); }
+.toc-subgroup {
+  display: none;
+  padding-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  border-left: 2px solid var(--border);
+  margin-left: 12px;
+}
+.toc-group.open .toc-subgroup { display: block; }
+.toc-subgroup a {
+  display: block;
+  padding: 5px 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toc-subgroup a:hover { color: var(--text-main); background-color: var(--bg-accent); }
+.toc-nav a.active {
+  color: var(--primary) !important;
+  background-color: var(--primary-tint);
+  font-weight: 700;
+}
+main.content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 36px 48px;
+  max-width: 1280px;
+}
+header.doc-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+header.doc-header h1 {
+  font-size: 2.0rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.doc-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.doc-meta-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+.doc-meta-label { font-size: 0.74rem; color: var(--text-muted); font-weight: 600; }
+.doc-meta-val { font-size: 0.88rem; color: var(--text-heading); font-weight: 700; margin-top: 2px; }
+section { margin-bottom: 52px; scroll-margin-top: 28px; }
+h2 {
+  font-size: 1.42rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 26px 0 12px 0;
+  scroll-margin-top: 28px;
+}
+h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--accent-amber);
+  margin: 18px 0 10px 0;
+}
+p, ul, ol {
+  margin-bottom: 12px;
+  color: var(--text-body);
+  font-size: 0.92rem;
+}
+ul, ol { padding-left: 22px; }
+li { margin-bottom: 6px; }
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 14px 0 22px 0;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th {
+  background-color: var(--table-th-bg);
+  color: var(--primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: var(--table-hover); }
+.text-center { text-align: center; }
+code {
+  font-family: "Consolas", monospace;
+  background-color: var(--inline-code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--code-text);
+  font-size: 0.86em;
+}
+.callout-card {
+  background-color: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0 20px 0;
+}
+.callout-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent-amber);
+  margin-bottom: 6px;
+}
+.svg-diagram-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 16px 0 24px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.svg-diagram-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 14px;
+  margin: 14px 0 22px 0;
+}
+.info-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.info-card h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--accent-blue);
+}
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.badge-red { background: rgba(244, 63, 94, 0.18); color: #f43f5e; }
+.badge-blue { background: rgba(56, 189, 248, 0.18); color: #38bdf8; }
+.badge-green { background: rgba(52, 211, 153, 0.18); color: #34d399; }
+.badge-amber { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
+.badge-purple { background: rgba(192, 132, 252, 0.18); color: #c084fc; }
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--primary);
+  color: var(--text-main);
+  padding: 10px 18px;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+@media (max-width: 900px) {
+  aside.sidebar { display: none; }
+  main.content { margin-left: 0; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">
+      <h2>🥊 ROOSTER RUMBLE</h2>
+      <p>전투 시뮬레이션 규칙 정의서 (v1.2.0)</p>
+    </div>
+    <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="화이트/다크 테마 전환">
+      <span id="theme-icon">☀️</span><span id="theme-text">화이트</span>
+    </button>
+  </div>
+  <div class="sidebar-toolbar">
+    <div class="sidebar-search">
+      <input type="text" id="toc-filter" placeholder="목차 실시간 필터 검색..." onkeyup="filterTOC()">
+    </div>
+    <div class="sidebar-actions">
+      <button class="action-btn" onclick="expandAllTOC()">전체 펼치기</button>
+      <button class="action-btn" onclick="collapseAllTOC()">전체 접기</button>
+    </div>
+  </div>
+  <nav class="toc-nav">
+    <ul id="toc-list">
+      <li class="toc-group open" id="group-sec-1">
+        <div class="toc-group-header">
+          <a href="#sec-1" class="nav-h1" onclick="toggleGroupManual('group-sec-1')">1. 기본 전제 및 전투 진행 구조</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-1')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-1-1">1.1 비의인화 캐릭터 동작 및 지향점</a></li>
+          <li><a href="#sec-1-2">1.2 서버 시뮬 생성 및 클라 중계 원칙</a></li>
+          <li><a href="#sec-1-3">1.3 원형 벽면 경기장 및 QA 확정 원칙</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-2">
+        <div class="toc-group-header">
+          <a href="#sec-2" class="nav-h1" onclick="toggleGroupManual('group-sec-2')">2. 원형 경기장 공간 및 이동 규칙</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-2')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-2-1">2.1 선수 간 거리(Range) 3단계 구분</a></li>
+          <li><a href="#sec-2-2">2.2 6대 이동(조류 보행·도약) 및 동작 묘사</a></li>
+          <li><a href="#sec-2-3">2.3 원형 외곽 벽면 몰림 및 벽 격돌</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-3">
+        <div class="toc-group-header">
+          <a href="#sec-3" class="nav-h1" onclick="toggleGroupManual('group-sec-3')">3. 공격 판정 및 4대 기술 확장 규칙</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-3')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-3-1">3.1 타격 부위(상·중·하) 및 공격 궤적</a></li>
+          <li><a href="#sec-3-2">3.2 공격 4종 매핑 및 단계별 동작 묘사</a></li>
+          <li><a href="#sec-3-3">3.3 공격 3단계 구간 및 헛침(Whiff)</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-4">
+        <div class="toc-group-header">
+          <a href="#sec-4" class="nav-h1" onclick="toggleGroupManual('group-sec-4')">4. 방어 판정 및 공방 상성 매트릭스</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-4')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-4-1">4.1 방어 3종 매핑 및 상세 동작 묘사</a></li>
+          <li><a href="#sec-4-2">4.2 공격(4종) × 방어·이동(6종) 매트릭스</a></li>
+          <li><a href="#sec-4-3">4.3 가드 유지 한계 및 가드 브레이크</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-5">
+        <div class="toc-group-header">
+          <a href="#sec-5" class="nav-h1" onclick="toggleGroupManual('group-sec-5')">5. 공방 우선권·연속기·격돌 규칙</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-5')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-5-1">5.1 공방 결과별 우선권(유불리) 전환</a></li>
+          <li><a href="#sec-5-2">5.2 카운터 히트 및 동시 격돌(Clash)</a></li>
+          <li><a href="#sec-5-3">5.3 최대 3연속기 시너지 및 중간 차단</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-6">
+        <div class="toc-group-header">
+          <a href="#sec-6" class="nav-h1" onclick="toggleGroupManual('group-sec-6')">6. 그로기 공방 및 다운 즉시 KO 규칙</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-6')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-6-1">6.1 스탠딩 그로기 조건 및 동작 묘사</a></li>
+          <li><a href="#sec-6-2">6.2 그로기 직후 압박 vs 위기 탈출</a></li>
+          <li><a href="#sec-6-3">6.3 투지 버티기 및 다운 즉시 종료(KO)</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-7">
+        <div class="toc-group-header">
+          <a href="#sec-7" class="nav-h1" onclick="toggleGroupManual('group-sec-7')">7. 격투 스타일(5종)별 행동 성향</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-7')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-7-1">7.1 5대 스타일별 공간 및 공방 선호도</a></li>
+          <li><a href="#sec-7-2">7.2 경기 상황별 행동 성향 동적 변화</a></li>
+        </ul>
+      </li>
+      <li class="toc-group open" id="group-sec-8">
+        <div class="toc-group-header">
+          <a href="#sec-8" class="nav-h1" onclick="toggleGroupManual('group-sec-8')">8. 서버 시뮬 데이터 및 중계 명세</a>
+          <span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-8')">▶</span>
+        </div>
+        <ul class="toc-subgroup">
+          <li><a href="#sec-8-1">8.1 시뮬 타임라인 필수 기록 항목</a></li>
+          <li><a href="#sec-8-2">8.2 QA 기준 클라이언트 중계 연출 규칙</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<main class="content">
+  <header class="doc-header">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <h1>🥊 ROOSTER RUMBLE: 격투 모드(Rumble Pit) 전투 시뮬레이션 규칙 정의서</h1>
+      <span style="display: inline-block; padding: 5px 14px; font-size: 0.86rem; font-weight: 700; color: var(--primary); background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 6px;">문서 버전: v1.2.0</span>
+    </div>
+    <div class="doc-meta-grid">
+      <div class="doc-meta-card">
+        <div class="doc-meta-label">문서 목적</div>
+        <div class="doc-meta-val">비의인화 닭 캐릭터 기반 공·방·이동 규칙 및 상세 동작 묘사 정의</div>
+      </div>
+      <div class="doc-meta-card">
+        <div class="doc-meta-label">전투 방식 지향점</div>
+        <div class="doc-meta-val">버츄얼 파이터식 1:1 거리·부위·궤적 상성 + 실제 투계 골격 개연성 결합</div>
+      </div>
+      <div class="doc-meta-card">
+        <div class="doc-meta-label">경기장 및 판정 기준</div>
+        <div class="doc-meta-val">아케이드형 원형 벽면 경기장 / 짧은 스탠딩 그로기 / 다운 즉시 KO</div>
+      </div>
+      <div class="doc-meta-card">
+        <div class="doc-meta-label">작성 범위 및 기준 문서</div>
+        <div class="doc-meta-val">구현 알고리즘 배제 (규칙 및 모션 명세) / QA 체크리스트·실행 가이드 반영</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 문서 개정 이력 -->
+  <section id="sec-revision" style="margin-bottom: 36px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
+      <h4 style="margin: 0; color: var(--accent-amber);">■ 문서 개정 이력 (Revision History)</h4>
+      <span style="font-size: 0.78rem; color: var(--text-muted);">우측 바로가기 클릭 시 해당 본문 절로 이동</span>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 90px; text-align: center;">버전</th>
+            <th style="width: 105px; text-align: center;">개정일</th>
+            <th>주요 개정 내역 및 상세 변경 사항</th>
+            <th style="width: 240px;">관련 절 바로가기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>v1.0.0</strong></td>
+            <td class="text-center">2026-10-06</td>
+            <td>버츄얼 파이터 스타일 기반 1:1 전투 시뮬레이션 공/방/이동 규칙 최초 작성</td>
+            <td><a href="#sec-1" style="color: var(--primary); font-weight: 600;">1장 기본 전제 및 진행 구조</a></td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>v1.1.0</strong></td>
+            <td class="text-center">2026-10-06</td>
+            <td>
+              <strong>[원형 벽면 경기장 확정 및 QA 체크리스트/실행 가이드 전면 반영]</strong><br>
+              1. 경기장 형태를 사각 링/로프에서 <strong>깔끔한 아케이드형 원형 경기장(Circular Arena) + 외곽 벽(Wall)</strong>으로 전면 변경<br>
+              2. QA 확정안 반영: <strong>다운(Knockdown) 시 재기립·카운트 없이 즉시 경기 종료(KO)</strong>로 변경, 경기 중 강타 피격은 <strong>짧은 스탠딩 그로기(Groggy) 및 위기 탈출 공방</strong>으로 개편<br>
+              3. QA 확정안 반영: 조작 오해 방지를 위한 <strong>히트스톱(프레임 정지)·슬로우 모션·딥 다이브 줌인 전면 배제</strong> 및 객관적 관전 시점 명세<br>
+              4. QA 확정안 반영: 아케이드 섬광/스파크 타격 이펙트, <strong>크리티컬 한정 단발성 화면 혈흔(신체 지속 출혈 배제)</strong>, 인게임 불필요 상태 표기 제거 및 사전 베팅 기준 정렬
+            </td>
+            <td>
+              • <a href="#sec-1-3" style="color: var(--primary); font-weight: 600;">1.3절 원형 경기장 및 QA 원칙</a><br>
+              • <a href="#sec-2-3" style="color: var(--primary); font-weight: 600;">2.3절 원형 벽면 몰림 규칙</a><br>
+              • <a href="#sec-6" style="color: var(--primary); font-weight: 600;">6장 그로기 및 즉시 KO 규칙</a><br>
+              • <a href="#sec-8-2" style="color: var(--primary); font-weight: 600;">8.2절 클라 중계 연출 규칙</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>v1.2.0</strong></td>
+            <td class="text-center">2026-10-06</td>
+            <td>
+              <strong>[비의인화 닭(투계) 골격·생태 개연성 기반 공/방/이동 전면 개편 및 상세 동작 묘사 추가]</strong><br>
+              1. <strong>비의인화 조류 골격 원칙 확립</strong>: 인간형 격투 모션(날개 커버링 가드, 허리 슬립 위빙, 한발 축 로우킥, 720도 팽이 회전, 뒷걸음/게걸음 스텝)을 배제하고 실제 투계 골격·본능에 부합하는 동작으로 전면 대체<br>
+              2. <strong>공격 4종 개편 및 동작 묘사 신설</strong>: <code>[공1] 전진 부리 속사</code>, <code>[공2] 낮은 발톱 할퀴기</code>, <code>[공3] 비상 발톱 급습</code>, <strong><code>[공4] 광폭 발버둥 난타(대안 4)</code></strong>로 개편하고 준비·타격·회수 단계별 신체 동작 묘사 추가<br>
+              3. <strong>방어 3종 개편 및 동작 묘사 신설</strong>: <code>[방1] 깃털 부풀려 버티기</code>, <code>[방2] 납작 엎드리기</code>, <code>[방3] 맞발톱 쳐내기</code>로 개편하고 가드 브레이크 및 카운터 시 신체 반응 묘사 추가<br>
+              4. <strong>이동 6종 및 그로기/벽 격돌 동작 묘사 추가</strong>: 조류 보행·도약 습성에 맞춘 6대 이동(<code>전진 총총걸음</code>, <code>짧은 뒤로 홉</code>, <code>목 빼고 질주</code>, <code>날개 퍼덕 후방 이탈</code>, <code>측면 사이드 홉</code>, <code>원형 탐색 걸음</code>) 및 위기 상태별 상세 동작 명세 추가
+            </td>
+            <td>
+              • <a href="#sec-2-2" style="color: var(--primary); font-weight: 600;">2.2절 조류형 6대 이동 규칙</a><br>
+              • <a href="#sec-3-2" style="color: var(--primary); font-weight: 600;">3.2절 공격 4종 및 동작 명세</a><br>
+              • <a href="#sec-4-1" style="color: var(--primary); font-weight: 600;">4.1절 방어 3종 및 동작 명세</a><br>
+              • <a href="#sec-6-1" style="color: var(--primary); font-weight: 600;">6.1절 그로기 조건 및 동작 묘사</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 1장 -->
+  <section id="sec-1">
+    <h2>1. 시뮬레이션 기본 전제 및 전투 진행 구조</h2>
+
+    <h3 id="sec-1-1">1.1 버츄얼 파이터식 1:1 대전 지향점 및 비의인화 캐릭터 동작 원칙</h3>
+    <ul>
+      <li><strong>게임형 대전 액션 공방 지향 (<code>QA 01·02번 확정</code>)</strong>:
+        <ul>
+          <li>단순 발싸움 위주의 정통 실사 투계 재현이나 과도한 얼굴 표정 묘사에서 벗어나, 아케이드 카툰풍 닭 캐릭터들이 뚜렷한 동작 시인성을 바탕으로 화려하게 치고받는 <strong>1:1 게임형 대전 액션 메커니즘</strong> 지향</li>
+          <li>3차원 원형 경기장 공간 위에서 <strong>간격(거리) 조절 ➔ 탐색 및 견제 ➔ 상·중·하단 및 직선·광역 수읽기 ➔ 우선권(유불리) 주고받기 ➔ 외곽 벽면(Wall) 압박 및 그로기 공방</strong>이 실시간으로 전개됨</li>
+        </ul>
+      </li>
+      <li><strong>비의인화(Non-Anthropomorphic) 닭 골격 기반 모션 개연성 원칙 (<code>신규 확정</code>)</strong>:
+        <ul>
+          <li>출전 캐릭터는 직립 보행하거나 팔·손을 쓰는 의인화 캐릭터가 아닌, <strong>실제 수탉(투계)의 해부학적 체형(S자 목, 수평 몸통, 측면 날개, 두 다리와 며느리발톱, 꼬리깃)</strong>을 그대로 유지한 카툰 렌더링 캐릭터임</li>
+          <li>따라서 복서처럼 날개를 얼굴 앞에 모아 막는 커버링 가드, 허리를 흔드는 슬립 위빙, 한 발로 서서 차는 로우킥, 팽이처럼 도는 회전기 등 <strong>인간형 격투 모션을 전면 배제</strong>하고, <strong>목 뻗어 쪼기·슬라이딩 발톱 할퀴기·도약 발톱 찍기·광폭 날개/발버둥 난타·깃털 부풀려 버티기·납작 엎드리기·맞발톱 쳐내기·사이드 홉</strong> 등 실제 조류 생태와 골격에 부합하는 개연성 높은 모션으로 모든 공/방/이동을 구성함</li>
+        </ul>
+      </li>
+      <li><strong>기존 7대 기술 체계와의 결합</strong>:
+        <ul>
+          <li>기존 정의된 <strong>7대 전투 기술(공격 4종 + 방어 3종)</strong>과 <strong>3연속기(Combo) 체계</strong>의 상성 틀을 유지하면서, 각 기술에 <strong>유효 사거리(근/중/원), 타격 부위(상/중/하단), 궤적 속성(직선/반원/전방위 광역), 가드 후 우선권(유불리)</strong> 및 <strong>비의인화 상세 동작 묘사</strong>를 부여함</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 id="sec-1-2">1.2 서버 시뮬레이션 생성 및 클라이언트 중계 재생 원칙</h3>
+    <ul>
+      <li><strong>서버 단일 시뮬레이션 데이터 생성</strong>:
+        <ul>
+          <li>모든 격투 경기는 서버에서 두 출전 닭의 능력치(<code>POW</code>, <code>DEF</code>, <code>HP</code>, <code>REC</code>, <code>TEC</code>, <code>GRT</code>), 격투 스타일, 보유 기술 슬롯 및 본 문서의 공/방/이동 규칙에 기반하여 시뮬레이션 타임라인 데이터를 생성함</li>
+          <li>유저의 실시간 조작 개입은 없으며, 캐릭터 간 모든 이동·공격·방어·위기 탈출 판단은 정의된 규칙에 따라 서버 시뮬레이션에서 일관되게 생성됨</li>
+        </ul>
+      </li>
+      <li><strong>클라이언트 동일 중계 재생</strong>:
+        <ul>
+          <li>모든 접속 유저의 클라이언트는 서버가 생성한 시뮬레이션 타임라인 데이터를 수신하여 동일한 공방 장면을 오차 없이 재생함</li>
+          <li>공격 적중, 버티기 방어, 엎드려 회피, 맞발톱 쳐내기, 그로기 상태를 <strong>화면의 닭 캐릭터 동작만 보고도 직관적으로 구별</strong>할 수 있도록 명확한 조류 액션 모션과 아케이드 이펙트로 중계함 (<code>QA 통과 체크 기준</code>)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 id="sec-1-3">1.3 원형 벽면 경기장 규격 및 QA 확정 전투·연출 원칙</h3>
+    <div class="grid-2col">
+      <div class="info-card">
+        <h4>① 원형 벽면 경기장 (Circular Walled Arena) 확정</h4>
+        <ul>
+          <li>어둡고 거친 언더그라운드 투계장이나 사각 링 로프 구조를 배제하고, <strong>시인성이 높고 깔끔한 게임형 아케이드 컨셉의 '원형 경기장'</strong>을 기본 규격으로 확정 (<code>QA 06번 확정</code>)</li>
+          <li>경기장 외곽 경계는 탄성 로프가 아닌 <strong>단단한 원형 벽(Wall)</strong>으로 둘러싸여 있으며, 장외 패배(링아웃) 없이 외곽 벽면에 몰렸을 때의 <strong>벽면 압박(Wall Pressure) 및 벽 격돌(Wall Impact)</strong> 규칙 작동</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>② 다운 시 재기립 배제 및 즉시 KO 종료</h4>
+        <ul>
+          <li>권투처럼 바닥에 쓰러진 뒤 다운 카운트를 세거나 다시 일어나는(재기립) 연출은 <strong>인위적인 승패 조작 오해</strong>를 유발하므로 전면 배제 (<code>QA 07·09번 확정</code>)</li>
+          <li>경기 도중 큰 충격을 입었을 때는 서서 비틀거리는 <strong>짧은 '스탠딩 그로기(Groggy)' 상태</strong>로만 표현하며, 체력이 0이 되어 <strong>바닥에 다운(Knockdown)되는 순간 즉시 경기 종료(KO)</strong>로 판정</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>③ 히트스톱·슬로우·딥 다이브 줌인 전면 배제</h4>
+        <ul>
+          <li>유저가 직접 조작하지 않는 베팅 관전 게임 특성상, 타격 순간 화면을 멈추는 <strong>히트스톱(프레임 정지/슬로우 모션)</strong>이나 <strong>급격한 딥 다이브 카메라 줌인</strong>은 반대편 베팅 유저에게 승부 조작 의심을 유발하므로 일체 배제 (<code>QA 05번 확정</code>)</li>
+          <li>경기를 멈춘 것처럼 보이지 않는 객관적 관전 시점 일관 유지</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>④ 아케이드 스파크 이펙트 및 크리티컬 단발 화면 혈흔</h4>
+        <ul>
+          <li>아케이드 섬광·스파크 이펙트를 중심으로 타격감을 표현하되, <strong>큰 타격(크리티컬 히트) 적중 시에만</strong> 화면에 피가 짧게 튀었다가 즉시 사라지는 연출 적용 (<code>QA 03·04번 확정</code>)</li>
+          <li>캐릭터 신체의 지속적 상처·출혈 묘사 및 경기 중 불필요한 실시간 컨디션 오라 표기 전면 배제 (<code>QA 12번 확정</code>)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2장 -->
+  <section id="sec-2">
+    <h2>2. 원형 경기장 공간(거리·위치) 및 이동(Movement) 규칙</h2>
+
+    <div class="svg-diagram-box">
+      <div class="svg-diagram-title">[다이어그램 1] 원형 벽면 경기장 (Circular Walled Arena) 구역 구조 및 조류형 이동·벽 격돌 메커니즘</div>
+      <svg viewBox="0 0 820 340" width="100%" style="max-width: 780px; height: auto;">
+        <defs>
+          <radialGradient id="arenaGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1e293b" />
+            <stop offset="72%" stop-color="#0f172a" />
+            <stop offset="100%" stop-color="#334155" />
+          </radialGradient>
+        </defs>
+        <!-- Outer Wall Circle -->
+        <circle cx="210" cy="170" r="145" fill="url(#arenaGrad)" stroke="#f43f5e" stroke-width="6" />
+        <circle cx="210" cy="170" r="115" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,5" />
+        <circle cx="210" cy="170" r="70" fill="rgba(56, 189, 248, 0.08)" stroke="#38bdf8" stroke-width="1.5" />
+        <!-- Labels in Arena -->
+        <text x="210" y="46" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle">외곽 벽면 경계 구역 (Wall Edge Zone)</text>
+        <text x="210" y="122" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle">아레나 중앙 구역 (Center Zone)</text>
+        <!-- Fighters -->
+        <circle cx="175" cy="175" r="14" fill="#f43f5e" />
+        <text x="175" y="179" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">RED</text>
+        <circle cx="245" cy="175" r="14" fill="#38bdf8" />
+        <text x="245" y="179" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">BLUE</text>
+        <!-- Circular Walk Arrow -->
+        <path d="M 310 115 A 125 125 0 0 1 310 225" fill="none" stroke="#34d399" stroke-width="2.5" stroke-dasharray="4,3" />
+        <text x="295" y="250" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">사이드 홉 / 원형 탐색 걸음</text>
+        <!-- Right Explanation Cards -->
+        <rect x="395" y="25" width="405" height="90" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" />
+        <text x="412" y="48" fill="#38bdf8" font-size="13" font-weight="800">① 아레나 중앙 구역 (Center Zone)</text>
+        <text x="412" y="70" fill="#cbd5e1" font-size="11.5">• 총총걸음, 뒤로 홉, 목 빼고 질주, 날개 퍼덕 후방 이탈, 사이드 홉 자유 구사</text>
+        <text x="412" y="90" fill="#cbd5e1" font-size="11.5">• 넉백 공격 피격 시 뒤로 밀려나며 충격 흡수 가능</text>
+
+        <rect x="395" y="128" width="405" height="90" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5" />
+        <text x="412" y="151" fill="#fbbf24" font-size="13" font-weight="800">② 원형 외곽 벽면 구역 (Wall Edge Zone)</text>
+        <text x="412" y="173" fill="#cbd5e1" font-size="11.5">• 등 뒤 단단한 원형 벽 가로막힘 ➔ 짧은 뒤로 홉 및 후방 이탈 불가</text>
+        <text x="412" y="193" fill="#cbd5e1" font-size="11.5">• 원형 벽 곡면을 따라 측면 사이드 홉 / 원형 탐색 걸음으로만 탈출 가능</text>
+
+        <rect x="395" y="231" width="405" height="90" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" />
+        <text x="412" y="254" fill="#f43f5e" font-size="13" font-weight="800">③ 벽 격돌 (Wall Impact) 및 버티기 압박 가중</text>
+        <text x="412" y="276" fill="#cbd5e1" font-size="11.5">• 벽 등진 채 [공4: 광폭 발버둥 난타] 피격 시 꼬리깃·몸통 벽면 충돌 ➔ 그로기</text>
+        <text x="412" y="296" fill="#cbd5e1" font-size="11.5">• 벽면에서 연속 버티기([방1]) 시 충격 미분산으로 가드 내구도 소모 가중</text>
+      </svg>
+    </div>
+
+    <h3 id="sec-2-1">2.1 선수 간 거리(Range) 3단계 구분 규칙</h3>
+    <p>두 닭 캐릭터 사이의 상대 거리는 항상 아래 3단계 중 하나로 판정되며, 현재 거리에 따라 시전 가능한 기술과 적중 여부가 결정됨</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 140px; text-align: center;">거리 단계</th>
+            <th style="width: 250px;">거리 정의 및 대치 상태</th>
+            <th>공격 적중 가능 범위</th>
+            <th>주요 발생 행동</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><span class="badge badge-red">근접 거리</span><br><code>Close Range</code></td>
+            <td>부리와 가슴이 맞닿을 듯한 초근접 난타 간격</td>
+            <td>전진 부리 속사(<code>[공1]</code>), 낮은 발톱 할퀴기(<code>[공2]</code>), 광폭 발버둥 난타(<code>[공4]</code>) 즉시 적중</td>
+            <td>빠른 부리 연타 압박, 깃털 부풀려 버티기, 납작 엎드리기 회피, 맞발톱 쳐내기, 후방 이탈</td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-amber">중거리</span><br><code>Mid Range</code></td>
+            <td>반 걸음 전진하거나 몸을 날려야 닿는 견제 간격</td>
+            <td>낮은 발톱 할퀴기(<code>[공2]</code>), 광폭 발버둥 난타(<code>[공4]</code>) 및 비상 발톱 급습(<code>[공3]</code>) 적중 (<code>[공1]</code> 단독 시전 시 헛침)</td>
+            <td>총총걸음/홉 간격 조절, 측면 사이드 홉 탐색, 견제기 내밀기, 헛침 유도</td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-blue">원거리</span><br><code>Long Range</code></td>
+            <td>양 선수가 멀리 떨어진 탐색 및 호흡 정돈 간격</td>
+            <td>공중 도약 강습기인 비상 발톱 급습(<code>[공3]</code>)만 단숨에 거리 좁히며 적중 가능 (나머지 공격 전부 헛침)</td>
+            <td>목 빼고 질주 접근, 원형 탐색 걸음, 연속기 후 기력 호흡 정돈</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-2-2">2.2 6대 이동 동작(조류 보행·도약) 및 궤적 회피 규칙</h3>
+    <p>인간 격투가의 보폭 스텝(뒷걸음질, 게걸음 등)을 배제하고, <strong>실제 닭(투계)의 총총걸음·짧은 도약(Hop)·날개 퍼덕임(Flutter)</strong> 생태를 반영한 6가지 이동 동작으로 원형 경기장 내 거리와 각도를 제어함</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 100px; text-align: center;">이동 구분</th>
+            <th style="width: 155px;">이동 동작 명칭</th>
+            <th>비의인화 닭 캐릭터 상세 동작(모션) 묘사</th>
+            <th style="width: 170px;">거리/각도 변화 효과</th>
+            <th style="width: 240px;">이동 중 방어 및 피격 판정 규칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>전진 이동</strong></td>
+            <td><strong>전진 총총걸음</strong><br><code>Forward Trot</code></td>
+            <td>• 고개를 약간 낮추고 벼슬과 부리를 상대에게 고정한 채, 두 다리를 짧고 재빠르게 교차하며 경계하듯 다가가는 동작<br>• 목깃을 살짝 세워 언제든 몸을 웅크릴 준비를 유지함</td>
+            <td>상대와의 거리를 반 걸음 좁힘<br>(원➔중, 중➔근)</td>
+            <td>이동 중 즉시 깃털 부풀려 버티기(<code>[방1]</code>) 전환 가능 (안전한 접근 수단)</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>후퇴 이동</strong></td>
+            <td><strong>짧은 뒤로 홉</strong><br><code>Short Hop Back</code></td>
+            <td>• 조류 골격상 어색한 뒷걸음질 보행 대신, 두 발로 지면을 가볍게 톡 차며 뒤로 짧게 튀어 물러나는 동작<br>• 착지 시 꼬리깃을 살짝 내려 무게중심을 잡음</td>
+            <td>상대와의 거리를 반 걸음 벌림<br>(근➔중, 중➔원)</td>
+            <td>이동 중 자연 방어 전환 가능, 상대 짧은 공격(<code>[공1]</code>)의 헛침(Whiff) 유도</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>급속 접근</strong></td>
+            <td><strong>목 빼고 질주</strong><br><code>Neck-Out Rush</code></td>
+            <td>• 수탉이 공격적으로 달려들 때처럼 목과 머리를 앞으로 일직선으로 쭉 빼고 몸통을 낮춘 채, 양 날개를 반쯤 펴서 파닥이며 지면을 빠르게 박차고 돌진하는 동작</td>
+            <td>거리를 단숨에 1단계 이상 급속 축소<br>(원➔근/중)</td>
+            <td><strong>질주 동작 중 방어 불가</strong>, 상대 맞이치기 공격에 피격 시 카운터 판정</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>급속 이탈</strong></td>
+            <td><strong>날개 퍼덕 후방 이탈</strong><br><code>Flutter Leap Back</code></td>
+            <td>• 닭이 위험을 감지했을 때처럼 양 날개를 크게 한 번 퍼덕여 양력을 얻으며 뒤로 훌쩍 날아올라 거리를 벌리는 동작<br>• 바닥 착지 순간 두 다리를 굽히며 날개를 접는 짧은 후딜레이 발생</td>
+            <td>뒤로 빠르게 날아올라 근접 압박에서 즉시 이탈<br>(근➔원/중)</td>
+            <td>상대 근거리 직선/하단 공격 회피 가능, 단 <strong>착지 순간 짧은 무방비 후딜레이</strong> 존재 (원거리 추격기 <code>[공3]</code>에 취약)</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>측면 회피</strong></td>
+            <td><strong>측면 사이드 홉</strong><br><code>Side Hop (L/R)</code></td>
+            <td>• 게걸음 대신 머리와 시선(눈)은 상대 정면에 고정한 채, 두 발로 동시에 좌측 또는 우측 대각선 방향으로 통 튀어 몸통 위치를 옮기는 동작<br>• 착지와 동시에 몸통 방향을 상대 쪽으로 재정렬함</td>
+            <td>상대 정면 타격선(Line of Attack)에서 좌/우 측면으로 비켜남</td>
+            <td><strong>상대의 '직선 궤적 공격(<code>[공1]</code>, <code>[공3]</code>)'을 완전히 흘려보내고 측면 노출 유도</strong>, 단 <strong>'반원/광역 공격(<code>[공2]</code>, <code>[공4]</code>)'에는 포착 피격</strong>됨</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>원형 회전</strong></td>
+            <td><strong>원형 탐색 걸음</strong><br><code>Circle Prowl</code></td>
+            <td>• 몸통 진행 방향을 원형 경기장 벽면 곡률(접선) 쪽으로 비스듬히 틀고 고개만 상대 쪽으로 돌린 채, 재빠른 총총걸음으로 크게 원을 그리며 도는 동작</td>
+            <td>원형 경기장 곡률을 따라 좌/우로 크게 돌며 위치 교대</td>
+            <td>외곽 벽면 몰림 상황에서 벽을 타고 빠져나오거나 아레나 중앙 주도권 탈환</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-2-3">2.3 원형 외곽 벽면 몰림(Wall Pressure) 및 벽 격돌 규칙</h3>
+    <ul>
+      <li><strong>원형 경기장 2대 구역 구분</strong>:
+        <ul>
+          <li><strong>아레나 중앙 (<code>Center Zone</code>)</strong>: 전후좌우 모든 방향으로 제한 없이 이동 및 넉백 밀려남이 가능한 기본 구역</li>
+          <li><strong>외곽 벽면 경계 (<code>Wall Edge Zone</code>)</strong>: 원형 경기장 가장자리의 단단한 벽면에 꼬리깃이나 몸통 후면이 닿거나 인접하여 더 이상 뒤로 물러설 공간이 없는 구역</li>
+        </ul>
+      </li>
+      <li><strong>외곽 벽면 몰림 시 작동하는 3대 규칙 및 동작 묘사</strong>:
+        <ol>
+          <li><strong>후방 퇴로 차단 및 원형 탈출 강제</strong>: 등 뒤가 벽으로 막혀 <code>짧은 뒤로 홉(Short Hop Back)</code> 및 <code>날개 퍼덕 후방 이탈(Flutter Leap Back)</code>이 불가능해지며, 상대와 강제로 <code>근접 거리</code> 또는 <code>중거리</code>가 유지됨. 벽면 압박에서 벗어나려면 원형 벽면을 따라 <strong><code>측면 사이드 홉(Side Hop)</code>·<code>원형 탐색 걸음(Circle Prowl)</code></strong>으로 돌아 나가거나, 맞발톱 쳐내기(<code>[방3]</code>)/강타로 상대를 밀쳐내야 함</li>
+          <li><strong>벽 격돌 추가 경직 (<code>Wall Impact / Wall Stagger</code>) 및 모션 묘사</strong>: 탄성 로프와 달리 단단한 벽면이므로, 벽을 등진 상태에서 넉백 속성 공격(<code>[공4: 광폭 발버둥 난타]</code> 또는 3연속기 피니시)에 피격될 경우 <strong>뒤로 튕겨 나가며 꼬리깃과 몸통 후면/측면이 단단한 원형 외곽 벽에 강하게 부딪혀 깃털과 아케이드 스파크가 튀고, 충격 반동으로 앞으로 튕겨 나오며 두 다리가 휘청거리는 짧은 스탠딩 그로기(비틀거림 경직)</strong>에 빠짐</li>
+          <li><strong>버티기 압박 가중</strong>: 벽에 몰린 채 깃털 부풀려 버티기(<code>[방1]</code>)로만 방어할 경우, 뒤로 밀려나며 충격을 분산하지 못해 <strong>가드 내구도 소모량이 중앙 평지 대비 가중</strong>되어 가드 브레이크 위험이 급증함</li>
+        </ol>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 3장 -->
+  <section id="sec-3">
+    <h2>3. 공격(Attack) 판정 및 4대 공격 기술 확장 규칙</h2>
+
+    <h3 id="sec-3-1">3.1 타격 부위(상·중·하단) 및 공격 궤적(직선·광역) 정의</h3>
+    <div class="grid-2col">
+      <div class="info-card">
+        <h4>■ 타격 부위 (He\r\r\r\right) 3단 구분</h4>
+        <ul>
+          <li><strong>상단/공중 (<code>High / Air</code>)</strong>: 상대의 벼슬·머리·목 위쪽에서 꽂히는 타격. 깃털 부풀려 버티기(<code>[방1]</code>)로 방어 가능하나 <strong>바닥에 납작 엎드리는 회피(<code>[방2: 납작 엎드리기]</code>)에 허공을 가름</strong></li>
+          <li><strong>중단 (<code>Mid</code>)</strong>: 상대의 가슴·몸통 정면을 노리는 표준 타격. 깃털 부풀려 버티기(<code>[방1]</code>)로 방어 가능하며, <strong>낮은 방어 자세나 무리한 숙이기를 타격함</strong></li>
+          <li><strong>하단 (<code>Low</code>)</strong>: 지면을 스치며 상대의 다리·발목을 긁어 차는 타격. <strong>상·중단 위주 기본 버티기(<code>[방1]</code>)를 뚫고 타격</strong>하며, 하단 대비 버티기나 날개 퍼덕 후방 이탈(<code>Flutter Leap Back</code>), 또는 비상 발톱 급습(<code>[공3]</code>) 도약으로만 대처 가능</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>■ 공격 궤적 (Trajectory) 2종 구분</h4>
+        <ul>
+          <li><strong>직선 궤적 (<code>Linear</code>)</strong>: 정면 일직선으로 목을 뻗어 쪼거나 공중에서 직선으로 급강하하는 공격. 발동 속도와 사거리 대비 위력이 뛰어나지만 <strong>상대의 측면 사이드 홉(<code>Side Hop</code>) 및 납작 엎드리기(<code>[방2]</code>)에 회피당함</strong></li>
+          <li><strong>반원/전방위 광역 궤적 (<code>Semi-Track / Wide Flurry</code>)</strong>: 슬라이딩하며 발톱으로 반원을 긁어 차거나 양 날개와 두 발을 광폭하게 휘저어 전방과 좌우 측면을 동시에 휩쓰는 공격. 발동은 직선기보다 느리지만 <strong>원형 벽면을 타고 측면 사이드 홉(<code>Side Hop</code>)을 시도하거나 납작 엎드리는(<code>[방2]</code>) 상대를 포착하여 타격함</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="sec-3-2">3.2 공격 4종 기술의 거리·부위·궤적 및 동작 상세 매핑</h3>
+    <p>인간형 발차기(서서 차는 로우킥)나 인위적 팽이 회전(720도 회전)을 배제하고, <strong>실제 투계의 공격 본능(부리 속사, 낮은 슬라이딩 할퀴기, 공중 도약 발톱 찍기, 광폭 날개·발버둥 난타)</strong>을 적용한 4대 공격 기술 명세표임</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 75px; text-align: center;">식별자</th>
+            <th style="width: 145px;">기술명</th>
+            <th style="width: 105px; text-align: center;">유효 사거리</th>
+            <th style="width: 100px; text-align: center;">타격 부위</th>
+            <th style="width: 105px; text-align: center;">공격 궤적</th>
+            <th style="width: 85px; text-align: center;">발동 속도</th>
+            <th>비의인화 닭 캐릭터 동작(모션) 요약</th>
+            <th>핵심 공방 역할 및 특수 판정 규칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><span class="badge badge-red"><code>[공1]</code></span></td>
+            <td><strong>전진 부리 속사</strong><br><code>Rapid Neck Peck</code></td>
+            <td class="text-center"><strong>근접</strong></td>
+            <td class="text-center"><strong>중·상단</strong><br>(머리/가슴)</td>
+            <td class="text-center"><strong>직선</strong><br><code>Linear</code></td>
+            <td class="text-center"><strong>최고속</strong><br>(0.4초)</td>
+            <td>• 다리로 짧게 반 보 디디며 S자 목을 채찍처럼 앞으로 길게 뻗어 날카로운 부리로 상대 머리와 가슴을 재빠르게 2~3회 연속 쪼는 동작</td>
+            <td>
+              • <strong>근접 최속 시동기</strong>: 근접 거리에서 가장 먼저 닿는 기본 잽 견제기<br>
+              • 막혀도 후딜레이가 매우 짧아 불리하지 않으며 연속기 시동에 최적<br>
+              • 사거리가 짧아 중·원거리에서 헛치기 쉽고 <strong>측면 사이드 홉 및 납작 엎드리기(<code>[방2]</code>)에 취약</strong>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-amber"><code>[공2]</code></span></td>
+            <td><strong>낮은 발톱 할퀴기</strong><br><code>Low Claw Rake</code></td>
+            <td class="text-center"><strong>근 ~ 중거리</strong></td>
+            <td class="text-center"><strong>하단</strong><br>(다리/발목)</td>
+            <td class="text-center"><strong>반원 궤적</strong><br><code>Semi-Track</code></td>
+            <td class="text-center"><strong>보통</strong><br>(0.6초)</td>
+            <td>• 몸통을 바닥 가까이 낮추고 날개로 균형을 잡으며 앞으로 미끄러지듯 전진, 한쪽 발톱으로 지면과 상대 다리(하단)를 반원 궤적으로 강하게 긁어 차 올리는 동작</td>
+            <td>
+              • <strong>하단 방어 붕괴기</strong>: 낮은 슬라이딩 궤적으로 상대 다리를 후려침<br>
+              • 상대의 상·중단 기본 버티기(<code>[방1]</code>) 및 납작 엎드리기(<code>[방2]</code>)를 무너뜨리고 방어력 일부 관통<br>
+              • 발톱이 긁고 지나가는 쪽 측면 사이드 홉을 잡아내며 적중 시 다리 경직 유발
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-blue"><code>[공3]</code></span></td>
+            <td><strong>비상 발톱 급습</strong><br><code>Dive Talon</code></td>
+            <td class="text-center"><strong>중 ~ 원거리</strong><br>(돌진 단축)</td>
+            <td class="text-center"><strong>상단/공중</strong><br>(두부 강습)</td>
+            <td class="text-center"><strong>직선 도약</strong><br><code>Linear Jump</code></td>
+            <td class="text-center"><strong>다소 느림</strong><br>(0.7초)</td>
+            <td>• 양 날개를 힘껏 퍼덕여 공중으로 높게 솟구친 뒤, 두 다리와 며느리발톱을 전방 아래로 곧게 내지르며 대각선으로 급강하해 상대 머리·어깨를 덮치는 동작</td>
+            <td>
+              • <strong>원거리 단축 공중 강습기</strong>: 도약 급강하로 거리를 단숨에 근접으로 좁힘<br>
+              • 공중 도약 중 상대의 하단 공격(<code>[공2]</code>)을 무시하고 일방 타격 가능<br>
+              • 위에서 찍어 누르는 특성상 상대가 버티기(<code>[방1]</code>)로 막아도 공격자가 유리한 우선권 유지<br>
+              • 직선 궤적이므로 <strong>측면 사이드 홉, 납작 엎드리기(<code>[방2]</code>), 맞발톱 쳐내기(<code>[방3]</code>)에 취약</strong>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-purple"><code>[공4]</code></span></td>
+            <td><strong>광폭 발버둥 난타</strong><br><code>Frenzy Flap &amp; Claw</code></td>
+            <td class="text-center"><strong>근 ~ 중거리</strong></td>
+            <td class="text-center"><strong>전신 중단</strong><br>(전방 반원 광역)</td>
+            <td class="text-center"><strong>전방위 광역</strong><br><code>Wide Flurry</code></td>
+            <td class="text-center"><strong>가장 느림</strong><br>(0.8초)</td>
+            <td>• 극도로 흥분한 투계가 몸을 살짝 띄우며 <strong>양 날개를 미친 듯이 퍼덕이고 두 발로 전방 좌·우 공간을 마구 할퀴고 차올린 뒤</strong>, 마지막 거센 날개짓과 양발 차기로 상대를 튕겨내는 야수형 광역 난타 동작</td>
+            <td>
+              • <strong>측면 회피 원천 봉쇄 및 벽면 넉백기</strong>: 날개짓과 발톱이 전방 반원(180도) 및 좌우 측면을 빈틈없이 휘저어 <strong>측면 사이드 홉(<code>Side Hop</code>)과 납작 엎드리기(<code>[방2]</code>), 맞발톱 쳐내기(<code>[방3]</code>)를 100% 파훼</strong><br>
+              • 적중 시 상대를 외곽 벽면 쪽으로 크게 밀쳐내며(<code>Wall Impact</code> 유발), 상대 연속기를 강제 차단<br>
+              • 발동 준비 동작이 커서 근접 <code>[공1]</code>에 먼저 끊기거나 <code>[방1]</code>에 막힐 경우 큰 빈틈 노출
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>■ 3.2.1 공격 4종 기술의 단계별(준비 ➔ 타격 ➔ 회수) 비의인화 상세 동작 명세</h4>
+    <div class="grid-2col">
+      <div class="info-card">
+        <h4><code>[공1]</code> 전진 부리 속사 (Rapid Neck Peck)</h4>
+        <ul>
+          <li><strong>준비(Startup)</strong>: 목을 S자로 짧게 뒤로 당기며 부리 끝을 상대 가슴/머리 높이에 조준함</li>
+          <li><strong>타격(Active)</strong>: 앞발을 짧게 디디며 목을 피스톤처럼 전방 일직선으로 재빠르게 2~3회 뻗어 쪼고, 부리 끝에서 날카로운 직선 스파크 이펙트가 발생함</li>
+          <li><strong>회수(Recovery)</strong>: 뻗었던 목을 즉시 본래 길이로 거두어들이며 기본 대치 자세로 빠르게 복귀함</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4><code>[공2]</code> 낮은 발톱 할퀴기 (Low Claw Rake)</h4>
+        <ul>
+          <li><strong>준비(Startup)</strong>: 다리를 굽혀 몸통을 지면 가까이 낮추고 양 날개 끝을 살짝 벌려 낮은 무게중심을 잡음</li>
+          <li><strong>타격(Active)</strong>: 바닥을 미끄러지듯 반 걸음 전진하며 뒷다리 발톱과 며느리발톱으로 지면의 흙먼지와 함께 상대의 정강이·발목(하단)을 대각선 반원 궤적으로 거칠게 긁어 차 올림</li>
+          <li><strong>회수(Recovery)</strong>: 차 올린 발을 바닥에 디디며 낮아진 몸통을 다시 일으켜 세움 (헛침 시 미끄러진 반동으로 자세 복귀 시간 연장)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4><code>[공3]</code> 비상 발톱 급습 (Dive Talon)</h4>
+        <ul>
+          <li><strong>준비(Startup)</strong>: 다리를 깊게 웅크렸다가 양 날개를 강하게 퍼덕이며 공중으로 훌쩍 뛰어오름 (이 순간 하단 판정 회피)</li>
+          <li><strong>타격(Active)</strong>: 공중 최고점에서 꼬리깃을 펼쳐 각도를 잡은 뒤, 두 발의 발톱과 며느리발톱을 앞으로 나란히 세워 상대 정수리와 어깨 위를 향해 총알처럼 급강하 타격함</li>
+          <li><strong>회수(Recovery)</strong>: 적중·방어 시 상대를 밟고 가볍게 착지하나, 회피당해 헛칠 경우 빈 바닥에 발톱이 꽂히며 날개를 파닥거리는 큰 착지 후딜레이 노출</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4><code>[공4]</code> 광폭 발버둥 난타 (Frenzy Flap &amp; Claw)</h4>
+        <ul>
+          <li><strong>준비(Startup)</strong>: 수탉이 극도로 흥분하여 목깃(Hackle)을 곤두세우고 고개를 뒤로 젖히며 양 날개를 크게 들어 올리는 뚜렷한 전조 동작을 취함 (0.8초 선딜레이 시인성 확보)</li>
+          <li><strong>타격(Active)</strong>: 지면에서 살짝 떠오른 상태로 양 날개를 광폭하게 연속 퍼덕이며 두 발로 전방과 좌·우 허공을 마구 할퀴고 차올려 반원 광역 공간 전체에 다중 타격 스파크와 깃털 폭풍을 일으키고, 마지막 순간 양발과 날개를 동시에 강하게 내지르며 상대를 외곽 벽면으로 튕겨냄</li>
+          <li><strong>회수(Recovery)</strong>: 격렬한 난타 직후 착지하며 거칠게 숨을 고르고 흐트러진 날개를 접는 긴 회수 동작 발생</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="sec-3-3">3.3 공격 동작 3단계 구간 및 헛침(Whiff) 노출 규칙</h3>
+    <div class="svg-diagram-box">
+      <div class="svg-diagram-title">[다이어그램 2] 공격 기술 시전 3단계 타임라인 및 구간별 피격·헛침 판정</div>
+      <svg viewBox="0 0 820 145" width="100%" style="max-width: 780px; height: auto;">
+        <rect x="20" y="20" width="240" height="105" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="2" />
+        <text x="140" y="46" fill="#fbbf24" font-size="13" font-weight="800" text-anchor="middle">1. 준비 구간 (선딜레이 / Startup)</text>
+        <text x="140" y="72" fill="#cbd5e1" font-size="11.5" text-anchor="middle">• 목 당기기 / 몸 낮추기 / 날개 들기</text>
+        <text x="140" y="94" fill="#f43f5e" font-size="11.5" font-weight="700" text-anchor="middle">• 피격 시 '카운터 히트' 발생</text>
+
+        <path d="M 265 72 L 285 72" stroke="#94a3b8" stroke-width="2.5" />
+        <polygon points="285,67 295,72 285,77" fill="#94a3b8" />
+
+        <rect x="300" y="20" width="220" height="105" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2" />
+        <text x="410" y="46" fill="#f43f5e" font-size="13" font-weight="800" text-anchor="middle">2. 활성 타격 구간 (Active)</text>
+        <text x="410" y="72" fill="#cbd5e1" font-size="11.5" text-anchor="middle">• 부리/발톱/광폭 날개 난타 판정</text>
+        <text x="410" y="94" fill="#38bdf8" font-size="11.5" font-weight="700" text-anchor="middle">• 동시 충돌 시 '격돌(Clash)' 판정</text>
+
+        <path d="M 525 72 L 545 72" stroke="#94a3b8" stroke-width="2.5" />
+        <polygon points="545,67 555,72 545,77" fill="#94a3b8" />
+
+        <rect x="560" y="20" width="240" height="105" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="2" />
+        <text x="680" y="46" fill="#c084fc" font-size="13" font-weight="800" text-anchor="middle">3. 회수 구간 (후딜레이 / Recovery)</text>
+        <text x="680" y="72" fill="#cbd5e1" font-size="11.5" text-anchor="middle">• 기본 자세 복귀까지 방어 불가</text>
+        <text x="680" y="94" fill="#34d399" font-size="11.5" font-weight="700" text-anchor="middle">• 헛침(Whiff) 시 '확정 반격' 노출</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 4장 -->
+  <section id="sec-4">
+    <h2>4. 방어(Defense) 판정 및 공방 상성 매트릭스</h2>
+
+    <h3 id="sec-4-1">4.1 방어 3종 기술의 자세·회피·쳐내기 및 동작 확장 규칙</h3>
+    <p>인간 복서처럼 양 날개를 얼굴 앞으로 모으는 커버링 가드나 허리 위빙, 한쪽 날개 검술 패링을 전면 배제하고, <strong>실제 닭이 충격을 버티거나 피하고 맞받아치는 본능적 동작(<code>깃털 부풀려 버티기</code>, <code>납작 엎드리기</code>, <code>맞발톱 쳐내기</code>)</strong>으로 3대 방어 기술을 정의함</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 80px; text-align: center;">식별자</th>
+            <th style="width: 155px;">기술명</th>
+            <th style="width: 110px; text-align: center;">방어 유형</th>
+            <th>비의인화 닭 캐릭터 동작(모션) 요약</th>
+            <th style="width: 185px;">유효 대응 범위</th>
+            <th style="width: 185px;">취약 공격 (파훼 수단)</th>
+            <th style="width: 220px;">성공 시 후속 효과 및 우선권</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><span class="badge badge-blue"><code>[방1]</code></span></td>
+            <td><strong>깃털 부풀려 버티기</strong><br><code>Bristle Brace</code></td>
+            <td class="text-center"><strong>밀착 방어</strong><br>(충격 흡수)</td>
+            <td>• 목을 짧게 움츠려 급소(머리·목)를 가슴 쪽으로 감추고, 온몸의 목깃(Hackle)과 날개깃을 부풀리며 두 다리 중심을 낮게 박아 타격 충격을 몸통으로 버텨내는 동작</td>
+            <td>• 기본: 상·중단 및 광역 공격 방어<br>• 하단 인식 시: 다리를 더욱 낮춰 방어</td>
+            <td>• 미반응 시 하단(<code>[공2]</code>) 관통 피해<br>• 연속 방어 시 <strong>가드 브레이크</strong> 위험</td>
+            <td>• 타격 피해 대폭 감쇄(<code>-60%</code>) 및 후방 밀림 발생<br>• 상대가 큰 기술(<code>[공2]</code>, <code>[공4]</code>)을 막혔을 경우 수비자가 즉시 반격 우선권 획득</td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-green"><code>[방2]</code></span></td>
+            <td><strong>납작 엎드리기</strong><br><code>Low Duck</code></td>
+            <td class="text-center"><strong>자세 낮춰 회피</strong><br>(무효화+급습)</td>
+            <td>• 닭 특유의 유연한 S자 목 관절과 다리 관절을 순간적으로 접어 배가 바닥에 닿을 듯 납작 엎드리며 상대의 상단·직선 공격을 머리 위로 스쳐 지나가게 하는 동작</td>
+            <td>• <strong>직선 공격(<code>[공1]</code>, <code>[공3]</code>)</strong><br>• 상단/공중 타격</td>
+            <td>• <strong>광폭 발버둥 난타(<code>[공4]</code>)에 피격</strong><br>• <strong>낮은 발톱 할퀴기(<code>[공2]</code>)에 피격</strong></td>
+            <td>• 상대 공격 피해 <code>0</code> 완전 무효화 및 후딜레이 포착<br>• 엎드린 자세에서 튀어 오르며 이어지는 다음 연계 공격에 <strong>조건부 100% 확정 치명타</strong> 부여</td>
+          </tr>
+          <tr>
+            <td class="text-center"><span class="badge badge-amber"><code>[방3]</code></span></td>
+            <td><strong>맞발톱 쳐내기</strong><br><code>Spur Deflect</code></td>
+            <td class="text-center"><strong>맞받아 쳐내기</strong><br>(궤적 튕겨내기)</td>
+            <td>• 상대의 부리나 발톱이 닿는 순간, 실제 투계처럼 제자리에서 짧게 튀어 오르며 앞발과 며느리발톱을 강하게 맞부딪쳐 상대의 공격 궤적을 튕겨내고 중심을 무너뜨리는 동작</td>
+            <td>• <strong>단발/직선/반원 타격(<code>[공1]</code>, <code>[공2]</code>, <code>[공3]</code>)</strong> 접촉 순간</td>
+            <td>• <strong>광폭 발버둥 난타(<code>[공4]</code>) 쳐내기 불가</strong><br>• 상대 페인트 시 헛발질 후딜레이 노출</td>
+            <td>• 상대의 공격 및 진행 중인 <strong>연속기를 즉시 강제 캔슬</strong><br>• 발톱 격돌 스파크와 함께 상대를 짧은 무방비 경직(<code>Stun</code>) 상태로 만들고 <strong>무조건 반격 치명타</strong> 확정</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>■ 4.1.1 방어 3종 기술 및 가드 브레이크 비의인화 상세 동작 명세</h4>
+    <div class="grid-2col">
+      <div class="info-card">
+        <h4><code>[방1]</code> 깃털 부풀려 버티기 (Bristle Brace)</h4>
+        <ul>
+          <li><strong>방어 자세</strong>: 날개를 팔처럼 앞으로 모으지 않고 몸통 양옆에 단단히 밀착시켜 살짝 부풀리며, 목을 어깨/가슴 안쪽으로 깊숙이 집어넣고 목깃을 방패처럼 바짝 세워 두 발로 땅을 단단히 움켜쥠</li>
+          <li><strong>피격 흡수 반응</strong>: 상대 타격이 닿는 순간 부풀린 깃털이 파르르 떨리며 아케이드 가드 이펙트(푸른색/백색 반구형 스파크)가 튀고, 발톱으로 바닥을 긁으며 뒤로 살짝 밀려남</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4><code>[방2]</code> 납작 엎드리기 (Low Duck) &amp; <code>[방3]</code> 맞발톱 쳐내기 (Spur Deflect)</h4>
+        <ul>
+          <li><strong>납작 엎드리기</strong>: 다리를 완전히 접어 가슴과 배를 지면에 밀착시키고 목과 머리를 앞으로 낮게 숙여 수직 피격 높이를 절반 이하로 낮춘 뒤, 상대 공격이 등 위로 지나가는 순간 다리를 폭발적으로 펴며 반격함</li>
+          <li><strong>맞발톱 쳐내기</strong>: 상대 공격 진입 타이밍에 날개를 한 번 짧게 탁 치며 몸을 살짝 띄워, 두 발의 발톱을 앞으로 내밀어 상대의 부리·발톱을 정면으로 걷어차 튕겨내고 착지와 동시에 역습함</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 id="sec-4-2">4.2 공격(4종) × 방어·이동(6종) 상성 판정 매트릭스</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 165px; text-align: center;">공격 기술 \ 수비·이동</th>
+            <th><code>[방1]</code> 깃털 부풀려 버티기<br>(밀착 방어)</th>
+            <th><code>[방2]</code> 납작 엎드리기<br>(자세 낮춰 회피)</th>
+            <th><code>[방3]</code> 맞발톱 쳐내기<br>(맞받아 쳐내기)</th>
+            <th><code>측면 사이드 홉</code><br>(<code>Side Hop</code>)</th>
+            <th><code>날개 퍼덕 후방 이탈</code><br>(<code>Flutter Leap Back</code>)</th>
+            <th><code>목 빼고 질주 / 공격 준비</code><br>(무방비 노출)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong><code>[공1]</code> 전진 부리 속사</strong><br>(근접/중상단/직선)</td>
+            <td><strong>방어 성공</strong><br>(피해 감쇄, 공방 대등)</td>
+            <td><span class="badge badge-green">회피 성공 (수비 승)</span><br>머리 위로 흘림 + 확정 반격</td>
+            <td><span class="badge badge-amber">쳐내기 성공 (수비 대승)</span><br>부리 궤적 튕겨냄 + 스턴</td>
+            <td><span class="badge badge-green">회피 성공 (수비 승)</span><br>직선 쪼기 궤적 이탈</td>
+            <td><strong>회피 성공</strong><br>(근접 사거리 밖 이탈)</td>
+            <td><span class="badge badge-red">적중 / 카운터 히트</span><br>빠른 발동 선제 타격</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong><code>[공2]</code> 낮은 발톱 할퀴기</strong><br>(근·중/하단/반원)</td>
+            <td><strong>방어 관통 / 반감</strong><br>(방어 시 수비자 반격 유리)</td>
+            <td><span class="badge badge-red">공격 적중 (공격 승)</span><br>납작 엎드린 몸통·다리 타격</td>
+            <td><span class="badge badge-amber">쳐내기 성공 (수비 대승)</span><br>맞발톱으로 튕겨냄 + 스턴</td>
+            <td><strong>방향별 반반 판정</strong><br>(할퀴는 쪽 피격/반대 회피)</td>
+            <td><strong>근접 적중 / 중거리 회피</strong><br>(사거리 끝 이탈 가능)</td>
+            <td><span class="badge badge-red">적중 / 카운터 히트</span><br>하단 다리 경직 유발</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong><code>[공3]</code> 비상 발톱 급습</strong><br>(중·원/상단공중/직선)</td>
+            <td><span class="badge badge-red">방어 성공 (공격 유리)</span><br>찍어 눌러 공격자 우선권 유지</td>
+            <td><span class="badge badge-green">회피 성공 (수비 대승)</span><br>엎드려 흘린 뒤 착지 빈틈 반격</td>
+            <td><span class="badge badge-amber">쳐내기 성공 (수비 대승)</span><br>급강하 발톱을 맞발톱 쳐냄</td>
+            <td><span class="badge badge-green">회피 성공 (수비 대승)</span><br>직선 강습 빗나감</td>
+            <td><span class="badge badge-red">공격 적중 (공격 승)</span><br>후방 이탈 착지 캐치</td>
+            <td><span class="badge badge-red">적중 / 카운터 히트</span><br>하단기 무시 일방 타격</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong><code>[공4]</code> 광폭 발버둥 난타</strong><br>(근·중/전신/전방위 광역)</td>
+            <td><span class="badge badge-blue">방어 성공 (수비 유리)</span><br>난타 종료 직후 수비자 반격권</td>
+            <td><span class="badge badge-red">공격 적중 (공격 대승)</span><br>광폭 난타로 엎드리기 파훼</td>
+            <td><span class="badge badge-red">공격 적중 (공격 대승)</span><br>연속 광역 난타로 쳐내기 분쇄</td>
+            <td><span class="badge badge-red">공격 적중 (공격 대승)</span><br>전방 반원 양방향 홉 100% 포착</td>
+            <td><strong>근접 적중 / 중거리 회피</strong><br>(난타 반경 밖 이탈)</td>
+            <td><span class="badge badge-red">강력 적중 (공격 대승)</span><br>연속기 차단 및 벽면 넉백</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-4-3">4.3 가드 유지 한계 및 가드 브레이크(Guard Break) 규칙</h3>
+    <ul>
+      <li><strong>가드 내구도 소모 규칙</strong>: <code>[방1: 깃털 부풀려 버티기]</code> 상태에서 중량 타격기(<code>[공2]</code>, <code>[공3]</code>, <code>[공4]</code>)를 연속 방어하거나 <strong>원형 외곽 벽면에 몰린 상태</strong>에서 버틸 경우 내구도가 빠르게 소진됨 (비방어 이동/공격 시 자연 회복)</li>
+      <li><strong>가드 브레이크 발생 및 비의인화 동작 묘사</strong>: 가드 내구도가 한계에 도달한 상태에서 중량 공격을 막을 경우 <strong>가드 브레이크(Guard Break)</strong>가 발생하여, <strong>움츠렸던 목이 뒤로 젖혀지고 부풀렸던 목깃·날개깃이 사방으로 흩날리며 두 다리가 휘청거려 가슴이 훤히 노출되는 짧은 무방비 스탠딩 그로기 상태</strong>에 빠지고, 후속 강타가 방어 무시 관통 치명타로 확정 적중함</li>
+    </ul>
+  </section>
+
+  <!-- 5장 -->
+  <section id="sec-5">
+    <h2>5. 공방 우선권(Initiative), 연속기(Combo) 및 동시 격돌(Clash) 규칙</h2>
+
+    <h3 id="sec-5-1">5.1 공방 결과에 따른 우선권(유불리) 전환 규칙</h3>
+    <div class="svg-diagram-box">
+      <div class="svg-diagram-title">[다이어그램 3] 1회 공방 교차 결과에 따른 다음 행동 우선권(Initiative / 유불리) 전환 흐름</div>
+      <svg viewBox="0 0 840 240" width="100%" style="max-width: 800px; height: auto;">
+        <rect x="20" y="90" width="150" height="60" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2" />
+        <text x="95" y="116" fill="#fff" font-size="12.5" font-weight="800" text-anchor="middle">1회 공방 교차 발생</text>
+        <text x="95" y="135" fill="#94a3b8" font-size="10.5" text-anchor="middle">(타격 vs 방어/이동)</text>
+
+        <!-- Branches -->
+        <path d="M 170 105 L 245 45" stroke="#f43f5e" stroke-width="2" />
+        <path d="M 170 120 L 245 120" stroke="#38bdf8" stroke-width="2" />
+        <path d="M 170 135 L 245 195" stroke="#34d399" stroke-width="2" />
+
+        <!-- Branch 1: Hit -->
+        <rect x="245" y="15" width="575" height="55" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.8" />
+        <text x="265" y="38" fill="#f43f5e" font-size="12" font-weight="800">① 타격 적중 시 (Hit Advantage) ➔ 공격자 우선권 유지</text>
+        <text x="265" y="57" fill="#cbd5e1" font-size="11">• 공격을 맞힌 쪽이 2타·3타 연속기(Combo)를 이어가거나 상대를 원형 외곽 벽면으로 지속 압박</text>
+
+        <!-- Branch 2: Block -->
+        <rect x="245" y="85" width="575" height="72" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8" />
+        <text x="265" y="107" fill="#38bdf8" font-size="12" font-weight="800">② 버티기 방어([방1]) 성공 시 ➔ 막힌 공격 기술의 무게감에 따라 우선권 분기</text>
+        <text x="265" y="126" fill="#cbd5e1" font-size="11">• [공1: 전진 부리 속사] 방어: 백중세(동등 우선권) / [공3: 비상 발톱 급습] 방어: 공격자 미세 우선권 유지</text>
+        <text x="265" y="144" fill="#fbbf24" font-size="11" font-weight="700">• [공2: 낮은 발톱 할퀴기]·[공4: 광폭 발버둥 난타] 방어: 큰 후딜레이 노출로 수비자에게 반격 우선권 즉시 이양</text>
+
+        <!-- Branch 3: Evade/Parry -->
+        <rect x="245" y="170" width="575" height="55" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="1.8" />
+        <text x="265" y="193" fill="#34d399" font-size="12" font-weight="800">③ 회피([방2: 납작 엎드리기]/사이드 홉/헛침 유도) 및 쳐내기([방3: 맞발톱 쳐내기]) 성공 시 ➔ 수비자 절대 우선권</text>
+        <text x="265" y="212" fill="#cbd5e1" font-size="11">• 공격자가 자세를 회수하기 전에 수비자의 반격 기술이 100% 확정 치명타로 적중</text>
+      </svg>
+    </div>
+
+    <h3 id="sec-5-2">5.2 카운터 히트(Counter Hit) 및 동시 타격 격돌(Clash) 규칙</h3>
+    <ul>
+      <li><strong>카운터 히트 (<code>Counter Hit</code>)</strong>: 상대가 공격을 내미는 <strong>준비 구간(선딜레이)</strong> 또는 <code>목 빼고 질주(Neck-Out Rush)</code> 도중에 더 빠른 공격이 먼저 닿을 경우 카운터 히트로 판정되며, 일반 적중보다 큰 피해량과 긴 경직이 발생함</li>
+      <li><strong>동시 타격 격돌 (<code>Clash</code> &amp; <code>Cross Counter</code>)</strong>:
+        <ol>
+          <li><strong>궤적/부위 상성 우위</strong>: <code>[공3: 비상 발톱 급습(공중)]</code>과 <code>[공2: 낮은 발톱 할퀴기(하단)]</code>이 동시 충돌하면 공중으로 솟구친 <code>[공3]</code>이 하단 판정을 일방적으로 이김</li>
+          <li><strong>기술 위력 우위</strong>: 동일 단수 충돌 시 공격 위력(<code>POW × 기술 계수</code>)이 뚜렷하게 높은 쪽이 상대 공격을 뭉개고 일방 적중함</li>
+          <li><strong>크로스 카운터 (동시 피격)</strong>: 두 공격의 위력과 타이밍이 대등(격차 10% 이내)할 경우 양측 모두 부리나 발톱이 스치며 피해를 입는 크로스 카운터 발생</li>
+        </ol>
+      </li>
+    </ul>
+
+    <h3 id="sec-5-3">5.3 최대 3연속기(Combo) 시너지 및 중간 차단(Cancel) 규칙</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 110px; text-align: center;">콤보 유형</th>
+            <th style="width: 160px; text-align: center;">조합 예시</th>
+            <th style="width: 165px;">콤보 명칭</th>
+            <th>시너지 효과 및 비의인화 연계 동작·중간 차단 규칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>공 + 공</strong></td>
+            <td class="text-center"><code>[공1] + [공2]</code></td>
+            <td><strong>전광석화 2연타</strong></td>
+            <td><code>전진 부리 속사</code> 직후 <code>낮은 발톱 할퀴기</code> 연계 / 1타 근접 적중 성공 시 2타 치명타율 <strong><code>+25%</code></strong> 가산</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>방 + 공</strong></td>
+            <td class="text-center"><code>[방2] + [공3]</code></td>
+            <td><strong>회피 후 기습 강타</strong></td>
+            <td>1타 <code>납작 엎드리기</code>로 직선기 회피 후 튀어 오르며 강타 / 2타 <strong><code>100% 확정 크리티컬 (1.5배)</code></strong> 적용</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>공 + 공 + 공</strong></td>
+            <td class="text-center"><code>[공1] + [공2] + [공4]</code></td>
+            <td><strong>맹공의 3단 콤보</strong></td>
+            <td>부리 속사 ➔ 발톱 할퀴기 ➔ <code>광폭 발버둥 난타</code> 마무리 / 3타 전수 적중 시 피해량 <strong><code>+30%</code> 증폭 + 외곽 벽면 넉백 및 짧은 스탠딩 그로기</strong> 유발</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>방 + 방 + 공</strong></td>
+            <td class="text-center"><code>[방1] + [방3] + [공2]</code></td>
+            <td><strong>철벽의 역습 카운터</strong></td>
+            <td>1타 <code>깃털 부풀려 버티기</code> 후 2타 <code>맞발톱 쳐내기</code> 성공 시 <strong>상대 연속기 즉시 강제 캔슬 + 100% 무조건 반격 크리티컬 (1.8배)</strong></td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>공 + 방 + 공</strong></td>
+            <td class="text-center"><code>[공1] + [방2] + [공3]</code></td>
+            <td><strong>페인트 치고 빠지기</strong></td>
+            <td>1타 부리 견제 후 상대의 반격을 2타 <code>납작 엎드리기</code>로 흘리고 3타 가격 시 <strong>상대 방어력 100% 무시 (트루 데미지)</strong></td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>방 + 공 + 공</strong></td>
+            <td class="text-center"><code>[방1] + [공1] + [공4]</code></td>
+            <td><strong>버티기 돌파 반격</strong></td>
+            <td>외곽 벽면 수세에서 <code>깃털 부풀려 버티기</code>로 충격 흡수 후 2연속 타격으로 상대를 밀어내며 <strong>아레나 중앙 주도권 탈환</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>연속기 중간 강제 차단 (<code>Combo Interruption / Cancel</code>)</strong>: 1타가 버티기에 막혔거나 빗나갔을 때 공격자가 무리하게 2타·3타를 이어갈 경우, 수비자가 그 틈에 <code>[방3: 맞발톱 쳐내기]</code>, <code>[방2: 납작 엎드리기]</code>, <code>측면 사이드 홉</code>, 또는 <code>[공4: 광폭 발버둥 난타]</code>를 개입시켜 공격자의 잔여 연속기를 즉시 강제 캔슬시키고 역습함</li>
+      <li><strong>연속기 완주 후 기력 호흡 정돈</strong>: 3연속기 완주 직후 기술력(<code>TEC</code>)에 반비례하는 짧은 호흡 정돈 시간(1.0~1.5초, 날개를 접고 가쁘게 숨을 고르는 동작) 동안 연속기 재시동이 제한되며, 총총걸음/홉 이동이나 단발 방어/견제로 간격을 조율함</li>
+    </ul>
+  </section>
+
+  <!-- 6장 -->
+  <section id="sec-6">
+    <h2>6. 그로기(Groggy) 위기 공방 및 다운 즉시 종료(KO) 규칙</h2>
+
+    <div class="callout-card">
+      <div class="callout-title">■ QA 체크리스트(07·09번) 및 작업자용 실행 가이드 확정 기준</div>
+      <ul>
+        <li>권투처럼 바닥에 쓰러진 뒤 다운 카운트를 세거나 재기립(기상)하는 연출은 <strong>인위적인 승패 조작 오해 소지</strong>가 있으므로 전면 배제</li>
+        <li>경기 도중 발생하는 위기 상태는 바닥에 눕지 않고 서서 비틀거리는 <strong>짧은 '스탠딩 그로기(Groggy)'</strong>로만 표현하며, 체력이 0이 되어 <strong>바닥에 다운(Knockdown)되는 순간 즉시 경기 종료(KO)</strong>로 확정</li>
+      </ul>
+    </div>
+
+    <h3 id="sec-6-1">6.1 스탠딩 그로기(Groggy) 발생 조건 및 비의인화 동작 묘사</h3>
+    <ul>
+      <li><strong>스탠딩 그로기(<code>Standing Groggy</code>) 정의 및 비의인화 상세 동작 묘사</strong>:
+        <ul>
+          <li>경기 도중 큰 충격을 입었을 때 바닥에 쓰러지지 않고 두 발로 버틴 채 일시적으로 방어력이 약화되는 위기 상태</li>
+          <li><strong>비의인화 동작 묘사</strong>: 인간처럼 상체를 잡고 비틀거리는 대신, <strong>두 다리가 후들거리며 목이 힘없이 아래로 툭 떨어지거나 좌우로 흔들리고, 양 날개 끝이 바닥에 끌릴 듯 축 처진 채 간헐적으로 파르르 퍼덕이는 동작</strong>으로 표현하여 관전자가 한눈에 위기 상태임을 직관적으로 인지하게 함 (<code>QA 07번 의도 반영</code>)</li>
+        </ul>
+      </li>
+      <li><strong>그로기 발생 4대 조건</strong>:
+        <ol>
+          <li><code>공+공+공</code> 3단 연속기의 마지막 3타 피니시에 직격당한 경우</li>
+          <li><strong>가드 브레이크(Guard Break)</strong>가 발생하여 부풀렸던 깃털 방어 자세가 무너진 경우</li>
+          <li>원형 외곽 벽면을 등진 상태에서 <code>[공4: 광폭 발버둥 난타]</code> 등 강타를 맞아 <strong>벽 격돌(<code>Wall Impact</code>)</strong>이 발생한 경우</li>
+          <li><code>[방3: 맞발톱 쳐내기]</code>에 공격이 튕겨 나가며 공중/지상에서 중심을 잃은 경우</li>
+        </ol>
+      </li>
+      <li><strong>경기 템포 유지를 위한 짧은 지속시간 원칙</strong>: 그로기 연출이 길어져 경기 템포가 늘어지거나 조작처럼 보이지 않도록, 그로기 지속시간은 <strong>0.5초 ~ 1.0초 이내의 짧은 순간</strong>으로 제한함</li>
+    </ul>
+
+    <h3 id="sec-6-2">6.2 그로기 직후 공격자 마무리 압박 vs 수비자 위기 탈출 규칙</h3>
+    <p>짧은 그로기 경직이 풀리는 직후 순간에 <strong>공격자의 마무리 압박 선택</strong>과 <strong>수비자의 위기 탈출 선택</strong>이 맞물리는 가위바위보 수읽기 전개</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 195px; text-align: center;">수비자 위기 탈출 \ 공격자 추격</th>
+            <th>① 직선 급습 마무리<br>(<code>[공1]</code> 부리 속사 / <code>[공3]</code> 비상 급습)</th>
+            <th>② 하단/광역 버티기 붕괴<br>(<code>[공2]</code> 낮은 할퀴기 / <code>[공4]</code> 광폭 난타)</th>
+            <th>③ 페인트 대기 후 카운터 처벌<br>(총총걸음 접근 후 <code>[방1]</code>/<code>[방3]</code> 대기)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>① 긴급 버티기 굳히기</strong><br>(<code>[방1]</code> 깃털 부풀려 버티기)</td>
+            <td><span class="badge badge-blue">방어 성공 (수비 생존)</span><br>직선 공격을 몸통과 깃털로 버텨내며 위기 모면</td>
+            <td><span class="badge badge-red">방어 관통 / 재붕괴 (공격 승)</span><br>하단 할퀴기(<code>[공2]</code>)에 뚫리거나 광폭 난타(<code>[공4]</code>)에 재붕괴</td>
+            <td><strong>중립 대치 복귀 (Neutral)</strong><br>양측 모두 피해 없이 호흡 정돈 및 간격 재조정</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>② 사이드 홉 / 엎드리기 탈출</strong><br>(<code>Side Hop</code> / <code>[방2]</code> 납작 엎드리기)</td>
+            <td><span class="badge badge-green">회피 후 역습 성공 (수비 대승)</span><br>직선 강습을 허공에 흘려보내고 측면/하단 확정 반격</td>
+            <td><span class="badge badge-red">광역 포착 피격 (공격 대승)</span><br>반원·광역 궤적(<code>[공2]</code>, <code>[공4]</code>)에 회피가 잡히며 큰 피해</td>
+            <td><span class="badge badge-green">벽면/위기 탈출 성공 (수비 유리)</span><br>외곽 벽면에서 벗어나 아레나 중앙으로 위치 회복</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>③ 맞발톱 쳐내기 / 광폭 난타 저항</strong><br>(<code>[방3]</code> / <code>[공4]</code>)</td>
+            <td><span class="badge badge-amber">맞발톱 역전 카운터 (수비 대승)</span><br>성급한 직선 추격을 맞발톱으로 튕겨내고 1.8배 역습</td>
+            <td><span class="badge badge-red">정면 격돌 (공격 위력 우위)</span><br>그로기 직후 느린 난타 시동 중 상대 강타에 피격</td>
+            <td><span class="badge badge-red">헛침 후 처벌 피격 (공격 대승)</span><br>수비자의 성급한 발톱/난타를 기다렸다 확정 카운터</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-6-3">6.3 투지 버티기(Last Stand) 및 다운 즉시 경기 종료(KO) 규칙</h3>
+    <ul>
+      <li><strong>투지 버티기 (<code>Last Stand</code> - 쓰러지지 않고 버티기) 및 동작 묘사</strong>:
+        <ul>
+          <li>결정적 타격을 입어 잔여 체력이 <code>0</code> 이하로 떨어지는 순간, 선수의 <strong>근성(<code>GRT</code>)</strong> 스탯에 비례하는 확률(<code>GRT × 0.5%</code>, 경기당 최대 1회)로 투지 버티기 발동</li>
+          <li><strong>비의인화 동작 묘사</strong>: 바닥에 완전히 쓰러지지 않고(재기립 연출 없음), <strong>다리가 꺾여 가슴이 바닥에 닿기 직전 양 날개로 바닥을 강하게 한 번 짚어 퍼덕이며 두 다리에 힘을 주고 고개를 번쩍 들어 올리는 모션</strong>과 함께 체력 <code>1</code>을 남긴 채 마지막 역전 공방을 이어감</li>
+        </ul>
+      </li>
+      <li><strong>바닥 다운(<code>Knockdown</code>) = 즉시 경기 종료(<code>KO</code>) 확정 (<code>QA 09번 확정</code>)</strong>:
+        <ul>
+          <li>투지 버티기가 발동하지 않거나 이미 소모된 상태에서 체력이 <code>0</code>에 도달하면, 그 순간 비로소 파이터가 <strong>바닥에 완전히 쓰러지는 다운(<code>Knockdown</code> - 날개와 목의 힘이 풀리며 바닥에 옆으로 쓰러져 다리를 뻗는 모션)</strong> 발생</li>
+          <li>파이터가 바닥에 다운되는 즉시 <strong>심판 카운트다운이나 재기립 시도 없이 그 자리에서 즉시 경기 종료(KO)</strong>가 선언되며, 곧바로 승리 닭의 날개 퍼덕임/포효 세리머니 및 결과/배당 정산 화면으로 전환됨</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 7장 -->
+  <section id="sec-7">
+    <h2>7. 격투 스타일(5종)별 거리·이동·공방 선택 성향 규칙</h2>
+
+    <h3 id="sec-7-1">7.1 5대 격투 스타일별 공간 운용 및 공방 선호도 정의</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 120px; text-align: center;">격투 스타일</th>
+            <th style="width: 115px; text-align: center;">선호 유지 거리</th>
+            <th>주력 이동(조류 보행·도약) 성향</th>
+            <th>주력 공격 및 연속기 성향</th>
+            <th>주력 방어 및 대응 성향</th>
+            <th style="width: 175px; text-align: center;">그로기/벽면 몰림 시 탈출</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>인파이터</strong><br><code>Infighter</code></td>
+            <td class="text-center"><span class="badge badge-red">근접 거리</span><br><code>Close</code></td>
+            <td>• <code>전진 총총걸음</code> 및 <code>목 빼고 질주</code> 비중 최상<br>• 상대를 원형 외곽 벽면으로 몰아붙이는 압박 선호</td>
+            <td>• <code>[공1: 전진 부리 속사]</code> 시동 후 <code>[공2: 낮은 발톱 할퀴기]</code> 연결 (<code>공+공</code>, <code>공+공+공</code>)<br>• 막혀도 끊임없이 근접 부리 연타 시도</td>
+            <td>• 근접 <code>[방2: 납작 엎드리기]</code> 및 짧은 <code>[방1: 깃털 부풀려 버티기]</code> 후 즉시 맞받아치기</td>
+            <td class="text-center"><strong>납작 엎드리기(<code>[방2]</code>)</strong> 후<br>즉시 근접 부리/발톱 반격</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>아웃파이터</strong><br><code>Outfighter</code></td>
+            <td class="text-center"><span class="badge badge-blue">중·원거리</span><br><code>Mid ~ Long</code></td>
+            <td>• <code>짧은 뒤로 홉</code>, <code>날개 퍼덕 후방 이탈</code>, <code>원형 탐색 걸음</code> 비중 최상<br>• 외곽 벽면을 등지지 않도록 아레나 중앙 사수</td>
+            <td>• 상대 헛침(Whiff) 유도 후 <code>[공3: 비상 발톱 급습]</code> 도약 강습<br>• <code>방+공</code>, <code>공+방+공</code> 치고 빠지기 선호</td>
+            <td>• <code>날개 퍼덕 후방 이탈</code> 거리 벌리기 및 <code>[방2: 납작 엎드리기]</code> 회피 후 확정 치명타 반격</td>
+            <td class="text-center"><strong>원형 탐색 걸음 / 사이드 홉</strong><br>(벽면 탈출 최우선)</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>브롤러</strong><br><code>Brawler</code></td>
+            <td class="text-center"><span class="badge badge-amber">근 ~ 중거리</span><br><code>Close ~ Mid</code></td>
+            <td>• 우직한 <code>전진 총총걸음</code> 위주, 후방 홉이나 이탈 거의 안 함<br>• 맞으면서도 밀고 들어가는 야수형 난타전 선호</td>
+            <td>• <code>[공2: 낮은 발톱 할퀴기]</code> 및 <strong><code>[공4: 광폭 발버둥 난타]</code></strong> 중량 강타<br>• 상대 측면 홉 분쇄 및 외곽 벽 격돌 유발 특화</td>
+            <td>• <code>[방1: 깃털 부풀려 버티기]</code>로 견딘 뒤 <code>방+공+공</code> 돌파 반격</td>
+            <td class="text-center"><strong>긴급 버티기(<code>[방1]</code>)</strong> 후<br><code>[공4]</code> 광폭 발버둥 밀어내기</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>테크니션</strong><br><code>Technician</code></td>
+            <td class="text-center"><span class="badge badge-green">중거리</span><br><code>Mid</code></td>
+            <td>• <code>측면 사이드 홉(Side Hop)</code> 및 정밀한 <code>전진 총총걸음/뒤로 홉</code> 비중 최상<br>• 상대의 직선 공격 각도를 비켜나는 발놀림</td>
+            <td>• 상대 빈틈 포착 시 <code>[공1]+[공2]</code> 또는 맞발톱 쳐내기 직후 확정 카운터 공격</td>
+            <td>• <strong><code>[방3: 맞발톱 쳐내기]</code></strong> 및 <code>측면 사이드 홉</code> 비중 최상<br>• <code>방+방+공</code> 1.8배 무조건 반격 지향</td>
+            <td class="text-center"><strong>맞발톱 쳐내기(<code>[방3]</code>)</strong> 및<br><strong>측면 사이드 홉</strong> 혼합</td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>밸런서</strong><br><code>Balanced</code></td>
+            <td class="text-center"><span class="badge badge-purple">전 거리 유동</span><br><code>Adaptive</code></td>
+            <td>• 상대 스타일의 반대 상성 거리로 유연하게 이동 전환</td>
+            <td>• 특정 패턴에 치우치지 않고 상황에 맞는 최적 단발/연속기 구사</td>
+            <td>• <code>[방1]</code>, <code>[방2]</code>, <code>[방3]</code> 및 측면 사이드 홉을 고르게 분배하여 안정적 수비</td>
+            <td class="text-center"><strong>상황별 균등 선택</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-7-2">7.2 경기 상황(우세·열세·벽면 몰림)에 따른 행동 성향 변화</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 210px;">경기 상황 조건</th>
+            <th>공격자(우세/압박 측)의 행동 변화 규칙</th>
+            <th>수비자(열세/위기 측)의 행동 변화 규칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>원형 외곽 벽면 몰림 시</strong></td>
+            <td>• 상대가 원형 벽을 타고 좌우로 빠져나가지 못하도록 <strong>전방위 광역기(<code>[공4: 광폭 발버둥 난타]</code>)</strong> 및 <strong>반원 하단기(<code>[공2: 낮은 발톱 할퀴기]</code>)</strong> 비중 상향<br>• 벽 격돌(<code>Wall Impact</code>) 및 가드 브레이크 압박 강화</td>
+            <td>• 벽면 탈출을 위해 <strong><code>측면 사이드 홉(Side Hop)</code> + <code>원형 탐색 걸음(Circle Prowl)</code></strong> 시도 비중 급증<br>• 또는 위기 탈출용 <strong><code>[방3: 맞발톱 쳐내기]</code></strong> 및 <strong><code>[공4: 광폭 발버둥 난타]</code></strong> 저항 시도</td>
+          </tr>
+          <tr>
+            <td><strong>체력 대폭 우세 시</strong><br>(잔여 체력 30%p 이상 리드)</td>
+            <td>• 무리한 목 빼고 질주나 큰 후딜레이 기술을 자제하고, <code>짧은 뒤로 홉</code>·<code>원형 탐색 걸음</code> 및 안전한 <code>[공1: 전진 부리 속사]</code> 견제와 버티기 방어 비중 상향 (굳히기 운영)</td>
+            <td>• 점수 만회를 위해 <code>목 빼고 질주</code> 접근 및 고위험·고수익 3연속기(<code>공+공+공</code>), <code>[공3: 비상 발톱 급습]</code> 시도 비중 대폭 상향</td>
+          </tr>
+          <tr>
+            <td><strong>라운드 종료 임박 시</strong><br>(잔여 시간 10초 이내)</td>
+            <td>• 판정 우위를 지키기 위한 거리 벌리기(<code>날개 퍼덕 후방 이탈</code>, <code>원형 탐색 걸음</code>) 및 방어 집중</td>
+            <td>• 라운드 역전을 위한 총공세(방어 비중 축소, 연속 공격 및 도약 강습기 집중)</td>
+          </tr>
+          <tr>
+            <td><strong>가드 내구도 위험 시</strong><br>(가드 브레이크 직전)</td>
+            <td>• 상대의 버티기 자세를 부수기 위해 중량 타격기(<code>[공2]</code>, <code>[공3]</code>, <code>[공4]</code>) 집중 투입</td>
+            <td>• <code>[방1: 깃털 부풀려 버티기]</code> 선택을 일시 중단하고, 위험을 감수하더라도 <strong><code>[방2: 납작 엎드리기]</code></strong>, <strong><code>[방3: 맞발톱 쳐내기]</code></strong>, 또는 <strong><code>날개 퍼덕 후방 이탈/측면 사이드 홉</code></strong>으로 전환</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8장 -->
+  <section id="sec-8">
+    <h2>8. 서버 시뮬레이션 결과 데이터 구성 및 중계 재생 명세</h2>
+
+    <h3 id="sec-8-1">8.1 시뮬레이션 타임라인 데이터 필수 기록 항목</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 170px; text-align: center;">데이터 구분</th>
+            <th style="width: 220px;">기록 항목</th>
+            <th>포함되어야 할 상태 및 판정 정보</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><strong>원형 공간 및 위치</strong></td>
+            <td>두 선수의 아레나 내 위치 및 거리</td>
+            <td>
+              • 선수 간 현재 거리 단계 (<code>근접</code> / <code>중거리</code> / <code>원거리</code>)<br>
+              • 각 선수의 원형 경기장 구역 상태 (<code>중앙 구역(Center)</code> / <code>외곽 벽면 구역(Wall Edge)</code>)<br>
+              • 원형 아레나 내 상대 각도 및 좌우 측면 사이드 홉 방향
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>이동 및 행동 상태</strong></td>
+            <td>시전 동작 및 기술 식별자</td>
+            <td>
+              • 조류형 이동 동작 (<code>전진 총총걸음</code> / <code>짧은 뒤로 홉</code> / <code>목 빼고 질주</code> / <code>날개 퍼덕 후방 이탈</code> / <code>측면 사이드 홉</code> / <code>원형 탐색 걸음</code>)<br>
+              • 공격/방어 기술 ID (<code>[공1: 전진 부리 속사]</code>, <code>[공2: 낮은 발톱 할퀴기]</code>, <code>[공3: 비상 발톱 급습]</code>, <code>[공4: 광폭 발버둥 난타]</code>, <code>[방1: 깃털 부풀려 버티기]</code>, <code>[방2: 납작 엎드리기]</code>, <code>[방3: 맞발톱 쳐내기]</code>) 및 연속기 단계 (<code>단발</code> / <code>1~3타</code>)
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>공방 상성 판정 결과</strong></td>
+            <td>교차 충돌 및 판정 결과 코드</td>
+            <td>
+              • 적중 여부 (<code>일반 적중</code> / <code>카운터 히트</code> / <code>크로스 카운터</code> / <code>헛침(Whiff)</code>)<br>
+              • 방어 결과 (<code>버티기 감쇄</code> / <code>가드 브레이크</code> / <code>납작 엎드려 회피</code> / <code>사이드 홉 회피</code> / <code>맞발톱 쳐내기 캔슬</code>)<br>
+              • 공방 직후 우선권 획득자 (<code>Red 유리</code> / <code>Blue 유리</code> / <code>동등 대치</code>)
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>그로기 및 벽 격돌 상태</strong></td>
+            <td>위기 상태 및 벽면 상호작용</td>
+            <td>
+              • 스탠딩 그로기(<code>Groggy</code>) 발생 여부 및 벽 격돌(<code>Wall Impact</code>) 여부<br>
+              • 그로기 직후 수비자 위기 탈출 선택 (<code>긴급 버티기 굳히기</code> / <code>사이드 홉·엎드리기 탈출</code> / <code>맞발톱 쳐내기·광폭 난타 저항</code>) 결과
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center"><strong>이펙트 및 승패 상태</strong></td>
+            <td>체력·가드·이펙트·KO 기록</td>
+            <td>
+              • 발생한 타격 피해량 및 <strong>크리티컬 히트 여부 (클라이언트 화면 단발 혈흔 트리거용)</strong><br>
+              • 양 선수의 잔여 체력(<code>HP</code>) 및 잔여 가드 내구도 상태<br>
+              • 투지 버티기(<code>Last Stand</code>) 발동 여부 및 <strong>다운 즉시 종료(<code>KO</code>)</strong> / 라운드 판정 결과
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="sec-8-2">8.2 QA 기준 클라이언트 중계 재생 및 연출 동기화 규칙</h3>
+    <ul>
+      <li><strong>원형 벽면 경기장 및 조류형 이동·공방 시각화</strong>:
+        <ul>
+          <li>시인성이 높고 깔끔한 아케이드풍 원형 벽면 경기장 위에서 <code>전진 총총걸음/뒤로 홉</code>, <code>목 빼고 질주/날개 퍼덕 후방 이탈</code>, <code>측면 사이드 홉(원형 탐색 걸음)</code>을 통해 비의인화 닭 캐릭터들이 자연스럽게 간격을 재고 벽면 압박을 주고받는 모습을 재생</li>
+          <li>외곽 벽면에 몰린 선수가 <code>[공4: 광폭 발버둥 난타]</code> 등 넉백 공격에 피격될 때, 로프 반동이 아닌 <strong>단단한 외곽 벽면에 꼬리깃과 몸통이 부딪혀 깃털이 튀고 흔들리는 벽 격돌(<code>Wall Impact</code>) 모션</strong> 재생</li>
+        </ul>
+      </li>
+      <li><strong>공격 적중 vs 버티기/엎드리기/맞발톱 쳐내기의 즉각적 시인성 확보 (<code>QA 통과 체크 1번</code>)</strong>:
+        <ul>
+          <li>얼굴 표정이나 인간형 팔 동작 대신 <strong>목 뻗어 쪼기, 슬라이딩 발톱 할퀴기, 도약 발톱 급습, 광폭 날개·발버둥 난타, 목 움츠리고 깃털 부풀리기, 바닥에 납작 엎드리기, 공중 맞발톱 쳐내기</strong> 등 비의인화 닭의 큼직한 카툰풍 실루엣 변화와 <strong>아케이드 섬광·스파크 이펙트</strong>를 사용하여, 유저가 화면만 보고도 현재 공방 상태를 즉각 구별할 수 있도록 표현</li>
+        </ul>
+      </li>
+      <li><strong>히트스톱·슬로우 모션·딥 다이브 줌인 전면 배제 (<code>QA 05번 및 통과 체크 2번</code>)</strong>:
+        <ul>
+          <li>맞발톱 쳐내기 성공, 가드 브레이크, 크리티컬 강타가 발생하더라도 <strong>인위적인 프레임 정지(히트스톱), 슬로우 모션, 급격한 딥 다이브 카메라 줌인을 일체 적용하지 않음</strong></li>
+          <li>타격 연출이 승패 판정 순간을 가리거나 경기를 멈춘 것처럼 보이지 않도록 객관적인 관전 카메라 시점을 일관되게 유지</li>
+        </ul>
+      </li>
+      <li><strong>크리티컬 한정 단발성 화면 혈흔 연출 (<code>QA 04번 및 통과 체크 3번</code>)</strong>:
+        <ul>
+          <li>캐릭터 몸에 상처가 남거나 피를 계속 흘리는 지속적 출혈 묘사는 전면 배제</li>
+          <li>서버 데이터상 <strong>큰 타격(<code>Critical Hit</code> / 피니시 강타) 적중 이벤트</strong>가 수신되었을 때만, 화면(렌즈) 가장자리에 피가 짧게 튀었다가 즉시 사라지는 이펙트를 출력하여 큰 공격 적중을 직관적으로 전달</li>
+        </ul>
+      </li>
+      <li><strong>짧은 스탠딩 그로기 및 다운 즉시 결과 전환 (<code>QA 07·09번 및 통과 체크 4번</code>)</strong>:
+        <ul>
+          <li>경기 중 강타 피격 시 바닥에 눕지 않고 <strong>목과 날개 끝이 축 처진 채 두 다리로 휘청거리는 짧은 그로기 모션(0.5~1.0초)</strong>만 재생하여 경기 템포가 늘어지지 않게 유지</li>
+          <li>체력이 0이 되어 <strong>바닥에 옆으로 쓰러지는 다운(<code>Knockdown</code>) 모션이 재생되면, 카운트다운이나 재기립 모션 없이 즉시 KO 선언 및 결과 화면으로 전환</strong></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<div class="toast" id="toast"><span>ℹ️</span><span id="toast-msg">알림 메시지</span></div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
+  document.getElementById('theme-text').innerText = isDark ? '다크' : '화이트';
+  localStorage.setItem('rr_theme', newTheme);
+  showToast(isDark ? '화이트 테마로 전환됨' : '다크 테마로 전환됨');
+}
+const savedTheme = localStorage.getItem('rr_theme');
+if (savedTheme === 'light') {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.getElementById('theme-icon').innerText = '🌙';
+  document.getElementById('theme-text').innerText = '다크';
+}
+function toggleGroupManual(groupId) {
+  const grp = document.getElementById(groupId);
+  if (grp) grp.classList.toggle('open');
+}
+function expandAllTOC() {
+  document.querySelectorAll('.toc-group').forEach(g => g.classList.add('open'));
+}
+function collapseAllTOC() {
+  document.querySelectorAll('.toc-group').forEach(g => g.classList.remove('open'));
+}
+function filterTOC() {
+  const val = document.getElementById('toc-filter').value.toLowerCase();
+  document.querySelectorAll('.toc-group').forEach(group => {
+    const text = group.innerText.toLowerCase();
+    if (text.includes(val)) {
+      group.style.display = '';
+      if (val) group.classList.add('open');
+    } else {
+      group.style.display = 'none';
+    }
+  });
+}
+window.addEventListener('scroll', () => {
+  const headers = document.querySelectorAll('section[id], h3[id]');
+  let currentId = '';
+  headers.forEach(h => {
+    if (h.getBoundingClientRect().top <= 130) {
+      currentId = h.getAttribute('id');
+    }
+  });
+  if (currentId) {
+    document.querySelectorAll('.toc-nav a').forEach(a => {
+      if (a.getAttribute('href') === `#${currentId}`) {
+        a.classList.add('active');
+      } else {
+        a.classList.remove('active');
+      }
+    });
+  }
+});
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>

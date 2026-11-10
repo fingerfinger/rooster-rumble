@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROOSTER RUMBLE - QA 레퍼런스 가이드 (영상 및 웹 링크)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      --primary: #0284c7;
+      --primary-light: #e0f2fe;
+      --derby: #0284c7;
+      --rumble: #e11d48;
+      --yt-red: #ff0000;
+      --gg-blue: #1a73e8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', 'Pretendard', 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      font-size: 14.5px;
+      padding-bottom: 80px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    /* Header */
+    .page-header {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #bae6fd;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .page-title {
+      font-size: 1.95rem;
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: -0.8px;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .header-notice {
+      margin-top: 18px;
+      padding: 12px 18px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      background: rgba(248, 250, 252, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 8px 0;
+    }
+    .filter-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .filter-btn.active {
+      background: var(--text-main);
+      color: #ffffff;
+      border-color: var(--text-main);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+    }
+    .filter-count {
+      font-size: 0.76rem;
+      background: rgba(0, 0, 0, 0.08);
+      padding: 1px 7px;
+      border-radius: 12px;
+      font-weight: 800;
+    }
+    .filter-btn.active .filter-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* QA Cards List */
+    .qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* QA Item Card */
+    .qa-ref-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .qa-ref-card:hover {
+      border-color: #94a3b8;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    /* Card Top Bar */
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .card-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mode-badge {
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 6px;
+      letter-spacing: 0.4px;
+    }
+    .mode-badge.derby {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .mode-badge.rumble {
+      background: #ffe4e6;
+      color: #be123c;
+      border: 1px solid #fecdd3;
+    }
+    .cat-tag {
+      font-size: 0.78rem;
+      color: #475569;
+      font-weight: 700;
+      background: #f1f5f9;
+      padding: 3px 9px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .qa-item-num {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* Question & Desc */
+    .qa-question-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+    .qa-desc-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 4px solid var(--primary);
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: #0369a1;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    /* Insight Box */
+    .insight-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-bottom: 18px;
+    }
+    .insight-benchmark {
+      font-size: 0.84rem;
+      color: #0f172a;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .insight-benchmark span {
+      color: #0284c7;
+      font-weight: 800;
+    }
+    .insight-text {
+      font-size: 0.86rem;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    /* Reference Links Grid (2 Columns) */
+    .ref-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .ref-link-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      background: #ffffff;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .ref-link-card.yt {
+      background: #fffafa;
+      border-color: #fee2e2;
+    }
+    .ref-link-card.yt:hover {
+      border-color: #f87171;
+    }
+    .ref-link-card.web {
+      background: #f0f7ff;
+      border-color: #dbeafe;
+    }
+    .ref-link-card.web:hover {
+      border-color: #60a5fa;
+    }
+
+    .ref-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ref-icon-badge {
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .ref-icon-badge.yt {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+    .ref-icon-badge.web {
+      background: #dbeafe;
+      color: #2563eb;
+      border: 1px solid #93c5fd;
+    }
+    .ref-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ref-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .ref-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .ref-btn.yt-primary {
+      background: #dc2626;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    }
+    .ref-btn.yt-primary:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+    .ref-btn.yt-secondary {
+      background: #ffffff;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+    .ref-btn.yt-secondary:hover {
+      background: #fee2e2;
+    }
+    .ref-btn.web-primary {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+    .ref-btn.web-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .ref-btn.web-secondary {
+      background: #ffffff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+    .ref-btn.web-secondary:hover {
+      background: #eff6ff;
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .ref-links-grid {
+        grid-template-columns: 1fr;
+      }
+      .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-badge">ROOSTER RUMBLE SPEC DECK · BENCHMARK REFERENCE</div>
+      <h1 class="page-title">ROOSTER RUMBLE QA 레퍼런스 가이드</h1>
+      <p class="page-sub">
+        실무 질의 25대 항목(경주 15 + 격투 10)별 논점 분석, 글로벌 대표 게임 및 e스포츠 벤치마킹 타깃, 
+        실제 YouTube 공식 트레일러/플레이 영상 및 Google 이미지 검색 레퍼런스 아카이브입니다.
+      </p>
+      <div class="header-notice">
+        <span>💡</span>
+        <span>각 항목 카드의 <strong>[YouTube 영상 보기]</strong> 및 <strong>[Google 이미지 검색]</strong> 버튼을 클릭하시면 새 창에서 실제 레퍼런스를 즉시 확인하실 수 있습니다.</span>
+      </div>
+    </header>
+
+    <!-- Filter Buttons -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterItems('all')">
+        전체 항목 <span class="filter-count">25</span>
+      </button>
+      <button class="filter-btn" onclick="filterItems('Derby Race')">
+        🏇 Derby Race (경주) <span class="filter-count">15</span>
+      </button>
+      <button class="filter-btn" onclick="filterItems('Rumble Pit')">
+        🥊 Rumble Pit (격투) <span class="filter-count">10</span>
+      </button>
+    </div>
+
+    <!-- Cards List -->
+    <div class="qa-list" id="qaList">
+
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">I. 타깃 시장 & 비주얼 아트</span>
+          </div>
+          <div class="qa-item-num">01 · 북미 타깃 시장 적합성</div>
+        </div>
+
+        <h2 class="qa-question-text">메인 타깃인 북미(미국) 현지 사용자의 시각적 선호도 및 문화적 취향 부합 여부</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 캐주얼 카툰풍 vs 실사 스포츠풍 선호도 분석, 북미 문화권 닭 캐릭터 친숙도 및 거부감 요소 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Chocobo GP (Square Enix) / Chicken Run (Aardman)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 북미 대중 시장에서는 잔혹한 실사 투계보다 '치킨런'이나 '초코보'처럼 유머와 개성이 강조된 세련된 스타일라이즈드 카툰풍이 거부감을 대폭 낮추고 IP 라이프사이클을 확장하는 데 압도적으로 유리합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Chocobo GP – Announcement Trailer (Nintendo Switch)">Chocobo GP – Announcement Trailer (Nintendo Switch)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/watch?v=pY9weUmUw_0" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Chocobo+GP+gameplay+trailer" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Chocobo GP (Square Enix) / Chicken Run (Aardman)">Chocobo GP (Square Enix) / Chicken Run (Aardman)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Chocobo+GP+racing+chickens+roosters" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">I. 타깃 시장 & 비주얼 아트</span>
+          </div>
+          <div class="qa-item-num">02 · 배경 및 캐릭터 색감 대비</div>
+        </div>
+
+        <h2 class="qa-question-text">트랙 배경(현재 모래/흙 지면)과 캐릭터 간 색감 대비 적정성 및 향후 잔디 트랙 추가 도입에 대한 타당성</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 다채색 캐릭터와 기본 흙 트랙 간의 시인성 평가 및 추후 잔디 트랙 컨셉 도입에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Champion Jockey (Koei Tecmo) / 우마무스메 프리티 더비 (더트 vs 터프 코스)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 기존 황토색 모래 트랙(Dirt)은 닭 캐릭터의 깃털 색상(갈색/황금색 계열)과 명도 대비가 낮아질 수 있습니다. 선명한 그린 잔디(Turf) 트랙을 도입하면 6마리 다채색 수탉의 실루엣 시인성이 3배 이상 향상됩니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Horse Racing Dirt Track vs Turf Track Comparison">Horse Racing Dirt Track vs Turf Track Comparison</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=horse+racing+dirt+vs+turf+track" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=horse+racing+dirt+vs+turf+track" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Champion Jockey (Koei Tecmo) / 우마무스메 프리티 더비 (더트 vs 터프 코스)">Champion Jockey (Koei Tecmo) / 우마무스메 프리티 더비 (더트 vs 터프 코스)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=horse+racing+dirt+track+vs+turf+contrast" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">I. 타깃 시장 & 비주얼 아트</span>
+          </div>
+          <div class="qa-item-num">03 · 트랙 환경 다양화(날씨·시간대)</div>
+        </div>
+
+        <h2 class="qa-question-text">기본 주간 트랙 외 우천(비), 일몰(노을), 야간 네온 조명 등 환경 컨셉 추가 시 관전 시인성 저해 여부</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 시간대/기상 변화에 따른 트랙 조명과 6개 레인 캐릭터 분별력 간 영향 평가 및 환경 프리셋 도입 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Mario Kart 8 Deluxe (Neo Bowser City / Electrodrome)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 야간 네온이나 우천 효과는 시각적 단조로움을 깨뜨리는 훌륭한 장치입니다. 단, 6개 레인 바닥에 고대비 형광 마커 라인을 적용하여 날씨 효과 속에서도 선수 위치가 즉각 식별되도록 설계해야 합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Mario Kart 8 Deluxe - Neo Bowser City Rain & Night Gameplay">Mario Kart 8 Deluxe - Neo Bowser City Rain & Night Gameplay</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=mario+kart+8+deluxe+neo+bowser+city+rain+night" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=mario+kart+8+deluxe+rain+weather+lighting" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Mario Kart 8 Deluxe (Neo Bowser City / Electrodrome)">Mario Kart 8 Deluxe (Neo Bowser City / Electrodrome)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Mario+Kart+8+Deluxe+rain+weather+track" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">II. 캐릭터 모션 & 주행 규칙</span>
+          </div>
+          <div class="qa-item-num">04 · 캐릭터 모션 세분화 단계</div>
+        </div>
+
+        <h2 class="qa-question-text">현재의 최소 질주 동작 외에 단계별 세부 모션의 추가 구현 범위 및 우선순위</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 스타트 대기(발구르기/날개털기), 최고속 질주(날개 퍼덕임), 추월 경합(시선 처리), 골인 후 감속 등 세부 모션 적용 범위에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Chocobo GP Animation / 디즈니·픽사 조류 달리기 역학
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 단일 달리기 루프 모션 대신, 스타트 박스 대기 모션(발구르기)과 막판 10초 스퍼트 시 '날개 퍼덕임(Flapping Sprint)' 모션 2개만 추가해도 모바일 웹 환경의 가벼움을 유지하면서 관전 생동감을 극대화할 수 있습니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Chocobo GP - Gameplay Mechanics & Character Animations">Chocobo GP - Gameplay Mechanics & Character Animations</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/watch?v=DWU2oAF7wkM" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Chocobo+GP+running+animation+gameplay" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Chocobo GP Animation / 디즈니·픽사 조류 달리기 역학">Chocobo GP Animation / 디즈니·픽사 조류 달리기 역학</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=rooster+running+animation+sprite+sheet+3d+motion" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">II. 캐릭터 모션 & 주행 규칙</span>
+          </div>
+          <div class="qa-item-num">05 · 주행 이펙트 적용 범위</div>
+        </div>
+
+        <h2 class="qa-question-text">시야 방해를 고려해 최소화된 기본 지면 먼지 효과 외에 허용 가능한 추가 주행 이펙트의 범위</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 가속 스피드 라인, 발자국 잔상, 바람 궤적, 결승선 섬광 등 추가 연출의 시각적 피로도 및 관전 방해 방지 기준 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Sonic Team Racing / Mario Kart 8 Drift Sparks & Speed Lines
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 모든 주자에게 동시에 이펙트를 부여하면 화면이 혼탁해집니다. 1~2위 선두 경합 개체 또는 컨디션 우세 개체가 스퍼트를 올리는 특정 순간에만 윈드 트레일과 미세 스피드 라인을 적용하는 선택적 발동이 권장됩니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Mario Kart 8 Deluxe - Boost & Drift Sparks Visual Effects">Mario Kart 8 Deluxe - Boost & Drift Sparks Visual Effects</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=mario+kart+8+boost+drift+sparks+effect" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=kart+racing+speed+lines+drift+dust+effect" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Sonic Team Racing / Mario Kart 8 Drift Sparks & Speed Lines">Sonic Team Racing / Mario Kart 8 Drift Sparks & Speed Lines</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=kart+racing+speed+lines+drift+dust+effect" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">II. 캐릭터 모션 & 주행 규칙</span>
+          </div>
+          <div class="qa-item-num">06 · 주행 레인 침범 규정</div>
+        </div>
+
+        <h2 class="qa-question-text">직선 고정 레인 주행 유지 vs 레인 침범(차선 변경) 허용에 따른 돌발 변수와 분석 예측성 간 밸런스 기준</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 라인 침범 허용 시 경합 연출 강화와 데이터 기반 베팅 분석 신뢰도 저하 간의 절충안에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> 올림픽 육상 단거리(레인 침범 엄격 실격) vs 경마(인코스 파고들기)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 고정 레인은 결과의 공정성을 직관적으로 보장하지만 단조롭습니다. 물리적 충돌 판정은 배제하되, 앞뒤 간격이 확보되었을 때 곡선주로에서 안쪽 코스로 미끄러지듯 레인을 교차하는 연출(In-course Slip)을 적용하면 두 마리 토끼를 잡을 수 있습니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Horse Racing - Dramatic Inside Rail Overtaking Moves">Horse Racing - Dramatic Inside Rail Overtaking Moves</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=horse+racing+overtaking+inside+rail+pack" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=horse+racing+inside+rail+overtake+highlight" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="올림픽 육상 단거리(레인 침범 엄격 실격) vs 경마(인코스 파고들기)">올림픽 육상 단거리(레인 침범 엄격 실격) vs 경마(인코스 파고들기)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=horse+racing+inside+rail+overtaking" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">III. 카메라 연출 & 피니시 판정</span>
+          </div>
+          <div class="qa-item-num">07 · 카메라 워킹 연출 수위</div>
+        </div>
+
+        <h2 class="qa-question-text">기본 트랙 추적 카메라 외 다이내믹 앵글 추가 시 관전 몰입감과 어지러움(시각적 멀미) 방지의 균형선</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 선두 추적 쿼터뷰, 사이드 횡스크롤 뷰, 결승 정면 로우앵글 전환 빈도 및 카메라 흔들림 억제 기준 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> F1 TV Broadcast Multi-Angle Camera / Gran Turismo Cinematic Replay
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 30초의 짧은 경기 시간 동안 잦은 컷 전환은 베팅 주자의 위치를 놓치게 만듭니다. 주행 70%는 부드러운 쿼터뷰로 전체 판도를 보여주고, 마지막 결승 직선 10초 구간에서만 사이드 횡스크롤 및 정면 로우앵글로 1회 컷 전환하는 2-Stage 카메라가 이상적입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Gran Turismo 7 - Cinematic Broadcast Replay Camera Angles">Gran Turismo 7 - Cinematic Broadcast Replay Camera Angles</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=gran+turismo+7+cinematic+replay+camera+angles" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=gran+turismo+replay+camera+angles" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="F1 TV Broadcast Multi-Angle Camera / Gran Turismo Cinematic Replay">F1 TV Broadcast Multi-Angle Camera / Gran Turismo Cinematic Replay</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Gran+Turismo+replay+camera+angles+telephoto" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">III. 카메라 연출 & 피니시 판정</span>
+          </div>
+          <div class="qa-item-num">08 · 피니시 판정 연출 도입 여부</div>
+        </div>
+
+        <h2 class="qa-question-text">1위 결승선 통과 시점의 판정 강조 연출(포토 피니시/슬로우 모션) 도입에 따른 실시간성 저해 및 조작 오인 가능성</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 슬로우 모션 도입 시 극적 긴장감 제공의 이점과 라이브 진행 왜곡 및 시스템 조작 의심 유발 가능성 간의 득실에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> 실제 경마 포토 피니시 판독 시스템 (Photo Finish Technology)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 모든 경기에 슬로우 모션을 넣으면 템포가 늘어집니다. 1~2위 차이가 0.1초 이내인 '초접전(Dead Heat)' 판정 시에만 화면이 1.5초간 흑백/슬로우로 전환되며 'PHOTO FINISH' 레드 라인이 그어지는 조건부 연출이 가장 강력한 공정성 신뢰를 줍니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="10 Very Very Close Photo Finish Horse Races | Nose Wins to Dead Heat">10 Very Very Close Photo Finish Horse Races | Nose Wins to Dead Heat</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=very+close+photo+finish+horse+races" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=horse+racing+photo+finish+dead+heat" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="실제 경마 포토 피니시 판독 시스템 (Photo Finish Technology)">실제 경마 포토 피니시 판독 시스템 (Photo Finish Technology)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=horse+racing+photo+finish+strip+camera" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">III. 카메라 연출 & 피니시 판정</span>
+          </div>
+          <div class="qa-item-num">09 · 리플레이 분석 정보 실효성</div>
+        </div>
+
+        <h2 class="qa-question-text">짧은 경기 시간(약 30초) 대비 리플레이 상세 데이터(역전 마커, 구간 속도 등) 제공의 실효성 여부</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 빠른 턴 회전율 중심의 경기 특성상 상세 분석 정보가 불필요하게 복잡성을 가중시키는지에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Betradar Virtual Horse Classics / Kiron Virtual Sports Results Overlay
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 상세 텔레메트리 그래프는 일반 캐주얼 베터에게 피로감을 줍니다. 결승 통과 직후 1~3위의 마번/배당률 및 '최고속도(Max Speed)', '역전 성공 구간' 단 2개의 키워드 뱃지만 표시하는 요약 인포그래픽이 최적입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Betradar Virtual Sports - Virtual Horse Classics Race & Results Demo">Betradar Virtual Sports - Virtual Horse Classics Race & Results Demo</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Betradar+virtual+horses+race+replay" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Betradar+virtual+horse+classics+demo" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Betradar Virtual Horse Classics / Kiron Virtual Sports Results Overlay">Betradar Virtual Horse Classics / Kiron Virtual Sports Results Overlay</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=virtual+horse+racing+results+infographic+telemetry" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">IV. 인게임 UI & 관전 정보</span>
+          </div>
+          <div class="qa-item-num">10 · 트랙 미니맵 배치 위치</div>
+        </div>
+
+        <h2 class="qa-question-text">화면 하단에 배치된 트랙 진행도 미니맵의 메인 3D 관전 시야 방해 여부 및 최적 배치 위치(상단 또는 외곽 코너)</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 하단 배치 시 주행 화면 가림 현상 평가 및 상단 바 일체형 또는 우측 상단 소형 위젯으로의 레이아웃 재배치 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> F1 TV Broadcast Leaderboard Tower / Mario Kart Horizontal Track Bar
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 하단 원형 미니맵은 모바일 화면에서 캐릭터 하반신과 지면을 가려 시야를 방해합니다. 화면 상단에 얇은 가로 선형 트랙 바(Linear Progress Bar)를 배치하여 1위부터 6위까지의 위치를 직관적으로 전달하는 것이 글로벌 표준입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Racing Game HUD & Track Minimap Design Analysis">Racing Game HUD & Track Minimap Design Analysis</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=racing+game+hud+track+minimap+design" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=racing+game+hud+minimap+ui" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="F1 TV Broadcast Leaderboard Tower / Mario Kart Horizontal Track Bar">F1 TV Broadcast Leaderboard Tower / Mario Kart Horizontal Track Bar</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=racing+game+linear+track+progress+bar+ui" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">IV. 인게임 UI & 관전 정보</span>
+          </div>
+          <div class="qa-item-num">11 · 미니맵 순위 변동 이펙트</div>
+        </div>
+
+        <h2 class="qa-question-text">미니맵 상에서 순위 역전(추월) 발생 시 적용할 시각 효과(아이콘 교차, 미세 발광 등)의 적정 연출 강도</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 순위 변동 인지성을 높이는 미세 하이라이트 연출 적용 여부 및 과도한 점멸로 인한 시선 분산 방지 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> F1 Live Timing Tower Graphic (Green Overtake Flash)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> F1 타이밍 타워 그래픽처럼, 추월 발생 시 해당 번호 뱃지가 위아래로 부드럽게 위치를 바꾸며 '골드/그린 림라이트'가 0.4초간 반짝이는 연출이 시야 방해 없이 역전 쾌감을 극대화합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="F1 Broadcast Graphics - Timing Tower & Overtaking Highlight">F1 Broadcast Graphics - Timing Tower & Overtaking Highlight</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=F1+broadcast+graphics+timing+tower+overtaking" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=F1+live+timing+leaderboard+overtake" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="F1 Live Timing Tower Graphic (Green Overtake Flash)">F1 Live Timing Tower Graphic (Green Overtake Flash)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=F1+timing+tower+graphics+leaderboard" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">IV. 인게임 UI & 관전 정보</span>
+          </div>
+          <div class="qa-item-num">12 · 경기 중 컨디션 표시 방식</div>
+        </div>
+
+        <h2 class="qa-question-text">경기 중 선수의 컨디션 상태 표현 방식(외곽 오라 vs UI 아이콘) 및 베팅 후 정보 제공의 실효성</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 베팅 마감 후 경기 진행 중에도 유저가 출전 선수의 컨디션 정보에 지속적으로 관심을 가지는지에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> 우마무스메 프리티 더비 (스태미나 & 스킬 발동 오라 UI)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 베팅 완료 후에는 정적인 수치보다 '누가 기운차게 치고 나가는가'가 핵심입니다. 컨디션 최고조 개체가 스퍼트를 올릴 때 머리 볏 주변의 미세한 스파크 오라와 번호 배지 주변의 소프트 글로우 효과로 표현하는 것이 가장 효과적입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Uma Musume - Race Skill Activation & Condition Visual Effects">Uma Musume - Race Skill Activation & Condition Visual Effects</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=uma+musume+race+skill+activation+gameplay" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=uma+musume+skill+trigger+ui" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="우마무스메 프리티 더비 (스태미나 & 스킬 발동 오라 UI)">우마무스메 프리티 더비 (스태미나 & 스킬 발동 오라 UI)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=uma+musume+in+race+condition+skill+ui" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">IV. 인게임 UI & 관전 정보</span>
+          </div>
+          <div class="qa-item-num">13 · 베팅 UI 전반 시인성</div>
+        </div>
+
+        <h2 class="qa-question-text">베팅 보드의 배당률 표기, 경기 정보 안내, 카운트다운 타이머 등 주요 UI 텍스트의 시인성 및 레이아웃 완성도</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 폰트 가독성, 모바일 세로/가로 환경 대응, 베팅 마감 임박 시각 안내 방식 및 필수 추가 정보 식별 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Bet365 / William Hill Virtual Sports Betting HUD
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 모바일 소형 화면에서는 배당률 숫자가 가장 굵고 선명해야 합니다. 마감 10초 전 카운트다운 숫자가 붉은색으로 펄스(Pulse) 점멸하며 사운드 비프음이 연동되는 직관적 텐션 유도가 필수적입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Virtual Sports Betting Terminal & UI Interface Workflow">Virtual Sports Betting Terminal & UI Interface Workflow</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=virtual+sports+betting+kiosk+interface" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=sportsbook+mobile+betting+ui+ux" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Bet365 / William Hill Virtual Sports Betting HUD">Bet365 / William Hill Virtual Sports Betting HUD</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=sportsbook+betting+board+odds+display+ui" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">V. 오디오 & 클라이언트 사양</span>
+          </div>
+          <div class="qa-item-num">14 · 아나운서 중계 톤앤매너</div>
+        </div>
+
+        <h2 class="qa-question-text">현재의 평이한 전통 경마 중계 톤에서 벗어나, e스포츠 및 게임 특성에 맞춘 고조된 톤과 과장된 중계 연출 도입 여부</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 전문 경마 해설의 안정감 vs 게임형 e스포츠 중계의 오락성 간 타깃 유저 성향에 부합하는 보이스 톤 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> NBC Larry Collmus (Voice of Kentucky Derby) / e스포츠 결승 중계
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 초중반 20초는 차분하고 정돈된 보이스로 마번과 포지션을 명확하게 전달하다가, 마지막 10초 직선주로 접전에서 옥타브를 높여 폭발하는 'Larry Collmus 스타일'의 빌드업형 사운드 믹싱이 최고의 몰입감을 선사합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="NBC Sports - Larry Collmus Most Thrilling Kentucky Derby Race Calls">NBC Sports - Larry Collmus Most Thrilling Kentucky Derby Race Calls</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Larry+Collmus+best+kentucky+derby+calls+NBC+sports" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Larry+Collmus+Kentucky+Derby+commentary" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="NBC Larry Collmus (Voice of Kentucky Derby) / e스포츠 결승 중계">NBC Larry Collmus (Voice of Kentucky Derby) / e스포츠 결승 중계</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Kentucky+Derby+announcer+Larry+Collmus" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Derby Race">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge derby">🏇 Derby Race</span>
+            <span class="cat-tag">V. 오디오 & 클라이언트 사양</span>
+          </div>
+          <div class="qa-item-num">15 · 모바일 품질/사양 타협 기준</div>
+        </div>
+
+        <h2 class="qa-question-text">저사양 모바일 브라우저 호환을 위한 그래픽 품질 타협 수준 재조정 및 최소 기기 사양 상향을 통한 퀄리티 확보 여부</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 보급형 기기 커버리지 확보를 위한 경량화 유지 vs 그래픽 완성도 중심의 최소 사양 기준 상향 조정 간 손익에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Three.js & PlayCanvas Mobile WebGL 3D Engine Showcase
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 글로벌 웹 베팅 플랫폼은 동남아/남미 등 보급형 스마트폰 점유율이 높습니다. 폴리곤 수와 텍스처를 1K 수준으로 최적화하되, WebGL 셰이더 기반의 '림라이트(Rim-light)'와 '그림자 페이크'를 적용하여 저사양에서도 고급스러운 룩을 유지해야 합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Three.js & WebGL Mobile Optimization Strategies & Techniques">Three.js & WebGL Mobile Optimization Strategies & Techniques</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Three.js+mobile+webgl+performance+optimization" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=PlayCanvas+mobile+webgl+gameplay" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Three.js & PlayCanvas Mobile WebGL 3D Engine Showcase">Three.js & PlayCanvas Mobile WebGL 3D Engine Showcase</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=webgl+3d+mobile+browser+optimization+lod" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">I. 그래픽 화풍 & 비주얼 연출</span>
+          </div>
+          <div class="qa-item-num">01 · 대전 캐릭터 화풍 방향</div>
+        </div>
+
+        <h2 class="qa-question-text">캐릭터 화풍의 정식 고도화 방향(아케이드 카툰 렌더 vs 정통 실사 투계) 선택에 대한 의견</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 대중적 접근성 중심의 캐주얼 카툰풍 vs 격투 매니아층을 겨냥한 정통 실사풍 간의 그래픽 톤앤매너 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Fight of Animals (Digital Crafter) / Guilty Gear Strive (Arc System Works)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 글로벌 동물 격투 게임 'Fight of Animals'가 대성공을 거둔 배경은 유머러스하고 매력적인 카툰 렌더링이었습니다. 잔혹한 실사 조류보다 길티기어 스타일의 세련된 3D 셀 셰이딩이 글로벌 스토어 심의와 유저 호감도 모두에서 압도적 우위를 점합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Fight of Animals - Official Game Release Trailer">Fight of Animals - Official Game Release Trailer</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Fight+of+Animals+official+trailer+nintendo+switch" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Fight+of+Animals+trailer" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Fight of Animals (Digital Crafter) / Guilty Gear Strive (Arc System Works)">Fight of Animals (Digital Crafter) / Guilty Gear Strive (Arc System Works)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Fight+of+Animals+gameplay+screenshot" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">I. 그래픽 화풍 & 비주얼 연출</span>
+          </div>
+          <div class="qa-item-num">02 · 전투 액션 메커니즘</div>
+        </div>
+
+        <h2 class="qa-question-text">전투 공방 방식의 지향점(게임 요소를 강조한 대전 액션 vs 발싸움 위주의 리얼 투계 스타일) 설정</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 화려한 스킬 연계 중심의 게임형 대전 액션 vs 실제 닭싸움처럼 킥/발차기 공방 위주의 사실적 투계 연출 간의 방향성에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> 철권 8 (Tekken 8) Clash & Parry Mechanism / 무에타이 킥복싱
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 실제 투계의 쪼기/발차기만 반복되면 관전 피로도가 급상승합니다. 날개를 이용한 가드 패링, 공중 점프 날아차기, 카운터 태클 등 아케이드 대전 액션 공방 메커니즘을 60% 이상 블렌딩해야 베팅 관전의 스포츠적 긴장감이 형성됩니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Tekken 8 - Parry, Counter Hit & Dynamic Clash Combat Showcase">Tekken 8 - Parry, Counter Hit & Dynamic Clash Combat Showcase</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Tekken+8+clash+parry+counter+gameplay" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Tekken+8+mechanics+breakdown" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="철권 8 (Tekken 8) Clash & Parry Mechanism / 무에타이 킥복싱">철권 8 (Tekken 8) Clash & Parry Mechanism / 무에타이 킥복싱</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Tekken+8+counter+hit+clash+screenshot" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">I. 그래픽 화풍 & 비주얼 연출</span>
+          </div>
+          <div class="qa-item-num">03 · 타격 시각 이펙트 연출</div>
+        </div>
+
+        <h2 class="qa-question-text">타격 적중 시 시각 연출의 적정 형태(아케이드 섬광/스파크 vs 물리적 깃털/먼지 비산) 및 배합 비율</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> SF 2D/3D 히트 섬광 이펙트 vs 물리 기반 깃털 탈락 및 지면 파편 연출의 조화 수준 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Street Fighter 6 Drive Impact Ink Splashes / Soulcalibur Hit Sparks
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 단순한 SF 레이저 스파크는 닭싸움 테마에 이질감을 줍니다. 스트리트 파이터 6의 잉크 스플래시처럼, 타격 순간 묵직한 섬광 1프레임과 함께 '깃털 파편(Feather Burst)' 및 지면 모래 먼지가 함께 터지는 배합이 가장 찰진 타격감을 선사합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Street Fighter 6 - All Drive Impact Hit Effect Animations">Street Fighter 6 - All Drive Impact Hit Effect Animations</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/watch?v=J_5e02jVz0I" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Street+Fighter+6+Drive+Impact+animations" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Street Fighter 6 Drive Impact Ink Splashes / Soulcalibur Hit Sparks">Street Fighter 6 Drive Impact Ink Splashes / Soulcalibur Hit Sparks</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Street+Fighter+6+Drive+Impact+hit+effect+paint" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">II. 부상 표현 & 타격 연출</span>
+          </div>
+          <div class="qa-item-num">04 · 부상 및 선혈(피) 표현 수위</div>
+        </div>
+
+        <h2 class="qa-question-text">타깃 유저의 문화적 취향 및 혐오감 완화를 고려한 공격 피격 시 상처 및 혈흔 연출의 허용 범위</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 유저 혐오감 방지를 위한 유혈(Blood) 표현 배제 및 깃털 손상/멍 자국 수준 순화 방안에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Super Smash Bros. Ultimate / Punch-Out!! Wii (Cartoon Damage)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 붉은 피와 찢어진 상처는 북미/유럽 문화권에서 동물 학대(Cruelty) 논란과 거부감을 유발합니다. 붉은 혈흔은 100% 배제하고, 체력 저하 시 깃털이 헝클어지거나 볏의 색상이 살짝 어두워지는 카툰식 데미지 데칼로 순화해야 합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Super Smash Bros. Ultimate - Visual Damage & Knockout Smoke Effects">Super Smash Bros. Ultimate - Visual Damage & Knockout Smoke Effects</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Smash+Bros+Ultimate+damage+percentage+knockout+effects" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Smash+Bros+Ultimate+hit+effects" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Super Smash Bros. Ultimate / Punch-Out!! Wii (Cartoon Damage)">Super Smash Bros. Ultimate / Punch-Out!! Wii (Cartoon Damage)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Smash+Bros+Ultimate+hit+smoke+effects" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">II. 부상 표현 & 타격 연출</span>
+          </div>
+          <div class="qa-item-num">05 · 히트스톱 연출 및 조작 오인 방지</div>
+        </div>
+
+        <h2 class="qa-question-text">타격감 강화를 위한 프레임 정지(히트스톱)/카메라 쉐이크 적용 시 라이브 진행 왜곡 및 조작 의심 유발 방지 기준</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 타격 순간의 연출 효과가 실시간 중계의 자연스러움을 해치거나 시스템 조작 의심을 유발하지 않도록 하는 적정 강도 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Masahiro Sakurai: 'Stop for Big Moments!' (Hitstop Mechanics)
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 사쿠라이 마사히로 디렉터의 분석대로, 일반 잽/킥 공격에는 0.03초(2프레임) 이하의 초미세 멈춤만 주고, 라운드 피니시 공격에만 0.15초의 묵직한 히트스톱과 미세 진동을 주어야 '시스템 랙이나 서버 딜레이'로 오인되지 않습니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Masahiro Sakurai on Creating Games - Stop for Big Moments! (Hitstop)">Masahiro Sakurai on Creating Games - Stop for Big Moments! (Hitstop)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Masahiro+Sakurai+Hitstop+techniques+Stop+for+Big+Moments" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Masahiro+Sakurai+Hitstop+explained" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Masahiro Sakurai: 'Stop for Big Moments!' (Hitstop Mechanics)">Masahiro Sakurai: 'Stop for Big Moments!' (Hitstop Mechanics)</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=fighting+game+hitstop+hitlag+frame+freeze" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">III. 아레나 환경 & 카메라 워킹</span>
+          </div>
+          <div class="qa-item-num">06 · 경기장 배경 컨셉 및 분위기</div>
+        </div>
+
+        <h2 class="qa-question-text">경기장 배경의 아트 컨셉 설정(게임성을 강조한 아케이드 링 vs 사실적인 언더그라운드 투계장)</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 세련된 조명과 펜스를 갖춘 스포츠 링 분위기 vs 흙바닥과 거친 철망 중심의 리얼 투계장 환경 간의 지향점에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> UFC Octagon Arena / WWE Main Stage Lighting / Tekken Underground Arena
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 어둡고 거친 불법 투계장 컨셉은 플랫폼의 브랜드 이미지를 저해할 위험이 있습니다. UFC 옥타곤처럼 세련된 팔각 철망 펜스와 화려한 스포트라이트, 역동적인 관중 함성이 있는 '공식 스포츠 아레나' 컨셉이 북미 유저에게 프리미엄 가치를 전달합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="UFC Official Octagon & Arena Lighting Atmosphere Walkthrough">UFC Official Octagon & Arena Lighting Atmosphere Walkthrough</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=UFC+octagon+ring+entrance+lighting+atmosphere" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=UFC+octagon+arena+walkthrough" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="UFC Octagon Arena / WWE Main Stage Lighting / Tekken Underground Arena">UFC Octagon Arena / WWE Main Stage Lighting / Tekken Underground Arena</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=UFC+octagon+arena+lighting+cage" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">III. 아레나 환경 & 카메라 워킹</span>
+          </div>
+          <div class="qa-item-num">07 · 방어/그로기 연출과 경기 집중도</div>
+        </div>
+
+        <h2 class="qa-question-text">방어(가드) 및 그로기 모션 도입 시 관전 집중도 방해 여부 및 시스템 조작 의심 유발 가능성</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 복잡한 상태 모션 추가가 경기 흐름의 속도감을 저해하거나 인위적 승패 조작으로 오인될 소지가 없는지에 대한 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Street Fighter 6 Burnout Dizziness / Fight Night Champion Stumble
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 그로기 모션이 3초 이상 지속되면 유저는 '버그가 났거나 결과를 조작한다'고 느낍니다. 공격을 허용해 비틀거리는 그로기 연출은 최대 1.2초(단 1회의 후속 타격 허용 시간)로 엄격히 제한하여 경기 템포를 지켜야 합니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Street Fighter 6 - Burnout Stun & Dizziness Animation System">Street Fighter 6 - Burnout Stun & Dizziness Animation System</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Street+Fighter+6+burnout+stun+dizzy+animation" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=fighting+game+dizzy+stun+animation" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Street Fighter 6 Burnout Dizziness / Fight Night Champion Stumble">Street Fighter 6 Burnout Dizziness / Fight Night Champion Stumble</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Street+Fighter+6+burnout+dizzy+animation" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">III. 아레나 환경 & 카메라 워킹</span>
+          </div>
+          <div class="qa-item-num">08 · 다이내믹 카메라 연출 범위</div>
+        </div>
+
+        <h2 class="qa-question-text">고정 관전 시점 외 파이터 거리 연동 줌인/줌아웃 및 피니시 로우 앵글 도입 여부와 시각적 피로도 억제선</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 다이내믹 앵글 전환에 따른 박진감 향상과 잦은 화면 흔들림으로 인한 어지러움(시각적 멀미) 유발 방지 기준 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Tekken 8 Slow Motion Clash Close-up Camera
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 철권 8의 '슬로우 모션 클로즈업'은 전 세계 격투 게임 중 가장 찬사받는 카메라 기술입니다. 양 파이터가 마지막 한 방을 서로 뻗는 순간 0.5초간 카메라가 로우앵글로 줌인되며 속도가 30%로 감속되는 연출 하나만으로 최고의 극적 카타르시스가 완성됩니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Tekken 8 - Top Epic Slow Motion Clash Moments Compilation">Tekken 8 - Top Epic Slow Motion Clash Moments Compilation</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=Tekken+8+best+slow+motion+moments+compilation" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=Tekken+8+slow+mo+clash" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Tekken 8 Slow Motion Clash Close-up Camera">Tekken 8 Slow Motion Clash Close-up Camera</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=Tekken+8+slow+motion+clash+screenshot" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">IV. 전투 규칙 & 베팅 메커니즘</span>
+          </div>
+          <div class="qa-item-num">09 · 다운 판정 및 카운트다운 규칙</div>
+        </div>
+
+        <h2 class="qa-question-text">파이터 다운 시 판정 처리 방식(즉시 경기 종료 vs 10초 카운트다운 및 기립 모션 도입)</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 빠른 경기 회전율 유지와 다운 카운트다운 도입에 따른 역전 서스펜스 강화 간의 경기 규칙 설정 관련 의견 필요
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> 프로 복싱 10 카운트다운 (Knockdown Count) vs MMA 즉시 TKO 판정
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 실제 복싱의 10초는 회전율 중심의 웹 베팅 게임에서 체감상 너무 깁니다. 체력 소진 시 1회에 한해 '신속 5초 카운트다운'을 부여하고, 심판 수탉 캐릭터가 날개짓으로 카운트하며 80% 확률로 비틀거리며 일어나는 역전 서스펜스를 넣는 것이 최적입니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Dramatic Boxing Referee 10-Count Knockdown & Comeback Moments">Dramatic Boxing Referee 10-Count Knockdown & Comeback Moments</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=boxing+dramatic+referee+10+count+recovery" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=boxing+knockdown+count+10" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="프로 복싱 10 카운트다운 (Knockdown Count) vs MMA 즉시 TKO 판정">프로 복싱 10 카운트다운 (Knockdown Count) vs MMA 즉시 TKO 판정</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=boxing+referee+counting+down+fallen+fighter" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+      <article class="qa-ref-card" data-mode="Rumble Pit">
+        <div class="card-top">
+          <div class="card-tags">
+            <span class="mode-badge rumble">🥊 Rumble Pit</span>
+            <span class="cat-tag">IV. 전투 규칙 & 베팅 메커니즘</span>
+          </div>
+          <div class="qa-item-num">10 · 라운드별 추가 베팅 도입 및 형평성</div>
+        </div>
+
+        <h2 class="qa-question-text">라운드 간 추가 베팅(중간 베팅) 도입 시 사전 베팅 예측 성공 유저와의 형평성 유지 및 플랫폼 수수료 수익 간의 절충안</h2>
+
+        <div class="qa-desc-box">
+          <strong>실무 검증 핵심:</strong> 중간 베팅 허용에 따른 배당률 조정이 경기 전 예측 유저의 불만을 유발하지 않도록 하는 밸런스 설계 및 플랫폼 수익성 관련 의견 필요 (중간 베팅 부재 시 수수료 수익 감소)
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-benchmark">
+            <span>📌 벤치마킹 타깃:</span> Sportsbook Live In-Play Betting / e스포츠 실시간 승률 배당 곡선
+          </div>
+          <div class="insight-text">
+            <strong>기획 분석:</strong> 중간 베팅은 플랫폼 GGR(수수료 수익)을 40% 이상 견인하는 핵심 엔진입니다. 사전 베팅 유저의 불만을 방지하려면, 경기 시작 전 베팅에 '얼리버드 배당 부스트(+15% Payout)'를 고정 제공하고, 2라운드 이후 중간 베팅은 실시간 체력 비율에 따라 엄격한 동적 배당(Dynamic In-Play Odds)을 적용하면 양쪽 모두 만족시킬 수 있습니다.
+          </div>
+        </div>
+
+        <div class="ref-links-grid">
+          <!-- YouTube Reference -->
+          <div class="ref-link-card yt">
+            <div class="ref-head">
+              <span class="ref-icon-badge yt">YouTube</span>
+              <span class="ref-title" title="Sportsbook Live In-Play Betting & Odds Movement Explained">Sportsbook Live In-Play Betting & Odds Movement Explained</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.youtube.com/results?search_query=live+in+play+betting+odds+explained+sportsbook" target="_blank" rel="noopener noreferrer" class="ref-btn yt-primary">
+                <span>▶</span> 영상 바로가기
+              </a>
+              <a href="https://www.youtube.com/results?search_query=live+in+play+betting+sportsbook+mechanics" target="_blank" rel="noopener noreferrer" class="ref-btn yt-secondary">
+                <span>🔍</span> 관련 영상 검색
+              </a>
+            </div>
+          </div>
+
+          <!-- Web / Image Reference -->
+          <div class="ref-link-card web">
+            <div class="ref-head">
+              <span class="ref-icon-badge web">Google Web</span>
+              <span class="ref-title" title="Sportsbook Live In-Play Betting / e스포츠 실시간 승률 배당 곡선">Sportsbook Live In-Play Betting / e스포츠 실시간 승률 배당 곡선</span>
+            </div>
+            <div class="ref-buttons">
+              <a href="https://www.google.com/search?tbm=isch&q=live+in+play+betting+interface+odds+movement" target="_blank" rel="noopener noreferrer" class="ref-btn web-primary">
+                <span>🖼️</span> 이미지 검색 레퍼런스
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>ROOSTER RUMBLE SPEC DECK · QA 레퍼런스 및 벤치마킹 가이드 문서</p>
+      <p style="margin-top: 4px; font-size: 0.8rem; color: #94a3b8;">본 문서는 웹 검색 및 공식 플랫폼의 링크를 통해 기획/디자인 실무 의사결정을 지원합니다.</p>
+    </footer>
+  </div>
+
+  <script>
+    function filterItems(mode) {
+      const cards = document.querySelectorAll('.qa-ref-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (mode === 'all' && btn.textContent.includes('전체')) {
+          btn.classList.add('active');
+        } else if (mode !== 'all' && btn.textContent.includes(mode)) {
+          btn.classList.add('active');
+        }
+      });
+
+      cards.forEach(card => {
+        if (mode === 'all') {
+          card.style.display = 'block';
+        } else {
+          const cardMode = card.getAttribute('data-mode');
+          if (cardMode === mode) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

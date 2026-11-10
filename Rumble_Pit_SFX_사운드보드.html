@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🥊 ROOSTER RUMBLE - Rumble Pit SFX-Pit 12종 사운드보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-card: #131b2e;
+      --bg-card-hover: #1c2742;
+      --border-color: #243354;
+      --border-highlight: #ff5722;
+      --primary-red: #ff334b;
+      --primary-orange: #ff6b35;
+      --accent-gold: #ffb703;
+      --accent-cyan: #00f2fe;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 28px 20px 60px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    header.header {
+      background: linear-gradient(135deg, rgba(255, 51, 75, 0.15), rgba(255, 107, 53, 0.08) 60%, rgba(0, 242, 254, 0.05));
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-title h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+    }
+    .header-title h1 .badge {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      background: var(--primary-orange);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header-title p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(10, 14, 23, 0.7);
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+    .volume-slider-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .volume-slider-box input[type="range"] {
+      width: 100px;
+      accent-color: var(--primary-orange);
+      cursor: pointer;
+    }
+    .btn-global {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-global:hover {
+      border-color: var(--primary-orange);
+      color: var(--primary-orange);
+      background: rgba(255, 107, 53, 0.1);
+    }
+    .btn-global.active {
+      background: var(--primary-orange);
+      color: #fff;
+      border-color: var(--primary-orange);
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-highlight);
+    }
+    .filter-btn.active {
+      background: var(--primary-red);
+      color: #fff;
+      border-color: var(--primary-red);
+      box-shadow: 0 4px 12px rgba(255, 51, 75, 0.35);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--primary-orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    .card.playing {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.3);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .card-title-box {
+      flex: 1;
+    }
+    .card-id {
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: var(--accent-gold);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 2px 0 4px 0;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .card-meta span {
+      background: rgba(10, 14, 23, 0.5);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .category-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .cat-attack { background: rgba(255, 51, 75, 0.2); color: #ff6b7d; border: 1px solid rgba(255, 51, 75, 0.4); }
+    .cat-defense { background: rgba(0, 242, 254, 0.15); color: #38bdf8; border: 1px solid rgba(0, 242, 254, 0.3); }
+    .cat-special { background: rgba(255, 183, 3, 0.2); color: #fbbf24; border: 1px solid rgba(255, 183, 3, 0.4); }
+    .cat-system { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      background: rgba(10, 14, 23, 0.4);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary-orange);
+      min-height: 48px;
+    }
+
+    /* Wave visualizer */
+    .wave-box {
+      height: 32px;
+      background: #090d16;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 0 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .wave-bar {
+      width: 4px;
+      height: 6px;
+      background: var(--text-dim);
+      border-radius: 2px;
+      transition: height 0.08s ease, background-color 0.2s;
+    }
+    .card.playing .wave-bar {
+      background: var(--accent-cyan);
+      animation: wave-anim 0.5s infinite alternate ease-in-out;
+    }
+    @keyframes wave-anim {
+      0% { height: 4px; }
+      100% { height: 26px; }
+    }
+
+    /* Card Player Controls */
+    .card-player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 4px;
+    }
+    .btn-play {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-red));
+      border: none;
+      color: #fff;
+      font-size: 1.05rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(255, 107, 53, 0.35);
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .btn-play:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(255, 107, 53, 0.55);
+    }
+    .btn-play:active {
+      transform: scale(0.96);
+    }
+    .timeline-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .seek-bar {
+      width: 100%;
+      height: 5px;
+      -webkit-appearance: none;
+      background: #243354;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    .seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      cursor: pointer;
+    }
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-family: monospace;
+    }
+    .btn-action-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .btn-action-icon:hover {
+      color: #fff;
+      border-color: var(--primary-orange);
+      background: rgba(255, 107, 53, 0.15);
+    }
+
+    /* Combo Simulator Section */
+    .simulator-panel {
+      background: linear-gradient(180deg, #131b2e 0%, #0d1322 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 36px;
+    }
+    .simulator-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .simulator-sub {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .combo-card {
+      background: rgba(10, 14, 23, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .combo-card:hover {
+      border-color: var(--accent-gold);
+      background: rgba(255, 183, 3, 0.05);
+    }
+    .combo-info h4 {
+      font-size: 0.88rem;
+      color: #fff;
+      font-weight: 700;
+    }
+    .combo-info p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-family: monospace;
+    }
+    .btn-combo-trigger {
+      background: var(--bg-card);
+      border: 1px solid var(--border-highlight);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .btn-combo-trigger:hover {
+      background: var(--primary-orange);
+      box-shadow: 0 0 12px rgba(255, 107, 53, 0.4);
+    }
+
+    /* Specs Table */
+    .specs-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .specs-panel h3 {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .specs-table th, .specs-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    .specs-table th {
+      color: var(--primary-orange);
+      font-weight: 700;
+      background: rgba(10, 14, 23, 0.5);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1c2742;
+      border: 1px solid var(--primary-orange);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-title">
+      <h1>🥊 ROOSTER RUMBLE <span class="badge">SFX-Pit 14종 사운드보드</span></h1>
+      <p>Rumble Pit 선수 공격·방어 동작 구성안 매핑 실사 음향 MP3 플레이어</p>
+    </div>
+    <div class="header-controls">
+      <div class="volume-slider-box">
+        <span>🔊 마스터</span>
+        <input type="range" id="masterVolume" min="0" max="1" step="0.05" value="0.9" oninput="changeMasterVolume(this.value)">
+      </div>
+      <button class="btn-global" onclick="stopAllAudio()">⏹ 전체 정지</button>
+      <button class="btn-global" id="showcaseBtn" onclick="toggleShowcase()">▶ 전곡 순차 청음</button>
+    </div>
+  </header>
+
+  <!-- BGM PANEL -->
+  <section style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.18), rgba(19, 27, 46, 0.85)); border: 1px solid var(--primary-orange); border-radius: 12px; padding: 18px 24px; margin-bottom: 22px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.25rem;">🎻</span>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff;">[인게임 전투 BGM] 혈투의 링 (Battle Orchestral)</h3>
+        <span style="background:var(--primary-red); color:#fff; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:4px;">150 BPM 배틀 오케스트라</span>
+      </div>
+      <p style="font-size:0.83rem; color:var(--text-muted); margin-top:4px;">
+        박진감 넘치는 시네마틱 액션 배틀 오케스트라 (2분 52초 풀 렝스)
+      </p>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+        <span>BGM 볼륨</span>
+        <input type="range" id="bgmVolume" min="0" max="1" step="0.05" value="0.65" oninput="changeBgmVolume(this.value)" style="width:90px; accent-color:var(--primary-orange);">
+      </div>
+      <button id="btnBgmPlay" onclick="toggleBgmPlay()" style="background:var(--primary-orange); border:none; color:#fff; font-weight:700; padding:8px 18px; border-radius:6px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+        ▶ BGM 재생
+      </button>
+      <a href="assets/audio/pit/bgm/bgm_pit_fight.mp3" download style="color:var(--text-muted); text-decoration:none; font-size:1.1rem;" title="BGM MP3 다운로드">💾</a>
+      <audio id="audio-bgm_pit_fight" src="assets/audio/pit/bgm/bgm_pit_fight.mp3" loop preload="auto"></audio>
+    </div>
+  </section>
+
+  <!-- 1R COMBAT SIMULATION DEMO PANEL -->
+  <section style="background: linear-gradient(135deg, rgba(239, 71, 111, 0.22), rgba(19, 27, 46, 0.90)); border: 1px solid var(--primary-red); border-radius: 12px; padding: 18px 24px; margin-bottom: 22px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:1.25rem;">🥊</span>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff;">[1라운드 실전 시뮬레이션 데모] 가상 시나리오 전체 사운드 예시</h3>
+        <span style="background:var(--primary-red); color:#fff; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:4px;">35.03초 풀 시뮬레이션</span>
+      </div>
+      <p style="font-size:0.83rem; color:var(--text-muted); margin-top:4px;">
+        BGM + 관중 앰비언스 기저음 + 라운드 보이스 + 시작/종료 벨 + 공방 7종 + 치명타 덕킹 + 다운 + 투지 심장박동 믹싱 실전 예시
+      </p>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+        <span>데모 볼륨</span>
+        <input type="range" id="demoVolume" min="0" max="1" step="0.05" value="0.80" oninput="changeDemoVolume(this.value)" style="width:90px; accent-color:var(--primary-red);">
+      </div>
+      <button id="btnDemoPlay" onclick="toggleDemoPlay()" style="background:var(--primary-red); border:none; color:#fff; font-weight:700; padding:8px 18px; border-radius:6px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+        ▶ 1R 데모 재생
+      </button>
+      <a href="assets/audio/pit/demo/demo_pit_round1_simulation.mp3" download style="color:var(--text-muted); text-decoration:none; font-size:1.1rem;" title="1R 시뮬레이션 데모 MP3 다운로드">💾</a>
+      <audio id="audio-demo_pit_round1_simulation" src="assets/audio/pit/demo/demo_pit_round1_simulation.mp3" preload="auto"></audio>
+    </div>
+  </section>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">전체 보기 (14종)</button>
+    <button class="filter-btn" onclick="filterCategory('attack', this)">공격 기술 [공1~4/범용] (5종)</button>
+    <button class="filter-btn" onclick="filterCategory('defense', this)">방어/회피 [방1~2/범용] (3종)</button>
+    <button class="filter-btn" onclick="filterCategory('special', this)">특수/다운/투지 (2종)</button>
+    <button class="filter-btn" onclick="filterCategory('system', this)">보이스/벨/KO/관중 (4종)</button>
+  </div>
+
+  <!-- SOUNDBOARD GRID -->
+  <div class="grid" id="soundGrid">
+
+    <!-- 1. SFX_PIT_ROUND_START (Pure Voice 1R/2R/3R) -->
+    <div class="card" data-category="system" id="card-sfx_pit_round_start">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_ROUND_START</div>
+          <div class="card-title" id="title-sfx_pit_round_start">1R 시작 보이스 (First Round... FIGHT!)</div>
+          <div class="card-meta">
+            <span id="dur-meta-sfx_pit_round_start">2.02초</span>
+            <span id="size-meta-sfx_pit_round_start">50 KB</span>
+            <span>순수 보이스</span>
+          </div>
+        </div>
+        <span class="category-badge cat-system">라운드 보이스</span>
+      </div>
+      <div class="card-desc" id="desc-sfx_pit_round_start">
+        다크 헤비 아나운서 순수 보이스 샤우팅("First Round... FIGHT!"). 벨소리 제거 분리 완료.
+      </div>
+      <!-- 라운드 선택 (1R / 2R / 3R) -->
+      <div style="display:flex; gap:6px; margin: 8px 0;">
+        <button class="btn-sub-round active-round" onclick="selectHeavyRound('1', this)" style="flex:1; padding:5px 4px; font-size:0.75rem; background:var(--primary-orange); border:none; border-radius:5px; color:#fff; cursor:pointer; font-weight:700;">1R (First)</button>
+        <button class="btn-sub-round" onclick="selectHeavyRound('2', this)" style="flex:1; padding:5px 4px; font-size:0.75rem; background:rgba(255,255,255,0.08); border:1px solid var(--border-color); border-radius:5px; color:var(--text-muted); cursor:pointer;">2R (Second)</button>
+        <button class="btn-sub-round" onclick="selectHeavyRound('3', this)" style="flex:1; padding:5px 4px; font-size:0.75rem; background:rgba(255,255,255,0.08); border:1px solid var(--border-color); border-radius:5px; color:var(--text-muted); cursor:pointer;">3R (Third)</button>
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_round_start"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_round_start', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_round_start', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_round_start">0.0s</span>
+            <span id="dur-sfx_pit_round_start">2.02s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" id="dl-sfx_pit_round_start" href="assets/audio/pit/sfx/sfx_pit_round1_start.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_round_start" src="assets/audio/pit/sfx/sfx_pit_round1_start.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 2. SFX_PIT_BELL_SINGLE (1회 공식 벨) -->
+    <div class="card" data-category="system" id="card-sfx_pit_bell_single">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_BELL_SINGLE</div>
+          <div class="card-title">단독 1회 공식 벨 (Single Bell DING!)</div>
+          <div class="card-meta">
+            <span>2.40초</span>
+            <span>58 KB</span>
+            <span>1회 타종</span>
+          </div>
+        </div>
+        <span class="category-badge cat-system">공식 벨</span>
+      </div>
+      <div class="card-desc">
+        KO 3연타 벨 참조 단독 1회 공식 경기 시작 벨소리(Ding!). 보이스와 분리된 순수 벨 에셋.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_bell_single"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_bell_single', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_bell_single', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_bell_single">0.0s</span>
+            <span id="dur-sfx_pit_bell_single">2.40s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_bell_single.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_bell_single" src="assets/audio/pit/sfx/sfx_pit_bell_single.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 2. SFX_PIT_HIT_POKE -->
+    <!-- 3. SFX_PIT_HIT_POKE -->
+    <div class="card" data-category="attack" id="card-sfx_pit_hit_poke">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_HIT_POKE</div>
+          <div class="card-title">[공1] 부리 연타 잽 (Punch Jab)</div>
+          <div class="card-meta">
+            <span>0.20초</span>
+            <span>6 KB</span>
+            <span>0.25초 틱 대응</span>
+          </div>
+        </div>
+        <span class="category-badge cat-attack">공격 기술</span>
+      </div>
+      <div class="card-desc">
+        날카로운 부리로 쪼아 박는 초고속 잽. 실사 펀치 타격 트랜지언트 적용.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_hit_poke"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_hit_poke', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_hit_poke', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_hit_poke">0.0s</span>
+            <span id="dur-sfx_pit_hit_poke">0.20s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_hit_poke.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_hit_poke" src="assets/audio/pit/sfx/sfx_pit_hit_poke.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 4. SFX_PIT_HIT_SPUR -->
+    <div class="card" data-category="attack" id="card-sfx_pit_hit_spur">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_HIT_SPUR</div>
+          <div class="card-title">[공2] 며느리발톱 회전킥 슬래시</div>
+          <div class="card-meta">
+            <span>0.35초</span>
+            <span>9 KB</span>
+            <span>슬래시 + 강타</span>
+          </div>
+        </div>
+        <span class="category-badge cat-attack">공격 기술</span>
+      </div>
+      <div class="card-desc">
+        공기를 가르는 예리한 채찍 슬래시 파열음과 묵직한 발차기 바디 타격음 결합.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_hit_spur"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_hit_spur', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_hit_spur', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_hit_spur">0.0s</span>
+            <span id="dur-sfx_pit_hit_spur">0.35s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_hit_spur.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_hit_spur" src="assets/audio/pit/sfx/sfx_pit_hit_spur.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 5. SFX_PIT_HIT_WING -->
+    <div class="card" data-category="attack" id="card-sfx_pit_hit_wing">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_HIT_WING</div>
+          <div class="card-title">[공3/공4] 비상 급습 & 날개 스윙 돌풍</div>
+          <div class="card-meta">
+            <span>0.42초</span>
+            <span>11 KB</span>
+            <span>바람 스윕 + 둔탁음</span>
+          </div>
+        </div>
+        <span class="category-badge cat-attack">공격 기술</span>
+      </div>
+      <div class="card-desc">
+        날개를 크게 휘두르며 발생하는 육중한 공기 마찰 돌풍음과 몸통 타격음.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_hit_wing"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_hit_wing', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_hit_wing', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_hit_wing">0.0s</span>
+            <span id="dur-sfx_pit_hit_wing">0.42s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_hit_wing.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_hit_wing" src="assets/audio/pit/sfx/sfx_pit_hit_wing.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 6. SFX_PIT_HIT_CRIT -->
+    <div class="card" data-category="attack" id="card-sfx_pit_hit_crit">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_HIT_CRIT</div>
+          <div class="card-title">치명타 강타 & 가드 브레이크 파열</div>
+          <div class="card-meta">
+            <span>0.58초</span>
+            <span>15 KB</span>
+            <span>서브 베이스 펀치</span>
+          </div>
+        </div>
+        <span class="category-badge cat-attack">치명타 / 파열</span>
+      </div>
+      <div class="card-desc">
+        치명타 및 가드 브레이크 시 묵직한 서브 쿵 울림과 함께 파열하는 강력한 타격음.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_hit_crit"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_hit_crit', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_hit_crit', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_hit_crit">0.0s</span>
+            <span id="dur-sfx_pit_hit_crit">0.58s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_hit_crit.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_hit_crit" src="assets/audio/pit/sfx/sfx_pit_hit_crit.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 7. SFX_PIT_HIT_GEN (신설 다목적 타격) -->
+    <div class="card" data-category="attack" id="card-sfx_pit_hit_gen">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_HIT_GEN</div>
+          <div class="card-title">[범용] 다목적 기본 타격음 (Generic Hit)</div>
+          <div class="card-meta">
+            <span>0.30초</span>
+            <span>8 KB</span>
+            <span>다목적 범용 타격</span>
+          </div>
+        </div>
+        <span class="category-badge cat-attack">범용 타격</span>
+      </div>
+      <div class="card-desc">
+        단타, 연속기 연결, 콤보 등 다양한 타격 상황에 즉시 활용 가능한 솔리드 범용 펀치 임팩트.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_hit_gen"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_hit_gen', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_hit_gen', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_hit_gen">0.0s</span>
+            <span id="dur-sfx_pit_hit_gen">0.30s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_hit_gen.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_hit_gen" src="assets/audio/pit/sfx/sfx_pit_hit_gen.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 8. SFX_PIT_GUARD -->
+    <div class="card" data-category="defense" id="card-sfx_pit_guard">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_GUARD</div>
+          <div class="card-title">[방1] 깃털 커버링 가드 감쇄 흡수</div>
+          <div class="card-meta">
+            <span>0.28초</span>
+            <span>8 KB</span>
+            <span>데미지 50% 흡수</span>
+          </div>
+        </div>
+        <span class="category-badge cat-defense">방어 기술</span>
+      </div>
+      <div class="card-desc">
+        날개를 모아 상대 타격을 막아낼 때 고역이 차단되고 묵직하게 충격을 흡수하는 둔탁음.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_guard"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_guard', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_guard', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_guard">0.0s</span>
+            <span id="dur-sfx_pit_guard">0.28s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_guard.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_guard" src="assets/audio/pit/sfx/sfx_pit_guard.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 9. SFX_PIT_GUARD_GEN (신설 다목적 방어) -->
+    <div class="card" data-category="defense" id="card-sfx_pit_guard_gen">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_GUARD_GEN</div>
+          <div class="card-title">[범용] 다목적 기본 방어음 (Generic Guard)</div>
+          <div class="card-meta">
+            <span>0.26초</span>
+            <span>7 KB</span>
+            <span>다목적 범용 방어</span>
+          </div>
+        </div>
+        <span class="category-badge cat-defense">범용 방어</span>
+      </div>
+      <div class="card-desc">
+        다양한 일반 공격 및 콤보 틱 차단 시 활용 가능한 단단한 솔리드 가드 블록 사운드.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_guard_gen"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_guard_gen', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_guard_gen', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_guard_gen">0.0s</span>
+            <span id="dur-sfx_pit_guard_gen">0.26s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_guard_gen.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_guard_gen" src="assets/audio/pit/sfx/sfx_pit_guard_gen.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 10. SFX_PIT_DODGE -->
+    <div class="card" data-category="defense" id="card-sfx_pit_dodge">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_DODGE</div>
+          <div class="card-title">[방2] 슬립 위빙 & 패링 회피 스위시</div>
+          <div class="card-meta">
+            <span>0.24초</span>
+            <span>7 KB</span>
+            <span>바람가르기 스위시</span>
+          </div>
+        </div>
+        <span class="category-badge cat-defense">회피 기술</span>
+      </div>
+      <div class="card-desc">
+        종이 한 장 차이로 상체를 젖혀 회피하는 순간의 빠른 공기 가르는 소리 (실사 스위시).
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_dodge"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_dodge', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_dodge', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_dodge">0.0s</span>
+            <span id="dur-sfx_pit_dodge">0.24s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_dodge.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_dodge" src="assets/audio/pit/sfx/sfx_pit_dodge.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 11. SFX_PIT_LAST_STAND -->
+    <div class="card" data-category="special" id="card-sfx_pit_last_stand">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_LAST_STAND</div>
+          <div class="card-title">투지 버티기 1 HP 심장박동 (Heartbeats)</div>
+          <div class="card-meta">
+            <span>2.30초</span>
+            <span>56 KB</span>
+            <span>실제 심장박동 쿵-쿵</span>
+          </div>
+        </div>
+        <span class="category-badge cat-special">특수 상태</span>
+      </div>
+      <div class="card-desc">
+        체력 1 생존 시 발동. 실제 생체 심장 박동음(쿵-쿵, 쿵-쿵) 기반의 긴장감 연출.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_last_stand"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_last_stand', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_last_stand', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_last_stand">0.0s</span>
+            <span id="dur-sfx_pit_last_stand">2.3s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_last_stand.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_last_stand" src="assets/audio/pit/sfx/sfx_pit_last_stand.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 12. SFX_PIT_KNOCKDOWN -->
+    <div class="card" data-category="special" id="card-sfx_pit_knockdown">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_KNOCKDOWN</div>
+          <div class="card-title">링 캔버스 다운 바닥 충격</div>
+          <div class="card-meta">
+            <span>0.68초</span>
+            <span>18 KB</span>
+            <span>캔버스 매트 낙하음</span>
+          </div>
+        </div>
+        <span class="category-badge cat-special">다운 판정</span>
+      </div>
+      <div class="card-desc">
+        체력 0에 도달하여 선수가 링 바닥 매트에 육중하게 쓰러질 때의 실제 바닥 충격음.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_knockdown"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_knockdown', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_knockdown', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_knockdown">0.0s</span>
+            <span id="dur-sfx_pit_knockdown">0.68s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_knockdown.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_knockdown" src="assets/audio/pit/sfx/sfx_pit_knockdown.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 13. SFX_PIT_KO_BELL -->
+    <div class="card" data-category="system" id="card-sfx_pit_ko_bell">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_KO_BELL</div>
+          <div class="card-title">KO 확정 공식 3연타 벨 (Boxing Bell 3-Strike)</div>
+          <div class="card-meta">
+            <span>1.74초</span>
+            <span>43 KB</span>
+            <span>실제 댕!댕!댕! 타종</span>
+          </div>
+        </div>
+        <span class="category-badge cat-system">KO 확정</span>
+      </div>
+      <div class="card-desc">
+        KO 승리 확정 시 울리는 공식 경기 종료 3연속 벨소리(Ding! Ding! Ding!) 원본 녹음.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_ko_bell"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_ko_bell', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_ko_bell', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_ko_bell">0.0s</span>
+            <span id="dur-sfx_pit_ko_bell">1.74s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_ko_bell.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_ko_bell" src="assets/audio/pit/sfx/sfx_pit_ko_bell.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- 14. SFX_PIT_CROWD_ROAR -->
+    <div class="card" data-category="system" id="card-sfx_pit_crowd_roar">
+      <div class="card-top">
+        <div class="card-title-box">
+          <div class="card-id">SFX_PIT_CROWD_ROAR</div>
+          <div class="card-title">지하 투계장 열광 관중 환호 (Crowd Cheering)</div>
+          <div class="card-meta">
+            <span>3.60초</span>
+            <span>87 KB</span>
+            <span>실제 경기장 관중 환호</span>
+          </div>
+        </div>
+        <span class="category-badge cat-system">관중 환호</span>
+      </div>
+      <div class="card-desc">
+        노이즈 합성 배제, 실제 경기장 군중의 열광적인 함성 및 갈채 원본 녹음 적용.
+      </div>
+      <div class="wave-box" id="wave-sfx_pit_crowd_roar"></div>
+      <div class="card-player">
+        <button class="btn-play" onclick="togglePlay('sfx_pit_crowd_roar', this)">▶</button>
+        <div class="timeline-box">
+          <input type="range" class="seek-bar" value="0" min="0" max="100" oninput="seekAudio('sfx_pit_crowd_roar', this.value)">
+          <div class="time-display">
+            <span id="cur-sfx_pit_crowd_roar">0.0s</span>
+            <span id="dur-sfx_pit_crowd_roar">3.6s</span>
+          </div>
+        </div>
+        <a class="btn-action-icon" href="assets/audio/pit/sfx/sfx_pit_crowd_roar.mp3" download title="MP3 다운로드">💾</a>
+      </div>
+      <audio id="audio-sfx_pit_crowd_roar" src="assets/audio/pit/sfx/sfx_pit_crowd_roar.mp3" preload="auto"></audio>
+    </div>
+
+  </div>
+
+  <!-- IN-GAME COMBO SOUND SIMULATOR -->
+  <section class="simulator-panel">
+    <div class="simulator-title">🔥 8장 매핑: 인게임 콤보 연계 사운드 시뮬레이터</div>
+    <div class="simulator-sub">
+      동작 구성안 매트릭스에 명시된 다중 사운드 동시/시차 레이어링을 직접 체감할 수 있는 믹서 시뮬레이터
+    </div>
+    <div class="combo-grid">
+
+      <!-- Combo 1: 공4 날개치기 + 치명타 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[공4] 회전 날개치기 돌풍 + 치명타</h4>
+          <p>SFX_PIT_HIT_WING + HIT_CRIT (동시 출력)</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_hit_wing', 'sfx_pit_hit_crit'], [0, 0])">
+          ⚡ 콤보 재생
+        </button>
+      </div>
+
+      <!-- Combo 2: 방3 날개 패링 카운터 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>[방3] 날개 패링 쳐내기 & 즉시 역습</h4>
+          <p>SFX_PIT_DODGE ➔ 0.08초 후 HIT_WING</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_dodge', 'sfx_pit_hit_wing'], [0, 80])">
+          ⚡ 콤보 재생
+        </button>
+      </div>
+
+      <!-- Combo 3: 가드 브레이크 파열 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>가드 브레이크 & 무방비 크런치 강타</h4>
+          <p>SFX_PIT_GUARD ➔ 0.05초 후 HIT_CRIT</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_guard', 'sfx_pit_hit_crit'], [0, 50])">
+          ⚡ 콤보 재생
+        </button>
+      </div>
+
+      <!-- Combo 4: Last Stand 투지 발동 & 카운터 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>Last Stand 1 HP 심장박동 ➔ 스퍼 킥 역습</h4>
+          <p>SFX_PIT_LAST_STAND ➔ 0.5초 후 HIT_SPUR</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_last_stand', 'sfx_pit_hit_spur'], [0, 500])">
+          ⚡ 콤보 재생
+        </button>
+      </div>
+
+      <!-- Combo 5: KO 확정 풀 시퀀스 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>KO 피니시 풀 시퀀스 (다운 ➔ 벨 ➔ 환호)</h4>
+          <p>KNOCKDOWN ➔ 0.4s KO_BELL ➔ 0.8s CROWD</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_knockdown', 'sfx_pit_ko_bell', 'sfx_pit_crowd_roar'], [0, 400, 800])">
+          🏆 KO 시퀀스
+        </button>
+      </div>
+
+      <!-- Combo 6: 공1+공2 고속 연타 콤보 -->
+      <div class="combo-card">
+        <div class="combo-info">
+          <h4>부리 연타 2타 ➔ 며느리발톱 회전 피니시</h4>
+          <p>HIT_POKE ➔ 0.25s POKE ➔ 0.25s HIT_SPUR</p>
+        </div>
+        <button class="btn-combo-trigger" onclick="playCombo(['sfx_pit_hit_poke', 'sfx_pit_hit_poke', 'sfx_pit_hit_spur'], [0, 250, 500])">
+          🥊 3연타 재생
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS TABLE -->
+  <section class="specs-panel">
+    <h3>📊 Rumble Pit SFX-Pit 14종 및 1R 실전 데모 오디오 파일 사양</h3>
+    <table class="specs-table">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>규격</th>
+          <th>세부 내용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>파일 포맷</strong></td>
+          <td>MP3</td>
+          <td>MPEG-1 Audio Layer III (192 kbps, 44.1 kHz, 2-Channel Stereo)</td>
+        </tr>
+        <tr>
+          <td><strong>음원 소스</strong></td>
+          <td>실사 녹음 (Foley / Real Acoustic)</td>
+          <td>다크 헤비 격투 아나운서 순수 보이스(1R~3R 벨소리 분리), KO 참조 단독 1회 공식 벨, 3연타 벨, 고품질 실사 펀치/슬래시/임팩트/블록 기반 공격 5종 및 방어/회피 3종, 다목적 범용 타격/방어 2종, 인간 심장박동, 실제 군중 환호 적용</td>
+        </tr>
+        <tr>
+          <td><strong>실전 시뮬레이션 데모</strong></td>
+          <td>demo_pit_round1_simulation.mp3</td>
+          <td>35.03초 풀 시뮬레이션 (BGM + 관중 앰비언스 + 라운드 보이스 + 타종 벨 + 공방 7종 + 치명타 덕킹 + 다운 + 투지 심장박동 믹싱)</td>
+        </tr>
+        <tr>
+          <td><strong>피크 헤드룸</strong></td>
+          <td>-0.7 dBFS (0.92)</td>
+          <td>다중 타격음 동시 재생(Layering) 시 클리핑 왜곡 방지 정규화</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let masterVol = 0.9;
+  let activeAudios = [];
+  let isShowcasing = false;
+  let showcaseIndex = 0;
+  const sfxList = [
+    'sfx_pit_round_start',
+    'sfx_pit_bell_single',
+    'sfx_pit_hit_poke',
+    'sfx_pit_hit_spur',
+    'sfx_pit_hit_wing',
+    'sfx_pit_hit_crit',
+    'sfx_pit_hit_gen',
+    'sfx_pit_guard',
+    'sfx_pit_guard_gen',
+    'sfx_pit_dodge',
+    'sfx_pit_last_stand',
+    'sfx_pit_knockdown',
+    'sfx_pit_ko_bell',
+    'sfx_pit_crowd_roar'
+  ];
+
+  const heavyRoundSources = {
+    '1': {
+      src: 'assets/audio/pit/sfx/sfx_pit_round1_start.mp3',
+      title: '1R 시작 보이스 (First Round... FIGHT!)',
+      dur: '2.02초',
+      size: '50 KB',
+      desc: '다크 헤비 아나운서 순수 보이스 샤우팅("First Round... FIGHT!"). 벨소리 제거 분리 완료.'
+    },
+    '2': {
+      src: 'assets/audio/pit/sfx/sfx_pit_round2_start.mp3',
+      title: '2R 시작 보이스 (Second Round... FIGHT!)',
+      dur: '2.19초',
+      size: '53 KB',
+      desc: '다크 헤비 아나운서 순수 보이스 샤우팅("Second Round... FIGHT!"). 벨소리 제거 분리 완료.'
+    },
+    '3': {
+      src: 'assets/audio/pit/sfx/sfx_pit_round3_start.mp3',
+      title: '3R 시작 보이스 (Third Round... FIGHT!)',
+      dur: '2.02초',
+      size: '50 KB',
+      desc: '다크 헤비 아나운서 순수 보이스 샤우팅("Third Round... FIGHT!"). 벨소리 제거 분리 완료.'
+    }
+  };
+
+  function selectHeavyRound(key, btn) {
+    const card = document.getElementById('card-sfx_pit_round_start');
+    const audio = document.getElementById('audio-sfx_pit_round_start');
+    const dl = document.getElementById('dl-sfx_pit_round_start');
+    const btnPlay = card ? card.querySelector('.btn-play') : null;
+    const info = heavyRoundSources[key] || heavyRoundSources['1'];
+
+    if (!audio) return;
+    audio.pause();
+    audio.currentTime = 0;
+    if (btnPlay) btnPlay.textContent = '▶';
+    if (card) card.classList.remove('playing');
+
+    card.querySelectorAll('.btn-sub-round').forEach(b => {
+      b.style.background = 'rgba(255,255,255,0.08)';
+      b.style.border = '1px solid var(--border-color)';
+      b.style.color = 'var(--text-muted)';
+      b.style.fontWeight = 'normal';
+    });
+    btn.style.background = 'var(--primary-orange)';
+    btn.style.border = 'none';
+    btn.style.color = '#fff';
+    btn.style.fontWeight = '700';
+
+    audio.src = info.src;
+    if (dl) dl.href = info.src;
+    document.getElementById('title-sfx_pit_round_start').textContent = info.title;
+    document.getElementById('desc-sfx_pit_round_start').textContent = info.desc;
+    document.getElementById('dur-meta-sfx_pit_round_start').textContent = info.dur;
+    document.getElementById('size-meta-sfx_pit_round_start').textContent = info.size;
+    audio.load();
+    showToast(info.title + ' 로 전환 완료');
+  }
+
+  // Initialize Wave Bars
+  document.querySelectorAll('.wave-box').forEach(box => {
+    for (let i = 0; i < 28; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      bar.style.animationDelay = (i * 0.03) + 's';
+      box.appendChild(bar);
+    }
+  });
+
+  // Audio Event Listeners
+  sfxList.forEach(id => {
+    const audio = document.getElementById('audio-' + id);
+    const card = document.getElementById('card-' + id);
+    if (!audio || !card) return;
+    const btnPlay = card.querySelector('.btn-play');
+    const seekBar = card.querySelector('.seek-bar');
+    const curTime = document.getElementById('cur-' + id);
+    const durTime = document.getElementById('dur-' + id);
+
+    audio.volume = masterVol;
+
+    audio.addEventListener('loadedmetadata', () => {
+      if (durTime) durTime.textContent = audio.duration.toFixed(2) + 's';
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration && seekBar && curTime) {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+        curTime.textContent = audio.currentTime.toFixed(1) + 's';
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      card.classList.add('playing');
+      if (btnPlay) btnPlay.textContent = '⏸';
+      if (!activeAudios.includes(audio)) activeAudios.push(audio);
+    });
+
+    audio.addEventListener('pause', () => {
+      card.classList.remove('playing');
+      if (btnPlay) btnPlay.textContent = '▶';
+    });
+
+    audio.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      if (btnPlay) btnPlay.textContent = '▶';
+      if (seekBar) seekBar.value = 0;
+      if (curTime) curTime.textContent = '0.0s';
+      activeAudios = activeAudios.filter(a => a !== audio);
+
+      if (isShowcasing) {
+        showcaseIndex++;
+        if (showcaseIndex < sfxList.length) {
+          setTimeout(() => playSingle(sfxList[showcaseIndex]), 300);
+        } else {
+          isShowcasing = false;
+          document.getElementById('showcaseBtn').classList.remove('active');
+          document.getElementById('showcaseBtn').textContent = '▶ 전곡 순차 청음';
+          showToast('전체 순차 청음 완료');
+        }
+      }
+    });
+  });
+
+  let bgmVol = 0.65;
+  function toggleBgmPlay() {
+    const bgm = document.getElementById('audio-bgm_pit_fight');
+    const btn = document.getElementById('btnBgmPlay');
+    if (!bgm) return;
+
+    if (bgm.paused) {
+      bgm.volume = bgmVol;
+      bgm.play().then(() => {
+        btn.textContent = '⏸ BGM 일시정지';
+        btn.style.background = 'var(--primary-red)';
+        showToast('전투 BGM (배틀 오케스트라) 재생 시작');
+      }).catch(e => console.error(e));
+    } else {
+      bgm.pause();
+      btn.textContent = '▶ BGM 재생';
+      btn.style.background = 'var(--primary-orange)';
+      showToast('전투 BGM 일시정지 완료');
+    }
+  }
+
+  function changeBgmVolume(val) {
+    bgmVol = parseFloat(val);
+    const bgm = document.getElementById('audio-bgm_pit_fight');
+    if (bgm) bgm.volume = bgmVol;
+  }
+
+  let demoVol = 0.80;
+  function toggleDemoPlay() {
+    const demo = document.getElementById('audio-demo_pit_round1_simulation');
+    const btn = document.getElementById('btnDemoPlay');
+    if (!demo) return;
+
+    if (demo.paused) {
+      demo.volume = demoVol;
+      demo.play().then(() => {
+        if (btn) {
+          btn.textContent = '⏸ 데모 일시정지';
+          btn.style.background = '#d6335c';
+        }
+        showToast('1라운드 실전 시뮬레이션 데모 재생 시작');
+      }).catch(e => console.error(e));
+    } else {
+      demo.pause();
+      if (btn) {
+        btn.textContent = '▶ 1R 데모 재생';
+        btn.style.background = 'var(--primary-red)';
+      }
+      showToast('1라운드 실전 시뮬레이션 데모 일시정지 완료');
+    }
+  }
+
+  function changeDemoVolume(val) {
+    demoVol = parseFloat(val);
+    const demo = document.getElementById('audio-demo_pit_round1_simulation');
+    if (demo) demo.volume = demoVol;
+  }
+
+  const topDemoAudio = document.getElementById('audio-demo_pit_round1_simulation');
+  if (topDemoAudio) {
+    topDemoAudio.addEventListener('ended', () => {
+      const btn = document.getElementById('btnDemoPlay');
+      if (btn) {
+        btn.textContent = '▶ 1R 데모 재생';
+        btn.style.background = 'var(--primary-red)';
+      }
+      showToast('1라운드 데모 완주 완료');
+    });
+  }
+
+  function playSingle(id) {
+    const audio = document.getElementById('audio-' + id);
+    if (audio) {
+      audio.currentTime = 0;
+      audio.volume = masterVol;
+      audio.play().catch(e => console.error(e));
+    }
+  }
+
+  function togglePlay(id, btn) {
+    const audio = document.getElementById('audio-' + id);
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.volume = masterVol;
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  function seekAudio(id, pct) {
+    const audio = document.getElementById('audio-' + id);
+    if (audio && audio.duration) {
+      audio.currentTime = (pct / 100) * audio.duration;
+    }
+  }
+
+  function changeMasterVolume(val) {
+    masterVol = parseFloat(val);
+    sfxList.forEach(id => {
+      const audio = document.getElementById('audio-' + id);
+      if (audio) audio.volume = masterVol;
+    });
+  }
+
+  function stopAllAudio() {
+    isShowcasing = false;
+    document.getElementById('showcaseBtn').classList.remove('active');
+    document.getElementById('showcaseBtn').textContent = '▶ 전곡 순차 청음';
+
+    sfxList.forEach(id => {
+      const audio = document.getElementById('audio-' + id);
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+    activeAudios = [];
+    showToast('모든 SFX 재생 정지 완료');
+  }
+
+  function toggleShowcase() {
+    const btn = document.getElementById('showcaseBtn');
+    if (isShowcasing) {
+      stopAllAudio();
+    } else {
+      stopAllAudio();
+      isShowcasing = true;
+      showcaseIndex = 0;
+      btn.classList.add('active');
+      btn.textContent = '⏹ 순차 청음 정지';
+      showToast('14종 순차 청음 시작');
+      playSingle(sfxList[0]);
+    }
+  }
+
+  function playCombo(ids, delays) {
+    showToast('콤보 연계 사운드 재생 중...');
+    ids.forEach((id, idx) => {
+      const delay = delays[idx] || 0;
+      setTimeout(() => {
+        const orig = document.getElementById('audio-' + id);
+        if (orig) {
+          const clone = orig.cloneNode();
+          clone.volume = masterVol;
+          clone.play().catch(e => console.error(e));
+          const card = document.getElementById('card-' + id);
+          if (card) {
+            card.classList.add('playing');
+            setTimeout(() => card.classList.remove('playing'), 600);
+          }
+        }
+      }, delay);
+    });
+  }
+
+  function filterCategory(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.card').forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-category') === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+</script>
+</body>
+</html>

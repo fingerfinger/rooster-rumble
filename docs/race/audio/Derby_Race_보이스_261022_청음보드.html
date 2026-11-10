@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏇 Derby Race - 신규 격정적 보이스(voice_261022) 타입별 청음보드</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: #0f172a;
+      --border-color: #1e293b;
+      --primary-green: #10b981;
+      --primary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 30px 20px 80px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 1320px; margin: 0 auto; }
+    header.header {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.20), rgba(59, 130, 246, 0.15) 50%, rgba(245, 158, 11, 0.10));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header .tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--primary-green);
+      color: #fff;
+      font-weight: 700;
+    }
+    .header p { color: var(--text-muted); margin-top: 8px; font-size: 0.92rem; }
+    .stat-banner {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 20px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .stat-card .val { font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .stat-card .lbl { font-size: 0.8rem; color: var(--text-muted); }
+
+    .category-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .category-section h2 {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    table.voice-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    table.voice-table th, table.voice-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+    }
+    table.voice-table th {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .btn-play {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      margin-right: 4px;
+    }
+    .btn-play:hover {
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+    }
+    .btn-play.playing {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+    .text-cell { font-family: monospace; font-size: 0.84rem; color: #e2e8f0; }
+    .meta-tag { font-size: 0.72rem; color: var(--text-dim); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🏇 ROOSTER RUMBLE: voice_261022 신규 보이스 청음보드 <span class="tag">58개 에셋 완비</span></h1>
+      <p>
+        연결 호흡 기반으로 정밀 분할 및 마스터링된 신규 보이스 에셋입니다. 기존 보이스는 <code>assets/audio/race/voice/</code>에 100% 안전하게 보존되어 있으며, 아래에서 신규 타입 1/2/3 음원을 직접 들어보실 수 있습니다.
+      </p>
+    </header>
+
+    <div class="stat-banner">
+      <div class="stat-card">
+        <div class="val" style="color: var(--primary-green);">27개</div>
+        <div class="lbl">타입 1 (기본 27종 풀 세트)</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color: var(--primary-blue);">21개</div>
+        <div class="lbl">타입 2 (바리에이션 음원)</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color: var(--accent-purple);">10개</div>
+        <div class="lbl">타입 3 (솔로 바리에이션)</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color: var(--accent-gold);">총 58개</div>
+        <div class="lbl">보관 위치: assets/audio/race/voice_261022/</div>
+      </div>
+    </div>
+
+    <!-- 1. 선수 번호 6종 -->
+    <div class="category-section">
+      <h2>1️⃣ 선수 번호 호명 (6종) - 연결 억양 적용</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 250px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_rooster_num_01</code></td>
+            <td class="text-cell">"NUMBER ONE,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_01.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_rooster_num_02</code></td>
+            <td class="text-cell">"NUMBER TWO,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_02.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_rooster_num_03</code></td>
+            <td class="text-cell">"NUMBER THREE,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_03.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_rooster_num_04</code></td>
+            <td class="text-cell">"NUMBER FOUR,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_04.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_rooster_num_04.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_rooster_num_05</code></td>
+            <td class="text-cell">"NUMBER FIVE,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_05.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_rooster_num_05.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_rooster_num_06</code></td>
+            <td class="text-cell">"NUMBER SIX,"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_rooster_num_06.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_rooster_num_06.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. W-1 출발 및 늦출발 -->
+    <div class="category-section">
+      <h2>2️⃣ W-1: 출발선 및 늦출발 상황 (5종)</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 280px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_us_start_01</code></td>
+            <td class="text-cell">"And AWAY they GO!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_start_01.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_start_01.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_start_01.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_start_02</code></td>
+            <td class="text-cell">"And they're OFF in Rooster Rumble!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_start_02.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_start_02.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_start_02.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_start_03</code></td>
+            <td class="text-cell">"Off the mark and AWAY they sprint!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_start_03.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_start_03.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_start_03.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_flinch_01</code></td>
+            <td class="text-cell">"BAD BREAK! Stumbled off the line!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_flinch_01.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_flinch_01.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_flinch_01.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_flinch_02</code></td>
+            <td class="text-cell">"Awkward start! Losing ground early!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_flinch_02.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_flinch_02.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_flinch_02.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. W-2 초반 선두 -->
+    <div class="category-section">
+      <h2>3️⃣ W-2: 초반 선두 경쟁 (3종)</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 250px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_us_early_01</code></td>
+            <td class="text-cell">"showing blazing speed to TAKE the lead!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_early_01.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_early_02</code></td>
+            <td class="text-cell">"GRABS the lead early on!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_early_02.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_early_03</code></td>
+            <td class="text-cell">"SETTING the pace out front!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_early_03.mp3', this)">▶ 타입 1</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. W-3 중반 역전 및 격돌 -->
+    <div class="category-section">
+      <h2>4️⃣ W-3: 중반 역전 & 접전 (4종)</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 250px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_us_over_01</code></td>
+            <td class="text-cell">"TAKES OVER the lead!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_over_01.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_over_01.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_over_02</code></td>
+            <td class="text-cell">"makes a POWERFUL surge!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_over_02.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_over_02.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_over_03</code></td>
+            <td class="text-cell">"SURGING to the front!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_over_03.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_over_03.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_side_01</code></td>
+            <td class="text-cell">"HEAD-TO-HEAD in a fierce battle!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_side_01.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_side_01.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5. W-4 직선주로 라스트 스퍼트 -->
+    <div class="category-section">
+      <h2>5️⃣ W-4: 직선주로 라스트 스퍼트 (4종)</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 280px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_us_stretch_01</code></td>
+            <td class="text-cell">"DOWN THE STRETCH they come!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_stretch_01.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_stretch_01.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_stretch_01.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_stretch_02</code></td>
+            <td class="text-cell">"LEADING THEM all the way to the wire!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_stretch_02.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_stretch_02.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_stretch_03</code></td>
+            <td class="text-cell">"They're SPRINTING for the wire!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_stretch_03.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_stretch_03.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_stretch_03.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_stretch_chui</code></td>
+            <td class="text-cell">"CHARGING HARD from behind!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_stretch_chui.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_stretch_chui.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 6. W-5 골인 및 우승 -->
+    <div class="category-section">
+      <h2>6️⃣ W-5: 골인, 초박빙 판독 및 우승 (5종)</h2>
+      <table class="voice-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">에셋 ID</th>
+            <th>영문 대사</th>
+            <th style="width: 280px;">청취 (타입별)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>vo_us_win_01</code></td>
+            <td class="text-cell">"WINS IT wire-to-wire!! Unbelievable!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_win_01.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_win_01.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_win_02</code></td>
+            <td class="text-cell">"It is ALL VICTORY at the wire!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_win_02.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_win_02.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_win_02.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_win_03</code></td>
+            <td class="text-cell">"TAKES THE VICTORY in Rooster Rumble!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_win_03.mp3', this)">▶ 타입 1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_win_03.mp3', this)">▶ 타입 2</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_photo_01</code></td>
+            <td class="text-cell">"TOO CLOSE to call!! They cross the line TOGETHER!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_photo_01.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_photo_01.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_photo_01.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+          <tr>
+            <td><code>vo_us_photo_02</code></td>
+            <td class="text-cell">"NOSE TO NOSE at the wire!! WHO TOOK IT?!!"</td>
+            <td>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_1/vo_us_photo_02.mp3', this)">▶ T1</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_2/vo_us_photo_02.mp3', this)">▶ T2</button>
+              <button class="btn-play" onclick="playAudio('../../assets/audio/race/voice_261022/type_3/vo_us_photo_02.mp3', this)">▶ T3</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let currentAudio = null;
+    let currentButton = null;
+
+    function playAudio(path, btn) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if (currentButton) {
+          currentButton.textContent = currentButton.textContent.replace('■', '▶');
+          currentButton.classList.remove('playing');
+        }
+        if (currentButton === btn) {
+          currentAudio = null;
+          currentButton = null;
+          return;
+        }
+      }
+
+      currentAudio = new Audio(path);
+      currentButton = btn;
+      btn.textContent = btn.textContent.replace('▶', '■');
+      btn.classList.add('playing');
+
+      currentAudio.play().catch(e => {
+        console.error('Audio play error:', e);
+        btn.textContent = btn.textContent.replace('■', '▶');
+        btn.classList.remove('playing');
+      });
+
+      currentAudio.onended = () => {
+        btn.textContent = btn.textContent.replace('■', '▶');
+        btn.classList.remove('playing');
+        currentAudio = null;
+        currentButton = null;
+      };
+    }
+  </script>
+</body>
+</html>
