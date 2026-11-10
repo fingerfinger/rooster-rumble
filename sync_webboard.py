@@ -371,25 +371,50 @@ def main():
     # --push 옵션 지원
     if "--push" in sys.argv:
         import subprocess
-        print("\n[GitHub] 원클릭 배포 푸시 시작 (--push)...")
+        print("\n" + "=" * 64)
+        print(" 🚀 GitHub 원클릭 배포 프로세스 시작")
+        print("=" * 64)
         try:
+            # 1. 파일 스테이징
             subprocess.run(["git", "add", "."], check=True)
+
+            # 2. 변경사항 확인
+            status_res = subprocess.run(["git", "status", "-s"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+            changes = status_res.stdout.strip()
+
             diff_res = subprocess.run(["git", "diff", "--cached", "--quiet"])
             if diff_res.returncode == 0:
-                print("  ℹ️ 새로 변경되거나 추가된 파일이 없습니다. (이미 최신 상태)")
+                print("\nℹ️ 새로 변경되거나 추가된 파일이 없습니다. (이미 최신 상태)")
             else:
-                commit_msg = f"docs: 웹보드 문서 동기화 ({now_str})"
-                # 커밋 메시지 인자 전달 가능: --msg "메시지"
+                print("\n[변경된 파일 목록]")
+                print(changes)
+
+                commit_msg = f"docs: 웹보드 산출물 업데이트 ({now_str})"
                 if "--msg" in sys.argv:
                     idx = sys.argv.index("--msg")
                     if idx + 1 < len(sys.argv):
                         commit_msg = sys.argv[idx + 1]
+                else:
+                    try:
+                        user_input = input(f"\n📝 커밋 메모를 입력하세요 (엔터 치면 자동 입력): ").strip()
+                        if user_input:
+                            commit_msg = user_input
+                    except Exception:
+                        pass
+
+                print(f"\n[Git] 커밋 생성 중: {commit_msg}")
                 subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+
+                print("[Git] GitHub로 푸시 중...")
                 subprocess.run(["git", "push", "origin", "main"], check=True)
-                print(f"  🎉 GitHub 배포 푸시 완료! ({commit_msg})")
-                print("  👉 웹사이트: https://fingerfinger.github.io/rooster-rumble/")
+
+                print("\n" + "=" * 64)
+                print(" 🎉 GitHub 배포가 성공적으로 완료되었습니다!")
+                print(" 약 1~2분 후 아래 웹사이트에 자동으로 최신 내용이 반영됩니다:")
+                print(" 👉 https://fingerfinger.github.io/rooster-rumble/")
+                print("=" * 64)
         except Exception as e:
-            print(f"  ❌ Git 푸시 중 오류 발생: {e}")
+            print(f"\n❌ Git 푸시 중 오류 발생: {e}")
 
 if __name__ == "__main__":
     main()

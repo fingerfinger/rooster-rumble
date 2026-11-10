@@ -1,9 +1,9 @@
 // ROOSTER RUMBLE 웹보드 자동 생성 데이터 (v2.2 마크다운 본문 임베딩)
-// 생성 일시: 2026-11-10 18:06:15
+// 생성 일시: 2026-11-10 19:22:27
 window.BOARD_DATA = {
   "project_title": "ROOSTER RUMBLE 아카이브 & 웹보드",
   "project_subtitle": "프로젝트 최종 확정 산출물 포털",
-  "last_sync": "2026-11-10 18:06:15",
+  "last_sync": "2026-11-10 19:22:27",
   "total_items": 83,
   "menu_sections": [
     {
