@@ -368,5 +368,28 @@ def main():
     print(f"  - 웹보드 주소: {docs_dir.resolve()}\\index.html")
     print("=" * 64)
 
+    # --push 옵션 지원
+    if "--push" in sys.argv:
+        import subprocess
+        print("\n[GitHub] 원클릭 배포 푸시 시작 (--push)...")
+        try:
+            subprocess.run(["git", "add", "."], check=True)
+            diff_res = subprocess.run(["git", "diff", "--cached", "--quiet"])
+            if diff_res.returncode == 0:
+                print("  ℹ️ 새로 변경되거나 추가된 파일이 없습니다. (이미 최신 상태)")
+            else:
+                commit_msg = f"docs: 웹보드 문서 동기화 ({now_str})"
+                # 커밋 메시지 인자 전달 가능: --msg "메시지"
+                if "--msg" in sys.argv:
+                    idx = sys.argv.index("--msg")
+                    if idx + 1 < len(sys.argv):
+                        commit_msg = sys.argv[idx + 1]
+                subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+                subprocess.run(["git", "push", "origin", "main"], check=True)
+                print(f"  🎉 GitHub 배포 푸시 완료! ({commit_msg})")
+                print("  👉 웹사이트: https://fingerfinger.github.io/rooster-rumble/")
+        except Exception as e:
+            print(f"  ❌ Git 푸시 중 오류 발생: {e}")
+
 if __name__ == "__main__":
     main()
