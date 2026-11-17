@@ -17,6 +17,7 @@
     "doc_pit_actions_md",
     "doc_pit_anim_status_md",
     "sb_pit_sfx_html",
+    "audio_pit_bgm_fight",
     "demo_pit_web_lobby",
     "doc_farm_mvp_html",
     "auto_rooster_rumble_pt_멘트_요약_md",
@@ -43,5 +44,5 @@
     "doc_total_mvp_html",
     "doc_pit_anim_status_md"
   ],
-  "exported_at": "2026-11-10T13:20:41.021Z"
+  "exported_at": "2026-11-17T06:26:23.152Z"
 }

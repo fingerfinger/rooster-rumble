@@ -1,9 +1,9 @@
 // ROOSTER RUMBLE 웹보드 자동 생성 데이터 (v2.2 마크다운 본문 임베딩)
-// 생성 일시: 2026-11-10 22:59:59
+// 생성 일시: 2026-11-17 15:27:05
 window.BOARD_DATA = {
   "project_title": "ROOSTER RUMBLE 아카이브 & 웹보드",
   "project_subtitle": "프로젝트 최종 확정 산출물 포털",
-  "last_sync": "2026-11-10 22:59:59",
+  "last_sync": "2026-11-17 15:27:05",
   "total_items": 83,
   "menu_sections": [
     {
@@ -1310,7 +1310,7 @@ window.BOARD_DATA = {
       "updated_at": "2026-09-29 16:05",
       "ext": "mp3",
       "url": "pit/audio/bgm_pit_fight.mp3",
-      "is_hidden": true,
+      "is_hidden": false,
       "is_pinned": false
     },
     {
