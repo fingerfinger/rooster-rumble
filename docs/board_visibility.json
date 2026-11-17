@@ -6,9 +6,19 @@
     "doc_master_table_md",
     "doc_mode_summary_html",
     "doc_pt_summary_html",
+    "doc_derby_ranking_md",
     "doc_derby_sound_md",
+    "doc_derby_voice_guide_md",
     "sb_derby_main_html",
     "sb_derby_voice_261022_html",
+    "sb_derby_voice_candidate_html",
+    "audio_race_bgm_ingame",
+    "audio_race_bgm_result",
+    "img_derby_live",
+    "img_derby_lobby",
+    "img_derby_countdown",
+    "img_derby_result",
+    "demo_derby_3d",
     "data_cue_table",
     "data_camera_frames",
     "data_fx_names",
@@ -20,6 +30,7 @@
     "audio_pit_bgm_fight",
     "demo_pit_web_lobby",
     "doc_farm_mvp_html",
+    "auto_derby_race_인게임_사운드_구성안_mvp_md",
     "auto_rooster_rumble_pt_멘트_요약_md",
     "auto_rooster_rumble_pt_멘트_요약_txt",
     "auto_rooster_rumble_모드_요약_소개_md",
@@ -44,5 +55,5 @@
     "doc_total_mvp_html",
     "doc_pit_anim_status_md"
   ],
-  "exported_at": "2026-11-17T06:26:23.152Z"
+  "exported_at": "2026-11-17T07:15:10.246Z"
 }
