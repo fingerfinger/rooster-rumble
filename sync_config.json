@@ -572,7 +572,7 @@
     },
     {
       "id": "sb_pit_sfx_html",
-      "title": "Rumble Pit SFX 사운드보드",
+      "title": "Rumble Pit SFX 사운드보드 (v4.0 스튜디오 실사 폴리)",
       "category": "audio",
       "subcat": "audio",
       "game_mode": "pit",
@@ -580,10 +580,10 @@
       "dest": "docs/pit/audio/Rumble_Pit_SFX_사운드보드.html",
       "is_final": true,
       "is_demo": true,
-      "badge": "SFX보드",
+      "badge": "v4.0 SFX보드",
       "badge_type": "warning",
-      "desc": "1:1 격투 벨소리, 타격음, 관중 함성 등 격투 전용 효과음 보드",
-      "tags": ["격투", "사운드보드", "SFX", "타격음"],
+      "desc": "v4.0 (26종 상용 무료 Mixkit WAV + USC Red Library CC0 FLAC 실사 폴리, 무잡음/무슬레이트, 흥분 승자 PA 콜 2종, 핵심 12종 즉시 비교 바, v1.2 A/B 비교)",
+      "tags": ["격투", "사운드보드", "SFX", "스튜디오실사폴리", "스페셜공방", "승자PA콜", "v4.0"],
       "related_doc_ids": [
         "doc_pit_mvp_html",
         "doc_pit_actions_md",

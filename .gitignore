@@ -21,3 +21,6 @@ __pycache__/
 *.zip
 *.tmp
 *.bak
+
+# Audio mastering raw source cache (large WAV/FLAC downloads)
+tools/source_cache/

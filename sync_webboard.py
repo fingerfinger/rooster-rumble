@@ -421,8 +421,14 @@ def main():
         print(" 🚀 GitHub 원클릭 배포 프로세스 시작")
         print("=" * 64)
         try:
+            # 0. Git 한글 경로 인코딩 설정 (8진수 이스케이프 방지)
+            try:
+                subprocess.run(["git", "config", "core.quotepath", "false"], check=False)
+            except Exception:
+                pass
+
             # 1. 현재 변경/신규 파일 목록 조회
-            status_res = subprocess.run(["git", "status", "-s"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+            status_res = subprocess.run(["git", "-c", "core.quotepath=false", "status", "-s"], capture_output=True, text=True, encoding="utf-8", errors="replace")
             raw_lines = [l.rstrip() for l in status_res.stdout.splitlines() if l.strip()]
 
             if not raw_lines:
@@ -434,12 +440,20 @@ def main():
                     # git status -s 형식: ' M filename' 또는 '?? filename'
                     code = line[:2].strip()
                     file_name = line[3:].strip().strip('"')
+                    # 혹시 남아있을 수 있는 8진수 이스케이프 안전 복원
+                    if '\\' in file_name:
+                        try:
+                            file_name = file_name.encode('latin1').decode('unicode-escape').encode('latin1').decode('utf-8')
+                        except Exception:
+                            pass
                     file_items.append((code, file_name))
                     print(f"  [{idx:2d}] ({code:2s}) {file_name}")
 
                 selected_files = []
+                is_all = False
                 # 인자로 직접 파일 지정이 없으면 사용자에게 대화형으로 선택
                 if "--all" in sys.argv:
+                    is_all = True
                     selected_files = [f for _, f in file_items]
                 else:
                     try:
@@ -448,6 +462,7 @@ def main():
                         choice = ""
 
                     if not choice or choice.upper() == "A":
+                        is_all = True
                         selected_files = [f for _, f in file_items]
                         print("  👉 전체 파일을 커밋 대상으로 선택했습니다.")
                     else:
@@ -468,6 +483,7 @@ def main():
 
                         if not chosen_indices:
                             print("  ⚠️ 올바른 번호가 선택되지 않아 전체 파일을 대상으로 진행합니다.")
+                            is_all = True
                             selected_files = [f for _, f in file_items]
                         else:
                             selected_files = [file_items[i][1] for i in sorted(chosen_indices)]
@@ -483,8 +499,13 @@ def main():
                                 print(f"     • {sf}")
 
                 # 2. 선택된 파일 스테이징
-                for sf in selected_files:
-                    subprocess.run(["git", "add", sf], check=True)
+                if is_all:
+                    print("\n[Git] 전체 변경 파일 스테이징 (git add -A)...")
+                    subprocess.run(["git", "add", "-A"], check=True)
+                else:
+                    print(f"\n[Git] 선택된 {len(selected_files)}개 파일 스테이징...")
+                    for sf in selected_files:
+                        subprocess.run(["git", "add", sf], check=True)
 
                 commit_msg = f"docs: 웹보드 산출물 업데이트 ({now_str})"
                 if "--msg" in sys.argv:

@@ -27,3 +27,4 @@ FX_Wall_01,fx,fight.wall,벽 격돌 — 맞은 닭 발밑의 큰 흙먼지 + 튀
 FX_SpeedLine_01,fx,race.spurt,[가설] 스피드 라인 — 스퍼트한 닭(그 순간 순위 3위 안) 몸 뒤로 흐르는 흰 줄 몇 가닥(FX_Sprint_01의 흙 줄을 가늘고 길게 · 몸을 따라감). 레이스 어휘 표 tag spurt의 fx 칸이 부른다,,,,
 FX_DustKick_01,fx,race.lead,[가설] 흙먼지 — 선두에 나선 닭의 발밑에서 뒤로 차올리는 흙(FX_Stumble_01 · FX_RaceStart_01의 변형). 레이스 어휘 표 tag lead의 fx 칸이 부른다,,,,
 FX_GateBurst_01,fx,race.gate_open,[가설] 게이트 열림 — 출발 순간(경기 0초 · G13 START) 출발선을 따라 여섯 게이트 앞에서 터지는 흙먼지와 금빛 반짝(FX_RaceStart_01 · FX_Intro_01의 변형). 연결표 G13의 fx 칸이 부른다,,,,
+FX_Slam_01,fx,fight.grapple_slam,[v2.0 신규] 머리 잡아 바닥 찍기 — 지면 충돌 대형 흙먼지 폭발 + 비산하는 자갈과 깃털(FX_Crit_01 · FX_Wall_01 변형 · 연결표 F33). 바닥 초근접 카메라(F_SLAM_CLOSE) 동기화,,,,
