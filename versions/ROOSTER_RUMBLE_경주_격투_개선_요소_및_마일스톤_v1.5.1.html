@@ -1,0 +1,4205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROOSTER RUMBLE: 경주/격투/농장 개선 요소 및 3주 단위 마일스톤 계획서</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-sub-bg: #1a2234;
+      --border: #23304a;
+      --border-focus: #3b82f6;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --primary: #f97316;
+      --primary-light: #fb923c;
+      --primary-glow: rgba(249, 115, 22, 0.2);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --sidebar-w: 280px;
+      --header-h: 68px;
+    }
+
+    html.light {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-sub-bg: #f1f5f9;
+      --border: #cbd5e1;
+      --border-focus: #2563eb;
+      --text: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #475569;
+      --primary: #c2410c;
+      --primary-light: #9a3412;
+      --primary-glow: rgba(234, 88, 12, 0.12);
+      --accent: #0284c7;
+      --accent-glow: rgba(2, 132, 199, 0.12);
+      --success: #047857;
+      --warning: #b45309;
+      --danger: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-dim);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--header-h);
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+    html.light header {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-badge {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .header-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-primary { background: var(--primary-glow); color: var(--primary-light); border: 1px solid var(--primary); }
+    .badge-accent { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--accent); }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-secondary { background: var(--card-sub-bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: var(--card-sub-bg);
+      border-color: var(--text-dim);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    /* Main Container */
+    .layout-wrapper {
+      display: flex;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      gap: 2rem;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+      height: calc(100vh - var(--header-h) - 3rem);
+      overflow-y: auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1rem;
+    }
+
+    .toc-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .toc-item a {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toc-item a:hover {
+      color: var(--text);
+      background: var(--card-sub-bg);
+    }
+    .toc-item a.active {
+      color: var(--primary-light);
+      background: var(--primary-glow);
+      font-weight: 700;
+    }
+
+    .toc-sub {
+      list-style: none;
+      padding-left: 0.75rem;
+      margin-top: 0.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .toc-sub a {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.6rem;
+    }
+
+    /* Content Area */
+    main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* KPI Highlights */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kpi-box {
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent);
+    }
+    .kpi-box.primary::before { background: var(--primary); }
+    .kpi-box.success::before { background: var(--success); }
+    .kpi-box.warning::before { background: var(--warning); }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .kpi-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0.3rem 0;
+    }
+    .kpi-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Section Headings */
+    h2.section-header {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+    }
+    h3.sub-header {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.5rem 0 1rem 0;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h4.group-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      margin: 1.2rem 0 0.6rem 0;
+    }
+
+    /* Callout alert */
+    .callout {
+      background: var(--card-sub-bg);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .callout-content {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Lists */
+    ul.styled-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+    ul.styled-list > li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    ul.styled-list > li::before {
+      content: "•";
+      position: absolute;
+      left: 0.4rem;
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+    ul.styled-sublist {
+      list-style: none;
+      padding-left: 1rem;
+      margin-top: 0.35rem;
+    }
+    ul.styled-sublist > li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+    ul.styled-sublist > li::before {
+      content: "–";
+      position: absolute;
+      left: 0.3rem;
+      color: var(--text-dim);
+    }
+
+    /* Interactive Timeline Visualizer */
+    .timeline-container {
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .timeline-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .timeline-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .timeline-track {
+        grid-template-columns: 1fr;
+      }
+    }
+    .timeline-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 0.85rem;
+      position: relative;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .timeline-step:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+    .timeline-step.active {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--primary-glow) 100%);
+    }
+    .timeline-step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-step-num {
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: var(--primary-light);
+    }
+    .timeline-step-dates {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .timeline-step-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-step-scope {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Gantt Visual Roadmap Section (Date-Aligned & High Contrast) */
+    .gantt-section {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .gantt-axis-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .gantt-axis-label-spacer {
+      width: 170px;
+      flex-shrink: 0;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding-left: 0.25rem;
+    }
+
+    .gantt-axis-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.4rem;
+    }
+
+    .axis-cell {
+      text-align: center;
+      padding: 0.35rem 0.2rem;
+      border-radius: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .axis-cell.active {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+
+    .axis-phase {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .axis-cell.active .axis-phase {
+      color: var(--primary);
+    }
+
+    .axis-dates {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+
+    /* Gantt Body */
+    .gantt-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .gantt-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .gantt-row-info {
+      width: 170px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 0.25rem;
+    }
+
+    .gantt-phase-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+    .gantt-phase-badge.p1 { color: #f97316; }
+    .gantt-phase-badge.p2 { color: #a855f7; }
+    .gantt-phase-badge.p3 { color: #ec4899; }
+    .gantt-phase-badge.p4 { color: #f59e0b; }
+    .gantt-phase-badge.p5 { color: #10b981; }
+    .gantt-phase-badge.p6 { color: #06b6d4; }
+
+    .gantt-phase-date {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    /* Track grid */
+    .gantt-track-grid {
+      flex: 1;
+      height: 42px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.4rem;
+      padding: 3px 4px;
+      position: relative;
+    }
+
+    .gantt-slot {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+    }
+    .col-1 { grid-column: 1 / 2; }
+    .col-2 { grid-column: 2 / 3; }
+    .col-3 { grid-column: 3 / 4; }
+    .col-4 { grid-column: 4 / 5; }
+    .col-5 { grid-column: 5 / 6; }
+    .col-6 { grid-column: 6 / 7; }
+
+    .gantt-bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 6px;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      overflow: hidden;
+    }
+
+    .gantt-bar:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    }
+
+    .gantt-bar-title {
+      font-size: 0.74rem;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    .gantt-bar-desc {
+      font-size: 0.64rem;
+      font-weight: 600;
+      opacity: 0.95;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    .bar-1 { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+    .bar-2 { background: linear-gradient(135deg, #6d28d9, #7c3aed); }
+    .bar-3 { background: linear-gradient(135deg, #be185d, #db2777); }
+    .bar-4 { background: linear-gradient(135deg, #b45309, #d97706); }
+    .bar-5 { background: linear-gradient(135deg, #047857, #059669); }
+    .bar-6 { background: linear-gradient(135deg, #0e7490, #0891b2); }
+
+    /* Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin: 1rem 0;
+      background: var(--card-bg);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+    th {
+      background: var(--card-sub-bg);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    html.light tr:hover td {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    /* WBS Code Pill */
+    .code-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      display: inline-block;
+      text-align: center;
+      min-width: 48px;
+    }
+
+    /* Category Badges */
+    .cat-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .cat-model { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+    .cat-motion { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
+    .cat-direct { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+    .cat-sound { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+    /* Note styling */
+    .wbs-note {
+      font-size: 0.8rem;
+      color: var(--warning);
+      font-weight: 600;
+    }
+    .wbs-note-blue {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ========================================================
+       Light / White Mode High Contrast & Visibility Overrides
+       ======================================================== */
+    html.light header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1.5px solid #cbd5e1;
+      box-shadow: 0 1px 6px rgba(15, 23, 42, 0.05);
+    }
+    html.light aside {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    html.light .toc-title {
+      color: #475569;
+      font-weight: 800;
+    }
+    html.light .toc-item a {
+      color: #334155;
+      font-weight: 600;
+    }
+    html.light .toc-item a:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+    html.light .toc-item a.active {
+      color: #c2410c;
+      background: #fff7ed;
+      border: 1px solid #ea580c;
+      font-weight: 800;
+    }
+
+    html.light .card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    }
+    html.light h2.section-header {
+      color: #0f172a;
+      border-bottom: 2px solid #cbd5e1;
+    }
+    html.light h3.sub-header {
+      color: #0369a1;
+      font-weight: 800;
+    }
+    html.light h4.group-title {
+      color: #c2410c;
+      font-weight: 800;
+    }
+
+    html.light .callout {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-left: 5px solid #ea580c;
+    }
+    html.light .callout-title {
+      color: #0f172a;
+      font-weight: 800;
+    }
+    html.light .callout-content {
+      color: #334155;
+      font-weight: 500;
+    }
+
+    html.light .kpi-box {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    }
+    html.light .kpi-label {
+      color: #475569;
+      font-weight: 800;
+    }
+    html.light .kpi-value {
+      color: #0f172a;
+      font-weight: 900;
+    }
+    html.light .kpi-desc {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    html.light ul.styled-list > li {
+      color: #1e293b;
+    }
+    html.light ul.styled-sublist > li {
+      color: #334155;
+    }
+    html.light ul.styled-sublist > li::before {
+      color: #64748b;
+    }
+
+    /* Category Badges in Light Mode */
+    html.light .cat-model { background: #eff6ff; color: #1d4ed8; border: 1.5px solid #93c5fd; font-weight: 800; }
+    html.light .cat-motion { background: #faf5ff; color: #6d28d9; border: 1.5px solid #d8b4fe; font-weight: 800; }
+    html.light .cat-direct { background: #fffbeb; color: #b45309; border: 1.5px solid #fcd34d; font-weight: 800; }
+    html.light .cat-sound { background: #ecfdf5; color: #047857; border: 1.5px solid #6ee7b7; font-weight: 800; }
+
+    /* Status Badges in Light Mode */
+    html.light .badge-primary { background: #fff7ed; color: #c2410c; border: 1.5px solid #ea580c; font-weight: 800; }
+    html.light .badge-accent { background: #f0f9ff; color: #0369a1; border: 1.5px solid #0284c7; font-weight: 800; }
+    html.light .badge-success { background: #f0fdf4; color: #047857; border: 1.5px solid #059669; font-weight: 800; }
+    html.light .badge-warning { background: #fffbeb; color: #b45309; border: 1.5px solid #d97706; font-weight: 800; }
+    html.light .badge-secondary { background: #f1f5f9; color: #1e293b; border: 1.5px solid #cbd5e1; font-weight: 800; }
+
+    /* Code Pill & Notes in Light Mode */
+    html.light .code-pill {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #0369a1;
+      font-weight: 800;
+    }
+    html.light .wbs-note {
+      color: #b45309;
+      font-weight: 700;
+    }
+    html.light .wbs-note-blue {
+      color: #0369a1;
+      font-weight: 700;
+    }
+
+    /* Table styles in Light Mode */
+    html.light .table-container {
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    html.light th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 800;
+      border-bottom: 2px solid #cbd5e1;
+    }
+    html.light td {
+      color: #1e293b;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    html.light td strong {
+      color: #0f172a;
+    }
+    html.light tr:hover td {
+      background: #f8fafc;
+    }
+    html.light code {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Buttons in Light Mode */
+    html.light .btn {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    html.light .btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    html.light .btn-primary {
+      background: #ea580c;
+      color: #ffffff !important;
+      border: none;
+    }
+    html.light .btn-primary:hover {
+      background: #c2410c;
+    }
+
+    /* Section 3 Milestone Visualizer in Light Mode */
+    html.light .timeline-container {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    }
+    html.light .timeline-step {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+    html.light .timeline-step.active {
+      border: 2px solid #ea580c;
+      background: #fffaf5;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.16);
+    }
+    html.light .timeline-step-dates {
+      color: #475569;
+      font-weight: 700;
+    }
+    html.light .timeline-step-name {
+      color: #0f172a;
+      font-weight: 800;
+    }
+    html.light .timeline-step-scope {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    /* Gantt Axis & Grid in Light Mode */
+    html.light .gantt-section {
+      border-top-color: #cbd5e1;
+    }
+    html.light .gantt-axis-header {
+      border-bottom-color: #cbd5e1;
+    }
+    html.light .gantt-axis-label-spacer {
+      color: #334155;
+      font-weight: 800;
+    }
+    html.light .axis-cell {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    html.light .axis-cell.active {
+      background: #fff7ed;
+      border-color: #ea580c;
+    }
+    html.light .axis-phase {
+      color: #0f172a;
+      font-weight: 800;
+    }
+    html.light .axis-cell.active .axis-phase {
+      color: #c2410c;
+    }
+    html.light .axis-dates {
+      color: #475569;
+      font-weight: 700;
+    }
+    html.light .gantt-phase-badge.p1 { color: #c2410c; }
+    html.light .gantt-phase-badge.p2 { color: #6d28d9; }
+    html.light .gantt-phase-badge.p3 { color: #be185d; }
+    html.light .gantt-phase-badge.p4 { color: #b45309; }
+    html.light .gantt-phase-badge.p5 { color: #047857; }
+    html.light .gantt-phase-badge.p6 { color: #0e7490; }
+    html.light .gantt-track-grid {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+    }
+    html.light .gantt-phase-date {
+      color: #475569;
+      font-weight: 700;
+    }
+    html.light footer {
+      color: #475569;
+      border-top-color: #cbd5e1;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+    }
+
+
+    /* ========================================================
+       Mobile Responsiveness & Adaptive Layout Enhancements
+       ======================================================== */
+    .btn-toc-toggle {
+      display: none;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 800;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+    }
+    .btn-toc-toggle:hover {
+      background: var(--primary-glow);
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+    html.light .btn-toc-toggle {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    html.light .btn-toc-toggle:hover {
+      background: #fff7ed;
+      border-color: #ea580c;
+      color: #c2410c;
+    }
+
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding: 0 0.25rem 0.4rem 0.25rem;
+    }
+    .btn-close-toc {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 6px;
+      line-height: 1;
+    }
+    .btn-close-toc:hover {
+      background: var(--card-sub-bg);
+      color: var(--text);
+    }
+    html.light .btn-close-toc {
+      color: #475569;
+    }
+    html.light .btn-close-toc:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .toc-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .toc-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .gantt-scroll-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+    }
+    .gantt-section {
+      min-width: 680px;
+    }
+
+    .mobile-scroll-hint {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      background: var(--primary-glow);
+      border: 1px dashed var(--primary);
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      text-align: center;
+    }
+    html.light .mobile-scroll-hint {
+      color: #c2410c;
+      background: #fff7ed;
+      border-color: #ea580c;
+    }
+
+    .mobile-fab-group {
+      display: none;
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 900;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .fab-btn {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      padding: 0.55rem 0.95rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    html.light .fab-btn {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+    }
+    .fab-btn:hover, .fab-btn:active {
+      background: var(--primary);
+      color: #ffffff !important;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .fab-top {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      align-self: flex-end;
+    }
+
+    /* Tablet Breakpoint (<= 1024px) */
+    @media (max-width: 1024px) {
+      .btn-toc-toggle {
+        display: inline-flex;
+      }
+      .mobile-fab-group {
+        display: flex;
+      }
+      .layout-wrapper {
+        flex-direction: column !important;
+        padding: 1rem 0.75rem !important;
+        gap: 1.25rem !important;
+      }
+      aside {
+        position: fixed !important;
+        top: 0 !important;
+        left: -320px !important;
+        width: min(300px, 85vw) !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.45) !important;
+        border-radius: 0 16px 16px 0 !important;
+        padding: 1.25rem 1rem !important;
+        background: var(--card-bg) !important;
+      }
+      aside.open {
+        left: 0 !important;
+      }
+      .btn-close-toc {
+        display: block;
+      }
+    }
+
+    /* Mobile Breakpoint (<= 768px) */
+    @media (max-width: 768px) {
+      header {
+        height: auto !important;
+        min-height: 56px;
+        padding: 0.5rem 0.85rem !important;
+        gap: 0.5rem;
+      }
+      .header-title h1 {
+        font-size: 0.92rem !important;
+      }
+      .header-dday {
+        display: none !important;
+      }
+      .btn-print {
+        display: none !important;
+      }
+      .theme-btn-text {
+        display: none;
+      }
+      .btn {
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.75rem !important;
+      }
+      .card {
+        padding: 1.15rem 0.85rem !important;
+        border-radius: 10px !important;
+        margin-bottom: 1rem !important;
+      }
+      h2.section-header {
+        font-size: 1.15rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.35rem !important;
+      }
+      h3.sub-header {
+        font-size: 1.0rem !important;
+        margin: 1.2rem 0 0.8rem 0 !important;
+      }
+      .timeline-container {
+        padding: 1rem 0.75rem !important;
+      }
+      .timeline-title {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.4rem !important;
+      }
+      .timeline-track {
+        grid-template-columns: 1fr !important;
+        gap: 0.6rem !important;
+      }
+      .mobile-scroll-hint {
+        display: flex !important;
+      }
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.6rem !important;
+      }
+      .kpi-box {
+        padding: 0.85rem 0.75rem !important;
+      }
+      .kpi-value {
+        font-size: 1.2rem !important;
+      }
+      .table-container {
+        border-radius: 8px !important;
+      }
+      table {
+        min-width: 560px !important;
+      }
+      th, td {
+        padding: 0.55rem 0.7rem !important;
+        font-size: 0.78rem !important;
+      }
+    }
+
+    /* Small Mobile Breakpoint (<= 480px) */
+    @media (max-width: 480px) {
+      .toc-btn-text {
+        display: none;
+      }
+      .header-title h1 {
+        font-size: 0.85rem !important;
+      }
+      .logo-badge {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1.1rem !important;
+      }
+      .kpi-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .callout {
+        padding: 0.85rem 0.85rem !important;
+      }
+    }
+
+    
+    /* ========================================================
+       Mobile Gantt 100% Fit, Touch Rotate Banner & Fullscreen Modal
+       ======================================================== */
+    .gantt-wrapper {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .gantt-touch-prompt {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(56, 189, 248, 0.12));
+      border: 1.5px solid var(--primary);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .gantt-touch-prompt:active, .gantt-touch-prompt:hover {
+      background: var(--primary-glow);
+      transform: translateY(-1px);
+    }
+    .prompt-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .prompt-icon {
+      font-size: 1.3rem;
+    }
+    .prompt-text-group {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .prompt-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .prompt-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .prompt-action-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    html.light .gantt-touch-prompt {
+      background: #fff7ed;
+      border-color: #ea580c;
+    }
+    html.light .prompt-title {
+      color: #0f172a;
+    }
+    html.light .prompt-sub {
+      color: #475569;
+    }
+
+    /* Modal Overlay */
+    .gantt-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(11, 15, 25, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .gantt-modal.active {
+      display: flex;
+    }
+    html.light .gantt-modal {
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .gantt-modal-content {
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Modal Header */
+    .gantt-modal-header {
+      height: 54px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      flex-shrink: 0;
+    }
+    html.light .gantt-modal-header {
+      background: #ffffff;
+      border-bottom-color: #cbd5e1;
+    }
+    .gantt-modal-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .gantt-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .modal-view-toggle {
+      display: flex;
+      background: var(--card-sub-bg);
+      border-radius: 6px;
+      padding: 2px;
+      border: 1px solid var(--border);
+    }
+    .modal-view-toggle .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .modal-view-toggle .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    html.light .modal-view-toggle {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    html.light .modal-view-toggle .tab-btn {
+      color: #475569;
+    }
+    html.light .modal-view-toggle .tab-btn.active {
+      background: #ea580c;
+      color: #ffffff;
+    }
+    .btn-modal-close {
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    html.light .btn-modal-close {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    /* Modal Body 1: 90° Rotated View */
+    .modal-view-rotate {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 54px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      background: var(--card-sub-bg);
+    }
+    html.light .modal-view-rotate {
+      background: #f1f5f9;
+    }
+    .rotate-viewport-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .rotate-inner-content {
+      width: min(860px, 92vh);
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      transform: rotate(90deg);
+      transform-origin: center center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    html.light .rotate-inner-content {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .rotated-gantt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+    .rotated-gantt-header h3 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .rotated-badge {
+      background: var(--primary-glow);
+      color: var(--primary-light);
+      border: 1px solid var(--primary);
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    html.light .rotated-badge {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #ea580c;
+    }
+
+    .rotated-gantt-axis {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.35rem;
+    }
+    .r-axis-label-spacer {
+      width: 140px;
+      flex-shrink: 0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-dim);
+    }
+    .r-axis-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.35rem;
+    }
+    .r-axis-cell {
+      text-align: center;
+      padding: 0.3rem 0.2rem;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .r-axis-cell.active {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+    .r-axis-phase {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .r-axis-date {
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+    html.light .r-axis-cell {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html.light .r-axis-cell.active {
+      background: #fff7ed;
+      border-color: #ea580c;
+    }
+    html.light .r-axis-cell.active .r-axis-phase {
+      color: #c2410c;
+    }
+
+    .rotated-gantt-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .r-gantt-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .r-gantt-info {
+      width: 140px;
+      flex-shrink: 0;
+    }
+    .r-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .r-badge.p1 { color: #f97316; }
+    .r-badge.p2 { color: #a855f7; }
+    .r-badge.p3 { color: #ec4899; }
+    .r-badge.p4 { color: #f59e0b; }
+    .r-badge.p5 { color: #10b981; }
+    .r-badge.p6 { color: #06b6d4; }
+    html.light .r-badge.p1 { color: #c2410c; }
+    html.light .r-badge.p2 { color: #6d28d9; }
+    html.light .r-badge.p3 { color: #be185d; }
+    html.light .r-badge.p4 { color: #b45309; }
+    html.light .r-badge.p5 { color: #047857; }
+    html.light .r-badge.p6 { color: #0e7490; }
+
+    .r-gantt-grid {
+      flex: 1;
+      height: 36px;
+      background: var(--card-sub-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.35rem;
+      padding: 2px 3px;
+    }
+    html.light .r-gantt-grid {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .r-slot {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+    }
+    .r-bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1px 4px;
+      color: #ffffff !important;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .r-bar-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .r-bar-desc {
+      font-size: 0.58rem;
+      font-weight: 600;
+      opacity: 0.95;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    /* Modal Body 2: Vertical Detailed Timeline Flow */
+    .modal-view-vertical {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 54px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem 0.85rem;
+      background: var(--bg);
+    }
+    .v-timeline-flow {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .v-step-card {
+      display: flex;
+      gap: 0.85rem;
+      position: relative;
+    }
+    .v-step-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 32px;
+      flex-shrink: 0;
+    }
+    .v-step-node {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--card-sub-bg);
+      border: 2px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.85rem;
+      z-index: 2;
+    }
+    .node-1 { border-color: #f97316; color: #f97316; background: rgba(249, 115, 22, 0.15); }
+    .node-2 { border-color: #a855f7; color: #a855f7; background: rgba(168, 85, 247, 0.15); }
+    .node-3 { border-color: #ec4899; color: #ec4899; background: rgba(236, 72, 153, 0.15); }
+    .node-4 { border-color: #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.15); }
+    .node-5 { border-color: #10b981; color: #10b981; background: rgba(16, 185, 129, 0.15); }
+    .node-6 { border-color: #06b6d4; color: #06b6d4; background: rgba(6, 182, 212, 0.15); }
+
+    .v-step-line {
+      width: 3px;
+      flex: 1;
+      background: var(--border);
+      margin: 4px 0;
+    }
+    .v-step-card:last-child .v-step-line {
+      display: none;
+    }
+    .v-step-body {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .v-step-card.current .v-step-body {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--primary-glow) 100%);
+    }
+    html.light .v-step-body {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    html.light .v-step-card.current .v-step-body {
+      background: #fffaf5;
+      border-color: #ea580c;
+    }
+    .v-step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+    }
+    .v-step-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .v-step-badge.p1 { color: #f97316; }
+    .v-step-badge.p2 { color: #a855f7; }
+    .v-step-badge.p3 { color: #ec4899; }
+    .v-step-badge.p4 { color: #f59e0b; }
+    .v-step-badge.p5 { color: #10b981; }
+    .v-step-badge.p6 { color: #06b6d4; }
+    html.light .v-step-badge.p1 { color: #c2410c; }
+    html.light .v-step-badge.p2 { color: #6d28d9; }
+    html.light .v-step-badge.p3 { color: #be185d; }
+    html.light .v-step-badge.p4 { color: #b45309; }
+    html.light .v-step-badge.p5 { color: #047857; }
+    html.light .v-step-badge.p6 { color: #0e7490; }
+    .v-step-date {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+    }
+    .v-step-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 0.35rem;
+    }
+    .v-step-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========================================================
+       Mobile Table Card Transformation (Problem 2 Complete Fix)
+       ======================================================== */
+    @media (max-width: 768px) {
+      .gantt-touch-prompt {
+        display: flex !important;
+      }
+      .mobile-scroll-hint {
+        display: none !important;
+      }
+
+      /* In mobile default view: Fit 100% width cleanly */
+      .gantt-scroll-wrapper {
+        overflow-x: hidden !important;
+        width: 100% !important;
+      }
+      .gantt-section {
+        min-width: 0 !important;
+        width: 100% !important;
+      }
+      .gantt-axis-header {
+        gap: 0.25rem !important;
+        padding-bottom: 0.3rem !important;
+      }
+      .gantt-axis-label-spacer {
+        width: 38px !important;
+        font-size: 0.64rem !important;
+        padding-left: 0 !important;
+        text-align: center !important;
+      }
+      .gantt-axis-grid {
+        gap: 2px !important;
+      }
+      .axis-cell {
+        padding: 0.25rem 1px !important;
+        border-radius: 4px !important;
+      }
+      .axis-phase {
+        font-size: 0.68rem !important;
+        font-weight: 800 !important;
+      }
+      .axis-dates {
+        font-size: 0.55rem !important;
+        line-height: 1.1 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .gantt-row {
+        gap: 0.25rem !important;
+      }
+      .gantt-row-info {
+        width: 38px !important;
+        padding-left: 0 !important;
+        text-align: center !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .gantt-phase-badge {
+        font-size: 0.68rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
+      }
+      .gantt-phase-date {
+        display: none !important;
+      }
+      .gantt-track-grid {
+        height: 32px !important;
+        gap: 2px !important;
+        padding: 2px !important;
+      }
+      .gantt-bar {
+        padding: 1px 2px !important;
+        border-radius: 4px !important;
+      }
+      .gantt-bar-title {
+        font-size: 0.6rem !important;
+        line-height: 1.15 !important;
+      }
+      .gantt-bar-desc {
+        display: none !important;
+      }
+
+      /* Table Container transforms into Card Container on Mobile */
+      .table-container {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow-x: visible !important;
+        margin: 1rem 0 !important;
+      }
+      .table-container table {
+        display: block !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        border-collapse: separate !important;
+      }
+      .table-container thead {
+        display: none !important;
+      }
+      .table-container tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.85rem !important;
+        width: 100% !important;
+      }
+      .table-container tr {
+        display: flex !important;
+        flex-direction: column !important;
+        background: var(--card-bg) !important;
+        border: 1.5px solid var(--border) !important;
+        border-radius: 12px !important;
+        padding: 1rem 0.95rem !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        gap: 0.45rem !important;
+      }
+      html.light .table-container tr {
+        background: #ffffff !important;
+        border-color: #cbd5e1 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+      }
+      .table-container td {
+        display: block !important;
+        width: 100% !important;
+        border: none !important;
+        padding: 0 !important;
+        text-align: left !important;
+        line-height: 1.6 !important;
+        font-size: 0.88rem !important;
+      }
+
+      /* Milestone Table Mobile Card Specifics */
+      .milestone-table tr {
+        border-left: 5px solid var(--primary) !important;
+      }
+      .milestone-table td:nth-child(1) {
+        display: inline-flex !important;
+        align-items: center !important;
+        width: auto !important;
+      }
+      .milestone-table td:nth-child(2) {
+        display: inline-flex !important;
+        align-items: center !important;
+        width: auto !important;
+        margin-left: 0.5rem !important;
+      }
+      .milestone-table tr > td:first-child {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+      }
+      .milestone-table td:nth-child(3) {
+        font-size: 1.0rem !important;
+        font-weight: 800 !important;
+        color: var(--text) !important;
+        line-height: 1.4 !important;
+        border-bottom: 1px solid var(--border) !important;
+        padding-bottom: 0.45rem !important;
+        margin-bottom: 0.2rem !important;
+      }
+      html.light .milestone-table td:nth-child(3) {
+        color: #0f172a !important;
+        border-bottom-color: #e2e8f0 !important;
+      }
+      .milestone-table td:nth-child(4) {
+        font-size: 0.85rem !important;
+        color: var(--text-muted) !important;
+        background: var(--card-sub-bg) !important;
+        border-radius: 8px !important;
+        padding: 0.75rem 0.85rem !important;
+        line-height: 1.65 !important;
+        word-break: keep-all !important;
+      }
+      html.light .milestone-table td:nth-child(4) {
+        background: #f8fafc !important;
+        color: #334155 !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+
+      /* WBS Table Mobile Card Specifics */
+      .wbs-table tr {
+        border-left: 4px solid var(--accent) !important;
+      }
+      .wbs-table td:nth-child(1) {
+        display: inline-block !important;
+        width: auto !important;
+        margin-right: 0.35rem !important;
+      }
+      .wbs-table td:nth-child(2) {
+        display: inline-block !important;
+        width: auto !important;
+        margin-right: 0.35rem !important;
+      }
+      .wbs-table td:nth-child(3) {
+        font-size: 0.95rem !important;
+        font-weight: 800 !important;
+        color: var(--text) !important;
+        line-height: 1.4 !important;
+        margin: 0.25rem 0 !important;
+      }
+      html.light .wbs-table td:nth-child(3) {
+        color: #0f172a !important;
+      }
+      .wbs-table td:nth-child(4) {
+        font-size: 0.83rem !important;
+        color: var(--text-muted) !important;
+        background: var(--card-sub-bg) !important;
+        border-radius: 6px !important;
+        padding: 0.6rem 0.75rem !important;
+        line-height: 1.55 !important;
+        margin: 0.25rem 0 !important;
+      }
+      html.light .wbs-table td:nth-child(4) {
+        background: #f8fafc !important;
+        color: #334155 !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+      .wbs-table td:nth-child(5) {
+        font-size: 0.8rem !important;
+        line-height: 1.5 !important;
+        padding-top: 0.2rem !important;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      header, aside, .btn, .header-actions {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .layout-wrapper {
+        padding: 0 !important;
+      }
+      .card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 1.5rem !important;
+      }
+      th {
+        background: #eee !important;
+        color: #000 !important;
+      }
+      td {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Fixed Header -->
+  <header>
+    <div class="header-left">
+      <button class="btn btn-toc-toggle" onclick="toggleTOC()" title="목차 열기" aria-label="목차 열기">☰ <span class="toc-btn-text">목차</span></button>
+      <div class="logo-badge">🐓</div>
+      <div class="header-title">
+        <h1>ROOSTER RUMBLE 마일스톤 명세서 <span class="badge badge-primary">v1.5.1</span></h1>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="badge badge-accent header-dday">1차 마감: 2026-10-28 (D-15)</span>
+      <button class="btn" onclick="toggleTheme()" title="화면 테마 전환">🌓 <span class="theme-btn-text">테마 전환</span></button>
+      <button class="btn btn-primary btn-print" onclick="window.print()" title="문서 인쇄 / PDF 저장">🖨️ 인쇄 / PDF</button>
+    </div>
+  </header>
+
+  <!-- Backdrop for Mobile Drawer -->
+  <div id="tocBackdrop" class="toc-backdrop" onclick="toggleTOC(false)"></div>
+
+  <!-- Layout Wrapper -->
+  <div class="layout-wrapper">
+
+    <!-- Sidebar Navigation (Sticky on Desktop, Off-Canvas Drawer on Mobile) -->
+    <aside id="tocSidebar">
+      <div class="toc-header">
+        <div class="toc-title">목차 (Table of Contents)</div>
+        <button class="btn-close-toc" onclick="toggleTOC(false)" title="목차 닫기" aria-label="목차 닫기">✕</button>
+      </div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#sec-overview" class="active">1. 개요 및 수립 배경</a></li>
+        <li class="toc-item">
+          <a href="#sec-modes">2. 모드별 핵심 개선 요소</a>
+          <ul class="toc-sub">
+            <li><a href="#sec-derby">2.1 더비 레이스 (경주)</a></li>
+            <li><a href="#sec-pit">2.2 럼블 핏 (격투)</a></li>
+            <li><a href="#sec-farm">2.3 럼블 팜 (농장)</a></li>
+          </ul>
+        </li>
+        <li class="toc-item"><a href="#sec-roadmap">3. 3주 단위 마일스톤 로드맵</a></li>
+        <li class="toc-item">
+          <a href="#sec-wbs">4. [1차] 상세 작업표 (WBS)</a>
+          <ul class="toc-sub">
+            <li><a href="#sec-wbs-race">4.1 경주 상세 (R-1~12)</a></li>
+            <li><a href="#sec-wbs-pit">4.2 격투 상세 (P-1~10)</a></li>
+          </ul>
+        </li>
+        <li class="toc-item">
+          <a href="#sec-milestones">5. 차수별 후속 계획</a>
+          <ul class="toc-sub">
+            <li><a href="#sec-m2">5.1 [2차] 셰이더완료 & VIP 1차</a></li>
+            <li><a href="#sec-m3">5.2 [3차] VIP 버전완료·런칭준비</a></li>
+            <li><a href="#sec-m4">5.3 [4차] VIP런칭 & 마켓준비</a></li>
+            <li><a href="#sec-m5">5.4 [5차] 마켓용 버전 고도화</a></li>
+            <li><a href="#sec-m6">5.5 [후속] 글로벌 정식 런칭</a></li>
+          </ul>
+        </li>
+        <li class="toc-item">
+          <a href="#sec-volume">6. 구성 요소 볼륨 픽스 총괄표</a>
+          <ul class="toc-sub">
+            <li><a href="#sec-vol-summary">6.1 에셋 픽스 요약</a></li>
+            <li><a href="#sec-vol-modes">6.2 모드별 상세 볼륨</a></li>
+            <li><a href="#sec-vol-milestones">6.3 마일스톤 투입 배분</a></li>
+          </ul>
+        </li>
+        <li class="toc-item"><a href="#sec-history">문서 개정 이력</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+
+      <!-- KPI Executive Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-box primary">
+          <div class="kpi-label">1차 마일스톤 (내부시연)</div>
+          <div class="kpi-value">10/28</div>
+          <div class="kpi-desc">카메라3종/환경연출/피니쉬기획/시뮬기초</div>
+        </div>
+        <div class="kpi-box warning">
+          <div class="kpi-label">미국 VIP 라운지 런칭</div>
+          <div class="kpi-value">4차 초기</div>
+          <div class="kpi-desc">3차 버전완료(12/09) ➔ 12월 중순 현장오픈</div>
+        </div>
+        <div class="kpi-box success">
+          <div class="kpi-label">5차 마켓용 버전 고도화</div>
+          <div class="kpi-value">2027.01</div>
+          <div class="kpi-desc">소프트런칭 데이터 반영 / 스토어 승인</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-label">양대 마켓 글로벌 정식오픈</div>
+          <div class="kpi-value">2027 상반기</div>
+          <div class="kpi-desc">Google Play / App Store 동시 그랜드오픈</div>
+        </div>
+      </div>
+
+      <!-- Section 1: 개요 및 수립 배경 -->
+      <section id="sec-overview" class="card">
+        <h2 class="section-header">
+          <span>1. 개요 및 수립 배경</span>
+          <span class="badge badge-secondary">Overview & Principles</span>
+        </h2>
+
+        <div class="callout">
+          <div class="callout-title">🎯 수립 목적</div>
+          <div class="callout-content">
+            시연 피드백을 수렴하여 경주(Derby Race) 및 격투(Rumble Pit) 모드의 비주얼/속도감/타격감/상용화 연출을 격상하고, 3차 마일스톤까지 <strong>미국 VIP 라운지 버전 개발 및 현장 런칭 준비(VIP 라운지용 농장 기능 완비)</strong>를 완료하여 4차 초기에 현장 정식 런칭을 단행하며, 4차 마일스톤부터 양대 마켓 런칭 준비에 착수하고 <strong>5차 마켓용 버전 고도화(2027.01)</strong>를 거쳐 <strong>2027년 상반기 글로벌 정식 런칭</strong>을 달성하기 위함.
+          </div>
+        </div>
+
+        <h4 class="group-title">핵심 제약 및 원칙</h4>
+        <ul class="styled-list">
+          <li><strong>3주 단위 스프린트 마일스톤 운용</strong>: 2026년 10월부터 연말 및 2027년 초까지 3주 주기로 점진적 릴리즈 빌드 패키징.</li>
+          <li>
+            <strong>1차 마일스톤 (~10/28) 즉시 반영</strong>: 기존 확보된 리소스 및 파이프라인을 바탕으로 10/28까지 투입 가능한 경주/격투 개선 과제 최우선 탑재 (내부 시연용).<br>
+            <span style="color: var(--accent); font-weight: 600;">※ 닭 캐릭터 3D 모델 카툰 셰이더 및 배경 모델링은 캐릭터/배경 컨셉 확정 선행 후 2차 마일스톤에서 최종 완료하며, 1차에서는 선수 식별 번호 인디케이터 부착, 질주 속도감 상향(+30%), 중계 카메라 워킹 3종 랜덤 적용, 환경 변수(비/바람-낙엽/아지랑이) 연출, 피니쉬 3단계 기획(FINISH!/슬로우 리플레이/감속런 세리머니) 수립 및 격투 대전 시뮬레이터 기초/전투 기술 매핑을 집중 구현.</span>
+          </li>
+          <li>
+            <strong>2차 마일스톤 (~11/18) 카툰 셰이더·배경 모델 최종 완료 & VIP 1차 빌드 & 농장 1단계 착수</strong>: 1차에서 확정된 컨셉을 기반으로 닭 캐릭터 3D 카툰 셰이더 및 배경 모델링을 최종 적용 완료하고, 6종 주행 스타일 외형 차별화 모델 분기 및 환경 물리 보정 연동. 이와 병행하여 10/29부터 농장 모드 개발에 착수하여 알 부화·스탯 생성·기본 훈련 8종 및 팜 뷰를 구축하고, 미국 VIP 라운지 1차 시연 빌드 패키징.
+          </li>
+          <li><strong>3차 마일스톤 (~12/09) 미국 VIP 라운지 버전 완료 및 런칭 준비 완료</strong>: 현장 전용 디스플레이/태블릿 UI, 키오스크 결제/크레딧 정산 및 VIP 라운지용 농장 주요 기능 상용 버전 빌드 완성 및 현장 리허설/런칭 준비 완비.</li>
+          <li>
+            <strong>온·오프라인 계정 및 크레딧 분리 운영 (상호 연동 배제)</strong>:
+            <span style="color: var(--danger); font-weight: 700;">규제 리스크 방지 및 각 플랫폼별 운영 독립성을 위해 미국 VIP 라운지(오프라인 현장 단말기/키오스크)와 온라인 모바일 앱(Google Play / Apple App Store) 간의 유저 계정, 게임 재화, 베팅 크레딧은 상호 연동하지 않고 100% 분리 운영 (독립 DB 및 독립 빌드 유지).</span>
+          </li>
+          <li><strong>4차 마일스톤 (~12/30) [4차 초기] VIP 라운지 런칭 & 양대 마켓 런칭 준비 착수</strong>: 4차 초기에 미국 VIP 라운지 현장 정식 런칭 및 라이브 운영을 개시하며, Google Play / App Store 제출용 인앱 결제(IAP) SDK 연동, IARC 연령등급, 보안/약관, 스토어 심사 접수 및 온라인 생태계(거래소/퀘스트) 완성, 소프트 런칭/CBT 운영.</li>
+          <li><strong>5차 마일스톤 (2027.01: 01/02~01/22) 마켓용 버전 고도화</strong>: 소프트 런칭 및 CBT 실데이터 피드백을 반영하여 닭/경기 밸런스 미세 조정, 모바일 디바이스 최적화, 스토어 심사 피드백 대응 및 최종 승인 획득, 글로벌 서버/인프라 스트레스 검증 완료.</li>
+          <li><strong>2027년 상반기 글로벌 정식 런칭</strong>: 5차 고도화 검증 완료 후 2027년 상반기 글로벌 동시 그랜드 오픈 전환.</li>
+          <li><strong>베팅 신뢰성 훼손 방지</strong>: 인위적인 경기 중단(히트스톱), 급격한 시점 왜곡(딥 다이브 줌인), 조작 오해를 유발하는 경기 중 슬로우 모션 배제.</li>
+        </ul>
+      </section>
+
+      <!-- Section 2: 모드별 핵심 개선 요소 -->
+      <section id="sec-modes" class="card">
+        <h2 class="section-header">
+          <span>2. 모드별 핵심 개선 요소 (3대 영역: 모델 / 모션 / 연출)</span>
+          <span class="badge badge-accent">Core Upgrades</span>
+        </h2>
+
+        <!-- 2.1 더비 레이스 -->
+        <div id="sec-derby">
+          <h3 class="sub-header">🏇 2.1 더비 레이스 (Derby Race - 경주 모드)</h3>
+          
+          <h4 class="group-title">1) 모델 (3D Model & Visual Style)</h4>
+          <ul class="styled-list">
+            <li><strong>아케이드 카툰 렌더링 스타일 (컨셉 확정 ➔ 2차 적용 완료)</strong>: 실사풍 한계를 탈피하고 동작 시인성을 극대화한 아케이드 카툰 셰이더 적용. 1차 마일스톤에서 캐릭터 및 배경 모델 컨셉을 우선 확정하고, 최종 3D 카툰 셰이더 적용 완료는 2차 마일스톤으로 이관. 모바일 및 오프라인 대형 디스플레이 양측에서 뚜렷한 외곽선과 채도 유지.</li>
+            <li><strong>선수 식별 번호 인디케이터 부착</strong>: 각 닭 머리 위에 게이트 번호(1~6번) 및 고유 컬러 인디케이터 부착. 레인 침범 및 치열한 선두 경합 시에도 베팅 닭 위치 즉각 식별 가능.</li>
+            <li><strong>6종 주행 스타일 외형 차별화</strong>: 도주, 선행, 선입, 추입, 자재, 변칙 6종 스타일에 맞춘 체형 실루엣 및 깃털 텍스처 톤앤매너 정립 필요 (2차 연계).</li>
+          </ul>
+
+          <h4 class="group-title">2) 모션 (Animation & Dynamics)</h4>
+          <ul class="styled-list">
+            <li><strong>출발 대기 모션 세분화 (베팅 기대감 고조 - R-1 후속 연계)</strong>: 게이트 안 발구르기, 날개털기, 고개짓 등 개별 준비 동작 세분화 (R-1 모델 컨셉/기초 메쉬와 연계 탑재).</li>
+            <li><strong>질주 모션 속도감 상향 (+30%)</strong>: 전체 질주 모션 템포 및 보폭 주기를 30% 상향 튜닝. 라스트 스퍼트 시 거센 날개짓 연계.</li>
+            <li><strong>피니시 감속 및 승리 세리머니 모션 [피니쉬 연출 기획 필요-3]</strong>: 결승선 통과 직후 급정지 없이 자연스러운 감속 런 다운 모션 및 1위 닭의 단상 도약/세리머니 연계 기획 수립 및 검증.</li>
+          </ul>
+
+          <h4 class="group-title">3) 연출 (Direction - 상용화 버전 적용)</h4>
+          <ul class="styled-list">
+            <li><strong>출발 / 피니시 시각 임팩트 강화 [피니쉬 연출 기획 필요-1]</strong>: 출발 0초 시점에 화면 중앙 볼드 폰트 "START" 그래픽 표출. 1위 통과 시 화면 중앙 "FINISH!" 텍스트 강조 표출 및 팡파레 연계 기획 확정.</li>
+            <li><strong>결승 통과 직후 1초 자동 슬로우 리플레이 (+ 스킵 기능) [피니쉬 연출 기획 필요-2]</strong>: 경기 중 슬로우 모션은 배제하고, 경기 완전 종료 후 1초간 다이내믹 앵글 슬로우 리플레이 재생 ([Skip] 버튼 연계 기획 확정).</li>
+            <li><strong>가속 스피드 라인 FX 및 환경 파티클 (구체적 샘플 확보 선행)</strong>: 속도감을 극대화하는 측면 가속 스피드 라인 이펙트 (아트/기획 구체적 레퍼런스 샘플 기반 제작) 및 발굽 흙먼지 킥 파티클 연출.</li>
+            <li><strong>경기 중계 카메라 워킹 추가 (1차 신규 편입)</strong>: 단조로운 시점을 탈피하고 속도감 및 관전 몰입감을 극대화하기 위해 최소 3종의 중계 카메라 워킹을 추가 개발하여 경기 중 랜덤하게 적용.</li>
+            <li><strong>환경 변수 연출 (1차 신규 편입)</strong>: 비, 바람(낙엽 흩날림), 아지랑이 등 트랙 환경 변수에 대응하는 시각 연출 1차 구현 (2차에서 트랙 주행 물리 보정과 결합).</li>
+            <li><strong>카메라 워킹 최적화 (2차 옵션화 연계)</strong>: 1차 카메라 3종 랜덤 적용 결과를 바탕으로, 안정적 쿼터뷰 트랙 카메라(기본)와 다이내믹 박력 카메라(옵션) 간 유저 선택 기능은 2차에서 완성.</li>
+            <li><strong>오디오 & 보이스 동기화 (R-12 연동)</strong>: 카운트다운 비프 ➔ GO 비프 ➔ 출발총 레이어링 및 경기 상황 반응형 아나운서 보이스 연동.</li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <!-- 2.2 럼블 핏 -->
+        <div id="sec-pit">
+          <h3 class="sub-header">🥊 2.2 럼블 핏 (Rumble Pit - 격투 모드)</h3>
+          
+          <h4 class="group-title">1) 모델 (3D Model & Arena Environment)</h4>
+          <ul class="styled-list">
+            <li><strong>비의인화 조류 골격 기반 카툰 3D 모델 (더비 모델과의 차별화/신규 컨셉 검토)</strong>: 인간형 관절 꺾임을 배제하고 실제 투계의 신체 비율(목, 가슴, 날개, 다리, 며느리발톱)에 부합하는 카툰 렌더 모델 구축. 더비 레이스 모델과의 공용 여부 또는 격투 전용 신규 모델 분기 컨셉 확정 선행 및 타격 부위 시인성 강화.</li>
+            <li><strong>5대 격투 스타일별 외형 분기</strong>: 인파이터(근육형, 붉은볏), 아웃파이터(날렵, 긴다리), 브롤러(거대흉곽, 거친깃털), 테크니션(정교한부리, 화려함), 밸런서(표준체형).</li>
+            <li><strong>원형 벽면 경기장 (Circular Walled Arena)</strong>: 사각 링을 배제하고 직경 10m 목재/철망 구조 원형 투계장 모델 배치.</li>
+          </ul>
+
+          <h4 class="group-title">2) 모션 (Avian Motions & Combat Actions)</h4>
+          <ul class="styled-list">
+            <li><strong>조류 6대 이동 모션 완비 & 대전 시뮬레이터 개발 연계</strong>: 전진 총총걸음, 짧은 뒤로 홉, 목 빼고 질주, 날개 퍼덕 후방 이탈, 측면 사이드 홉, 원형 탐색 걸음 연동 및 이를 관장하는 <strong>대전 시뮬레이터 기본 프레임워크 개발</strong> 병행 착수.</li>
+            <li><strong>비의인화 7대 전투 기술(공4/방3) 매핑</strong>: [공1] 전진 부리 속사, [공2] 낮은 발톱 할퀴기, [공3] 비상 발톱 급습, [공4] 광폭 발버둥 난타 / [방1] 깃털 부풀려 버티기, [방2] 납작 엎드리기, [방3] 맞발톱 쳐내기.</li>
+            <li><strong>스탠딩 그로기 모션</strong>: 강타 피격 시 바닥에 쓰러지지 않고 1.0~1.5초간 두 다리를 비틀거리며 서스펜스 부여.</li>
+            <li><strong>즉시 바닥 다운 모션</strong>: 체력 0 도달 시 10카운트 없이 다운 즉시 승패 확정 및 경기 종료.</li>
+          </ul>
+
+          <h4 class="group-title">3) 연출 (Direction - 상용화 버전 적용)</h4>
+          <ul class="styled-list">
+            <li><strong>아케이드 섬광 & 스파크 타격 이펙트</strong>: 히트 섬광과 황금빛 스파크 FX로 타격감 극대화. 부리 공격 시 핀포인트 스파크, 발톱 할퀴기 시 슬래시 궤적.</li>
+            <li><strong>크리티컬 히트 한정 화면 렌즈 혈흔 FX</strong>: 몸에 피를 묻히지 않고, 크리티컬 적중 시 렌즈에 붉은 핏방울이 튀었다가 0.8초 내 페이드아웃.</li>
+            <li><strong>히트스톱 및 딥 다이브 줌인 배제</strong>: 타격 순간 프레임 정지 없이 선수 간 거리에 비례하여 부드럽게 줌인/줌아웃되는 객관적 스포츠 중계 시점 유지.</li>
+            <li><strong>사운드 타종 & 보이스 연출</strong>: 라운드 개시 보이스("FIGHT!") ➔ 단독 타종 징소리, KO 판정 시 연속 타종 벨소리.</li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+        <!-- 2.3 럼블 팜 -->
+        <div id="sec-farm">
+          <h3 class="sub-header">🌾 2.3 럼블 팜 (Rumble Farm - 육성 모드: 2차 마일스톤 적용)</h3>
+          
+          <h4 class="group-title">1) 공간 및 비주얼 (2.5D Isometric Farm)</h4>
+          <ul class="styled-list">
+            <li><strong>메인 팜 5대 핵심 공간 구축</strong>: 부화실(Incubator), 훈련장(Training Field), 닭장 및 스파(Rest & Spa), 교배소(Breeding Pen), 관리동(Farm House).</li>
+            <li><strong>캐주얼 아케이드 2.5D 아이소메트릭 뷰</strong>: 따뜻한 파스텔톤 농장 뷰포트 및 닭들의 유쾌한 자율 배회 연출.</li>
+          </ul>
+
+          <h4 class="group-title">2) 육성 및 라이프사이클 (Core Breeding & Status)</h4>
+          <ul class="styled-list">
+            <li><strong>알 획득 & 부화 시스템</strong>: 65종 알 가차 마스터 연동, 등급별 부화 대기시간 및 터치 미니게임(시간 가속), 1차 기본 피지컬 스탯(체력/근력/순발력/지구력/공격성/회복력) 생성 및 잠재력(POT) 롤링.</li>
+            <li><strong>8종 훈련 시스템</strong>: 트레드밀, 샌드백 등 8종 훈련 기구 재화 소모 및 스탯 성장 로직.</li>
+            <li><strong>10대 상태 머신</strong>: 미부화 ➔ 대기 ➔ 훈련중 ➔ 출전중 ➔ 휴식중 ➔ 부상 ➔ 치료중 ➔ 교배중 ➔ 교배쿨다운 ➔ 은퇴.</li>
+          </ul>
+
+          <h4 class="group-title">3) 모드 간 환류 및 교배 (Cross-Mode Circulation)</h4>
+          <ul class="styled-list">
+            <li><strong>경기 출전 환류 루프</strong>: Derby/Pit 출전 시 피로도 적재(+25), 부상 판정(30%), 30분 쿨다운 ➔ 닭장 휴식/스파 치료 복귀.</li>
+            <li><strong>2차 파생 스탯 & 7대 전투 기술 연동</strong>: 훈련 스탯 ➔ 경주(최고속/가속 등) 및 격투(공격/방어 등) 2차 파생 스탯 및 7대 전투 기술 개화/장착 연동.</li>
+            <li><strong>2세대 교배 시스템</strong>: 부모 스탯/잠재력 상속 유전 공식, 생애 5회 교배 한도 제약, 외형 및 특성 유전 확률표 적용.</li>
+          </ul>
+
+          <h4 class="group-title">4) 미국 VIP 라운지 전용 농장 특화 기능 (3차 개발완료 & 4차초기 런칭)</h4>
+          <ul class="styled-list">
+            <li><strong>현장 태블릿/키오스크 맞춤형 패스트 트랙 UX</strong>: 16:9 가로 뷰포트에서 1~2터치로 선수 선택/육성/출전 원스톱 완료.</li>
+            <li><strong>현장 즉시 육성(Fast-Breeding) 시스템</strong>: VIP 크레딧 즉시 소모를 통한 급속 부화, 고속 훈련 및 부상 즉각 치료.</li>
+            <li><strong>VIP 전용 희귀 알 수급 및 현장 경기 즉시 출전</strong>: VIP 전용 고등급(Unique/Legendary) 알 풀 및 즉시 경기 출전 슬롯 제공.</li>
+            <li>
+              <strong>오프라인 독자 운영 체계 (모바일 앱 연동 전면 배제)</strong>:
+              <span style="color: var(--danger); font-weight: 700;">VIP 라운지의 농장 육성 데이터, 보유 닭, 크레딧은 현장 폐쇄망 독립 서버에서만 운용되며 모바일 앱과는 계정/재화 일체 미연동.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 3: 3주 단위 마일스톤 로드맵 -->
+      <section id="sec-roadmap" class="card">
+        <h2 class="section-header">
+          <span>3. 3주 단위 전체 마일스톤 로드맵</span>
+          <span class="badge badge-primary">Sprint Schedule</span>
+        </h2>
+
+        <!-- Interactive Visual Milestone Selector -->
+        <div class="timeline-container">
+          <div class="timeline-title">
+            <span>📅 차수별 스프린트 타임라인 (클릭하여 해당 단계로 즉시 이동)</span>
+            <span class="badge badge-accent">3주 주기 연속 릴리즈</span>
+          </div>
+
+          <div class="timeline-track">
+            <div class="timeline-step active" onclick="scrollToSec('sec-wbs')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[1차] 진행중</span>
+                <span class="timeline-step-dates">10/12 ~ 10/28</span>
+              </div>
+              <div class="timeline-step-name">경주·격투 개선 1차 탑재</div>
+              <div class="timeline-step-scope">카메라3종/환경연출/피니쉬기획/시뮬기초</div>
+            </div>
+
+            <div class="timeline-step" onclick="scrollToSec('sec-m2')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[2차] 예정</span>
+                <span class="timeline-step-dates">10/29 ~ 11/18</span>
+              </div>
+              <div class="timeline-step-name">셰이더완료 & VIP 1차 & 농장1단계</div>
+              <div class="timeline-step-scope">3D모델 셰이더완성, 6종분기, 알부화</div>
+            </div>
+
+            <div class="timeline-step" onclick="scrollToSec('sec-m3')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[3차] 계획</span>
+                <span class="timeline-step-dates">11/19 ~ 12/09</span>
+              </div>
+              <div class="timeline-step-name">미국 VIP 버전완료 & 농장2단계</div>
+              <div class="timeline-step-scope">현장 단말기/태블릿/결제 런칭준비</div>
+            </div>
+
+            <div class="timeline-step" onclick="scrollToSec('sec-m4')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[4차] 계획</span>
+                <span class="timeline-step-dates">12/10 ~ 12/30</span>
+              </div>
+              <div class="timeline-step-name">[4차초기] VIP런칭 & 마켓준비</div>
+              <div class="timeline-step-scope">스토어 심사접수 & 소프트런칭</div>
+            </div>
+
+            <div class="timeline-step" onclick="scrollToSec('sec-m5')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[5차] 신설</span>
+                <span class="timeline-step-dates">01/02 ~ 01/22</span>
+              </div>
+              <div class="timeline-step-name">마켓용 버전 고도화</div>
+              <div class="timeline-step-scope">실데이터 밸런스·스토어 승인</div>
+            </div>
+
+            <div class="timeline-step" onclick="scrollToSec('sec-m6')">
+              <div class="timeline-step-header">
+                <span class="timeline-step-num">[후속] 그랜드오픈</span>
+                <span class="timeline-step-dates">2027 상반기</span>
+              </div>
+              <div class="timeline-step-name">양대 마켓 글로벌 정식 런칭</div>
+              <div class="timeline-step-scope">글로벌 런칭 & 토너먼트 리그</div>
+            </div>
+          </div>
+
+          <!-- Gantt Visual Roadmap Section (Date-Aligned & Mobile 100% Fit + Tap to Rotate) -->
+          <!-- Mobile Touch-to-Rotate Banner (Mobile Only) -->
+          <div class="gantt-touch-prompt" onclick="openGanttModal()" title="터치하여 90° 회전 및 전체 화면으로 크게 보기">
+            <div class="prompt-left">
+              <span class="prompt-icon">🔄</span>
+              <div class="prompt-text-group">
+                <span class="prompt-title">터치하여 90° 회전 및 전체화면 크게 보기</span>
+                <span class="prompt-sub">전체 6개 스프린트 타임라인을 세로 화면에 꽉 차게 확대 회전</span>
+              </div>
+            </div>
+            <button class="prompt-action-btn" type="button">⛶ 확대 회전</button>
+          </div>
+
+          <div class="gantt-wrapper" onclick="openGanttModal()">
+            <div class="gantt-section">
+              <!-- Timeline Time-Axis Scale Header -->
+              <div class="gantt-axis-header">
+                <div class="gantt-axis-label-spacer">차수 / 기간</div>
+                <div class="gantt-axis-grid">
+                  <div class="axis-cell active">
+                    <span class="axis-phase">1차</span>
+                    <span class="axis-dates">10/12 ~ 10/28</span>
+                  </div>
+                  <div class="axis-cell">
+                    <span class="axis-phase">2차</span>
+                    <span class="axis-dates">10/29 ~ 11/18</span>
+                  </div>
+                  <div class="axis-cell">
+                    <span class="axis-phase">3차</span>
+                    <span class="axis-dates">11/19 ~ 12/09</span>
+                  </div>
+                  <div class="axis-cell">
+                    <span class="axis-phase">4차</span>
+                    <span class="axis-dates">12/10 ~ 12/30</span>
+                  </div>
+                  <div class="axis-cell">
+                    <span class="axis-phase">5차</span>
+                    <span class="axis-dates">01/02 ~ 01/22</span>
+                  </div>
+                  <div class="axis-cell">
+                    <span class="axis-phase">후속</span>
+                    <span class="axis-dates">2027 상반기</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gantt Body Rows -->
+              <div class="gantt-body">
+                <!-- Row 1: 1차 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p1">[1차] 진행중</div>
+                    <div class="gantt-phase-date">10/12 ~ 10/28</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-1">
+                      <div class="gantt-bar bar-1" title="[1차] 경주·격투 개선 1차 탑재 (카메라3종/환경연출/피니쉬기획/대전시뮬기초)">
+                        <span class="gantt-bar-title">경주·격투 개선 1차 탑재</span>
+                        <span class="gantt-bar-desc">카메라/환경/피니쉬/시뮬기초</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 2: 2차 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p2">[2차] 예정</div>
+                    <div class="gantt-phase-date">10/29 ~ 11/18</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-2">
+                      <div class="gantt-bar bar-2" title="[2차] 카툰 셰이더·배경 모델 최종 완료 & 경합 물리 & VIP 1차 & [농장 1단계]">
+                        <span class="gantt-bar-title">카툰 셰이더 & VIP 1차</span>
+                        <span class="gantt-bar-desc">배경모델/물리/농장1단계</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 3: 3차 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p3">[3차] 계획</div>
+                    <div class="gantt-phase-date">11/19 ~ 12/09</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-3">
+                      <div class="gantt-bar bar-3" title="[3차] 미국 VIP 버전 완료 및 런칭 준비 완비 & [농장 2단계] VIP농장/환류">
+                        <span class="gantt-bar-title">미국 VIP 버전 완료</span>
+                        <span class="gantt-bar-desc">현장런칭준비/농장2단계</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 4: 4차 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p4">[4차] 계획</div>
+                    <div class="gantt-phase-date">12/10 ~ 12/30</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-4">
+                      <div class="gantt-bar bar-4" title="[4차] [4차초기] 미국 VIP 정식 런칭 / 양대 마켓 심사접수 & [농장 3단계]">
+                        <span class="gantt-bar-title">VIP 런칭 & 마켓준비</span>
+                        <span class="gantt-bar-desc">스토어심사/소프트런칭</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 5: 5차 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p5">[5차] 신설</div>
+                    <div class="gantt-phase-date">01/02 ~ 01/22</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-5">
+                      <div class="gantt-bar bar-5" title="[5차] 마켓용 버전 고도화 (소프트런칭 데이터 반영 / 서버·최적화)">
+                        <span class="gantt-bar-title">마켓용 버전 고도화</span>
+                        <span class="gantt-bar-desc">실데이터반영/스토어승인</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 6: 후속 -->
+                <div class="gantt-row">
+                  <div class="gantt-row-info">
+                    <div class="gantt-phase-badge p6">[후속] 그랜드오픈</div>
+                    <div class="gantt-phase-date">2027 상반기</div>
+                  </div>
+                  <div class="gantt-track-grid">
+                    <div class="gantt-slot col-6">
+                      <div class="gantt-bar bar-6" title="[후속] 양대 마켓 글로벌 정식 그랜드 런칭 & 글로벌 토너먼트 리그">
+                        <span class="gantt-bar-title">양대 마켓 정식 런칭</span>
+                        <span class="gantt-bar-desc">글로벌오픈/토너먼트</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone Summary Table -->
+        <div class="table-container milestone-table-container">
+          <table class="milestone-table">
+            <thead>
+              <tr>
+                <th class="col-step" style="width: 70px; text-align: center;">단계</th>
+                <th style="width: 140px;">기간</th>
+                <th style="width: 260px;">마일스톤 명칭</th>
+                <th>핵심 목표 및 주요 산출물</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-primary">1차</span></td>
+                <td><code>10/12 ~ 10/28</code></td>
+                <td><strong>경주·격투 핵심 개선 1차 탑재 (카메라·환경·피니쉬기획·시뮬레이터 기초)</strong></td>
+                <td>
+                  • 10/28 내부 시연용 상용화 수준 경주/격투 1차 빌드<br>
+                  • <strong>경주</strong>: 닭 번호 인디케이터 부착, 질주 가속 +30%, 피니쉬 3단계 기획 수립(FINISH! 표출, 1초 슬로우 리플레이, 감속런·세리머니), 중계 카메라 3종 랜덤 워킹 추가, 환경 변수 연출(비/바람-낙엽/아지랑이), 스피드 라인 FX 샘플 제작, 상황 반응형 보이스 기초 구조 (※ 닭 3D 모델 카툰 셰이더 및 배경 모델링은 컨셉 확정 선행 후 2차 완료로 이관)<br>
+                  • <strong>격투</strong>: 더비 모델과의 차별화/신규 모델 컨셉 검토 및 2종 베이스 준비, 대전 시뮬레이터 기초 프레임워크 개발 병행, 조류 6대 이동 모션 및 7대 전투 기술 매핑, 즉시 KO 판정, 아케이드 섬광 FX<br>
+                  <small style="color: var(--text-dim);">※ 농장 모드는 1차 시연 피드백 검증 후 2차 마일스톤부터 개발 착수</small>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-accent">2차</span></td>
+                <td><code>10/29 ~ 11/18</code></td>
+                <td><strong>카툰 셰이더·배경 모델 최종 완료, 경합 인터랙션 고도화, VIP 라운지 1차 & [농장 1단계] 착수</strong></td>
+                <td>
+                  • <strong>닭 캐릭터 3D 모델 카툰 셰이더 및 배경 모델링 최종 적용 완료 (1차 R-1 이관분 수렴)</strong><br>
+                  • 미국 오프라인 라운지 현장 기기용 1차 시연 빌드 패키징<br>
+                  • 6종 주행 스타일 외형 차별화 모델 분기, 다이내믹 중계 보이스 풀 확장, 세리머니 본 연동, 레인 침범(차선 변경), 원형 벽면 충돌 연출, 환경 변수 트랙 물리 보정 연동, 현장 결제/정산 프로토타입<br>
+                  • <strong>[농장 1단계]</strong>: 2.5D 메인 팜 뷰 및 5대 핵심 공간(부화실/훈련장/닭장/교배소/관리동) 레이아웃, 65종 알 가차/부화 미니게임, 1차 기본 피지컬 스탯(6종) 및 잠재력 생성, 기본 훈련 8종 구현
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-warning">3차</span></td>
+                <td><code>11/19 ~ 12/09</code></td>
+                <td><strong>미국 VIP 라운지 버전 완료 및 런칭 준비 완료 & [농장 2단계] VIP 농장 기능 및 전 모드 환류 완성</strong></td>
+                <td>
+                  • <strong>미국 VIP 라운지 상용 버전 개발 완료 및 현장 런칭 준비 완비</strong> (※ 오프라인 거점 독자 운영, 온라인 모바일 앱 연동 전면 배제, 4차 초기에 현장 런칭 진행)<br>
+                  • 현장 전용 대형 디스플레이/태블릿 가로 UI 완성, 키오스크 결제 및 크레딧 충전/실시간 베팅 정산 구현, 현장 리허설 완료<br>
+                  • <strong>[농장 2단계 (VIP 라운지용)]</strong>: 현장 태블릿 특화 패스트 트랙 UX, 급속 부화/훈련 및 즉각 치료, VIP 전용 희귀 알 수급, 경기(Derby/Pit) 출전 환류 루프(피로도/부상/쿨다운), 2차 파생 스탯 및 7대 전투 기술 개화/장착, 2세대 교배 유전 완성
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-warning">4차</span></td>
+                <td><code>12/10 ~ 12/30</code></td>
+                <td><strong>[4차 초기] 미국 VIP 라운지 정식 런칭, 양대 마켓 런칭 준비 착수, 스토어 심사 접수 & [농장 3단계] 완비</strong></td>
+                <td>
+                  • <strong>[4차 초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong> (현장 배포, 관전/태블릿 베팅/키오스크 정산 라이브 오픈)<br>
+                  • Google Play / Apple App Store 제출용 모바일 마스터 빌드 패키징 및 스토어 심사 접수<br>
+                  • 인앱 결제(IAP) SDK 연동, IARC 연령등급, 서비스 약관, 치팅 방지 보안 모듈, 세션 자동 복구, 리플레이 최적화<br>
+                  • <strong>[농장 3단계]</strong>: 유저 간 알 거래소(8% 수수료), 일일/주간 퀘스트, 영구 업적 8종, 칭호 20종 마스터, 육성-경기-거래 통합 경제 밸런스 실데이터 튜닝<br>
+                  • 특정 국가 시범 출시(소프트 런칭/CBT) 및 실데이터 수집 개시
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-success">5차</span></td>
+                <td><code>2027.01 (01/02 ~ 01/22)</code></td>
+                <td><strong>마켓용 버전 고도화 및 최종 안정화</strong></td>
+                <td>
+                  • 소프트 런칭 및 CBT 유저 실데이터 기반 경기/육성 밸런스 및 배당률 알고리즘 미세 튜닝<br>
+                  • 모바일 저사양 기기 최적화, 발열/메모리 누수 해소, 다양한 화면비 UI 반응성 고도화<br>
+                  • Google Play / Apple App Store 심사 피드백 대응 및 최종 스토어 승인 확보<br>
+                  • 글로벌 런칭 대비 10만 동접 서버 오토스케일링 및 DB 병목 해소 스트레스 검증 완료
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">후속</span></td>
+                <td><code>2027 상반기</code></td>
+                <td><strong>양대 마켓 글로벌 정식 런칭 (Grand Open)</strong></td>
+                <td>
+                  • 스토어 심사 승인 완료 후 2027년 상반기 글로벌 양대 마켓 동시 그랜드 오픈<br>
+                  • 대규모 동접 부하 대응, 라이브 서비스 운영 및 글로벌 마케팅 전개
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 4: 1차 마일스톤 WBS -->
+      <section id="sec-wbs" class="card">
+        <h2 class="section-header">
+          <span>4. [1차 마일스톤] 상세 작업 분류표 (WBS: ~10/28 완료)</span>
+          <span class="badge badge-primary">Target: 10/28</span>
+        </h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          10/28(수) 내부 시연 피드백 검증을 위해 즉시 투입 가능한 경주 및 격투 모드 작업 범위임. (※ 농장 모드는 1차 시연 종료 후 2차 마일스톤부터 세부 WBS 개시)
+        </p>
+
+        <!-- 4.1 경주 모드 상세 작업 -->
+        <div id="sec-wbs-race">
+          <h3 class="sub-header">🏇 4.1 경주 모드 (Derby Race) 상세 작업</h3>
+          <div class="table-container wbs-table-container">
+            <table class="wbs-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px; text-align: center;">No</th>
+                  <th style="width: 70px; text-align: center;">구분</th>
+                  <th style="width: 320px;">세부 작업 내용</th>
+                  <th>완료 기준 (DoD: Definition of Done)</th>
+                  <th style="width: 250px;">비고 (수기 수정 사항)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-1</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-model">컨셉/기획</span></td>
+                  <td>닭 캐릭터 및 트랙 배경 3D 모델 비주얼 컨셉/스타일 시안 확정</td>
+                  <td>카툰 셰이더 룩앤필 및 배경 컨셉 아트/시안 승인 완료 (2차 카툰 셰이더 및 배경 모델링 최종 완료 기준 확립)</td>
+                  <td><span class="badge badge-warning">2차 완료로 완전 이관</span> <span class="wbs-note">※ 3D 모델 카툰 셰이더 적용 및 배경 모델링 최종 완료는 2차 마일스톤으로 완전 이관</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-2</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-model">모델</span></td>
+                  <td>닭 머리 위 게이트 번호(1~6) 및 고유 컬러 인디케이터 부착</td>
+                  <td>기존 3D 모델 상단 부착 완료, 6두 뒤엉킴 시에도 각 닭의 번호가 100% 식별 가능 검증</td>
+                  <td><span class="badge badge-accent">시인성 최우선</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-3</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션</span></td>
+                  <td>스타트 게이트 대기 모션 3종(발구르기/날개털기/고개짓) 탑재</td>
+                  <td>출발 카운트다운 동안 닭들이 랜덤 대기 모션 정상 수행 검증</td>
+                  <td><span class="wbs-note-blue">기존 모델 연동 ➔ 2차 카툰 모델 승계</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-4</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션</span></td>
+                  <td>기본 질주 모션 템포 30% 상향 튜닝 및 날개짓 연동</td>
+                  <td>기존 대비 체감 속도 30% 증가 검증 완료</td>
+                  <td><span class="wbs-note">속도감 극대화</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-5</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션/기획</span></td>
+                  <td>결승 통과 후 자연스러운 감속 런 모션 적용 및 1위 세리머니 연계 검토</td>
+                  <td>골인 직후 급정지 없이 감속 후 승리 포즈 연결 타당성 검증 및 모션 클립 확보</td>
+                  <td><span class="badge badge-warning">피니쉬 기획-3</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-6</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>출발 시 화면 중앙 "START" 볼드 그래픽 표출</td>
+                  <td>출발 신호총 및 GO 비프와 0.1초 오차 없이 싱크</td>
+                  <td><span class="wbs-note">출발 연출 임팩트 강화</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-7</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>1위 골인 시 화면 중앙 "FINISH!" 강조 연출 및 팡파레 연동</td>
+                  <td>결승선 터치 순간 센터 텍스트 팝업 및 BGM 전환 동기화</td>
+                  <td><span class="badge badge-warning">피니쉬 기획-1</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-8</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>레이스 종료 직후 1초 자동 슬로우 리플레이 (+ Skip 버튼)</td>
+                  <td>결승 순간 1초 슬로우 재생 및 스킵 클릭 시 즉시 결과창 이동 정상 작동</td>
+                  <td><span class="badge badge-warning">피니쉬 기획-2</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-9</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>주행 가속 스피드 라인 FX 및 흙먼지 킥 파티클 탑재</td>
+                  <td>화면 양측 가속 라인 및 지면 흙먼지 파티클 표출로 속도감 전달 검증</td>
+                  <td><span class="wbs-note">아트/기획 구체 샘플 기반 제작</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-10</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>경기 중계 카메라 워킹 3종 추가 (랜덤 적용)</td>
+                  <td>최소 3개 카메라 워킹 앵글 추가 및 경기 중 무작위 자동 전환 적용 완료</td>
+                  <td><span class="badge badge-accent">1차 신규 편입 (2차 옵션화)</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-11</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>트랙 환경 변수(비, 바람-낙엽, 아지랑이) 시각 연출 구현</td>
+                  <td>비, 바람(낙엽 흩날림), 아지랑이 등 3종 환경 변수 시각 효과 렌더링 정상 표출</td>
+                  <td><span class="badge badge-accent">1차 신규 편입 (2차 물리연동)</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">R-12</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-sound">사운드</span></td>
+                  <td>경기 상황 반응형 아나운서 보이스 구조 적용 (이벤트 트리거형)</td>
+                  <td>출발, 라스트스퍼트, 피니시 등 핵심 경기 이벤트 트리거 연동 음성 정상 출력</td>
+                  <td><span class="wbs-note">고정 타임라인 방식 전면 탈피</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="height: 1.5rem;"></div>
+
+        <!-- 4.2 격투 모드 상세 작업 -->
+        <div id="sec-wbs-pit">
+          <h3 class="sub-header">🥊 4.2 격투 모드 (Rumble Pit) 상세 작업</h3>
+          <div class="table-container wbs-table-container">
+            <table class="wbs-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px; text-align: center;">No</th>
+                  <th style="width: 70px; text-align: center;">구분</th>
+                  <th style="width: 320px;">세부 작업 내용</th>
+                  <th>완료 기준 (DoD: Definition of Done)</th>
+                  <th style="width: 250px;">비고 (수기 수정 사항)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-1</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-model">컨셉/모델</span></td>
+                  <td>격투 모델 컨셉 검토 및 조류 골격 기반 3D 파이터 베이스 2종(인파이터/테크니션) 준비</td>
+                  <td>더비 모델과의 차별화/격투 전용 모델 여부 확정 및 인간형 관절 배제 실제 조류 비율 3D 메쉬 준비 완료</td>
+                  <td><span class="wbs-note">더비 모델 차별화/신규 컨셉 검토 선행</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-2</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-model">모델</span></td>
+                  <td>직경 10m 원형 벽면 아레나(Circular Arena) 3D 배경 배치</td>
+                  <td>사각 링 철거, 목재/철망 원형 벽면 환경 렌더링 완료</td>
+                  <td><span class="wbs-note">원형 경기장 구조 안착</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-3</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션/시뮬</span></td>
+                  <td>조류 6대 이동 모션 클립 연동 및 대전 시뮬레이터 기본 프레임워크 개발 병행</td>
+                  <td>전진총총, 뒤로홉, 목빼고질주, 후방이탈, 사이드홉, 탐색걸음 적용 및 간격/타격축 판정 기초 프레임워크 구축</td>
+                  <td><span class="wbs-note">대전 시뮬레이터 개발 병행 연동</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-4</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션</span></td>
+                  <td>비의인화 7대 전투 기술(공4/방3) 모션 클립 매핑</td>
+                  <td>부리속사, 발톱할퀴기, 비상급습, 발버둥난타, 버티기, 엎드리기, 맞발톱쳐내기 연동</td>
+                  <td><span class="wbs-note">기술 모션 클립 완비</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-5</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션</span></td>
+                  <td>피격 시 단발성 스탠딩 그로기(Groggy) 모션 연동</td>
+                  <td>강타 피격 시 1.0초간 비틀거림 모션 발동</td>
+                  <td><span class="wbs-note">서스펜스 부여</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-6</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-motion">모션</span></td>
+                  <td>체력 0 도달 시 즉시 바닥 다운(Knockdown) 모션 연동</td>
+                  <td>10카운트 없이 바닥 닿는 즉시 KO 판정</td>
+                  <td><span class="wbs-note">아케이드 템포 유지</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-7</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>타격 시 아케이드 섬광 & 스파크 히트 이펙트 표출</td>
+                  <td>적중 순간 선명한 타격 스파크 및 섬광 출력</td>
+                  <td><span class="wbs-note">타격감 극대화</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-8</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>크리티컬 히트 한정 화면 렌즈 혈흔 FX 탑재</td>
+                  <td>치명타 발생 시 화면 렌즈에 일시적 혈흔 튀김 연출</td>
+                  <td><span class="wbs-note">스포츠 중계 렌즈 연출</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-9</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-direct">연출</span></td>
+                  <td>히트스톱 및 딥 다이브 줌인 배제, 선수 간 거리 비례 카메라 유지</td>
+                  <td>타격 프레임 정지 없이 부드러운 거리 연동 뷰포트 유지</td>
+                  <td><span class="wbs-note">베팅 조작 오해 차단</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;"><span class="code-pill">P-10</span></td>
+                  <td style="text-align: center;"><span class="cat-badge cat-sound">사운드</span></td>
+                  <td>라운드 보이스(`"FIGHT!"`), 단독 타종, KO 연속 벨소리 연동</td>
+                  <td>라운드 시작 및 KO 종료 시 효과음 정상 동기화</td>
+                  <td><span class="wbs-note">사운드 타종 임팩트</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: 차수별 후속 마일스톤 연계 계획 -->
+      <section id="sec-milestones" class="card">
+        <h2 class="section-header">
+          <span>5. 차수별 후속 마일스톤 연계 계획</span>
+          <span class="badge badge-accent">Phased Execution Plan</span>
+        </h2>
+
+        <!-- 5.1 2차 마일스톤 -->
+        <div id="sec-m2" style="margin-bottom: 2rem;">
+          <h3 class="sub-header">📍 5.1 [2차 마일스톤: ~11/18] 카툰 셰이더·배경 모델 최종 완료, 미국 VIP 라운지 1차 시연 대응 & [농장 1단계] 착수</h3>
+          <ul class="styled-list">
+            <li>
+              <strong>3D 카툰 셰이더 및 배경 모델링 최종 완료 (1차 R-1 이관 과제 완수)</strong>:
+              <ul class="styled-sublist">
+                <li>1차 마일스톤에서 확정된 캐릭터 및 배경 모델 컨셉을 바탕으로 닭 캐릭터 3D 모델 카툰 셰이더 최종 적용 완료.</li>
+                <li>경기장 트랙 및 배경 3D 모델링 확정 및 최종 렌더링 파이프라인 안착.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>경주 모드 심화</strong>:
+              <ul class="styled-sublist">
+                <li><strong>6종 주행 스타일 외형 차별화 모델 분기</strong>: 도주, 선행, 선입, 추입, 자재, 변칙 6종 스타일에 맞춘 체형 실루엣 및 깃털 텍스처 3D 모델 분기 탑재.</li>
+                <li><strong>피니쉬 3단계 연출 본 연동</strong>: 1차 피니쉬 기획(1: FINISH! 표출, 2: 1초 슬로우 리플레이, 3: 감속 런·승리 세리머니) 결과를 바탕으로 1위 완주 닭의 우승 세리머니(단상 도약 및 날개 펼침) 최종 연계.</li>
+                <li><strong>관전 카메라 2종 옵션화</strong>: 1차에서 추가된 중계 카메라 3종 랜덤 워킹 데이터를 바탕으로 안정적 기본 뷰 vs 다이내믹 박력 뷰 유저 선택 옵션화 구현.</li>
+                <li><strong>환경 변수 트랙 주행 물리 연동</strong>: 1차 시각 연출(비/바람-낙엽/아지랑이)에 이어 환경 변수에 따른 트랙 마찰력/주행 물리 보정 로직 연동.</li>
+                <li><strong>경기 상황 반응형 다이내믹 중계 보이스 고도화</strong>: 실시간 순위 변동, 추월, 초접전 경합 등 레이스 동적 이벤트에 반응하는 보이스 풀 대폭 확장 (R-12 연계 고도화).</li>
+                <li>장거리 코스에서 레인 침범(차선 변경) 및 진로 방해/몸싸움 경합 물리 연산 적용.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>격투 모드 심화 (대전 시뮬레이터 및 모델 확장)</strong>:
+              <ul class="styled-sublist">
+                <li><strong>격투 모델 분기 및 확장</strong>: 1차 P-1 컨셉 검토 결과(더비 모델과의 차별화/격투 전용 모델 여부)를 바탕으로 브롤러, 아웃파이터, 밸런서 3종 추가 파이터 모델/모션 확장.</li>
+                <li><strong>대전 시뮬레이터 고도화</strong>: 1차에서 구축된 대전 시뮬레이터 기본 프레임워크를 기반으로 콤보 캔슬, 실시간 동시 격돌(Clash) 상성 역습 시퀀스 및 외곽 벽면 압박 시 꼬리깃 튕김/벽 격돌(Wall Impact) 모션/사운드 연동 완성.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>농장 모드 1단계 (Core Farm Foundation)</strong>:
+              <ul class="styled-sublist">
+                <li><strong>메인 팜 2.5D 아이소메트릭 뷰 및 5대 공간 배치</strong>: 부화실, 훈련장, 닭장/스파, 교배소, 관리동 레이아웃 및 닭 캐릭터 자율 배회 애니메이션 연출.</li>
+                <li><strong>알 가차 & 부화 시스템</strong>: 65종 알 가차 마스터 연동, 등급별 부화 대기시간 및 터치 미니게임(부화 시간 가속) UI/UX 구현.</li>
+                <li><strong>1차 기본 피지컬 스탯(6종) & 잠재력 롤링</strong>: 부화 시 등급별 기본 스탯(체력/근력/순발력/지구력/공격성/회복력) 분배식 및 잠재력(POT) 생성 로직 탑재.</li>
+                <li><strong>기본 8종 훈련 시스템 & 상태 머신</strong>: 트레드밀, 샌드백 등 8종 훈련 기구 재화 소모/대기시간/스탯 성장 로직 및 닭 10대 상태 머신 1차 구현.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>미국 VIP 라운지 1차 현장 시연 빌드 패키징</strong>:
+              <ul class="styled-sublist">
+                <li>현장 전용 대형 디스플레이(16:9 가로 모드) 뷰포트 UI 배치 최적화.</li>
+                <li>오프라인 키오스크/단말기 연동 결제 및 크레딧 충전/정산 플로우 프로토타입 검증.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+        <!-- 5.2 3차 마일스톤 -->
+        <div id="sec-m3" style="margin-bottom: 2rem;">
+          <h3 class="sub-header">📍 5.2 [3차 마일스톤: ~12/09] 미국 VIP 라운지 버전 완료 및 런칭 준비 완료 & [농장 2단계] VIP 농장 기능 및 전 모드 환류 완성</h3>
+          <ul class="styled-list">
+            <li>
+              <strong>미국 VIP 라운지 상용 버전 개발 완료 및 현장 런칭 준비 완비</strong>:
+              <ul class="styled-sublist">
+                <li><strong>현장 전용 대형 스크린 & 태블릿 가로 UI 완성</strong>: VIP 라운지 대형 관전 모니터 중계 뷰와 좌석 태블릿 간 0.1초 실시간 동기화.</li>
+                <li><strong>현장 키오스크 결제 및 실시간 베팅/크레딧 정산 시스템 구현 완료</strong>: 현금/카드/VIP 멤버십 크레딧 충전, 경기별 베팅 티켓 발권, 적중 시 크레딧 즉시 환급/출금 연동.</li>
+                <li><strong>VIP 현장 네트워크/기기 환경 안정화 및 런칭 리허설 완료</strong>: 로컬 서버 및 통신 장애 대비 오프라인 캐시 및 자동 페일오버 완비, 현장 런칭 전 최종 리허설 검증.</li>
+                <li><small style="color: var(--text-dim);">※ 미국 VIP 라운지 현장 정식 런칭 및 오픈 작업은 4차 마일스톤 초기에 진행</small></li>
+              </ul>
+            </li>
+            <li>
+              <strong>농장 모드 2단계 (VIP 라운지용 농장 기능 & 전 모드 환류)</strong>:
+              <ul class="styled-sublist">
+                <li><strong>VIP 라운지 특화 패스트 트랙 UX</strong>: 복잡한 육성 뎁스를 압축하여 1~2터치로 선수 선택/육성/출전을 원스톱 진행하는 태블릿 전용 UI 제공.</li>
+                <li><strong>현장 급속 육성(Fast-Breeding) 시스템</strong>: VIP 크레딧 즉시 소모를 통한 알 급속 부화, 고속 훈련, 피로 회복 및 부상 즉각 치료(스파 VIP 케어) 연계.</li>
+                <li><strong>VIP 전용 희귀 알 수급 및 현장 경기 즉시 출전</strong>: VIP 전용 고등급(Unique/Legendary) 알 가차 풀 및 현장 더비/피트 경기 즉시 엔트리 슬롯 제공.</li>
+                <li><strong>경기 출전 환류 루프</strong>: 경기 종료 후 피로도(+25), 부상(30%), 쿨다운 적재 ➔ 닭장 휴식/스파 치료 복귀 환류 사이클 완성.</li>
+                <li><strong>2차 파생 스탯 & 7대 전투 기술 연동</strong>: 훈련 스탯 ➔ 경주(최고속/가속 등) 및 격투(공격/방어/기술슬롯 등) 2차 파생 스탯 공식 탑재.</li>
+                <li><strong>2세대 교배 시스템 완성</strong>: 부모 스탯/잠재력 상속 유전 공식, 생애 5회 교배 제한, 외형/특성 유전 확률표 적용.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+        <!-- 5.3 4차 마일스톤 -->
+        <div id="sec-m4" style="margin-bottom: 2rem;">
+          <h3 class="sub-header">📍 5.3 [4차 마일스톤: ~12/30] [4차 초기] 미국 VIP 라운지 정식 런칭, 양대 마켓 런칭 준비 착수, 스토어 심사 접수 & [농장 3단계] 완비</h3>
+          <ul class="styled-list">
+            <li>
+              <strong>[4차 초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong>:
+              <ul class="styled-sublist">
+                <li>3차에서 개발 및 런칭 준비가 완료된 VIP 라운지 전용 상용 빌드(경주/격투/VIP농장)를 현장 기기에 배포 및 정식 오픈.</li>
+                <li>현장 관전 스크린 중계, 유저별 좌석 태블릿 베팅, 키오스크 크레딧 충전/정산 및 VIP 농장 라이브 운영 개시.</li>
+                <li>현장 전담 CS 및 실시간 운영 모니터링/장애 대응 프로세스 가동.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>양대 마켓(Google Play / Apple App Store) 모바일 런칭 준비 착수</strong>:
+              <ul class="styled-sublist">
+                <li><strong>인앱 결제 SDK 및 플랫폼 보안</strong>: Google Play Billing 및 Apple In-App Purchase 모듈 연동, 영수증 검증 서버 보안 강화, 치팅 방지 로직 적용.</li>
+                <li><strong>심사 규격 및 법적 고지 UI</strong>: IARC 설문 기반 연령등급 표시, 글로벌 개인정보처리방침, 서비스 이용약관 팝업 구현.</li>
+                <li><strong>모바일 클라이언트 최적화</strong>: 저사양 기기 메모리 최적화, 네트워크 단절 및 백그라운드 전환 시 자동 재접속/세션 복구 프로세스 완비.</li>
+                <li><strong>양대 마켓 스토어 제출용 마스터 빌드 패키징 및 심사 접수 완료</strong>.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>농장 모드 3단계 (Ecosystem Completion & Balance)</strong>:
+              <ul class="styled-sublist">
+                <li><strong>유저 간 알 거래소(Egg Marketplace)</strong>: 알 등록/구매 및 8% 거래 수수료 회수 로직 구현.</li>
+                <li><strong>퀘스트, 업적 및 칭호 시스템</strong>: 일일 퀘스트 5종, 주간 퀘스트 4종, 영구 누적 업적 8종, 칭호 20종 마스터 데이터 연동.</li>
+                <li><strong>통합 경제 밸런스 튜닝</strong>: 실데이터 기반 재화 순환 경제 모델(Sink & Source) 및 훈련/교배/치료 밸런스 최적화.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>소프트 런칭 및 CBT 시범 출시</strong>:
+              <ul class="styled-sublist">
+                <li>특정 국가(동남아 등) 시범 소프트 런칭 개시 및 실제 유저 유입을 통한 경기/육성 실데이터 1차 수집.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+        <!-- 5.4 5차 마일스톤 -->
+        <div id="sec-m5" style="margin-bottom: 2rem;">
+          <h3 class="sub-header">📍 5.4 [5차 마일스톤: 2027.01 (01/02 ~ 01/22)] 마켓용 버전 고도화 및 최종 안정화</h3>
+          <ul class="styled-list">
+            <li>
+              <strong>소프트 런칭/CBT 실데이터 기반 게임·경제 밸런스 미세 조정</strong>:
+              <ul class="styled-sublist">
+                <li>시범 출시 국가 유저들의 실제 베팅 패턴, 승률 통계, 재화 순환 데이터를 정밀 분석하여 경기 배당률 알고리즘 및 닭 AI 난이도 튜닝.</li>
+                <li>농장 훈련 스탯 증가율, 알 부화/교배 쿨다운, 피로도 회복 비용 및 알 거래소 수수료율 등 전반적인 인게임 이코노미 Sink & Source 밸런스 미세 최적화.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>모바일 클라이언트 성능 및 디바이스 호환성 고도화</strong>:
+              <ul class="styled-sublist">
+                <li>안드로이드 저사양 기기 및 다양한 화면비/해상도 모바일·태블릿 기기 대상 UI 반응성 및 렌더링 최적화.</li>
+                <li>장시간 플레이 시 발열 및 배터리 소모 완화, 메모리 누수(Memory Leak) 차단 및 텍스처 스트리밍 안정화.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>스토어 심사 피드백 대응 및 최종 승인 획득</strong>:
+              <ul class="styled-sublist">
+                <li>Google Play 및 Apple App Store 심사 피드백/리젝 이슈 발생 시 신속한 클라이언트 및 백엔드 패치 대응.</li>
+                <li>연령 등급, 결제 가이드라인, 개인정보보호 규정 등 스토어 정책 100% 충족 및 글로벌 릴리즈 가능 최종 마스터 승인 확보.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>글로벌 서버 인프라 스트레스 검증 및 안정화</strong>:
+              <ul class="styled-sublist">
+                <li>글로벌 런칭 대비 10만 이상 동시 접속 트래픽 시뮬레이션을 통한 클라우드 서버 인프라 오토스케일링 검증.</li>
+                <li>실시간 경기 관전/베팅 패킷 트래픽 분산 최적화 및 DB 트랜잭션 병목 사전 제거 완료.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+        <!-- 5.5 후속 로드맵 -->
+        <div id="sec-m6">
+          <h3 class="sub-header">🚀 5.5 [2027년 상반기 로드맵] 양대 마켓 글로벌 정식 런칭 (Grand Open)</h3>
+          <ul class="styled-list">
+            <li>
+              <strong>글로벌 양대 마켓 동시 그랜드 오픈</strong>:
+              <ul class="styled-sublist">
+                <li>Google Play 및 Apple App Store 글로벌 전 권역 동시 정식 런칭 개시.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>글로벌 라이브 운영 및 대규모 마케팅 전개</strong>:
+              <ul class="styled-sublist">
+                <li>글로벌 정규 토너먼트 리그 운영 및 시즌제 랭킹전 개시.</li>
+                <li>실시간 서버 장애 관제, 부정 행위(치팅) 실시간 탐지 및 글로벌 CS 체제 본격 가동.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 6. 전 모드 구성 요소(비주얼 에셋 포함) 볼륨 픽스 및 마일스톤별 투입 총괄표 -->
+      <section id="sec-volume" class="card">
+        <h2 class="section-header">
+          <span>6. 전 모드 구성 요소(비주얼 에셋 포함) 볼륨 픽스 및 마일스톤별 투입 총괄표</span>
+          <span class="badge badge-success">Asset Baseline Fixed</span>
+        </h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+          ROOSTER RUMBLE 프로젝트 전 모드(경주·격투·농장·VIP라운지·온라인 마켓)의 모든 세부 구성 요소, 3D 모델, 모션/애니메이션, VFX 파티클, UI/UX 화면, 오디오, 마스터 데이터 및 시스템 볼륨을 정량적으로 체크 및 픽스(Fix)하고, 3주 단위 마일스톤(1차~후속)과 1:1 매핑한 공식 기준 볼륨 총괄표입니다.
+        </p>
+
+        <!-- 6.1 총괄 에셋 볼륨 요약 배지 그리드 -->
+        <div id="sec-vol-summary">
+          <h3 class="sub-header">📊 6.1 비주얼 & 제작 에셋 총괄 현황 요약 (Fix Status)</h3>
+          <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="kpi-box primary">
+              <div class="kpi-label">3D 모델 & 배경</div>
+              <div class="kpi-value">11종 + 7곳</div>
+              <div class="kpi-desc">11개 베이스메쉬 / 6부착물 / 7대 경기장·팜</div>
+            </div>
+            <div class="kpi-box" style="border-left: 4px solid #f43f5e;">
+              <div class="kpi-label">선수 맵핑 바리에이션</div>
+              <div class="kpi-value">총 300종</div>
+              <div class="kpi-desc">11종 모델 기반 텍스처/컬러 (추후 추가 예정)</div>
+            </div>
+            <div class="kpi-box warning">
+              <div class="kpi-label">모션 / 애니메이션</div>
+              <div class="kpi-value">35종</div>
+              <div class="kpi-desc">경주(7종) + 격투(16종) + 팜 자율/훈련/스파(12종)</div>
+            </div>
+            <div class="kpi-box" style="border-left: 4px solid #a855f7;">
+              <div class="kpi-label">VFX 및 파티클</div>
+              <div class="kpi-value">24종</div>
+              <div class="kpi-desc">타격·스피드·환경·혈흔·부화 연출 FX</div>
+            </div>
+            <div class="kpi-box success">
+              <div class="kpi-label">UI / UX 화면</div>
+              <div class="kpi-value">42개 화면</div>
+              <div class="kpi-desc">경주(6) + 격투(6) + 팜(14) + VIP(8) + 스토어(8)</div>
+            </div>
+            <div class="kpi-box" style="border-left: 4px solid #06b6d4;">
+              <div class="kpi-label">2D 에셋 & 아이콘</div>
+              <div class="kpi-value">135종+</div>
+              <div class="kpi-desc">알 65종, 훈련 8종, 칭호 20종, 업적 8종, 상태 10종</div>
+            </div>
+            <div class="kpi-box" style="border-left: 4px solid #ec4899;">
+              <div class="kpi-label">오디오 사운드</div>
+              <div class="kpi-value">105종+</div>
+              <div class="kpi-desc">BGM 8곡, 효과음 52종, 음성 보이스 45종+</div>
+            </div>
+          </div>
+
+          <!-- 총괄 에셋 픽스 요약 테이블 -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 180px;">제작 영역</th>
+                  <th style="width: 110px; text-align: center;">확정 수량</th>
+                  <th style="width: 70px; text-align: center;">단위</th>
+                  <th style="width: 120px; text-align: center;">픽스 상태</th>
+                  <th>상세 세부 내역 및 비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="제작 영역"><strong>3D 캐릭터 모델 (베이스 메쉬)</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">11</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">경주 6종 주행 스타일 외형 분기(도주/선행/선입/추입/자재/변칙) + 격투 5종 파이터 분기(인파이터/아웃파이터/브롤러/테크니션/밸런서) 기본 뼈대 메쉬</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>선수 바리에이션용 맵핑</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary" style="background: #e11d48;">300</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역"><strong>총 300개의 바리에이션용 텍스처/컬러 맵핑 (추후 추가 예정)</strong> - 기본 11종 선수 메쉬에 적용되는 품종별 깃털 무늬, 컬러 패턴, 스킨 맵핑 300세트</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>3D 캐릭터 부착물 에셋</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">6</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">1~6번 게이트 번호판 및 고유 컬러 인디케이터 머리 위 3D 부착물 에셋</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>3D 경기장/배경 스테이지</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">7</span></td>
+                  <td data-label="단위" style="text-align: center;">개소</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">더비 타원형 트랙(1곳), 직경 10m 원형 핏 아레나(1곳), 팜 5대 핵심 공간(부화실/훈련장/닭장스파/교배소/관리동)</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>모션 / 애니메이션 클립</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-warning">35</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">경주 7종(대기3, 질주2, 감속런/세리머니2) + 격투 16종(보법6, 기술7, 피격/그로기/다운3) + 팜 12종(배회4, 훈련8)</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>VFX 및 파티클 이펙트</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-accent">24</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">경주 7종(스피드라인, 흙먼지, 환경3, START/FINISH) + 격투 7종(타격3, 혈흔, 벽면/방어2) + 팜/공통 10종(부화3, 훈련/스파4 등)</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>UI 화면 및 모달 패널</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-success">42</span></td>
+                  <td data-label="단위" style="text-align: center;">개</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">더비 6화면(HUD4, 슬로우, 옵션) + 핏 6화면(HUD4, FIGHT/KO) + 팜 14화면 + VIP 현장 8화면 + 스토어/공통 8화면</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>2D 아이콘 및 그래픽 에셋</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">135+</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">알 가차 65종(커먼20/언커먼15/레어15/에픽10/전설5), 훈련 기구 8종, 상태 머신 배지 10종, 칭호 20종, 영구 업적 8종, 퀘스트 9종 등</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>BGM 음원</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">8</span></td>
+                  <td data-label="단위" style="text-align: center;">곡</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">로비, 더비 대기/질주, 핏 긴장, 팜 어쿠스틱, VIP 라운지, 우승 팡파레 3종</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>효과음 (SFX)</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">52</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">경주 12종(비프, 총성, 발자국, 날개 등) + 격투 18종(타격, 피격, 타종 징/벨 등) + 팜/공통 22종(부화, 훈련8, 스파, UI음)</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>음성 보이스 클립</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">45+</span></td>
+                  <td data-label="단위" style="text-align: center;">종</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">동적 아나운서 중계 25종 + 격투 콜 10종 + 닭 울음/비명 10종</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>마스터 데이터 테이블</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">6</span></td>
+                  <td data-label="단위" style="text-align: center;">세트</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">알 65종 가차 마스터, 30두 스탯 테이블, 24시간 타임 스케줄, 훈련/유전 공식, 경제 밸런스 테이블 등</td>
+                </tr>
+                <tr>
+                  <td data-label="제작 영역"><strong>핵심 엔진 & 서버 시스템</strong></td>
+                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">5</span></td>
+                  <td data-label="단위" style="text-align: center;">대모듈</td>
+                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
+                  <td data-label="상세 세부 내역">결정론적 경주 물리, 핏 대전 시뮬레이터, 팜 유전/스탯 엔진, 오프라인 VIP 독립 폐쇄 서버, 10만 동접 클라우드 인프라</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 6.2 모드별 상세 볼륨 명세 -->
+        <div id="sec-vol-modes" style="margin-top: 2rem;">
+          <h3 class="sub-header">🎮 6.2 모드별 세부 구성 요소 확정 볼륨 명세표</h3>
+
+          <!-- 경주 모드 표 -->
+          <h4 style="margin: 1.25rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🏇 1) 더비 레이스 (Derby Race - 경주 모드)</span>
+            <span class="badge badge-primary">경주 확정</span>
+          </h4>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 100px;">대분류</th>
+                  <th style="width: 200px;">세부 구성 항목</th>
+                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
+                  <th>상세 규격 및 작업 스펙</th>
+                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">주행 스타일별 3D 모델 분기</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
+                  <td data-label="상세 스펙">도주, 선행, 선입, 추입, 자재, 변칙 6종 체형 실루엣 및 깃털 차별화 메쉬</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차컨셉 ➔ 2차완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">게이트 번호 인디케이터</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
+                  <td data-label="상세 스펙">1~6번 게이트 고유 컬러 및 번호판 머리 위 3D 부착물 에셋</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 맵핑</span></td>
+                  <td data-label="세부 구성 항목">선수 바리에이션용 맵핑</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong style="color: #f43f5e;">총 300종</strong></td>
+                  <td data-label="상세 스펙">기본 11종 선수 메쉬 기반 깃털 무늬, 컬러 패턴, 품종 스킨 맵핑 300세트 (추후 추가 예정)</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차(6)➔2차(30)➔3차(100)➔4차(200)➔5차(300)</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">카툰 셰이더 머티리얼</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">아케이드 툰 셰이딩, 외곽선(Outline), 림라이트, 채도 보정 셰이더</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">트랙 및 스타트/골인 아레나</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">타원형 오벌 트랙, 6구 스타트 게이트, 피니쉬 아치, 우승 단상, 관중석</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">게이트 대기 모션</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">발구르기, 날개털기, 고개짓 등 출발 카운트다운 랜덤 대기 모션 클립</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">질주 모션 튜닝</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">기본 질주 템포 +30% 가속 모션, 라스트 스퍼트 강풍 날개짓 파워 모션</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">피니쉬 및 세리머니</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">결승 통과 후 감속 런다운 모션 1종, 1위 완주 닭 단상 도약/날개 펼침 세리머니 1종</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기획 ➔ 2차연동</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">속도감 및 주행 파티클</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">측면 가속 스피드 라인 FX, 발굽 지면 흙먼지 킥(Kick Dust) 파티클</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">환경 변수 연출</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">트랙 비(Rain) 파티클, 바람-낙엽 흩날림 파티클, 지면 열기 아지랑이 셰이더 FX</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차연출 ➔ 2차결합</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">레이스 스타트/피니쉬 FX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">출발 0초 볼드 "START" 팝업, 1위 결승 통과 "FINISH!" 팡파레 축하 버스트 FX</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">레이스 카메라 워킹</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">기본 쿼터뷰 트랙 카메라, 다이내믹 박력 추적 카메라, 결승 통과 클로즈업 카메라</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">1초 슬로우 리플레이</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">결승 1초 전후 다이내믹 앵글 슬로우 모션 리플레이 및 [Skip] 인터랙션</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기획 ➔ 2차구현</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">레이스 인게임 HUD</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
+                  <td data-label="상세 스펙">상단 실시간 순위 바, 미니맵 트랙 진행 인디케이터, 배당률 표출창, 결과창</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">레이스 SFX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>12종</strong></td>
+                  <td data-label="상세 스펙">카운트다운 비프(2회), GO 비프, 출발 신호총, 발자국 흙길/잔디 루프, 날개 퍼덕임 등</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">상황 반응형 아나운서</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>25종</strong></td>
+                  <td data-label="상세 스펙">출발, 선두 다툼, 외곽 추월, 접전 경합, 라스트 스퍼트, 골인 등 동적 보이스 풀</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기초 ➔ 2차확장</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">레이스 BGM</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3곡</strong></td>
+                  <td data-label="상세 스펙">경기 대기 룸 BGM, 박진감 질주 BGM, 우승 팡파레 BGM</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 격투 모드 표 -->
+          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🥊 2) 럼블 핏 (Rumble Pit - 격투 모드)</span>
+            <span class="badge badge-warning">격투 확정</span>
+          </h4>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 100px;">대분류</th>
+                  <th style="width: 200px;">세부 구성 항목</th>
+                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
+                  <th>상세 규격 및 작업 스펙</th>
+                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">5대 파이터 3D 모델 분기</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
+                  <td data-label="상세 스펙">인파이터(근육/붉은볏), 아웃파이터(날렵/린다리), 브롤러(거대흉곽), 테크니션(정교), 밸런서</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차2종 ➔ 2차5종</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
+                  <td data-label="세부 구성 항목">원형 벽면 아레나 (10m)</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">직경 10m 목재/철망 구조 원형 투계장, 흙바닥 링 텍스처, 원형 펜스 벽면</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차배치 ➔ 2차완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">조류 6대 이동 보법</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
+                  <td data-label="상세 스펙">전진 총총, 짧은 뒤로 홉, 목 빼고 질주 대시, 날개 퍼덕 후방 이탈, 측면 사이드 홉, 원형 탐색 걸음</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연동 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">비의인화 7대 전투 기술</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>7종</strong></td>
+                  <td data-label="상세 스펙">[공격4] 부리 속사, 낮은 발톱 할퀴기, 비상 발톱 급습, 광폭 발버둥 난타 / [방어3] 버티기, 엎드리기, 맞발톱 쳐내기</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차클립 ➔ 2차시뮬</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">피격 및 피니시 모션</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">강타 피격 단발 모션, 스탠딩 그로기(1.0초 비틀거림), 즉시 캔버스 다운(Knockdown)</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연동 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">격돌/벽면 충돌 모션</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">동시 격돌(Clash) 튕김 모션, 아레나 벽면 충돌(Wall Impact) 바운드 모션</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">아케이드 타격 FX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">부리 핀포인트 스파크, 발톱 할퀴기 슬래시 궤적, 날개 난타 광역 충격파 파티클</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">크리티컬 렌즈 혈흔 FX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">치명타 적중 시 화면 렌즈에 붉은 핏방울 일시 표출 후 0.8초 내 페이드아웃</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">벽면 충돌 및 방어 FX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">벽면 충돌 파편 흙먼지 FX, 깃털 부풀려 가드 시 깃털 흩날림 파티클</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">격투 관전 카메라</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
+                  <td data-label="상세 스펙">두 선수 간 거리에 비례하여 부드럽게 줌인/줌아웃되는 객관적 스포츠 중계 카메라</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">대전 인게임 HUD</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
+                  <td data-label="상세 스펙">좌우 2두 체력 게이지(HP Bar), 배당률 표시창, 라운드/타이머 표출창, 대전 결과 모달</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
+                  <td data-label="세부 구성 항목">대전 시각 연출 그래픽</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">라운드 시작 볼드 "FIGHT!" 표출, 승패 판정 센터 볼드 "KO" 그래픽 표출</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">격투 타격/피격 SFX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>14종</strong></td>
+                  <td data-label="상세 스펙">부리 타격음, 발톱 슬래시, 날개 강타, 뼈 충돌, 조류 피격 비명, 그로기 헐떡임 등</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">타종 및 관중 SFX</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
+                  <td data-label="상세 스펙">단독 타종 징소리, KO 연속 타종 벨소리(SFX_PIT_KO_BELL), 관중 함성/탄식</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">보이스 및 BGM</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">라운드 개시 보이스("First Round... FIGHT!"), 대전 긴장 BGM, KO 승리 팡파레</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">엔진</span></td>
+                  <td data-label="세부 구성 항목">대전 시뮬레이터</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1모듈</strong></td>
+                  <td data-label="상세 스펙">두 선수 간격, 타격축, 회피/판정, 콤보 캔슬 및 상성 역습을 관장하는 전용 시뮬레이터</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기초 ➔ 2차고도화</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 농장 모드 표 -->
+          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🏡 3) 럼블 팜 (Rumble Farm - 육성 모드)</span>
+            <span class="badge badge-success">육성 확정</span>
+          </h4>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 100px;">대분류</th>
+                  <th style="width: 200px;">세부 구성 항목</th>
+                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
+                  <th>상세 규격 및 작업 스펙</th>
+                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
+                  <td data-label="세부 구성 항목">메인 팜 5대 핵심 공간</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
+                  <td data-label="상세 스펙">부화실(Incubator), 훈련장(Training Field), 닭장/스파(Rest & Spa), 교배소(Breeding Pen), 관리동(Farm House)</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 1단계 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
+                  <td data-label="세부 구성 항목">농장 배경/지형 에셋</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1세트</strong></td>
+                  <td data-label="상세 스펙">2.5D 아이소메트릭 파스텔톤 타일맵, 울타리, 잔디, 조경 오브젝트 세트</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
+                  <td data-label="세부 구성 항목">8종 훈련 기구 오브젝트</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>8종</strong></td>
+                  <td data-label="상세 스펙">트레드밀, 샌드백, 밸런스 짐볼, 속도 래더, 타격 목인, 타이어 끌기, 점프대, 명상대</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
+                  <td data-label="세부 구성 항목">알 가차 2D 그래픽</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>65종</strong></td>
+                  <td data-label="상세 스펙">커먼(20종), 언커먼(15종), 레어(15종), 에픽(10종), 레전더리(5종) 고유 알 그래픽 에셋</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
+                  <td data-label="세부 구성 항목">상태 머신 배지 아이콘</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>10종</strong></td>
+                  <td data-label="상세 스펙">미부화, 대기, 훈련중, 출전중, 휴식중, 부상, 치료중, 교배중, 쿨다운, 은퇴 인디케이터</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
+                  <td data-label="세부 구성 항목">칭호 / 업적 / 퀘스트 아이콘</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>33종</strong></td>
+                  <td data-label="상세 스펙">칭호 20종, 영구 업적 8종 트로피, 일일(5종)/주간(4종) 퀘스트 인디케이터</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차 3단계 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">닭 캐릭터 팜 자율 배회</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
+                  <td data-label="상세 스펙">모이 쪼기, 꼬꼬댁 고개짓, 흙목욕 털기, 횟대 낮잠 자율 모션</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">8종 훈련 인터랙션 모션</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>8종</strong></td>
+                  <td data-label="상세 스펙">8개 기구별 특화 운동 모션 (트레드밀 달리기, 샌드백 부리 쪼기, 짐볼 중심잡기 등)</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
+                  <td data-label="세부 구성 항목">치료 및 휴식 모션</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
+                  <td data-label="상세 스펙">스파 온천 배스 모션, 부상 붕대 감기 치료 모션</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">알 부화 연출 파티클</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
+                  <td data-label="상세 스펙">알 흔들림/금가기, 등급별(일반/희귀/전설) 부화 폭발 광원 버스트 FX</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
+                  <td data-label="세부 구성 항목">훈련/스파 파티클</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
+                  <td data-label="상세 스펙">스탯 성장 스파클 FX, 훈련 땀방울 파티클, 스파 온천김 파티클, 하트 힐링 FX</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/화면</span></td>
+                  <td data-label="세부 구성 항목">농장 관리 HUD 및 모달</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>14화면</strong></td>
+                  <td data-label="상세 스펙">메인 팜 뷰포트, 인큐베이터 슬롯 패널, 부화 가속 미니게임 UI, 훈련 지정창, 선수 프로필 방사형 육각 스탯 차트, 교배창, 알 거래소(마켓), 퀘스트창, 업적/칭호창 등</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2~4차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
+                  <td data-label="세부 구성 항목">팜 인터랙션 SFX & BGM</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>17종</strong></td>
+                  <td data-label="상세 스펙">알 부화 껍질 깨짐음, 훈련 기구 구동음 8종, 스파 물소리, 치료 완료 벨, UI 클릭음 + 평화 팜 BGM 1곡</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- VIP 라운지 및 마켓/시스템 표 -->
+          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🎰 4) 미국 VIP 라운지 & 온라인 마켓/시스템</span>
+            <span class="badge badge-accent">상용화 확정</span>
+          </h4>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 100px;">대분류</th>
+                  <th style="width: 200px;">세부 구성 항목</th>
+                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
+                  <th>상세 규격 및 작업 스펙</th>
+                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
+                  <td data-label="세부 구성 항목">16:9 대형 스크린 관전 뷰</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2화면</strong></td>
+                  <td data-label="상세 스펙">라운지 메인 관전 디스플레이 1080p/4K 전광판 UI (더비 중계 뷰, 피트 중계 뷰)</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
+                  <td data-label="세부 구성 항목">좌석 태블릿 가로 전용 UI</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4화면</strong></td>
+                  <td data-label="상세 스펙">1~2터치 선수 선택 패스트트랙, 실시간 베팅 슬립 발권 UI, 경기 관전창, 정산창</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
+                  <td data-label="세부 구성 항목">키오스크 결제/정산 UI</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2화면</strong></td>
+                  <td data-label="상세 스펙">현금/카드/VIP 멤버십 크레딧 충전 화면, 당첨 티켓 바코드 스캔 및 즉시 출금 화면</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">VIP 기능</span></td>
+                  <td data-label="세부 구성 항목">VIP 즉시 육성 모듈</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3기능</strong></td>
+                  <td data-label="상세 스펙">VIP 크레딧 즉각 소모를 통한 부화 0초 완료, 훈련 즉시 완료, 스파 즉각 치료 모듈</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">VIP 기능</span></td>
+                  <td data-label="세부 구성 항목">VIP 전용 알 & 엔트리 슬롯</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2기능</strong></td>
+                  <td data-label="상세 스펙">VIP 전용 고등급(Unique/Legendary) 알 풀 제공, 더비/피트 즉시 출전 VIP 전용 엔트리 슬롯</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">서버/인프라</span></td>
+                  <td data-label="세부 구성 항목">오프라인 로컬 독립 서버</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
+                  <td data-label="상세 스펙">현장 폐쇄망 로컬 독립 DB, 게임 세션 서버, 온·오프라인 계정 분리 운영 검증</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차준비 ➔ 4차런칭</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">서버/인프라</span></td>
+                  <td data-label="세부 구성 항목">통신 장애 대비 자동 페일오버</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
+                  <td data-label="상세 스펙">단말기-키오스크 간 오프라인 로컬 캐시 및 통신 단절 시 데이터 무결성 보존 모듈</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-direct">스토어 SDK</span></td>
+                  <td data-label="세부 구성 항목">결제(IAP) & 스토어 승인 화면</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
+                  <td data-label="상세 스펙">Google Play Billing / Apple IAP 연동, IARC 연령등급, 개인정보방침, 이용약관 등</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차접수 ➔ 5차승인</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">클라이언트</span></td>
+                  <td data-label="세부 구성 항목">모바일 최적화 & 안티치트</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3세트</strong></td>
+                  <td data-label="상세 스펙">안드로이드 발열/메모리 최적화, 자동 세션 복구 및 메모리 변조 방지 안티치트</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차~5차 완성</span></td>
+                </tr>
+                <tr>
+                  <td data-label="대분류"><span class="cat-badge cat-model">글로벌 서버</span></td>
+                  <td data-label="세부 구성 항목">10만 동접 클라우드 인프라</td>
+                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
+                  <td data-label="상세 스펙">글로벌 다중 리전 분산 서버, DB 커넥션 풀 최적화, 10만 동접 부하 스트레스 검증</td>
+                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-success">5차 완료</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 6.3 마일스톤별 투입 볼륨 매핑표 -->
+        <div id="sec-vol-milestones" style="margin-top: 2rem;">
+          <h3 class="sub-header">📅 6.3 차수별(1차~후속) 마일스톤별 투입 볼륨 매핑표</h3>
+          <div class="table-container milestone-table">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 90px; text-align: center;">마일스톤</th>
+                  <th style="width: 140px; text-align: center;">개발 기간</th>
+                  <th>확정 투입 볼륨 (Fixed Deliverables)</th>
+                  <th style="width: 250px;">중점 관리 지표 및 산출물 규격</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-primary">1차</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>10/12 ~ 10/28</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(17일간)</span></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>3D 모델 & 맵핑</strong>: 캐릭터/배경 비주얼 컨셉 확정, 게이트 번호 인디케이터 <strong>6종</strong> 부착, 격투 베이스 모델 <strong>2종</strong> 준비, 초기 기본 맵핑 <strong>6종</strong> 적용</li>
+                      <li><strong>모션</strong>: 스타트 대기 모션 <strong>3종</strong>, 가속 질주 모션, 조류 6대 이동 보법 <strong>6종</strong>, 7대 전투 기술 클립 <strong>7종</strong>, 그로기/다운 모션 <strong>2종</strong></li>
+                      <li><strong>VFX</strong>: 스피드라인, 흙먼지 킥, START 플래시, 피니쉬 표출, 타격 섬광 스파크, 렌즈 혈흔 FX (<strong>6종</strong>)</li>
+                      <li><strong>UI/카메라</strong>: 중계 카메라 워킹 <strong>3종</strong> 랜덤 적용, 결승 1초 슬로우 리플레이 기획, 피니시 3단계 기획 수립</li>
+                      <li><strong>사운드/시스템</strong>: 상황 반응형 아나운서 보이스 구조(R-12), 라운드 타종 징소리, KO 연속 벨소리(<code>SFX_PIT_KO_BELL</code>), 대전 시뮬레이터 기초 프레임워크</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>10/28 내부 시연용 상용화 수준 경주/격투 1차 빌드 무결성 확보</strong></td>
+                </tr>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-secondary" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7;">2차</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>10/29 ~ 11/18</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>3D 모델 & 맵핑</strong>: <strong>3D 카툰 셰이더 최종 적용 완료</strong>, 트랙/배경 3D 모델링 확정, 6종 주행 스타일 외형 분기, 핏 5대 파이터 모델 확정 (<strong>11종</strong> 베이스 메쉬), 1차 상용 30두 닭 기본 맵핑 <strong>30종</strong> 완성</li>
+                      <li><strong>배경/공간</strong>: 직경 10m 원형 투계장 아레나 완성, 메인 팜 <strong>5대 핵심 공간</strong> 2.5D 에셋 배치, 훈련 기구 <strong>8종</strong> 배치</li>
+                      <li><strong>2D/에셋</strong>: 알 가차 <strong>65종</strong>, 상태 머신 배지 <strong>10종</strong>, 팜 모션 <strong>14종</strong>, 알 부화/훈련 파티클 <strong>7종</strong></li>
+                      <li><strong>엔진/VIP</strong>: 대전 시뮬레이터 상성 완성, 팜 6대 스탯 생성, 미국 VIP 라운지 1차 시연 빌드 패키징</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>카툰 셰이더 및 배경 100% 안착 & VIP 1차 시연 & 팜 1단계 릴리즈</strong></td>
+                </tr>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-secondary" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #ec4899;">3차</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>11/19 ~ 12/09</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>VIP 라운지 완성</strong>: 현장 대형 스크린(16:9) 관전 뷰 UI <strong>2종</strong>, 좌석 태블릿 가로 전용 UI <strong>4종</strong>, 키오스크 충전/정산 UI <strong>2종</strong> 완성</li>
+                      <li><strong>선수 맵핑 확장</strong>: VIP 전용 고등급(Unique/Legendary) 닭 및 2세대 교배 파생 바리에이션 등 누적 <strong>100종</strong> 맵핑 연동</li>
+                      <li><strong>VIP 전용 농장</strong>: 태블릿 패스트트랙 1~2터치 UX, 급속 부화/훈련/치료 기능, VIP 전용 희귀 알 수급 및 즉시 출전 슬롯 <strong>2기능</strong></li>
+                      <li><strong>환류 & 교배</strong>: 경기 출전 환류 루프(피로도/부상/쿨다운), 2차 파생 스탯 및 7대 전투 기술 개화/장착 완성, 2세대 교배 유전 시스템 탑재</li>
+                      <li><strong>오프라인 인프라</strong>: 현장 폐쇄망 로컬 독립 DB 구축, 온·오프라인 계정 분리 운영 검증, 자동 페일오버 완비, 현장 런칭 최종 리허설</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>미국 VIP 라운지 상용 버전 개발 완료 및 현장 런칭 준비 100% 완비</strong></td>
+                </tr>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-warning">4차</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>12/10 ~ 12/30</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>[4차초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong> (12월 중순 현장 오픈, 라이브 관전/베팅/키오스크 정산/VIP농장 가동)</li>
+                      <li><strong>선수 맵핑 확장</strong>: 알 가차(65종) 닭 품종 파생 및 거래소 대응 누적 <strong>200종</strong> 맵핑 연동</li>
+                      <li><strong>양대 마켓 런칭 준비</strong>: Google Play / Apple App Store 결제(IAP) SDK 연동, IARC 연령등급 표시, 약관/보안 모듈, 스토어 심사 접수 완료</li>
+                      <li><strong>팜 3단계 생태계</strong>: 알 거래소(8% 수수료 회수 로직), 칭호 <strong>20종</strong>, 영구 업적 <strong>8종</strong>, 일일/주간 퀘스트 <strong>9종</strong> 데이터 연동</li>
+                      <li><strong>소프트 런칭</strong>: 특정 국가 시범 소프트 런칭/CBT 운영 개시 및 경기/육성 실데이터 1차 수집</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>미국 VIP 현장 정식 라이브 오픈 & 양대 마켓 심사 접수 & 소프트런칭</strong></td>
+                </tr>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-success">5차</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>01/02 ~ 01/22</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>바리에이션 맵핑 300종 완성</strong>: 글로벌 정식 출시 대비 <strong>총 300종 텍스처/컬러 바리에이션 맵핑 100% 완성 및 리소스 최적화 (추후 추가 예정)</strong></li>
+                      <li><strong>밸런스 고도화</strong>: 소프트런칭/CBT 유저 실데이터 기반 배당률 알고리즘 및 닭 AI 난이도 튜닝, 인게임 이코노미 Sink & Source 최적화</li>
+                      <li><strong>모바일 최적화</strong>: 저사양 기기 발열 완화, 메모리 누수 원천 차단, 다양한 화면비 반응형 렌더링 최적화</li>
+                      <li><strong>스토어 승인</strong>: Google Play 및 Apple App Store 심사 피드백 대응 완료 및 최종 스토어 승인 확보</li>
+                      <li><strong>서버 안정화</strong>: 글로벌 런칭 대비 10만 동접 클라우드 오토스케일링 부하 스트레스 검증 완료</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>마켓용 버전 고도화 완료 & 300종 맵핑 완비 & 스토어 최종 승인</strong></td>
+                </tr>
+                <tr>
+                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-accent">후속</span></td>
+                  <td data-label="개발 기간" style="text-align: center;"><code>2027 상반기</code></td>
+                  <td data-label="확정 투입 볼륨">
+                    <ul class="styled-list" style="font-size: 0.85rem;">
+                      <li><strong>글로벌 그랜드 오픈</strong>: 양대 마켓 글로벌 전 권역 동시 정식 출시</li>
+                      <li><strong>글로벌 라이브 운영 & 추가 바리에이션</strong>: 정규 글로벌 토너먼트 리그 가동, 시즌제 랭킹전, 시즌별 신규 닭 바리에이션 맵핑 지속 추가 확장</li>
+                    </ul>
+                  </td>
+                  <td data-label="중점 지표"><strong>ROOSTER RUMBLE 글로벌 서비스 성공 안착</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Document Revision History -->
+      <section id="sec-history" class="card">
+        <h2 class="section-header">
+          <span>문서 개정 이력 (Revision History)</span>
+          <span class="badge badge-secondary">Audit Trail</span>
+        </h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 100px; text-align: center;">버전</th>
+                <th style="width: 110px;">개정일</th>
+                <th>주요 개정 내역 및 상세 변경 사항</th>
+                <th style="width: 140px;">관련 절</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-primary">v1.5.1</span></td>
+                <td>2026-10-15</td>
+                <td>기본 선수 모델링(11종 베이스 메쉬) 기반 텍스처 바리에이션용 맵핑 수량 <strong>'총 300종 (추후 추가 예정)'</strong> 제6절 볼륨 픽스표 및 마일스톤 단계별 투입 배분표에 적시 반영</td>
+                <td>6절 볼륨 픽스 총괄표</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.5.0</span></td>
+                <td>2026-10-15</td>
+                <td>전 모드 세부 구성 요소(3D 모델, 모션, VFX, UI, 오디오, 마스터 데이터, 시스템 등 비주얼 에셋 중심) 볼륨 정량 픽스(Fix) 및 차수별(1차~후속) 마일스톤 투입 배분 총괄표(제6절) 신설</td>
+                <td>6절 볼륨 픽스 총괄표</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.4.1</span></td>
+                <td>2026-10-13</td>
+                <td>4.1절 [1차 마일스톤 WBS]에서 2차 완료 항목인 '3D 카툰 셰이더 적용 및 배경 모델링'을 2차 마일스톤(5.1절)으로 완전 이관하고, 1차 R-1을 '캐릭터 및 배경 3D 모델 비주얼 컨셉/시안 확정'으로 정비. 비고란 수기 메모 실무 스펙/DoD로 정제</td>
+                <td>4.1절 경주 WBS</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.4.0</span></td>
+                <td>2026-10-13</td>
+                <td>4절 1차 마일스톤 WBS 수기 수정 사항 반영 로드맵 전면 개편: (1) R-1 카툰 셰이더 적용을 2차 완료로 이관 및 1차 캐릭터/배경 모델 컨셉 확정 선행, (2) 피니쉬 연출 3단계 기획 수립(FINISH 표출, 슬로우 리플레이, 감속런·세리머니), (3) 중계 카메라 3종 랜덤 워킹(R-10) 및 환경 변수 연출(R-11) 1차 신규 편입, (4) P-1 격투 모델 차별화/공용성 컨셉 검토 및 P-3 대전 시뮬레이터 개발 연계, (5) 1~3절 및 5절 후속 마일스톤 연계 계획 동기화</td>
+                <td>3~5절 전면 개편</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.3.0</span></td>
+                <td>2026-10-12</td>
+                <td>마일스톤 단계 신설: 4차와 후속(글로벌 런칭) 사이에 '5차 마켓용 버전 고도화' 단계 신설 (소프트런칭 피드백 반영, 서버·클라이언트 최적화, 스토어 대응, 경제 밸런스 고도화 및 5.4절 신설, 글로벌 런칭 5.5절로 재편)</td>
+                <td>3~5절 5차 마켓 고도화</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.2.2</span></td>
+                <td>2026-10-12</td>
+                <td>마일스톤 상세 조정: 3차 마일스톤을 '미국 VIP 라운지 버전 개발 완료 및 런칭 준비 완료'로 변경하고, 현장 정식 런칭 작업을 4차 초기에 진행하도록 로드맵 및 세부 연계 계획 개정</td>
+                <td>3~5절 VIP 일정 조정</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.2.1</span></td>
+                <td>2026-10-12</td>
+                <td>오프라인 VIP 라운지와 온라인 모바일 앱 간 계정 및 크레딧 분리 운영 원칙 반영 (상호 연동 전면 배제 및 채널별 독립 운영 정책 명시)</td>
+                <td>1절 원칙</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.2.0</span></td>
+                <td>2026-10-12</td>
+                <td>마일스톤 전략 개정: 3차 마일스톤까지 미국 VIP 라운지 정식 런칭 대응 집중(VIP 라운지용 농장 기능 포함), 양대 마켓 런칭 준비는 4차부터 착수하여 2027 상반기 글로벌 런칭으로 스케줄 조정</td>
+                <td>3~5절 VIP·마켓 런칭</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.1.0</span></td>
+                <td>2026-10-12</td>
+                <td>럼블 팜(Rumble Farm - 육성 모드) 개발 범위 2차 마일스톤 신규 편입 (2.3절 농장 개발 요소 신설, 3~5절 로드맵·스케줄·후속 연계 계획 전면 확장)</td>
+                <td>2.3절 농장 개발</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.0.2</span></td>
+                <td>2026-10-12</td>
+                <td>수기 수정 사항(시연 피드백 통일, 주행 스타일 외형화, 감속런·세리머니 검토화, 상황 반응형 보이스 전환) 3~5절 로드맵·WBS·후속 연계 전면 반영</td>
+                <td>3~5절 로드맵·WBS</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.0.1</span></td>
+                <td>2026-10-12</td>
+                <td>4.1절 경주(Derby Race) 상세 작업 식별 번호 표기를 D-n(날짜 카운트 오해 방지)에서 R-n(Race)으로 수정</td>
+                <td>4.1절 경주 WBS</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><span class="badge badge-secondary">v1.0.0</span></td>
+                <td>2026-10-12</td>
+                <td>시연 피드백 반영 경주/격투 3대 분야(모델·모션·상용화 연출) 개선 항목 도출 및 3주 단위 4단계 마일스톤(~10/28 1차 마일스톤 상세 WBS 포함) 최초 수립</td>
+                <td>1절 개요</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <p>🐓 <strong>ROOSTER RUMBLE</strong> Development Milestone Specification Document · Generated for Project Team</p>
+        <p style="margin-top: 0.35rem; color: var(--text-dim);">Confidential & Proprietary · All rights reserved.</p>
+      </footer>
+
+    </main>
+  </div>
+
+  
+  <!-- Fullscreen Rotated / Expanded Gantt Modal -->
+  <div id="ganttModal" class="gantt-modal" onclick="closeGanttModal(event)">
+    <div class="gantt-modal-content" onclick="event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="gantt-modal-header">
+        <div class="gantt-modal-title">
+          <span class="modal-icon">📊</span>
+          <span class="modal-title-text">3주 단위 전체 마일스톤 로드맵 (확대 뷰)</span>
+        </div>
+        <div class="gantt-modal-actions">
+          <div class="modal-view-toggle">
+            <button type="button" class="tab-btn active" id="tabRotate" onclick="setGanttModalView('rotate')">🔄 90° 회전 뷰</button>
+            <button type="button" class="tab-btn" id="tabVertical" onclick="setGanttModalView('vertical')">📋 세로 타임라인</button>
+          </div>
+          <button type="button" class="btn-modal-close" onclick="closeGanttModal()" aria-label="닫기">✕ 닫기</button>
+        </div>
+      </div>
+
+      <!-- View 1: 90° Rotated Landscape View -->
+      <div id="modalRotateView" class="gantt-modal-body modal-view-rotate">
+        <div class="rotate-viewport-container">
+          <div class="rotate-inner-content">
+            <div class="rotated-gantt-header">
+              <h3>ROOSTER RUMBLE · 3주 단위 마일스톤 정규 타임라인 로드맵 (90° 회전 확대 뷰)</h3>
+              <span class="rotated-badge">3주 연속 릴리즈 사이클</span>
+            </div>
+
+            <div class="rotated-gantt-axis">
+              <div class="r-axis-label-spacer">차수 / 작업기간</div>
+              <div class="r-axis-grid">
+                <div class="r-axis-cell active">
+                  <span class="r-axis-phase">1차 (진행중)</span>
+                  <span class="r-axis-date">10/12 ~ 10/28</span>
+                </div>
+                <div class="r-axis-cell">
+                  <span class="r-axis-phase">2차 (예정)</span>
+                  <span class="r-axis-date">10/29 ~ 11/18</span>
+                </div>
+                <div class="r-axis-cell">
+                  <span class="r-axis-phase">3차 (계획)</span>
+                  <span class="r-axis-date">11/19 ~ 12/09</span>
+                </div>
+                <div class="r-axis-cell">
+                  <span class="r-axis-phase">4차 (계획)</span>
+                  <span class="r-axis-date">12/10 ~ 12/30</span>
+                </div>
+                <div class="r-axis-cell">
+                  <span class="r-axis-phase">5차 (신설)</span>
+                  <span class="r-axis-date">01/02 ~ 01/22</span>
+                </div>
+                <div class="r-axis-cell">
+                  <span class="r-axis-phase">후속 (그랜드오픈)</span>
+                  <span class="r-axis-date">2027 상반기</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rotated-gantt-body">
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p1">[1차] 10/12 ~ 10/28</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-1">
+                    <div class="r-bar bar-1">
+                      <div class="r-bar-title">경주·격투 개선 1차 탑재</div>
+                      <div class="r-bar-desc">카메라3종/환경연출/피니쉬기획/대전시뮬기초</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p2">[2차] 10/29 ~ 11/18</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-2">
+                    <div class="r-bar bar-2">
+                      <div class="r-bar-title">카툰 셰이더·배경 모델 최종 완료 & VIP 1차</div>
+                      <div class="r-bar-desc">경합 물리 & [농장 1단계] 알부화/기초훈련</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p3">[3차] 11/19 ~ 12/09</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-3">
+                    <div class="r-bar bar-3">
+                      <div class="r-bar-title">미국 VIP 버전 완료 및 현장 런칭 준비 완비</div>
+                      <div class="r-bar-desc">[농장 2단계] 현장 태블릿 VIP농장 & 전 모드 환류</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p4">[4차] 12/10 ~ 12/30</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-4">
+                    <div class="r-bar bar-4">
+                      <div class="r-bar-title">[4차초기] 미국 VIP 정식 런칭 & 마켓 준비</div>
+                      <div class="r-bar-desc">양대 마켓 심사접수 & [농장 3단계] 거래소/소프트런칭</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p5">[5차] 01/02 ~ 01/22</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-5">
+                    <div class="r-bar bar-5">
+                      <div class="r-bar-title">마켓용 버전 고도화 및 최종 안정화</div>
+                      <div class="r-bar-desc">소프트런칭 실데이터 반영 / 스토어 최종 승인</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-gantt-row">
+                <div class="r-gantt-info">
+                  <span class="r-badge p6">[후속] 2027 상반기</span>
+                </div>
+                <div class="r-gantt-grid">
+                  <div class="r-slot col-6">
+                    <div class="r-bar bar-6">
+                      <div class="r-bar-title">양대 마켓 글로벌 정식 그랜드 런칭</div>
+                      <div class="r-bar-desc">글로벌 서비스 오픈 & 토너먼트 리그 운영</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 2: Vertical Flow View (세로 상세 타임라인) -->
+      <div id="modalVerticalView" class="gantt-modal-body modal-view-vertical" style="display: none;">
+        <div class="v-timeline-flow">
+          <!-- Step 1 -->
+          <div class="v-step-card current">
+            <div class="v-step-spine">
+              <div class="v-step-node node-1">1</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p1">[1차] 진행중</span>
+                <span class="v-step-date">10/12 ~ 10/28 (17일간)</span>
+              </div>
+              <h4 class="v-step-title">경주·격투 핵심 개선 1차 탑재</h4>
+              <p class="v-step-desc">
+                카메라 3종 랜덤 워킹 / 환경 연출(비·바람·아지랑이) / 피니쉬 3단계 기획 수립 / 대전 시뮬레이터 기초 프레임워크 구축
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="v-step-card">
+            <div class="v-step-spine">
+              <div class="v-step-node node-2">2</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p2">[2차] 예정</span>
+                <span class="v-step-date">10/29 ~ 11/18 (21일간)</span>
+              </div>
+              <h4 class="v-step-title">카툰 셰이더·배경 모델 최종 완료 & VIP 1차 & [농장 1단계]</h4>
+              <p class="v-step-desc">
+                3D 모델 카툰 셰이더 최종 적용, 6종 주행 스타일 모델 분기, 트랙 물리 보정, VIP 라운지 1차 시연 빌드, 2.5D 메인 팜 뷰 및 알 부화·스탯 생성·기본 훈련 8종 구현
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="v-step-card">
+            <div class="v-step-spine">
+              <div class="v-step-node node-3">3</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p3">[3차] 계획</span>
+                <span class="v-step-date">11/19 ~ 12/09 (21일간)</span>
+              </div>
+              <h4 class="v-step-title">미국 VIP 버전 완료 및 런칭 준비 완비 & [농장 2단계]</h4>
+              <p class="v-step-desc">
+                미국 VIP 라운지 상용 버전 개발 완료, 현장 태블릿 가로 UI 및 키오스크 정산 완비, VIP 라운지용 패스트 트랙 농장(급속부화/훈련/치료/희귀알) 완성, 현장 리허설
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="v-step-card">
+            <div class="v-step-spine">
+              <div class="v-step-node node-4">4</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p4">[4차] 계획</span>
+                <span class="v-step-date">12/10 ~ 12/30 (21일간)</span>
+              </div>
+              <h4 class="v-step-title">[4차초기] 미국 VIP 정식 런칭 & 양대 마켓 런칭 준비 착수</h4>
+              <p class="v-step-desc">
+                12월 중순 미국 VIP 라운지 현장 정식 런칭 및 운영 개시, Google/Apple 스토어 심사 접수(IAP/IARC/보안/약관), [농장 3단계] 거래소 및 소프트 런칭 개시
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="v-step-card">
+            <div class="v-step-spine">
+              <div class="v-step-node node-5">5</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p5">[5차] 신설</span>
+                <span class="v-step-date">01/02 ~ 01/22 (21일간)</span>
+              </div>
+              <h4 class="v-step-title">마켓용 버전 고도화 및 최종 안정화</h4>
+              <p class="v-step-desc">
+                소프트 런칭 실데이터 기반 밸런스 조정, 모바일 기기 최적화 및 발열/메모리 해소, 스토어 심사 승인 획득, 10만 동접 서버 스트레스 검증
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="v-step-card">
+            <div class="v-step-spine">
+              <div class="v-step-node node-6">6</div>
+              <div class="v-step-line"></div>
+            </div>
+            <div class="v-step-body">
+              <div class="v-step-header">
+                <span class="v-step-badge p6">[후속] 그랜드오픈</span>
+                <span class="v-step-date">2027 상반기</span>
+              </div>
+              <h4 class="v-step-title">양대 마켓 글로벌 정식 그랜드 런칭</h4>
+              <p class="v-step-desc">
+                Google Play / Apple App Store 글로벌 동시 출시, 대규모 동접 부하 대응 및 글로벌 토너먼트 리그 운영 개시
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Buttons for Mobile -->
+  <div class="mobile-fab-group">
+    <button class="fab-btn" onclick="toggleTOC()" title="목차 열기" aria-label="목차">📋 목차</button>
+    <button class="fab-btn fab-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="맨 위로 이동" aria-label="맨 위로">▲</button>
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('light');
+      const isLight = document.documentElement.classList.contains('light');
+      localStorage.setItem('rr_theme', isLight ? 'light' : 'dark');
+    }
+
+    // Restore saved theme
+    if (localStorage.getItem('rr_theme') === 'light') {
+      document.documentElement.classList.add('light');
+    }
+
+    // Scroll to section helper
+    function scrollToSec(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    
+    // Gantt Modal Functions
+    function openGanttModal() {
+      const modal = document.getElementById('ganttModal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeGanttModal(e) {
+      if (e && e.target && e.target.classList && !e.target.classList.contains('gantt-modal') && !e.target.classList.contains('btn-modal-close')) {
+        return;
+      }
+      const modal = document.getElementById('ganttModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function setGanttModalView(view) {
+      const rotView = document.getElementById('modalRotateView');
+      const vertView = document.getElementById('modalVerticalView');
+      const tabRot = document.getElementById('tabRotate');
+      const tabVert = document.getElementById('tabVertical');
+
+      if (view === 'rotate') {
+        if (rotView) rotView.style.display = 'block';
+        if (vertView) vertView.style.display = 'none';
+        if (tabRot) tabRot.classList.add('active');
+        if (tabVert) tabVert.classList.remove('active');
+      } else {
+        if (rotView) rotView.style.display = 'none';
+        if (vertView) vertView.style.display = 'block';
+        if (tabRot) tabRot.classList.remove('active');
+        if (tabVert) tabVert.classList.add('active');
+      }
+    }
+
+    // Mobile TOC Drawer toggle
+    function toggleTOC(force) {
+      const aside = document.getElementById('tocSidebar') || document.querySelector('aside');
+      const backdrop = document.getElementById('tocBackdrop');
+      if (!aside) return;
+
+      const isOpen = aside.classList.contains('open');
+      const shouldOpen = typeof force === 'boolean' ? force : !isOpen;
+
+      if (shouldOpen) {
+        aside.classList.add('open');
+        if (backdrop) backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        aside.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Auto-close drawer on TOC item click in mobile
+    document.querySelectorAll('.toc-list a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          toggleTOC(false);
+        }
+      });
+    });
+
+    // Active TOC link on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section[id], div[id^="sec-"]');
+      const scrollPos = window.scrollY + 120;
+
+      let currentId = '';
+      sections.forEach(sec => {
+        if (sec.offsetTop <= scrollPos) {
+          currentId = sec.id;
+        }
+      });
+
+      if (currentId) {
+        document.querySelectorAll('.toc-list a').forEach(a => {
+          if (a.getAttribute('href') === '#' + currentId) {
+            a.classList.add('active');
+          } else {
+            a.classList.remove('active');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

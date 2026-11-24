@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROOSTER RUMBLE: 유저 플레이 동선 및 플로우 구성안</title>
+  <title>ROOSTER RUMBLE: 유저 플레이 동선 및 플로우 구성안 (v1.9.0)</title>
   <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
   <style>
@@ -206,182 +206,236 @@
   <header>
     <div class="header-title">
       <h1>🐓 ROOSTER RUMBLE</h1>
-      <p>유저 플레이 동선 및 플로우 구성안</p>
+      <p>유저 플레이 동선 및 플로우 구성안 · v1.9.0 (모바일 풀버전 · 온라인 웹 · VIP 4대 팜)</p>
     </div>
     <button class="theme-toggle-btn" onclick="toggleTheme()">테마 전환 (Light/Dark)</button>
   </header>
 
   <div class="container">
 
-    <!-- 1장: 서비스 형태 정의 -->
-    <div class="card-section">
-      <div class="section-header">
-        <h2>1. 서비스 형태 2종 (모바일 스토어 서비스 vs VIP 라운지 서비스) 비교</h2>
-      </div>
+<div class="card-section">
+  <div class="section-header"><h2>1. 서비스 형태 (모바일 스토어 vs 온라인 웹 vs 미국 VIP 라운지) 비교</h2></div>
+  <h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">1.1 서비스 사양 비교</h3>
+<table class="styled-table">
+<thead>
+<tr>
+<th style="text-align: left;">서비스 구분</th>
+<th style="text-align: left;">📱 모바일 스토어 서비스 (풀버전)</th>
+<th style="text-align: left;">🌐 자체 온라인 웹 서비스</th>
+<th style="text-align: left;">🏆 미국 VIP 라운지 서비스 (오프라인)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>서비스 목적</strong></td>
+<td style="text-align: left;">대중적 접근성, 캐주얼 육성 풀버전·리그 플레이</td>
+<td style="text-align: left;">24시간 실시간 경기 관람, 승자 예측 베팅</td>
+<td style="text-align: left;">매장 대형 전광판 관전, 좌석 태블릿 <strong>럼블 팜 4대 육성 + 베팅 동시 제공</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>서비스 플랫폼</strong></td>
+<td style="text-align: left;">Google Play / Apple App Store 앱</td>
+<td style="text-align: left;">독립 자체 온라인 웹 브라우저 (PC/모바일 웹)</td>
+<td style="text-align: left;">매장 16:9 대형 전광판 + 좌석 가로 태블릿 + 현장 키오스크</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>주력 모드/기능</strong></td>
+<td style="text-align: left;">• 럼블 팜 풀버전 (3스탬프 무료 알·유료 가차·8종 훈련·교배·스파·거래소·퀘스트·칭호·업적)<br>• 더비 레이스 6단계 리그<br>• 럼블 핏 1대1 대전</td>
+<td style="text-align: left;">• 24시간 달리기 경주(72회) &amp; 1v1 격투(48회) 중계<br>• 사전 및 실시간 인플레이 베팅<br>• 무료 닭장 / 유료 스파 케어</td>
+<td style="text-align: left;">• 경주/격투 전광판 중계 및 태블릿 베팅<br>• <strong>럼블 팜 4대 기능 동시 서비스</strong>: ① 알 유료 획득(35종), ② 유료 교배, ③ 유/무료 성장(일반 vs 0초 즉시), ④ 유/무료 회복(닭장·사료 vs 스파)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VIP 라운지 제외</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">거래소 미지원</td>
+<td style="text-align: left;"><strong>무료 알(3스탬프)·광고 3종·거래소(8%)·경매/분양·퀘스트·업적·칭호·모바일 리그 제외</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>수익 모델</strong></td>
+<td style="text-align: left;">유료 알 뽑기, 유료 성장/스파/교배, 거래소(8%), 광고 3종</td>
+<td style="text-align: left;">베팅 수수료 (8%~10%), 유료 스파</td>
+<td style="text-align: left;">현장 크레딧 충전, 알 유료 획득·유료 교배·유료 성장·유료 스파, 베팅 수수료(8%~10%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>계정 및 DB</strong></td>
+<td style="text-align: left;">모바일 전용 독립 DB (<code>Mobile App DB</code>)</td>
+<td style="text-align: left;">온라인 전용 독립 DB (<code>Online Web DB</code>)</td>
+<td style="text-align: left;">매장 폐쇄망 로컬 독립 DB (<code>VIP Lounge Local DB</code>, <strong>온·오프라인 100% 분리</strong>)</td>
+</tr>
+</tbody>
+</table>
+<h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">1.2 3대 핵심 게임 모드 사양</h3>
+<ul>
+<li><strong>모드 기본 구성</strong>: 닭 키우기(럼블 팜), 6두 달리기 경주(더비 레이스), 1대1 원형 아레나 대전(럼블 핏) 3개 모드 연계</li>
+</ul>
+<table class="styled-table">
+<thead>
+<tr>
+<th style="text-align: left;">모드 명칭</th>
+<th style="text-align: left;">핵심 재미</th>
+<th style="text-align: left;">주요 플레이 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🚜 <strong>1. 육성 모드 (럼블 팜)</strong></td>
+<td style="text-align: left;">알 부화, 유/무료 훈련·회복, 교배</td>
+<td style="text-align: left;">유료 알 35종(모바일 3스탬프 포함), 10초 미니게임/즉시 부화, <strong>8종 훈련</strong>, 유/무료 회복, 2세대 교배</td>
+</tr>
+<tr>
+<td style="text-align: left;">🏇 <strong>2. 경주 모드 (더비 레이스)</strong></td>
+<td style="text-align: left;">6두 달리기 경주, 승강급/베팅</td>
+<td style="text-align: left;">6단계 모바일 리그(모바일), 24시간 72회 중계 &amp; 사전 베팅(온라인·VIP), 결승 1초 슬로우 리플레이</td>
+</tr>
+<tr>
+<td style="text-align: left;">🥊 <strong>3. 격투 모드 (럼블 핏)</strong></td>
+<td style="text-align: left;">1대1 원형 아레나, 실시간 격돌</td>
+<td style="text-align: left;"><strong>9대 전투 기술(공4+방3+특수2 <code>F33/F34</code>)</strong>, 4대 순환 상성, 넉다운 vs 즉시 KO 분리, 실시간 라이브 베팅</td>
+</tr>
+</tbody>
+</table>
+<h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">1.3 유저 플레이 성향 분류 및 적용 서비스</h3>
+<table class="styled-table">
+<thead>
+<tr>
+<th style="text-align: left;">성향 명칭</th>
+<th style="text-align: left;">주력 모드 및 적용 서비스</th>
+<th style="text-align: left;">주요 행동 명세</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">🚜 <strong>[성향 A] 닭 키우기 마니아</strong></td>
+<td style="text-align: left;">육성 모드 (모바일 풀버전 / VIP 4대 기능)</td>
+<td style="text-align: left;">알 수집/부화, 8종 맞춤 훈련, 유/무료 회복 케어, 2세대 혈통 교배</td>
+</tr>
+<tr>
+<td style="text-align: left;">🏇 <strong>[성향 B] 경주 리그 승부사</strong></td>
+<td style="text-align: left;">경주 모드 (모바일 / 온라인 / VIP)</td>
+<td style="text-align: left;">6두 달리기 경주 출전, 주행 스타일 6종 세팅, 터치 부스터 또는 승자 예측</td>
+</tr>
+<tr>
+<td style="text-align: left;">🥊 <strong>[성향 C] 링 대전 파이터</strong></td>
+<td style="text-align: left;">격투 모드 (모바일 / 온라인 / VIP)</td>
+<td style="text-align: left;">1대1 원형 아레나, 9대 전투 기술 슬롯 세팅, 3연속 콤보 및 라이브 베팅</td>
+</tr>
+<tr>
+<td style="text-align: left;">🏆 <strong>[성향 D] VIP 라운지 현장 고객</strong></td>
+<td style="text-align: left;">미국 VIP 라운지 (태블릿 + 전광판)</td>
+<td style="text-align: left;">키오스크 크레딧 충전 ➔ <strong>알 유료 획득·유/무료 성장·유료 교배·유/무료 회복</strong> ➔ 현장 경주·격투 출전 및 실시간 베팅</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
 
-      <table class="styled-table">
-        <thead>
-          <tr>
-            <th>서비스 구분</th>
-            <th>📱 모바일 스토어 서비스</th>
-            <th>🌐 VIP 라운지 서비스</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>서비스 목적</strong></td>
-            <td>대중적 접근성, 캐주얼 닭 키우기/대전</td>
-            <td>24시간 실시간 경기 관람, 승자 예측 베팅 및 상금 정산</td>
-          </tr>
-          <tr>
-            <td><strong>서비스 플랫폼</strong></td>
-            <td>모바일 앱스토어 / 구글플레이 앱</td>
-            <td>독립 자체 온라인 웹 브라우저 (PC 및 모바일 웹)</td>
-          </tr>
-          <tr>
-            <td><strong>주력 모드/기능</strong></td>
-            <td>• 럼블 팜 (닭 키우기)<br>• 더비 레이스 (경주 리그)<br>• 럼블 핏 (1대1 링 대전)<br>• 유저 알 거래소</td>
-            <td>• 24시간 달리기 경주 중계 (하루 72회)<br>• 24시간 1대1 링 대전 중계 (하루 48회)<br>• 경기 시작 전/경기 중 실시간 베팅<br>• 독립 웹 코인 및 배당 정산</td>
-          </tr>
-          <tr>
-            <td><strong>수익 모델</strong></td>
-            <td>유료 알 뽑기, 유료 온천 이용료, 광고 3종</td>
-            <td>베팅 수수료 (8% ~ 10%), 유료 온천 이용료</td>
-          </tr>
-          <tr>
-            <td><strong>계정 체계</strong></td>
-            <td>모바일 전용 계정 (구글/애플/게스트)</td>
-            <td>자체 VIP 라운지 웹 전용 계정 (상호 미연동)</td>
-          </tr>
-          <tr>
-            <td><strong>재화 및 DB</strong></td>
-            <td>골드, 보석, 사료, 알 캡슐 (모바일 앱 DB)</td>
-            <td>베팅 코인, 격투 대전 상금 (VIP 라운지 DB)</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="card-section">
+  <div class="section-header"><h2>2. 모바일 스토어 서비스 전용 유저 플레이 동선 명세</h2></div>
+  <h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">2.1 단계별 (1단계 ~ 4단계) 플레이 동선</h3>
+<ul>
+<li><strong>1단계 (시작 / 첫 경험)</strong>:</li>
+<li>앱 설치 및 로그인 (<code>POST /api/v1/auth/login</code>)</li>
+<li>신규 보상 수령 (기본 닭 1두 + 1,000 Gold + 50 사료)</li>
+<li>첫 실행 튜토리얼 진행 (무료 알 10초 터치 부화 미니게임 ➔ 개화 훈련장 1회 훈련 ➔ 경주/격투 출전)</li>
+<li>메인 로비 (5대 하단 탭) 진입</li>
+<li><strong>2단계 (초기 정착 / 매일 접속)</strong>:</li>
+<li>일일 출석체크(+1) 및 광고 2회 시청(+2, 5분 쿨다운) ➔ 3스탬프 완료 즉시 무료 일반 알 수령</li>
+<li>부화 온실 알 부화 ➔ 피로도 70+ 관리 (무료 닭장 휴식 <code>-10/h</code> / 영양 사료 <code>-20</code> / 광고 <code>-20</code> / 유료 스파 <code>0 완충</code>)</li>
+<li>6단계 경주 리그 출전 (승점 RP 수급) 및 1대1 격투 대전 출전 (파이트 머니 150% 수급)</li>
+<li>경기 우승 상금 2배 광고 시청 적용</li>
+<li><strong>3단계 (숙련 / 심화 플레이)</strong>:</li>
+<li>유료 알 뽑기(30~300 Gem / 10연 천장 전설 알) 또는 <strong>유저 알 거래소(8% 수수료, <code>[큰손]</code> 7%)</strong> 이용</li>
+<li>암수 닭 2두 선택 ➔ 2세대 혈통 교배 (<code>부모합 90% + 난수(-5,+10)</code>, <code>POT Max×1.05</code>, 외형/스타일 <code>40/40/20%</code>)</li>
+<li><strong>9대 전투 기술(공4+방3+특수2 <code>F33/F34</code>)</strong> 중 등급별 최대 5개 슬롯 장착 및 3연속 콤보 세팅</li>
+<li><strong>4단계 (고수 / 마스터)</strong>:</li>
+<li>전설 리그 챔피언 도전, 일일 5·주간 4 퀘스트, 영구 업적 8종 및 대표 칭호 20종 장착</li>
+<li>유저 알 거래소 매매 진행 및 재화 순환</li>
+</ul>
+<h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">2.2 주력 모드별 세션 이동 경로</h3>
+<ul>
+<li><strong>🚜 육성 모드 이동 경로</strong>: <code>[앱 접속] ➔ [3스탬프/가차 알 획득] ➔ [부화 온실 10초 미니게임/즉시 부화] ➔ [8종 훈련] ➔ [유/무료 회복] ➔ [2세대 교배] ➔ [알 거래소 8% 매매]</code></li>
+<li><strong>🏇 경주 리그 이동 경로</strong>: <code>[앱 접속] ➔ [주행 스타일 확인] ➔ [리그 출전] ➔ [1,200m 터치 부스터] ➔ [RP 승점/상금 수령] ➔ [상금 2배 광고] ➔ [훈련/회복]</code></li>
+<li><strong>🥊 격투 대전 이동 경로</strong>: <code>[앱 접속] ➔ [9대 전투 기술/콤보 세팅] ➔ [1대1 원형 아레나 출전] ➔ [즉시 KO/판정 파이트 머니 수령] ➔ [부상 시 유료 스파]</code></li>
+</ul>
+<hr />
+</div>
 
-      <h3 style="margin-top: 24px; font-size: 1.05rem; color: var(--cyan);">1.2 3대 핵심 게임 모드 사양</h3>
-      <table class="styled-table">
-        <thead>
-          <tr>
-            <th>모드 명칭</th>
-            <th>핵심 재미</th>
-            <th>주요 플레이 내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>🚜 <strong>1. 육성 모드 (럼블 팜)</strong></td>
-            <td>알 부화, 훈련, 온천 케어 및 교배</td>
-            <td>3도장 알 획득, 터치 미니게임, 7종 능력치 훈련, 온천 케어, 2세대 닭 교배</td>
-          </tr>
-          <tr>
-            <td>🏇 <strong>2. 경주 모드 (더비 레이스)</strong></td>
-            <td>6두 달리기 경주, 리그 승강급</td>
-            <td>6단계 모바일 리그, 승점(RP), 주행 기술 6종, 결승선 터치 부스터</td>
-          </tr>
-          <tr>
-            <td>🥊 <strong>3. 격투 모드 (럼블 핏)</strong></td>
-            <td>1대1 링 대전, 실시간 동시 격돌</td>
-            <td>7대 전투 기술 세팅, 3연속 콤보 조합, 동시 격돌, 대전 상금 (150%)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="card-section">
+  <div class="section-header"><h2>3. 미국 VIP 라운지 서비스 전용 유저 플레이 동선 명세</h2></div>
+  <h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">3.1 단계별 (1단계 ~ 4단계) 플레이 동선</h3>
+<ul>
+<li><strong>1단계 (현장 키오스크 충전 &amp; 태블릿 로그인)</strong>:</li>
+<li>라운지 QR/멤버십 로그인 (<code>VIP Lounge Local DB</code>, 온·오프라인 100% 독립)</li>
+<li>현장 키오스크에서 현금/카드/멤버십 크레딧 충전 ➔ 좌석 태블릿 16:9 가로 UI 접속</li>
+<li><strong>2단계 (VIP 럼블 팜 4대 기능 + 경기 출전 동시 플레이)</strong>:</li>
+<li><strong>① 알 유료 획득</strong>: 유료 알 35종(<code>Superior</code>/<code>Rare</code>/<code>Legendary</code>) 가차 및 10연속 전설 천장 뽑기</li>
+<li><strong>③ 유/무료 성장</strong>: 무료 대기+10초 터치 미니게임·일반 8종 훈련 또는 VIP 크레딧 즉시 부화(0초)·급속 부스트 훈련 선택 실행</li>
+<li>16:9 대형 전광판 실시간 경주(72회)·격투(48회) 중계 관전 및 사전/인플레이 라이브 베팅</li>
+<li><strong>3단계 (경기 환류 케어 &amp; 유료 교배 세대 교체)</strong>:</li>
+<li>경기 출전 후 피로도(+25)·부상(30%) 발생 시 <strong>④ 유/무료 회복</strong>(무료 닭장 휴식/영양 사료 급여 또는 유료 프리미엄 스파 즉시 완충/완치) 선택</li>
+<li>우수 성체 암수 2두 보유 시 <strong>② 유료 교배</strong>(VIP 크레딧 전용) 실행 ➔ <code>Heritage Egg</code> 생산 및 유료 즉시 부화 연계</li>
+<li><strong>4단계 (현장 배당 정산 및 바우처 출금)</strong>:</li>
+<li>적중 배당금 및 파이트 머니 수령 ➔ 현장 키오스크 바코드 스캔 정산 티켓 발권</li>
+<li><em>(※ 무료 3스탬프 알, 광고 3종, 유저 알 거래소·현장 경매/분양, 퀘스트·업적·칭호는 VIP 라운지 미제공)</em></li>
+</ul>
+<h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">3.2 VIP 라운지 유저 세션 이동 경로</h3>
+<ul>
+<li><strong>🏆 VIP 라운지 통합 동선</strong>: <code>[키오스크 크레딧 충전] ➔ [태블릿 럼블 팜: 유료 알 획득 ➔ 유/무료 부화·훈련 ➔ 유/무료 회복 ➔ 유료 교배] ➔ [전광판 중계 관전 &amp; 태블릿 사전/라이브 베팅] ➔ [키오스크 정산 출금]</code></li>
+</ul>
+<hr />
+</div>
 
-    <!-- 2장: 모바일 스토어 서비스 동선 -->
-    <div class="card-section">
-      <div class="section-header">
-        <h2>2. 모바일 스토어 서비스 전용 유저 플레이 동선 명세</h2>
-      </div>
+<div class="card-section">
+  <div class="section-header"><h2>4. 서비스별 화면 이동 경로 (Mermaid)</h2></div>
+  <h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">4.1 모바일 스토어 서비스 화면 이동 경로</h3>
+<div class="mermaid-container">
+<div class="mermaid">
+flowchart TD
+    MOB_LOBBY["📱 모바일 메인 로비 (상단 HUD + 5대 탭)"]
+    
+    MOB_LOBBY --> TAB1["【1탭】 🚜 육성 모드 (럼블 팜)"]
+    MOB_LOBBY --> TAB2["【2탭】 🏇 경주 리그 (더비 레이스)"]
+    MOB_LOBBY --> TAB3["【3탭】 🥊 격투 대전 (럼블 핏)"]
+    MOB_LOBBY --> TAB4["【4탭】 🛒 상점 & 알 거래소"]
+    MOB_LOBBY --> TAB5["【5탭】 🏆 관리동 (칭호/퀘스트/업적)"]
 
-      <ul class="bullet-list">
-        <li><strong>1단계 (시작 / 첫 경험)</strong>: 앱 설치 및 로그인 ➔ 보상 수령 (기본 닭 1두 + 1,000골드 + 50사료) ➔ 첫 실행 튜토리얼 (터치 부화, 훈련, 경주 승리, 격투 맛보기) ➔ 메인 로비 진입</li>
-        <li><strong>2단계 (초기 정착 / 매일 접속)</strong>: 출석체크 & 광고 2회 시청 (3도장 완료 무료 알 수령) ➔ 알 부화 ➔ 지침 70+ 휴식/온천 케어 ➔ 경주 리그 & 격투 대전 출전</li>
-        <li><strong>3단계 (숙련 / 심화 플레이)</strong>: 보석 뽑기 (300 보석 천장) / 거래소 이용 ➔ 5,000골드 2세대 닭 교배 ➔ 7대 전투 기술 5슬롯 장착 & 3연속 콤보 세팅</li>
-        <li><strong>4단계 (고수 / 마스터)</strong>: 전설 리그 챔피언 도전 및 영구 칭호 20종 장착 ➔ 알 거래소 매매 진행</li>
-      </ul>
-    </div>
+    TAB1 --> FARM_INCUBATE["부화 온실 (10초 미니게임 / 즉시 부화)"]
+    TAB1 --> FARM_TRAIN["개화 훈련장 (유/무료 8종 훈련)"]
+    TAB1 --> FARM_CARE["닭장 & 스파 (무료 휴식·사료·광고 / 유료 스파)"]
+    TAB1 --> FARM_BREED["혈통 교배소 (2세대 교배, 생애 5회)"]
 
-    <!-- 3장: VIP 라운지 서비스 동선 -->
-    <div class="card-section">
-      <div class="section-header">
-        <h2>3. VIP 라운지 서비스 전용 유저 플레이 동선 명세</h2>
-      </div>
+    TAB2 --> RACE_MATCH["6단계 모바일 리그 출전"]
+    RACE_MATCH --> RACE_PLAY["1,200m 결승선 터치 부스터"]
+    RACE_PLAY --> RACE_RESULT["RP 승점 & 우승 상금 수령"]
 
-      <ul class="bullet-list">
-        <li><strong>1단계 (웹 접속 / 첫 중계 경험)</strong>: 자체 웹 접속 및 계정 생성 ➔ 신규 가입 보상 10,000 베팅 코인 수령 ➔ 24시간 타임 스케줄 확인 ➔ 실시간 관람 & 경기 시작 전 베팅</li>
-        <li><strong>2단계 (베팅 정착 / 매일 접속)</strong>: 경기 진입 전 전적 분석 ➔ 경기 시작 전 베팅 접수 ➔ 경기 중 실시간 베팅 참여 ➔ 수수료(8~10%) 차감 정산금 수령</li>
-        <li><strong>3단계 (고급 베팅 전략)</strong>: 실시간 배당 변동 그래프 분석 ➔ 복승식 & 베팅 마감 직전 베팅 수행</li>
-        <li><strong>4단계 (VIP 토너먼트 마스터)</strong>: 자체 웹 'VIP 베팅 왕중왕전' 참가 ➔ VIP 라운지 베팅 정산 코인 자산 운용 및 랭킹 관리</li>
-      </ul>
-    </div>
+    TAB3 --> PIT_SETTING["9대 전투 기술(F33/F34 포함) & 콤보 세팅"]
+    PIT_SETTING --> PIT_MATCH["1대1 원형 아레나 대전"]
+    PIT_MATCH --> PIT_RESULT["즉시 KO/판정 & 파이트 머니(150%)"]
 
-    <!-- 4장: Mermaid 플로우차트 -->
-    <div class="card-section">
-      <div class="section-header">
-        <h2>4. 서비스별 화면 이동 경로</h2>
-      </div>
+    TAB4 --> SHOP_GACHA["유료 알 뽑기 (35종 / 10연 천장)"]
+    TAB4 --> MARKET_TRADE["유저 알 거래소 (8% 수수료)"]
+</div>
+</div>
+<h3 style="font-size: 1.05rem; color: var(--cyan); margin: 18px 0 10px 0;">4.2 미국 VIP 라운지 서비스 화면 이동 경로</h3>
+<div class="mermaid-container">
+<div class="mermaid">
+flowchart TD
+    VIP_KIOSK["💳 현장 키오스크 (QR 로그인 & 크레딧 충전)"] --> VIP_TABLET["🏆 좌석 가로 태블릿 메인 대시보드<br/>(로컬 독립 DB · 온/오프라인 100% 분리)"]
 
-      <h3 style="font-size: 1rem; color: var(--cyan); margin-bottom: 12px;">4.1 모바일 스토어 서비스 로비 탭 구조</h3>
-      <div class="mermaid-container">
-        <div class="mermaid">
-          flowchart TD
-              LOBBY["📱 모바일 메인 로비 (상단 HUD + 5대 탭)"]
-              LOBBY --> T1["【1탭】 🚜 육성 모드 (럼블 팜)"]
-              LOBBY --> T2["【2탭】 🏇 경주 리그 (더비 레이스)"]
-              LOBBY --> T3["【3탭】 🥊 격투 대전 (럼블 핏)"]
-              LOBBY --> T4["【4탭】 🛒 상점 & 알 거래소"]
-              LOBBY --> T5["【5탭】 🏆 마이페이지 (칭호/업적)"]
-        </div>
-      </div>
+    VIP_TABLET --> VIP_FARM["🌾 VIP 럼블 팜 (4대 기능 한정)"]
+    VIP_FARM --> VF1["① 알 유료 획득<br/>(유료 35종 가차 · 10연 천장)"]
+    VIP_FARM --> VF3["③ 유/무료 성장<br/>(일반 부화·미니게임·훈련 vs 0초 즉시)"]
+    VIP_FARM --> VF4["④ 유/무료 회복<br/>(닭장·사료 vs 유료 프리미엄 스파)"]
+    VIP_FARM --> VF2["② 유료 교배<br/>(VIP 크레딧 전용 2세대 교배)"]
+    VIP_FARM -.->|미반영 제외| VF_EXCL["[제외] 무료알/광고/거래소/퀘스트·칭호·업적"]
 
-      <h3 style="font-size: 1rem; color: var(--cyan); margin-top: 24px; margin-bottom: 12px;">4.2 모바일 3대 모드 세부 이동 경로</h3>
-      
-      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 12px 0 8px 0;">[1탭] 육성 모드 (럼블 팜)</h4>
-      <div class="mermaid-container">
-        <div class="mermaid">
-          flowchart TD
-              F1["알 부화기 (10초 미니게임)"] --> F2["7종 능력치 훈련소"]
-              F2 --> F3{"지침 수치 70+ 판정"}
-              F3 -->|지침/부상 발생| F4["닭장 휴식 / 유료 온천 케어"]
-              F3 -->|정상 상태| F5["2세대 닭 교배소 (5,000골드)"]
-        </div>
-      </div>
-
-      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 16px 0 8px 0;">[2탭] 경주 리그 (더비 레이스)</h4>
-      <div class="mermaid-container">
-        <div class="mermaid">
-          flowchart TD
-              D1["6단계 모바일 리그 출전"] --> D2["1,200m 결승선 터치 부스터"]
-              D2 --> D3["RP 승점 & 우승 상금 수령"]
-        </div>
-      </div>
-
-      <h4 style="font-size: 0.9rem; color: var(--amber); margin: 16px 0 8px 0;">[3탭] 격투 대전 (럼블 핏)</h4>
-      <div class="mermaid-container">
-        <div class="mermaid">
-          flowchart TD
-              P1["전투 스킬 5슬롯 & 콤보 세팅"] --> P2["1대1 링 대전 출전"]
-              P2 --> P3["KO승 판정 & 대전 상금 (150%) 수령"]
-        </div>
-      </div>
-
-      <h3 style="font-size: 1rem; color: var(--rose); margin-top: 28px; margin-bottom: 12px;">4.3 VIP 라운지 서비스 베팅 이동 경로</h3>
-      <div class="mermaid-container">
-        <div class="mermaid">
-          flowchart TD
-              V1["🌐 VIP 라운지 메인 로비 (10,000 코인)"] --> V2["24시간 타임 스케줄 (경주 72회 / 격투 48회)"]
-              V2 --> V3["출전 선수 전적 & 능력치 분석"]
-              V3 --> V4["경기 시작 전 베팅 (단승 / 복승)"]
-              V4 --> V5["24시간 실시간 경기 중계 관람"]
-              V5 --> V6["체력 변동 경기 중 실시간 베팅"]
-              V6 --> V7["경기 종료 & 수수료(8~10%) 차감 정산 수령"]
-        </div>
-      </div>
-
-    </div>
+    VIP_TABLET --> VIP_BET["🎲 경주(72회) · 격투(48회) 실시간 베팅 슬립"]
+    VIP_FARM -->|육성 선수 출전| VIP_SCREEN["📺 매장 16:9 대형 전광판 라이브 중계"]
+    VIP_BET --> VIP_SCREEN
+    VIP_SCREEN --> VIP_PAYOUT["💰 수수료(8~10%) 정산 & 키오스크 바우처 출금"]
+</div>
+</div>
+</div>
 
   </div>
 

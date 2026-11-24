@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ROOSTER RUMBLE : 럼블 팜 (Rumble Farm) 인터랙티브 프로토타입</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+:root {
+  --bg-primary: #0b1120;
+  --bg-secondary: #111a2e;
+  --bg-card: #162238;
+  --bg-accent: #1f2f4d;
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --primary: #38bdf8;
+  --primary-dark: #0284c7;
+  --amber: #fbbf24;
+  --green: #22c55e;
+  --rose: #f43f5e;
+  --purple: #a855f7;
+  --border: #2a3c5c;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+[data-theme="light"] {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-accent: #e2e8f0;
+  --text-main: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --primary: #0284c7;
+  --primary-dark: #0369a1;
+  --amber: #d97706;
+  --green: #16a34a;
+  --rose: #e11d48;
+  --purple: #9333ea;
+  --border: #cbd5e1;
+  --shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-bottom: 54px;
+}
+button, input, select { font-family: inherit; }
+button { cursor: pointer; }
+
+/* Top HUD */
+.hud-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(17, 26, 46, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+[data-theme="light"] .hud-bar { background: rgba(255, 255, 255, 0.94); }
+.brand-box { display: flex; align-items: center; gap: 10px; }
+.brand-logo {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+.brand-title { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
+.brand-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Mode Switcher */
+.mode-toggle-group {
+  display: inline-flex;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 4px;
+}
+.mode-pill {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.mode-pill.active-mobile {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(14, 165, 233, 0.35);
+}
+.mode-pill.active-vip {
+  background: linear-gradient(135deg, #f59e0b, #dc2626);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+}
+
+.hud-resources {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.res-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 5px;
+}
+.ctrl-chip {
+  background: var(--bg-accent);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+.ctrl-chip.active { border-color: var(--primary); color: var(--primary); }
+
+/* VIP Banner */
+.vip-policy-bar {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.14), rgba(220, 38, 38, 0.12));
+  border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 8px 20px;
+  font-size: 0.8rem;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+}
+.mobile-policy-bar {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(34, 197, 94, 0.1));
+  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 7px 20px;
+  font-size: 0.78rem;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+}
+
+/* Main Tabs */
+.tab-nav {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 18px;
+  display: flex; gap: 6px; overflow-x: auto;
+}
+.tab-btn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 0.15s;
+}
+.tab-btn:hover { background: var(--bg-accent); color: var(--text-main); }
+.tab-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.vip-tag {
+  font-size: 0.64rem; padding: 1px 5px; border-radius: 4px;
+  background: rgba(245, 158, 11, 0.2); color: var(--amber); font-weight: 800;
+}
+.lock-tag {
+  font-size: 0.64rem; padding: 1px 5px; border-radius: 4px;
+  background: rgba(244, 63, 94, 0.2); color: var(--rose); font-weight: 800;
+}
+
+/* Layout */
+.workspace {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 18px 20px;
+}
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.split-main { display: grid; grid-template-columns: 330px 1fr; gap: 16px; }
+@media (max-width: 960px) { .split-main { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+}
+.badge-sky { background: rgba(56, 189, 248, 0.16); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.35); }
+.badge-amber { background: rgba(251, 191, 36, 0.16); color: var(--amber); border: 1px solid rgba(251, 191, 36, 0.35); }
+.badge-green { background: rgba(34, 197, 94, 0.16); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.35); }
+.badge-rose { background: rgba(244, 63, 94, 0.16); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.35); }
+.badge-purple { background: rgba(168, 85, 247, 0.16); color: var(--purple); border: 1px solid rgba(168, 85, 247, 0.35); }
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--bg-accent);
+  color: var(--text-main);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  transition: all 0.15s;
+}
+.btn:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); border-color: transparent; color: #fff; }
+.btn-amber { background: linear-gradient(135deg, #f59e0b, #ea580c); border-color: transparent; color: #fff; }
+.btn-green { background: linear-gradient(135deg, #22c55e, #059669); border-color: transparent; color: #fff; }
+.btn-rose { background: linear-gradient(135deg, #f43f5e, #be123c); border-color: transparent; color: #fff; }
+.btn-purple { background: linear-gradient(135deg, #a855f7, #7e22ce); border-color: transparent; color: #fff; }
+.btn-sm { padding: 5px 9px; font-size: 0.74rem; }
+
+/* Mobile-only lock overlay box */
+.vip-locked-panel {
+  border: 1px dashed var(--rose);
+  background: rgba(244, 63, 94, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+/* Isometric SVG map */
+.farm-svg-wrap {
+  background: linear-gradient(180deg, #0d2137 0%, #112a24 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+[data-theme="light"] .farm-svg-wrap { background: linear-gradient(180deg, #bae6fd 0%, #bbf7d0 100%); }
+.zone-node { cursor: pointer; transition: transform 0.18s; }
+.zone-node:hover { filter: brightness(1.15); }
+
+/* Rooster card */
+.rooster-item {
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.rooster-item:hover { border-color: var(--primary); }
+.rooster-item.selected { border-color: var(--amber); background: rgba(251, 191, 36, 0.08); }
+
+/* Progress bar */
+.bar-track {
+  height: 8px; border-radius: 999px; background: var(--bg-primary);
+  border: 1px solid var(--border); overflow: hidden;
+}
+.bar-fill { height: 100%; border-radius: 999px; transition: width 0.25s; }
+
+/* Minigame bar */
+.mg-track {
+  position: relative; height: 34px; border-radius: 999px;
+  background: var(--bg-primary); border: 2px solid var(--border); overflow: hidden; margin: 12px 0;
+}
+.mg-zone-s { position: absolute; left: 42%; width: 16%; top: 0; bottom: 0; background: rgba(251, 191, 36, 0.45); }
+.mg-zone-a { position: absolute; left: 30%; width: 40%; top: 0; bottom: 0; background: rgba(34, 197, 94, 0.25); }
+.mg-cursor { position: absolute; width: 6px; top: 0; bottom: 0; background: #fff; box-shadow: 0 0 10px #38bdf8; }
+
+/* Table */
+.tbl-wrap { max-height: 360px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+th { background: var(--bg-secondary); color: var(--primary); position: sticky; top: 0; z-index: 2; }
+
+/* Skill pills */
+.skill-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 8px; border-radius: 6px; font-size: 0.74rem; font-weight: 700;
+  border: 1px solid var(--border); background: var(--bg-secondary);
+}
+.rps-타격 { border-left: 3px solid #f43f5e; }
+.rps-가드 { border-left: 3px solid #38bdf8; }
+.rps-잡기 { border-left: 3px solid #fbbf24; }
+.rps-반격 { border-left: 3px solid #a855f7; }
+
+/* Bottom API/WS Drawer */
+.api-drawer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+  background: var(--bg-secondary);
+  border-top: 2px solid var(--primary);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.35);
+}
+.api-drawer-bar {
+  padding: 8px 18px; display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.78rem; font-weight: 700; cursor: pointer;
+}
+.api-drawer-body {
+  display: none; max-height: 220px; overflow-y: auto;
+  padding: 10px 18px; background: #070b14; color: #a5f3fc;
+  font-family: Consolas, monospace; font-size: 0.74rem;
+  border-top: 1px solid var(--border);
+}
+.api-drawer.open .api-drawer-body { display: block; }
+
+/* Modal & Toast */
+.modal-bg {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 18px;
+}
+.modal-bg.open { display: flex; }
+.modal-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px;
+}
+.toast {
+  position: fixed; right: 20px; bottom: 56px; z-index: 120;
+  background: var(--bg-card); border: 1px solid var(--primary);
+  padding: 10px 16px; border-radius: 10px; font-size: 0.82rem; font-weight: 700;
+  box-shadow: var(--shadow); opacity: 0; transform: translateY(14px);
+  transition: all 0.2s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="hud-bar">
+  <div class="brand-box">
+    <div class="brand-logo">🐓</div>
+    <div>
+      <div class="brand-title">ROOSTER RUMBLE · 럼블 팜 (v1.5.0 프로토타입)</div>
+      <div class="brand-sub" id="hud-db-badge">연결 DB: Mobile App DB (독립 스키마) · 알 65종 &amp; 30두 마스터 탑재</div>
+    </div>
+  </div>
+
+  <div class="mode-toggle-group" role="group" aria-label="서비스 모드 선택">
+    <button id="btn-mode-mobile" class="mode-pill active-mobile" onclick="setPlatformMode('mobile')">📱 모바일 스토어 풀버전</button>
+    <button id="btn-mode-vip" class="mode-pill" onclick="setPlatformMode('vip')">👑 미국 VIP 라운지 (4대 기능)</button>
+  </div>
+
+  <div class="hud-resources">
+    <div class="res-chip" title="보유 골드" id="chip-gold">🪙 <span id="val-gold">50,000</span> G</div>
+    <div class="res-chip" title="보유 젬">💎 <span id="val-gem">2,500</span> Gem</div>
+    <div class="res-chip" title="VIP 현장 크레딧" id="chip-vip" style="display:none; border-color: var(--amber);">💳 <span id="val-vip">5,000</span> C</div>
+    <div class="res-chip" title="영양 사료">🌾 사료 <span id="val-feed">30</span>개</div>
+    <select id="sel-speed" class="ctrl-chip" onchange="setSpeed(Number(this.value))" title="시뮬레이션 배속">
+      <option value="1">⏱ 1x 실시간</option>
+      <option value="60" selected>⚡ 60x 테스트</option>
+      <option value="999999">🚀 즉시 진행</option>
+    </select>
+    <button id="btn-audio" class="ctrl-chip active" onclick="toggleAudio()" title="Web Audio BGM/SFX 음소거 전환">🔊 사운드 ON</button>
+    <button class="ctrl-chip" onclick="toggleTheme()" title="다크/라이트 테마">🌓 테마</button>
+  </div>
+</header>
+
+<div id="policy-banner" class="mobile-policy-bar">
+  <span><strong>📱 모바일 스토어 풀버전 활성</strong> · 전체 기능(3스탬프 무료 알 · 보상형 광고 3종 · 거래소 8% / [큰손] 7% · 퀘스트/업적/칭호 20종 · 유/무료 성장·회복·교배) 사용 가능</span>
+  <span class="badge badge-sky">DB 분리: Mobile App DB</span>
+</div>
+
+<nav class="tab-nav" id="tab-nav">
+  <button class="tab-btn active" data-tab="tab-map" onclick="switchTab('tab-map')">🏡 농장 전경 (5대 공간)</button>
+  <button class="tab-btn" data-tab="tab-eggs" onclick="switchTab('tab-eggs')">🥚 알 상점·가차·거래소·도감 <span class="vip-tag">VIP ①</span></button>
+  <button class="tab-btn" data-tab="tab-hatch" onclick="switchTab('tab-hatch')">🐣 부화 온실·10초 미니게임 <span class="vip-tag">VIP ③</span></button>
+  <button class="tab-btn" data-tab="tab-train" onclick="switchTab('tab-train')">🏋️ 개화 훈련장 (8종) <span class="vip-tag">VIP ③</span></button>
+  <button class="tab-btn" data-tab="tab-coop" onclick="switchTab('tab-coop')">🐓 닭장·스파·출전 환류 <span class="vip-tag">VIP ④</span></button>
+  <button class="tab-btn" data-tab="tab-breed" onclick="switchTab('tab-breed')">💕 혈통 교배소 (2세대) <span class="vip-tag">VIP ②</span></button>
+  <button class="tab-btn" data-tab="tab-admin" onclick="switchTab('tab-admin')">📜 관리동 (칭호·퀘스트·업적) <span id="admin-tab-tag" class="badge badge-green">모바일</span></button>
+</nav>
+
+<main class="workspace">
+
+  <!-- TAB 1: 농장 전경 -->
+  <section id="tab-map" class="tab-pane active">
+    <div class="grid-2" style="grid-template-columns: 1.55fr 1fr;">
+      <div class="card">
+        <div class="card-title">
+          <span>🌾 2.5D 아이소메트릭 럼블 팜 전경 (5대 표준 공간)</span>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <span class="badge badge-sky" id="bgm-status-badge">🎵 BGM_LOBBY_01</span>
+            <button class="btn btn-sm" onclick="cycleBgm()">🎵 BGM 전환</button>
+          </div>
+        </div>
+        <div class="farm-svg-wrap">
+          <svg id="farm-map-svg" viewBox="0 0 820 460" width="100%" style="display:block;">
+            <defs>
+              <linearGradient id="grassGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#14532d" stop-opacity="0.72" />
+                <stop offset="100%" stop-color="#0f3d2e" stop-opacity="0.92" />
+              </linearGradient>
+            </defs>
+            <polygon points="410,36 780,220 410,415 40,220" fill="url(#grassGrad)" stroke="#22c55e" stroke-opacity="0.35" stroke-width="2" />
+            <line x1="225" y1="128" x2="595" y2="318" stroke="#94a3b8" stroke-opacity="0.2" stroke-width="18" />
+            <line x1="225" y1="318" x2="595" y2="128" stroke="#94a3b8" stroke-opacity="0.2" stroke-width="18" />
+
+            <!-- Zone 1: 부화 온실 -->
+            <g class="zone-node" onclick="switchTab('tab-hatch')">
+              <polygon points="210,120 300,165 210,210 120,165" fill="#0369a1" fill-opacity="0.88" stroke="#38bdf8" stroke-width="2" />
+              <text x="210" y="156" text-anchor="middle" fill="#fff" font-size="22">🐣</text>
+              <text x="210" y="179" text-anchor="middle" fill="#e0f2fe" font-size="12" font-weight="800">① 부화 온실 (VIP ③)</text>
+              <text x="210" y="195" text-anchor="middle" fill="#7dd3fc" font-size="10" id="map-hatch-info">슬롯 0/2</text>
+            </g>
+
+            <!-- Zone 2: 개화 훈련장 -->
+            <g class="zone-node" onclick="switchTab('tab-train')">
+              <polygon points="410,70 505,118 410,166 315,118" fill="#b45309" fill-opacity="0.9" stroke="#fbbf24" stroke-width="2" />
+              <text x="410" y="106" text-anchor="middle" fill="#fff" font-size="22">🏋️</text>
+              <text x="410" y="129" text-anchor="middle" fill="#fef3c7" font-size="12" font-weight="800">② 개화 훈련장 (VIP ③)</text>
+              <text x="410" y="145" text-anchor="middle" fill="#fde68a" font-size="10">8종 기구 · 9대 기술 개화</text>
+            </g>
+
+            <!-- Zone 3: 선수 닭장 & 힐링 스파 -->
+            <g class="zone-node" onclick="switchTab('tab-coop')">
+              <polygon points="610,130 705,178 610,226 515,178" fill="#0f766e" fill-opacity="0.9" stroke="#2dd4bf" stroke-width="2" />
+              <text x="610" y="166" text-anchor="middle" fill="#fff" font-size="22">♨️</text>
+              <text x="610" y="189" text-anchor="middle" fill="#ccfbf1" font-size="12" font-weight="800">③ 닭장 &amp; 힐링 스파 (VIP ④)</text>
+              <text x="610" y="205" text-anchor="middle" fill="#99f6e4" font-size="10" id="map-coop-info">선수 4두 · 회복/출전</text>
+            </g>
+
+            <!-- Zone 4: 혈통 교배소 -->
+            <g class="zone-node" onclick="switchTab('tab-breed')">
+              <polygon points="270,275 365,323 270,371 175,323" fill="#9d174d" fill-opacity="0.9" stroke="#f472b6" stroke-width="2" />
+              <text x="270" y="311" text-anchor="middle" fill="#fff" font-size="22">💕</text>
+              <text x="270" y="334" text-anchor="middle" fill="#fce7f3" font-size="12" font-weight="800">④ 혈통 교배소 (VIP ②)</text>
+              <text x="270" y="350" text-anchor="middle" fill="#fbcfe8" font-size="10">2세대 단일 유전 · 생애 5회</text>
+            </g>
+
+            <!-- Zone 5: 관리동 & 파머스 마켓 -->
+            <g class="zone-node" onclick="switchTab('tab-eggs')">
+              <polygon points="545,270 645,320 545,370 445,320" fill="#4c1d95" fill-opacity="0.9" stroke="#c084fc" stroke-width="2" />
+              <text x="545" y="306" text-anchor="middle" fill="#fff" font-size="22">🏪</text>
+              <text x="545" y="329" text-anchor="middle" fill="#f3e8ff" font-size="12" font-weight="800" id="map-market-title">⑤ 관리동 &amp; 마켓 (VIP ①)</text>
+              <text x="545" y="345" text-anchor="middle" fill="#d8b4fe" font-size="10" id="map-market-sub">가차 35종 · 거래소 · 퀘스트</text>
+            </g>
+
+            <!-- Wandering Roosters SVG Layer -->
+            <g id="map-roosters-layer"></g>
+          </svg>
+        </div>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px;">
+          💡 각 농장 건물을 클릭하면 해당 기능 탭으로 즉시 이동합니다. 상단 <strong>모바일 ↔ VIP 라운지</strong> 스위치로 플랫폼별 기능 차이를 즉시 체험할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📋 플랫폼별 기능 적용 범위 &amp; 농장 현황</span>
+          <span class="badge badge-amber" id="summary-mode-badge">모바일 풀버전</span>
+        </div>
+        <div id="map-platform-matrix"></div>
+        <hr style="border:0; border-top:1px solid var(--border); margin:12px 0;">
+        <div class="card-title" style="margin-bottom:8px;"><span>🐓 보유 수탉 실시간 상태</span><button class="btn btn-sm" onclick="openMasterRoosterModal()">+ CSV 30두 영입</button></div>
+        <div id="map-roster-mini" style="max-height: 210px; overflow-y:auto;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: 알 상점·가차·거래소·도감 -->
+  <section id="tab-eggs" class="tab-pane">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🎰 알 뽑기(가차) · VIP ① 알 유료 획득</span>
+          <span class="badge badge-amber" id="pity-badge">전설 천장: 0 / 10</span>
+        </div>
+        <div class="bar-track" style="margin-bottom:10px;"><div id="pity-bar" class="bar-fill" style="width:0%; background:linear-gradient(90deg,#f59e0b,#ef4444);"></div></div>
+        <p id="gacha-pool-desc" style="font-size:0.8rem; color:var(--text-body); margin-bottom:12px;"></p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+          <button class="btn btn-primary" onclick="pullGacha(1)">🥚 유료 알 1회 뽑기 (<span id="cost-gacha1">100 Gem</span>)</button>
+          <button class="btn btn-amber" onclick="pullGacha(10)">✨ 유료 알 10연 뽑기 (<span id="cost-gacha10">1,000 Gem</span> · 전설 100%)</button>
+          <button class="btn btn-sm" onclick="buyDirectEgg('PAID_T1')">Superior 30 Gem/3,000G</button>
+          <button class="btn btn-sm" onclick="buyDirectEgg('PAID_T2')">Rare 100 Gem/10,000G</button>
+        </div>
+
+        <hr style="border:0; border-top:1px solid var(--border); margin:12px 0;">
+        <div class="card-title"><span>🎁 출석/광고 3스탬프 무료 알</span><span id="stamp-mode-tag" class="badge badge-green">모바일 전용</span></div>
+        <div id="free-stamp-box"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>🏪 유저 간 알 거래소 (수수료 8% / [큰손] 7%)</span>
+          <span id="market-mode-tag" class="badge badge-green">모바일 전용</span>
+        </div>
+        <div id="marketplace-box"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">
+        <span>📦 내 미부화 알 보관함 (<span id="inv-egg-count">0</span>개)</span>
+        <button class="btn btn-sm btn-primary" onclick="switchTab('tab-hatch')">🐣 부화 온실로 이동 ➔</button>
+      </div>
+      <div id="egg-inventory-list" class="grid-4" style="margin-bottom:16px;"></div>
+
+      <div class="card-title">
+        <span>📚 알 마스터 도감 65종 (<code>06_egg_gacha_master_list_65.csv</code> 실시간 데이터)</span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <select id="filter-egg-tier" class="ctrl-chip" onchange="renderEggEncyclopedia()">
+            <option value="ALL">전체 65종 (Natural 30 + 유료 35)</option>
+            <option value="NAT">무료 Natural (30종 · VIP 제외)</option>
+            <option value="PAID_T1">유료 1단계 Superior (20종)</option>
+            <option value="PAID_T2">유료 2단계 Rare (10종)</option>
+            <option value="PAID_T3">유료 3단계 Legendary (5종)</option>
+          </select>
+          <input id="search-egg-input" class="ctrl-chip" placeholder="알 이름/ID 검색..." oninput="renderEggEncyclopedia()" />
+        </div>
+      </div>
+      <div class="tbl-wrap" id="egg-encyclopedia-wrap"></div>
+    </div>
+  </section>
+
+  <!-- TAB 3: 부화 온실 & 10초 미니게임 -->
+  <section id="tab-hatch" class="tab-pane">
+    <div class="grid-2" style="grid-template-columns: 1.25fr 1fr;">
+      <div class="card">
+        <div class="card-title">
+          <span>🔥 인큐베이터 부화 온실 (슬롯 <span id="slot-cnt">2</span>/4) · VIP ③ 유/무료 성장</span>
+          <button class="btn btn-sm btn-purple" id="btn-expand-slot" onclick="expandHatchSlot()">➕ 슬롯 확장 (300 Gem)</button>
+        </div>
+        <div id="hatch-slots-grid" class="grid-2" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));"></div>
+        <hr style="border:0; border-top:1px solid var(--border); margin:14px 0;">
+        <div class="card-title"><span>📦 대기 중인 알 빠른 투입</span></div>
+        <div id="hatch-waiting-eggs" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>🎮 10초 터치 부화 가속 미니게임 (무료 성장)</span>
+          <span class="badge badge-sky" id="mg-timer-badge">대기중</span>
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-body);">
+          부화 중인 슬롯이 있을 때 미니게임을 시작하여 움직이는 커서가 중앙 금색 <strong>S구간(-20%)</strong>에 가까울 때 <code>[👆 온기 불어넣기]</code> 버튼을 터치하세요! (S:-20% / A:-12% / B:-5% / C:0%)
+        </p>
+        <div class="mg-track">
+          <div class="mg-zone-a" title="A구간 (-12%)"></div>
+          <div class="mg-zone-s" title="S구간 (-20%)"></div>
+          <div class="mg-cursor" id="mg-cursor" style="left:50%;"></div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+          <div>
+            <button class="btn btn-green" id="btn-mg-start" onclick="startMinigame()">▶ 미니게임 시작 (10초)</button>
+            <button class="btn btn-amber" id="btn-mg-tap" onclick="tapMinigame()" disabled>👆 온기 불어넣기 (터치!)</button>
+          </div>
+          <span id="mg-score-text" style="font-size:0.82rem; font-weight:700; color:var(--amber);">점수: 0 · 최고 등급: -</span>
+        </div>
+        <hr style="border:0; border-top:1px solid var(--border); margin:14px 0;">
+        <div class="card-title"><span>📊 부화 결과 생성 규칙</span></div>
+        <ul style="padding-left:18px; font-size:0.78rem; color:var(--text-muted);">
+          <li>POT: 알 등급 구간(<code>NAT 30~45 / Sup 46~60 / Rare 61~80 / Leg 81~100</code>) 내 롤링</li>
+          <li>1차 5대 스탯(<code>STR·DEX·VIT·MEN·LCK</code>): POT 기반 분배 + 편차 보정</li>
+          <li>성별: 수컷(<code>ROOSTER</code>) 50% / 암컷(<code>HEN</code>) 50%</li>
+          <li>외형: 단일 기본 리그(Rig) + 3단계 등급별 파츠 + 300종 맵핑 코드 부여</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 4: 개화 훈련장 -->
+  <section id="tab-train" class="tab-pane">
+    <div class="split-main">
+      <div class="card">
+        <div class="card-title"><span>🐓 훈련 대상 선수 선택</span></div>
+        <div id="train-roster-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>🏋️ 개화 훈련장 8종 기구 · VIP ③ 유/무료 성장</span>
+          <span class="badge badge-amber" id="train-target-badge">선택된 닭: 없음</span>
+        </div>
+        <div id="train-selected-summary" style="margin-bottom:12px; padding:10px; border-radius:8px; background:var(--bg-secondary); border:1px solid var(--border); font-size:0.8rem;"></div>
+        <div id="train-cards-grid" class="grid-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 5: 닭장 & 스파 & 출전 환류 -->
+  <section id="tab-coop" class="tab-pane">
+    <div class="split-main">
+      <div class="card">
+        <div class="card-title">
+          <span>🐓 선수 닭장 로스터</span>
+          <button class="btn btn-sm" onclick="openMasterRoosterModal()">+ CSV 30두 영입</button>
+        </div>
+        <div id="coop-roster-list"></div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card">
+          <div class="card-title">
+            <span id="coop-detail-title">선수 상세 스탯 &amp; 육각 레이더 차트</span>
+            <div style="display:flex; gap:4px;">
+              <button class="btn btn-sm btn-primary" onclick="setRadarMode('base')">1차 기본</button>
+              <button class="btn btn-sm" onclick="setRadarMode('derby')">더비 2차</button>
+              <button class="btn btn-sm" onclick="setRadarMode('pit')">핏 2차</button>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+              <svg id="radar-svg" viewBox="0 0 280 260" width="270" height="250"></svg>
+              <div id="coop-derived-meta" style="font-size:0.78rem; color:var(--text-muted); text-align:center;"></div>
+            </div>
+            <div>
+              <div id="coop-status-bars"></div>
+              <hr style="border:0; border-top:1px solid var(--border); margin:10px 0;">
+              <div style="font-size:0.82rem; font-weight:800; margin-bottom:6px;">🥊 개화/장착 9대 전투 기술 (F33/F34 포함 · 4대 순환 상성)</div>
+              <div id="coop-skills-box" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><span>♨️ 회복 케어 · VIP ④ 유/무료 회복</span><span class="badge badge-green">무료 + 스파 유료</span></div>
+            <div id="coop-recovery-box"></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span>🏆 경기 출전 환류 시뮬레이터</span><span class="badge badge-amber">피로+25 / 30m 쿨</span></div>
+            <div id="coop-dispatch-box"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 6: 혈통 교배소 -->
+  <section id="tab-breed" class="tab-pane">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">
+          <span>🧬 부모 닭 선택 · VIP ② 유료 교배</span>
+          <span class="badge badge-rose">생애 5회 한도 · 24h 쿨다운</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; display:block; margin-bottom:4px;">♂️ 부계 (ROOSTER)</label>
+            <select id="sel-sire" class="ctrl-chip" style="width:100%;" onchange="renderBreedingPreview()"></select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; display:block; margin-bottom:4px;">♀️ 모계 (HEN)</label>
+            <select id="sel-dam" class="ctrl-chip" style="width:100%;" onchange="renderBreedingPreview()"></select>
+          </div>
+        </div>
+        <div id="breed-validation-box" style="margin-bottom:12px;"></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="btn-do-breed" class="btn btn-rose" onclick="executeBreeding()">💕 유료 혈통 교배 실행 (<span id="cost-breed">150 Gem / 10,000G</span>)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>📐 통합 단일 유전 공식 예측 리포트</span><span class="badge badge-purple">2세대 Heritage 알(2h)</span></div>
+        <div id="breed-preview-box"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 7: 관리동 -->
+  <section id="tab-admin" class="tab-pane">
+    <div id="admin-vip-banner" class="vip-locked-panel" style="display:none; margin-bottom:14px;">
+      <h3 style="color:var(--rose); margin-bottom:6px;">🚫 미국 VIP 라운지 미반영 항목 (모바일 스토어 앱 전용)</h3>
+      <p style="font-size:0.82rem; color:var(--text-body); margin-bottom:10px;">
+        VIP 라운지 서비스에는 <strong>① 알 유료 획득, ② 유료 교배, ③ 유/무료 성장, ④ 유/무료 회복</strong> 4대 기능만 반영되며,<br>
+        일일 5·주간 4 퀘스트, 영구 누적 업적 8종, 칭호 20종 마스터, 모바일 6단계 리그 및 파산 구제는 모바일 스토어 버전에만 제공됩니다.
+      </p>
+      <button class="btn btn-primary" onclick="setPlatformMode('mobile')">📱 모바일 스토어 풀버전으로 전환하여 체험하기</button>
+    </div>
+
+    <div class="grid-2" id="admin-content-grid">
+      <div class="card">
+        <div class="card-title"><span>📅 일일 퀘스트 (5종) &amp; 주간 퀘스트 (4종)</span><button id="btn-bankruptcy-aid" class="btn btn-sm btn-rose" onclick="tryBankruptcyAid()">🆘 파산 긴급 구제 테스트</button></div>
+        <div id="quests-list-box"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🏅 영구 누적 업적 (8종)</span></div>
+        <div id="achievements-list-box" style="margin-bottom:14px;"></div>
+        <div class="card-title"><span>🏷️ 칭호 (20종 마스터) · 장착: <span id="equipped-title-name" style="color:var(--amber);">신참 양계사</span></span></div>
+        <div id="titles-grid-box" style="max-height:260px; overflow-y:auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:6px;"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Bottom API/WS Drawer -->
+<div class="api-drawer" id="api-drawer">
+  <div class="api-drawer-bar" onclick="toggleApiDrawer()">
+    <span>📡 REST API (<code>/api/v1/farm/*</code>) &amp; WebSocket (<code>farm:*</code>) 실시간 패킷 모니터 · 로그 <span id="api-log-cnt">0</span>건</span>
+    <span>▲ 펼치기 / 접기</span>
+  </div>
+  <div class="api-drawer-body" id="api-log-body"></div>
+</div>
+
+<!-- Generic Modal -->
+<div class="modal-bg" id="proto-modal" onclick="if(event.target.id==='proto-modal') closeProtoModal()">
+  <div class="modal-box">
+    <div class="card-title">
+      <span id="modal-title-text">알림</span>
+      <button class="btn btn-sm" onclick="closeProtoModal()">✕ 닫기</button>
+    </div>
+    <div id="modal-body-content"></div>
+  </div>
+</div>
+
+<div class="toast" id="proto-toast">메시지</div>
+
+<script>
+// ==================== MASTER DATA (FROM CSVs) ====================
+const MASTER_EGGS_65 = [{"id": "EGG-NAT-001", "name": "시골 재래 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-002", "name": "청계 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-003", "name": "오계 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-004", "name": "토종닭 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-005", "name": "약계 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-006", "name": "들판 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-007", "name": "산기슭 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-008", "name": "강변 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-009", "name": "농장 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-010", "name": "모이통 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-011", "name": "황토 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-012", "name": "짚풀 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-013", "name": "햇살 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-014", "name": "바람 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-015", "name": "이슬 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-016", "name": "돌담 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-017", "name": "개울 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-018", "name": "가을 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-019", "name": "보리 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-020", "name": "벼이삭 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-021", "name": "새벽 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-022", "name": "노을 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-023", "name": "구름 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-024", "name": "단풍 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-025", "name": "솔방울 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-026", "name": "풀잎 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-027", "name": "도토리 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-028", "name": "샘물 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-029", "name": "언덕 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-NAT-030", "name": "평야 알", "tier": "무료 일반 (Natural)", "code": "NAT", "price": "무료 (통합 3스템프: 출석/광고)", "pot": "30~45", "sec": 600, "weight": "70.0%", "note": "일반 피지컬 병아리 부화"}, {"id": "EGG-PAID1-001", "name": "강철 깃털 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-002", "name": "바람 발차기 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-003", "name": "붉은 벼슬 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-004", "name": "투지 불꽃 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-005", "name": "맹수 발톱 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-006", "name": "달빛 주행 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-007", "name": "태양 태엽 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-008", "name": "암석 가슴 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-009", "name": "번개 눈빛 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-010", "name": "폭풍 부리 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-011", "name": "신풍 날개 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-012", "name": "용맹 수탉 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-013", "name": "쾌속 질주 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-014", "name": "칠흑 그림자 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-015", "name": "황금 깃털 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-016", "name": "은빛 스퍼 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-017", "name": "거친 인파이트 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-018", "name": "유연 아웃파이트 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-019", "name": "강력 브롤러 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID1-020", "name": "정밀 테크닉 알", "tier": "유료 1단계 (Superior)", "code": "PAID_T1", "price": "30 Gem / 3,000 Gold", "pot": "46~60", "sec": 3600, "weight": "20.0%", "note": "상급 파이팅 병아리 부화"}, {"id": "EGG-PAID2-001", "name": "화산 불꽃 전사 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-002", "name": "극지 얼음 수호자 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-003", "name": "질풍 대시 마스터 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-004", "name": "아이언 월 방어자 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-005", "name": "크리티컬 헌터 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-006", "name": "하이퍼 밸런서 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-007", "name": "쉐도우 닌자 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-008", "name": "킹 크레스트 왕관 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-009", "name": "스피드 피닉스 불새 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID2-010", "name": "타이탄 골리앗 알", "tier": "유료 2단계 (Rare)", "code": "PAID_T2", "price": "100 Gem / 10,000 Gold", "pot": "61~80", "sec": 14400, "weight": "8.0%", "note": "희귀 혈통 패시브 병아리 부화"}, {"id": "EGG-PAID3-001", "name": "드래곤 클럭 신화 알", "tier": "유료 3단계 (Legendary)", "code": "PAID_T3", "price": "300 Gem (가차 확정)", "pot": "81~100", "sec": 43200, "weight": "2.0%", "note": "전설 히든 변이 병아리 100% 확정"}, {"id": "EGG-PAID3-002", "name": "신주 불사조 계승 알", "tier": "유료 3단계 (Legendary)", "code": "PAID_T3", "price": "300 Gem (가차 확정)", "pot": "81~100", "sec": 43200, "weight": "2.0%", "note": "전설 히든 변이 병아리 100% 확정"}, {"id": "EGG-PAID3-003", "name": "천상 챔피언 왕좌 알", "tier": "유료 3단계 (Legendary)", "code": "PAID_T3", "price": "300 Gem (가차 확정)", "pot": "81~100", "sec": 43200, "weight": "2.0%", "note": "전설 히든 변이 병아리 100% 확정"}, {"id": "EGG-PAID3-004", "name": "칠흑 마왕 루스터 알", "tier": "유료 3단계 (Legendary)", "code": "PAID_T3", "price": "300 Gem (가차 확정)", "pot": "81~100", "sec": 43200, "weight": "2.0%", "note": "전설 히든 변이 병아리 100% 확정"}, {"id": "EGG-PAID3-005", "name": "제우스 썬더 볼트 알", "tier": "유료 3단계 (Legendary)", "code": "PAID_T3", "price": "300 Gem (가차 확정)", "pot": "81~100", "sec": 43200, "weight": "2.0%", "note": "전설 히든 변이 병아리 100% 확정"}];
+const MASTER_ROOSTERS_30 = [{"id": "블레이징-윙-(-blazing-wing)", "name": "블레이징 윙 (Blazing Wing)", "raceStyle": "도주", "fightStyle": "아웃파이터", "STR": 56, "DEX": 77, "VIT": 54, "MEN": 43, "LCK": 68, "POT": 37}, {"id": "썬더-스트라이크-(-thunder-strike)", "name": "썬더 스트라이크 (Thunder Strike)", "raceStyle": "도주", "fightStyle": "아웃파이터", "STR": 55, "DEX": 83, "VIT": 47, "MEN": 45, "LCK": 75, "POT": 30}, {"id": "래피드-로드-(-rapid-road)", "name": "래피드 로드 (Rapid Road)", "raceStyle": "도주", "fightStyle": "아웃파이터", "STR": 35, "DEX": 68, "VIT": 63, "MEN": 42, "LCK": 83, "POT": 44}, {"id": "윈드-러너-(-wind-runner)", "name": "윈드 러너 (Wind Runner)", "raceStyle": "도주", "fightStyle": "아웃파이터", "STR": 62, "DEX": 80, "VIT": 53, "MEN": 48, "LCK": 43, "POT": 30}, {"id": "페더-대시-(-feather-dash)", "name": "페더 대시 (Feather Dash)", "raceStyle": "도주", "fightStyle": "아웃파이터", "STR": 75, "DEX": 91, "VIT": 44, "MEN": 47, "LCK": 29, "POT": 30}, {"id": "나이트-호크-(-night-hawk)", "name": "나이트 호크 (Night Hawk)", "raceStyle": "추입", "fightStyle": "브롤러", "STR": 84, "DEX": 52, "VIT": 81, "MEN": 70, "LCK": 0, "POT": 30}, {"id": "섀도우-페더-(-shadow-feather)", "name": "섀도우 페더 (Shadow Feather)", "raceStyle": "추입", "fightStyle": "브롤러", "STR": 71, "DEX": 41, "VIT": 74, "MEN": 50, "LCK": 58, "POT": 30}, {"id": "사일런트-킬러-(-silent-killer)", "name": "사일런트 킬러 (Silent Killer)", "raceStyle": "추입", "fightStyle": "브롤러", "STR": 80, "DEX": 37, "VIT": 66, "MEN": 58, "LCK": 48, "POT": 30}, {"id": "아이언-힐-(-iron-heel)", "name": "아이언 힐 (Iron Heel)", "raceStyle": "추입", "fightStyle": "브롤러", "STR": 64, "DEX": 55, "VIT": 80, "MEN": 50, "LCK": 36, "POT": 30}, {"id": "라스트-스퍼터-(-last-spurter)", "name": "라스트 스퍼터 (Last Spurter)", "raceStyle": "추입", "fightStyle": "브롤러", "STR": 79, "DEX": 52, "VIT": 72, "MEN": 63, "LCK": 19, "POT": 30}, {"id": "레드-불릿-(-red-bullet)", "name": "레드 불릿 (Red Bullet)", "raceStyle": "선행", "fightStyle": "인파이터", "STR": 64, "DEX": 73, "VIT": 59, "MEN": 46, "LCK": 48, "POT": 30}, {"id": "스피디-피닉스-(-speedy-phoenix)", "name": "스피디 피닉스 (Speedy Phoenix)", "raceStyle": "선행", "fightStyle": "인파이터", "STR": 59, "DEX": 75, "VIT": 54, "MEN": 51, "LCK": 46, "POT": 30}, {"id": "에어로-대시-(-aero-dash)", "name": "에어로 대시 (Aero Dash)", "raceStyle": "선행", "fightStyle": "인파이터", "STR": 74, "DEX": 65, "VIT": 56, "MEN": 48, "LCK": 63, "POT": 30}, {"id": "골든-크레스트-(-golden-crest)", "name": "골든 크레스트 (Golden Crest)", "raceStyle": "선행", "fightStyle": "인파이터", "STR": 52, "DEX": 82, "VIT": 57, "MEN": 48, "LCK": 48, "POT": 30}, {"id": "스프린트-마스터-(-sprint-master)", "name": "스프린트 마스터 (Sprint Master)", "raceStyle": "선행", "fightStyle": "인파이터", "STR": 67, "DEX": 83, "VIT": 60, "MEN": 52, "LCK": 23, "POT": 30}, {"id": "아이언-cluck-(-iron-cluck)", "name": "아이언 Cluck (Iron Cluck)", "raceStyle": "자재", "fightStyle": "밸런서", "STR": 61, "DEX": 63, "VIT": 71, "MEN": 50, "LCK": 43, "POT": 30}, {"id": "골리앗-(-goliath)", "name": "골리앗 (Goliath)", "raceStyle": "자재", "fightStyle": "밸런서", "STR": 56, "DEX": 54, "VIT": 72, "MEN": 46, "LCK": 58, "POT": 30}, {"id": "엔듀어런스-(-endurance)", "name": "엔듀어런스 (Endurance)", "raceStyle": "자재", "fightStyle": "밸런서", "STR": 64, "DEX": 67, "VIT": 65, "MEN": 52, "LCK": 37, "POT": 30}, {"id": "스톤-벽-(-stone-wall)", "name": "스톤 벽 (Stone Wall)", "raceStyle": "자재", "fightStyle": "밸런서", "STR": 56, "DEX": 52, "VIT": 77, "MEN": 44, "LCK": 57, "POT": 30}, {"id": "마라토너-(-marathoner)", "name": "마라토너 (Marathoner)", "raceStyle": "자재", "fightStyle": "밸런서", "STR": 61, "DEX": 66, "VIT": 66, "MEN": 51, "LCK": 41, "POT": 30}, {"id": "서니-cluck-(-sunny-cluck)", "name": "서니 Cluck (Sunny Cluck)", "raceStyle": "선입", "fightStyle": "밸런서", "STR": 74, "DEX": 74, "VIT": 67, "MEN": 47, "LCK": 23, "POT": 30}, {"id": "이븐-킬-(-even-keel)", "name": "이븐 킬 (Even Keel)", "raceStyle": "선입", "fightStyle": "밸런서", "STR": 65, "DEX": 74, "VIT": 66, "MEN": 47, "LCK": 34, "POT": 30}, {"id": "블루-리본-(-blue-ribbon)", "name": "블루 리본 (Blue Ribbon)", "raceStyle": "선입", "fightStyle": "밸런서", "STR": 72, "DEX": 70, "VIT": 63, "MEN": 52, "LCK": 29, "POT": 30}, {"id": "스태빌리티-(-stability)", "name": "스태빌리티 (Stability)", "raceStyle": "선입", "fightStyle": "밸런서", "STR": 64, "DEX": 72, "VIT": 72, "MEN": 49, "LCK": 28, "POT": 30}, {"id": "퍼펙트-밸런스-(-perfect-balance)", "name": "퍼펙트 밸런스 (Perfect Balance)", "raceStyle": "선입", "fightStyle": "밸런서", "STR": 67, "DEX": 75, "VIT": 63, "MEN": 52, "LCK": 29, "POT": 30}, {"id": "매드-루스터-(-mad-rooster)", "name": "매드 루스터 (Mad Rooster)", "raceStyle": "변칙", "fightStyle": "테크니션", "STR": 71, "DEX": 57, "VIT": 49, "MEN": 59, "LCK": 63, "POT": 30}, {"id": "와일드-카드-(-wild-card)", "name": "와일드 카드 (Wild Card)", "raceStyle": "변칙", "fightStyle": "테크니션", "STR": 40, "DEX": 61, "VIT": 64, "MEN": 51, "LCK": 78, "POT": 30}, {"id": "러시안-룰렛-(-russian-roulette)", "name": "러시안 룰렛 (Russian Roulette)", "raceStyle": "변칙", "fightStyle": "테크니션", "STR": 82, "DEX": 49, "VIT": 41, "MEN": 54, "LCK": 77, "POT": 32}, {"id": "카오스-(-chaos)", "name": "카오스 (Chaos)", "raceStyle": "변칙", "fightStyle": "테크니션", "STR": 38, "DEX": 69, "VIT": 68, "MEN": 42, "LCK": 89, "POT": 30}, {"id": "더스트-스퍼-(-dust-spur)", "name": "더스트 스퍼 (Dust Spur)", "raceStyle": "변칙", "fightStyle": "테크니션", "STR": 34, "DEX": 57, "VIT": 59, "MEN": 55, "LCK": 87, "POT": 46}];
+
+const TRAINING_LIST = [
+  { id:"TR_01", name:"고속 트랙 주행", mode:"더비", target:"DEX +1 (부스트 +2)", stat1:"DEX", stat2:null, gold:1000, gem:20, vipC:60, sec:900, sound:"SFX_TRAIN_TRACK", desc:"주행 최고 속도·가속력 기반 스탯 집중 성장" },
+  { id:"TR_02", name:"타이어 튀기기", mode:"더비", target:"DEX +1, LCK +1", stat1:"DEX", stat2:"LCK", gold:1000, gem:20, vipC:60, sec:900, sound:"SFX_TRAIN_TIRE", desc:"스타트 반응 속도 및 라스트 스퍼트 변칙성 향상" },
+  { id:"TR_03", name:"모래언덕 오르기", mode:"더비", target:"VIT +1, MEN +1", stat1:"VIT", stat2:"MEN", gold:1200, gem:25, vipC:75, sec:1200, sound:"SFX_TRAIN_TRACK", desc:"장거리 트랙 지구력·근성 동시 강화" },
+  { id:"TR_04", name:"통나무 타격하기", mode:"핏", target:"STR +1 (부스트 +2)", stat1:"STR", stat2:null, gold:1000, gem:20, vipC:60, sec:900, sound:"SFX_TRAIN_WOOD", desc:"타격 공격력 및 헤비 블로우 위력 강화" },
+  { id:"TR_05", name:"과녁 정밀 타격", mode:"핏", target:"DEX +1, MEN +1", stat1:"DEX", stat2:"MEN", gold:1200, gem:25, vipC:75, sec:1200, sound:"SFX_TRAIN_WOOD", desc:"기술력(TEC) 상승 · 호흡 정돈 쿨다운 단축" },
+  { id:"TR_06", name:"깃털 부풀려 버티기 수련", mode:"핏", target:"DEX +1, STR +1", stat1:"DEX", stat2:"STR", gold:1000, gem:20, vipC:60, sec:900, sound:"SFX_TRAIN_TIRE", desc:"가드 방어력 및 역습 전환 탄성 강화" },
+  { id:"TR_07", name:"외나무 밸런스 균형대", mode:"핏", target:"MEN +1, VIT +1", stat1:"MEN", stat2:"VIT", gold:1500, gem:30, vipC:90, sec:1800, sound:"SFX_TRAIN_WOOD", desc:"투지 버티기 및 넉다운 회복 탄성 확보" },
+  { id:"TR_08", name:"진흙탕 극기 훈련", mode:"공용", target:"VIT +2, LCK +3", stat1:"VIT", stat2:"LCK", gold:1500, gem:30, vipC:90, sec:1800, sound:"SFX_SPA_WATER_IN", bonus:{VIT:2, LCK:3}, desc:"더비·핏 공용 고효율 스태미나/행운 극대화 훈련" }
+];
+
+const PIT_SKILLS_9 = [
+  { id:"F10", name:"전진 부리 속사", type:"타격", cat:"공격" },
+  { id:"F12", name:"낮은 발톱 할퀴기", type:"타격", cat:"공격" },
+  { id:"F14", name:"비상 발톱 급습", type:"타격", cat:"공격" },
+  { id:"F16", name:"광폭 발버둥 난타", type:"타격", cat:"공격" },
+  { id:"F21", name:"깃털 부풀려 버티기", type:"가드", cat:"방어" },
+  { id:"F22", name:"납작 엎드리기", type:"가드", cat:"방어" },
+  { id:"F23", name:"맞발톱 쳐내기", type:"반격", cat:"방어" },
+  { id:"F33", name:"[특공] 머리 잡아 바닥 찍기", type:"잡기", cat:"특수공격" },
+  { id:"F34", name:"[특방] 머리 풀고 반격하기", type:"반격", cat:"특수방어" }
+];
+
+const TITLES_20 = [
+  { id:"T01", name:"신참 양계사", grade:"Normal", effect:"초기 기본 칭호" },
+  { id:"T02", name:"첫 알의 주인", grade:"Normal", effect:"Gold +2% 보너스" },
+  { id:"T03", name:"온실 지킴이", grade:"Normal", effect:"부화 대기 -3%" },
+  { id:"T04", name:"모이 공급자", grade:"Normal", effect:"닭장 회복 +2/h" },
+  { id:"T05", name:"성실한 조련사", grade:"Normal", effect:"훈련 Gold -5%" },
+  { id:"T06", name:"트랙 개척자", grade:"Rare", effect:"더비 상금 +5%" },
+  { id:"T07", name:"투계장 신성", grade:"Rare", effect:"핏 상금 +5%" },
+  { id:"T08", name:"온천 단골객", grade:"Rare", effect:"스파 비용 -10%" },
+  { id:"T09", name:"혈통 연구가", grade:"Rare", effect:"교배 비용 -10%" },
+  { id:"T10", name:"미니게임 장인", grade:"Rare", effect:"부화 터치 보정 +3%" },
+  { id:"T11", name:"질풍의 조련사", grade:"Epic", effect:"DEX 훈련 +10%" },
+  { id:"T12", name:"강철의 트레이너", grade:"Epic", effect:"STR/VIT 훈련 +10%" },
+  { id:"T13", name:"큰손", grade:"Epic", effect:"거래소 수수료 8% ➔ 7% 할인", special:"market_fee" },
+  { id:"T14", name:"전설 사냥꾼", grade:"Epic", effect:"가차 천장 심리 버프" },
+  { id:"T15", name:"불사조 부화자", grade:"Epic", effect:"Heritage POT +1 보정" },
+  { id:"T16", name:"더비 그랜드마스터", grade:"Legend", effect:"더비 출전 피로 -5" },
+  { id:"T17", name:"투계장 황제", grade:"Legend", effect:"핏 출전 부상률 -10%" },
+  { id:"T18", name:"황금 유전학자", grade:"Legend", effect:"교배 자식 POT +2 보너스" },
+  { id:"T19", name:"만수무강 농장주", grade:"Legend", effect:"전체 회복 효율 +20%" },
+  { id:"T20", name:"ROOSTER RUMBLE 챔피언", grade:"Legend", effect:"모든 Gold 보상 +15%" }
+];
+
+const STATUS_LABELS = {
+  UNHATCHED: { text:"미부화", cls:"badge-sky" },
+  IDLE: { text:"대기(IDLE)", cls:"badge-green" },
+  TRAINING: { text:"훈련중", cls:"badge-amber" },
+  IN_MATCH: { text:"출전중", cls:"badge-purple" },
+  RESTING: { text:"닭장휴식", cls:"badge-sky" },
+  FATIGUED: { text:"과피로(-15%)", cls:"badge-amber" },
+  INJURED: { text:"부상(출전불가)", cls:"badge-rose" },
+  SPA_TREATMENT: { text:"스파치료", cls:"badge-sky" },
+  BREEDING_LOCKED: { text:"교배잠금", cls:"badge-purple" },
+  COOLDOWN: { text:"쿨다운", cls:"badge-amber" },
+  RETIRED: { text:"교배은퇴(5/5)", cls:"badge-rose" }
+};
+
+// ==================== STATE ====================
+const state = {
+  platform: "mobile", // "mobile" | "vip"
+  speed: 60,
+  theme: "dark",
+  audioOn: true,
+  currentBgm: "BGM_LOBBY_01",
+  gold: 50000,
+  gem: 2500,
+  vipCredit: 5000,
+  feed: 30,
+  pity: 0,
+  stamp: 1, // attendance + ad stamps (0..3)
+  adCounts: { stamp: 0, stampCd: 0, heal: 0, healCd: 0 },
+  slotCount: 2,
+  eggs: [],
+  hatchSlots: [null, null, null, null],
+  roosters: [],
+  selectedRoosterId: null,
+  radarMode: "base", // "base" | "derby" | "pit"
+  marketListings: [],
+  equippedTitle: "T01",
+  unlockedTitles: new Set(["T01","T02","T03","T05","T06","T13","T14"]),
+  quests: [
+    { id:"QD1", kind:"일일", name:"무료/유료 알 1회 부화 완료", cur:0, max:1, reward:"500 G", gold:500, gem:0, claimed:false },
+    { id:"QD2", kind:"일일", name:"개화 훈련장 훈련 2회 완료", cur:0, max:2, reward:"800 G", gold:800, gem:0, claimed:false },
+    { id:"QD3", kind:"일일", name:"더비 또는 핏 경기 1회 출전", cur:0, max:1, reward:"1,000 G", gold:1000, gem:0, claimed:false },
+    { id:"QD4", kind:"일일", name:"스파 또는 사료 회복 1회", cur:0, max:1, reward:"사료 +10", gold:0, gem:0, feed:10, claimed:false },
+    { id:"QD5", kind:"일일", name:"알 가차 1회 시도", cur:0, max:1, reward:"30 Gem", gold:0, gem:30, claimed:false },
+    { id:"QW1", kind:"주간", name:"경기 10회 출전 누적", cur:2, max:10, reward:"150 Gem", gold:0, gem:150, claimed:false },
+    { id:"QW2", kind:"주간", name:"2세대 혈통 교배 1회 완료", cur:0, max:1, reward:"200 Gem", gold:0, gem:200, claimed:false },
+    { id:"QW3", kind:"주간", name:"전설(Legendary) 또는 Rare 부화", cur:0, max:1, reward:"5,000 G", gold:5000, gem:0, claimed:false },
+    { id:"QW4", kind:"주간", name:"거래소 매물 등록 또는 구매 1회", cur:0, max:1, reward:"100 Gem", gold:0, gem:100, claimed:false }
+  ],
+  achievements: [
+    { id:"A1", name:"첫 날갯짓 (첫 부화)", cur:1, max:1, reward:"50 Gem", gem:50, claimed:false },
+    { id:"A2", name:"베테랑 사육사 (5두 육성)", cur:4, max:5, reward:"150 Gem", gem:150, claimed:false },
+    { id:"A3", name:"천장 돌파 (전설 알 획득)", cur:0, max:1, reward:"300 Gem", gem:300, claimed:false },
+    { id:"A4", name:"9대 기술 마스터", cur:4, max:9, reward:"200 Gem", gem:200, claimed:false },
+    { id:"A5", name:"혈통 계승자 (2세대 교배 3회)", cur:0, max:3, reward:"250 Gem", gem:250, claimed:false },
+    { id:"A6", name:"거래소 큰손 (매매 3회)", cur:0, max:3, reward:"200 Gem", gem:200, claimed:false },
+    { id:"A7", name:"더비 연승 기록가", cur:0, max:5, reward:"300 Gem", gem:300, claimed:false },
+    { id:"A8", name:"투계장 챔피언", cur:0, max:5, reward:"300 Gem", gem:300, claimed:false }
+  ],
+  apiLogs: [],
+  minigame: { active:false, endAt:0, pos:50, dir:1, bestBonus:0, bestGrade:"-", taps:0 }
+};
+
+let uidCounter = 100;
+function nextUid(prefix) { return prefix + "-" + (++uidCounter); }
+
+// ==================== STAT DERIVATION FORMULAS ====================
+function calcDerby2nd(r) {
+  const { STR, DEX, VIT, MEN, LCK, POT } = r;
+  return {
+    SPD: Math.round(DEX * 0.5 + STR * 0.3 + POT * 0.2),
+    STA: Math.round(DEX * 0.7 + LCK * 0.2 + POT * 0.1),
+    STM: Math.round(VIT * 0.6 + MEN * 0.2 + POT * 0.2),
+    FOC: Math.round(MEN * 0.5 + DEX * 0.3 + POT * 0.2),
+    TMP: Math.round(LCK * 0.6 + MEN * 0.2 + STR * 0.2),
+    GUT: Math.round(MEN * 0.5 + VIT * 0.3 + POT * 0.2)
+  };
+}
+
+function calcPit2nd(r) {
+  const { STR, DEX, VIT, MEN, LCK, POT } = r;
+  const TEC = Math.round(DEX * 0.4 + MEN * 0.3 + POT * 0.3);
+  const recoverCd = Math.max(1.5 - (TEC / 100) * 0.5, 1.0).toFixed(2);
+  return {
+    POW: Math.round(STR * 0.6 + DEX * 0.2 + POT * 0.2),
+    DEF: Math.round(DEX * 0.5 + STR * 0.3 + POT * 0.2),
+    HP: Math.round(VIT * 10 + STR * 2 + POT * 2),
+    REC: Math.round(VIT * 0.5 + MEN * 0.3 + POT * 0.2),
+    TEC,
+    GRT: Math.round(MEN * 0.6 + VIT * 0.2 + POT * 0.2),
+    recoverCd
+  };
+}
+
+function createRoosterInstance(src, tierCode = "PAID_T1", gender = null, gen = 1, customSkills = null) {
+  const g = gender || (Math.random() < 0.5 ? "ROOSTER" : "HEN");
+  const slotCap = tierCode === "PAID_T3" ? 5 : tierCode === "PAID_T2" ? 4 : tierCode === "PAID_T1" ? 3 : 2;
+  const partTier = tierCode === "PAID_T3" ? "3단계 전설 파츠(황금볏·불꽃깃)" : tierCode === "PAID_T2" ? "2단계 희귀 파츠(강철볏·은빛발톱)" : "1단계 기본 파츠";
+  const allSkillIds = PIT_SKILLS_9.map(s => s.id);
+  const skills = customSkills || allSkillIds.slice(0, Math.min(slotCap, 2)).concat(tierCode === "PAID_T3" ? ["F33", "F34"] : []);
+  return {
+    uid: nextUid("RST"),
+    masterId: src.id || "GEN-2",
+    name: src.name,
+    gender: g,
+    gen,
+    tierCode,
+    partTier,
+    mapSkin: `VAR-${String(Math.floor(Math.random()*300)+1).padStart(3,"0")}`,
+    raceStyle: src.raceStyle || "선행",
+    fightStyle: src.fightStyle || "인파이터",
+    STR: src.STR, DEX: src.DEX, VIT: src.VIT, MEN: src.MEN, LCK: src.LCK, POT: src.POT,
+    fatigue: src.fatigue ?? 0,
+    condition: src.condition ?? 85,
+    status: "IDLE",
+    resting: false,
+    spa24h: false,
+    breedCount: src.breedCount ?? 0,
+    cooldownSec: 0,
+    breedCdSec: 0,
+    trainJob: null,
+    skills: Array.from(new Set(skills)),
+    equippedSkills: Array.from(new Set(skills)).slice(0, slotCap),
+    slotCap
+  };
+}
+
+// ==================== WEB AUDIO SYNTHESIZER (BGM 3 + SFX 10) ====================
+let audioCtx = null;
+let bgmTimer = null;
+function ensureAudio() {
+  if (!state.audioOn) return null;
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) audioCtx = new AC();
+  }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+  return audioCtx;
+}
+
+function playTone(freq, dur, type = "sine", vol = 0.08, delay = 0) {
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const now = ctx.currentTime + delay;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, now);
+  gain.gain.setValueAtTime(vol, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(now);
+  osc.stop(now + dur);
+}
+
+function playSFX(id) {
+  if (!state.audioOn) return;
+  switch (id) {
+    case "SFX_FARM_EGG_TAP": playTone(660, 0.08, "triangle", 0.08); break;
+    case "SFX_FARM_EGG_CRACK": playTone(440, 0.06, "sawtooth", 0.09); playTone(880, 0.1, "square", 0.06, 0.05); break;
+    case "SFX_FARM_EGG_HATCH": [523,659,784,1046].forEach((f,i)=>playTone(f,0.16,"triangle",0.09,i*0.07)); break;
+    case "SFX_CHICK_CHIRP": playTone(1400, 0.07, "sine", 0.06); playTone(1650, 0.08, "sine", 0.06, 0.08); break;
+    case "SFX_ROOSTER_CROW": [520,680,820,760].forEach((f,i)=>playTone(f,0.14,"sawtooth",0.05,i*0.1)); break;
+    case "SFX_TRAIN_TRACK": [320,380,440].forEach((f,i)=>playTone(f,0.06,"triangle",0.06,i*0.06)); break;
+    case "SFX_TRAIN_WOOD": playTone(180, 0.09, "square", 0.08); playTone(220, 0.07, "square", 0.06, 0.07); break;
+    case "SFX_TRAIN_TIRE": playTone(140, 0.14, "sawtooth", 0.07); break;
+    case "SFX_SPA_WATER_IN": [400,500,600,700].forEach((f,i)=>playTone(f,0.12,"sine",0.05,i*0.05)); break;
+    case "SFX_SPA_HEAL_CHIME": [784,988,1175].forEach((f,i)=>playTone(f,0.22,"sine",0.07,i*0.09)); break;
+    default: playTone(540, 0.06, "sine", 0.05);
+  }
+}
+
+function startBgmLoop() {
+  if (bgmTimer) clearInterval(bgmTimer);
+  const seqs = {
+    BGM_LOBBY_01: [261, 329, 392, 523, 392, 329],
+    BGM_TRAIN_02: [293, 369, 440, 587, 440, 369],
+    BGM_MARKET_03: [349, 440, 523, 659, 523, 440]
+  };
+  let step = 0;
+  bgmTimer = setInterval(() => {
+    if (!state.audioOn || !audioCtx || audioCtx.state !== "running") return;
+    const notes = seqs[state.currentBgm] || seqs.BGM_LOBBY_01;
+    playTone(notes[step % notes.length], 0.25, "sine", 0.018);
+    step++;
+  }, 550);
+}
+
+function toggleAudio() {
+  state.audioOn = !state.audioOn;
+  const btn = document.getElementById("btn-audio");
+  btn.innerText = state.audioOn ? "🔊 사운드 ON" : "🔇 음소거";
+  btn.classList.toggle("active", state.audioOn);
+  if (state.audioOn) ensureAudio();
+}
+
+function cycleBgm() {
+  const order = ["BGM_LOBBY_01", "BGM_TRAIN_02", "BGM_MARKET_03"];
+  state.currentBgm = order[(order.indexOf(state.currentBgm) + 1) % order.length];
+  document.getElementById("bgm-status-badge").innerText = "🎵 " + state.currentBgm;
+  ensureAudio();
+  showToast("BGM 전환: " + state.currentBgm);
+}
+
+// ==================== API / WS LOGGER ====================
+function logNet(method, path, reqObj, wsEvent, wsPayload) {
+  const ts = new Date().toLocaleTimeString("ko-KR", { hour12: false });
+  const db = state.platform === "vip" ? "VIP_LOCAL_DB" : "MOBILE_APP_DB";
+  const line = `[${ts}][${db}] ${method} ${path} | REQ=${JSON.stringify(reqObj)} => WS(${wsEvent})=${JSON.stringify(wsPayload)}`;
+  state.apiLogs.unshift(line);
+  if (state.apiLogs.length > 50) state.apiLogs.pop();
+  document.getElementById("api-log-cnt").innerText = state.apiLogs.length;
+  document.getElementById("api-log-body").innerHTML = state.apiLogs.map(l => `<div>${l}</div>`).join("");
+}
+
+function toggleApiDrawer() {
+  document.getElementById("api-drawer").classList.toggle("open");
+}
+
+// ==================== UI HELPERS ====================
+function showToast(msg) {
+  const el = document.getElementById("proto-toast");
+  el.innerText = msg;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 2600);
+}
+
+function toggleTheme() {
+  state.theme = state.theme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", state.theme);
+}
+
+function setSpeed(val) {
+  state.speed = val;
+  showToast(val >= 999999 ? "⚡ 모든 대기 타이머 즉시 완료 모드" : `⏱ 시뮬레이션 배속 ${val}x 적용`);
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
+  document.querySelectorAll(".tab-pane").forEach(p => p.classList.toggle("active", p.id === tabId));
+  const bgmMap = { "tab-map":"BGM_LOBBY_01", "tab-eggs":"BGM_MARKET_03", "tab-hatch":"BGM_TRAIN_02", "tab-train":"BGM_TRAIN_02" };
+  if (bgmMap[tabId]) {
+    state.currentBgm = bgmMap[tabId];
+    document.getElementById("bgm-status-badge").innerText = "🎵 " + state.currentBgm;
+  }
+  renderAll();
+}
+
+function setPlatformMode(mode) {
+  state.platform = mode;
+  const isVip = mode === "vip";
+  document.getElementById("btn-mode-mobile").className = "mode-pill " + (!isVip ? "active-mobile" : "");
+  document.getElementById("btn-mode-vip").className = "mode-pill " + (isVip ? "active-vip" : "");
+  document.getElementById("chip-vip").style.display = isVip ? "flex" : "none";
+  document.getElementById("hud-db-badge").innerText = isVip
+    ? "연결 DB: VIP Lounge Local DB (현장 폐쇄망 독립 분리) · 4대 기능 한정 서비스"
+    : "연결 DB: Mobile App DB (독립 스키마) · 알 65종 & 30두 마스터 탑재";
+
+  const banner = document.getElementById("policy-banner");
+  banner.className = isVip ? "vip-policy-bar" : "mobile-policy-bar";
+  banner.innerHTML = isVip
+    ? `<span><strong>👑 미국 VIP 라운지 모드 (4대 기능 한정)</strong> · 반영: <strong>① 알 유료 획득(35종/천장) · ② 유료 교배 · ③ 유/무료 성장 · ④ 유/무료 회복</strong> | <span style="color:var(--rose);">제외: 무료 알·광고·거래소·퀘스트·업적·칭호</span></span><span class="badge badge-amber">VIP Lounge Local DB</span>`
+    : `<span><strong>📱 모바일 스토어 풀버전 활성</strong> · 전체 기능(3스탬프 무료 알 · 보상형 광고 3종 · 거래소 8% / [큰손] 7% · 퀘스트/업적/칭호 20종 · 유/무료 성장·회복·교배) 사용 가능</span><span class="badge badge-sky">Mobile App DB</span>`;
+
+  document.getElementById("admin-tab-tag").className = isVip ? "lock-tag" : "badge badge-green";
+  document.getElementById("admin-tab-tag").innerText = isVip ? "VIP 제외" : "모바일";
+  document.getElementById("summary-mode-badge").className = isVip ? "badge badge-amber" : "badge badge-sky";
+  document.getElementById("summary-mode-badge").innerText = isVip ? "VIP 라운지 (4대 기능)" : "모바일 풀버전";
+  document.getElementById("map-market-title").innerText = isVip ? "⑤ 관리동·상점 (유료 알 전용)" : "⑤ 관리동 & 마켓";
+  document.getElementById("map-market-sub").innerText = isVip ? "VIP 35종 유료 가차 전용 (거래소 제외)" : "가차 65종 · 거래소 · 퀘스트";
+  playSFX("SFX_FARM_EGG_TAP");
+  renderAll();
+}
+
+function openProtoModal(title, htmlContent) {
+  document.getElementById("modal-title-text").innerText = title;
+  document.getElementById("modal-body-content").innerHTML = htmlContent;
+  document.getElementById("proto-modal").classList.add("open");
+}
+function closeProtoModal() { document.getElementById("proto-modal").classList.remove("open"); }
+
+// ==================== GAMEPLAY ACTIONS ====================
+function progressQuest(qid, delta = 1) {
+  if (state.platform === "vip") return;
+  const q = state.quests.find(x => x.id === qid);
+  if (q && q.cur < q.max) q.cur = Math.min(q.max, q.cur + delta);
+}
+
+function pullGacha(count) {
+  const isVip = state.platform === "vip";
+  const costVip = count * 300;
+  const costGem = count * 100;
+  if (isVip) {
+    if (state.vipCredit < costVip && state.gem < costGem) return showToast("VIP 크레딧 또는 Gem이 부족합니다.");
+    if (state.vipCredit >= costVip) state.vipCredit -= costVip; else state.gem -= costGem;
+  } else {
+    if (state.gem < costGem) return showToast("Gem이 부족합니다.");
+    state.gem -= costGem;
+  }
+
+  const paidPool = MASTER_EGGS_65.filter(e => e.code !== "NAT");
+  const supPool = paidPool.filter(e => e.code === "PAID_T1");
+  const rarePool = paidPool.filter(e => e.code === "PAID_T2");
+  const legPool = paidPool.filter(e => e.code === "PAID_T3");
+
+  const results = [];
+  for (let i = 0; i < count; i++) {
+    state.pity++;
+    let picked;
+    if (state.pity >= 10) {
+      picked = legPool[Math.floor(Math.random() * legPool.length)];
+      state.pity = 0;
+    } else {
+      const r = Math.random() * 100;
+      if (r < 6.6) {
+        picked = legPool[Math.floor(Math.random() * legPool.length)];
+        state.pity = 0;
+      } else if (r < 33.3) {
+        picked = rarePool[Math.floor(Math.random() * rarePool.length)];
+      } else {
+        picked = supPool[Math.floor(Math.random() * supPool.length)];
+      }
+    }
+    const inst = { uid: nextUid("EGG"), ...picked };
+    state.eggs.push(inst);
+    results.push(inst);
+  }
+  progressQuest("QD5", 1);
+  if (results.some(x => x.code === "PAID_T3")) {
+    const a3 = state.achievements.find(a => a.id === "A3");
+    if (a3) a3.cur = 1;
+  }
+  playSFX(results.some(x => x.code === "PAID_T3") ? "SFX_FARM_EGG_HATCH" : "SFX_FARM_EGG_CRACK");
+  logNet("POST", "/api/v1/farm/gacha", { mode: state.platform, count }, "farm:gacha_done", { obtained: results.map(r => r.id), pity: state.pity });
+
+  const cards = results.map(r => `<div style="border:1px solid var(--border); padding:8px; border-radius:8px; background:var(--bg-secondary);">
+    <div style="font-weight:800; color:${r.code==='PAID_T3'?'var(--amber)':r.code==='PAID_T2'?'var(--purple)':'var(--primary)'};">🥚 ${r.name}</div>
+    <div style="font-size:0.72rem; color:var(--text-muted);">${r.tier} · POT ${r.pot}</div>
+  </div>`).join("");
+  openProtoModal(`✨ 알 뽑기 결과 (${results.length}개 획득)`, `<div class="grid-2" style="gap:8px;">${cards}</div>`);
+  renderAll();
+}
+
+function buyDirectEgg(code) {
+  const pool = MASTER_EGGS_65.filter(e => e.code === code);
+  const picked = pool[Math.floor(Math.random() * pool.length)];
+  const gCost = code === "PAID_T1" ? 3000 : 10000;
+  const vCost = code === "PAID_T1" ? 150 : 500;
+  if (state.platform === "vip") {
+    if (state.vipCredit < vCost) return showToast("VIP 크레딧 부족");
+    state.vipCredit -= vCost;
+  } else {
+    if (state.gold < gCost) return showToast("Gold 부족");
+    state.gold -= gCost;
+  }
+  const inst = { uid: nextUid("EGG"), ...picked };
+  state.eggs.push(inst);
+  playSFX("SFX_FARM_EGG_TAP");
+  logNet("POST", "/api/v1/farm/shop/buy", { tier: code }, "farm:egg_acquired", { uid: inst.uid, id: inst.id });
+  showToast(`${inst.name} (${inst.tier}) 구매 완료!`);
+  renderAll();
+}
+
+function claimStamp(isAd) {
+  if (state.platform === "vip") return showToast("VIP 라운지에서는 무료 스탬프 알이 제외됩니다.");
+  if (isAd) {
+    if (state.adCounts.stamp >= 2) return showToast("일일 무료 알 광고 시청 한도(2회)를 모두 사용했습니다.");
+    if (state.adCounts.stampCd > 0) return showToast(`광고 쿨다운 남음 (${Math.ceil(state.adCounts.stampCd)}초)`);
+    state.adCounts.stamp++;
+    state.adCounts.stampCd = 300;
+  }
+  state.stamp++;
+  playSFX("SFX_CHICK_CHIRP");
+  if (state.stamp >= 3) {
+    state.stamp -= 3;
+    const natPool = MASTER_EGGS_65.filter(e => e.code === "NAT");
+    const picked = natPool[Math.floor(Math.random() * natPool.length)];
+    const inst = { uid: nextUid("EGG"), ...picked };
+    state.eggs.push(inst);
+    showToast(`🎉 3스탬프 달성! 무료 알 [${inst.name}] 획득!`);
+  } else {
+    showToast(`스탬프 +1 적립! (${state.stamp}/3)`);
+  }
+  renderAll();
+}
+
+function buyMarketEgg(idx) {
+  if (state.platform === "vip") return showToast("VIP 라운지에서는 알 거래소가 제외됩니다.");
+  const item = state.marketListings[idx];
+  if (!item) return;
+  if (state.gold < item.price) return showToast("Gold가 부족합니다.");
+  state.gold -= item.price;
+  state.marketListings.splice(idx, 1);
+  state.eggs.push({ uid: nextUid("EGG"), ...item.egg });
+  progressQuest("QW4", 1);
+  const a6 = state.achievements.find(a => a.id === "A6");
+  if (a6 && a6.cur < a6.max) a6.cur++;
+  playSFX("SFX_FARM_EGG_TAP");
+  logNet("POST", "/api/v1/farm/market/buy", { listingId: item.lid, price: item.price }, "farm:market_traded", { egg: item.egg.name });
+  showToast(`거래소에서 [${item.egg.name}] 구매 완료!`);
+  renderAll();
+}
+
+function listEggToMarket(eggUid) {
+  if (state.platform === "vip") return showToast("VIP 라운지에서는 거래소 이용 불가");
+  const idx = state.eggs.findIndex(e => e.uid === eggUid);
+  if (idx < 0) return;
+  const egg = state.eggs[idx];
+  const basePrice = egg.code === "PAID_T3" ? 25000 : egg.code === "PAID_T2" ? 12000 : egg.code === "PAID_T1" ? 3500 : 1200;
+  const feeRate = state.equippedTitle === "T13" ? 0.07 : 0.08;
+  const net = Math.round(basePrice * (1 - feeRate));
+  state.eggs.splice(idx, 1);
+  state.gold += net;
+  progressQuest("QW4", 1);
+  const a6 = state.achievements.find(a => a.id === "A6");
+  if (a6 && a6.cur < a6.max) a6.cur++;
+  logNet("POST", "/api/v1/farm/market/sell", { uid: eggUid, price: basePrice, feeRate }, "farm:market_sold", { netGold: net });
+  showToast(`[${egg.name}] 즉시 체결 정산 +${net.toLocaleString()} G (수수료 ${Math.round(feeRate*100)}% 적용)`);
+  renderAll();
+}
+
+// ==================== HATCHING & MINIGAME ====================
+function placeEggInSlot(eggUid) {
+  const emptyIdx = state.hatchSlots.findIndex((s, i) => i < state.slotCount && s === null);
+  if (emptyIdx < 0) return showToast("빈 부화 슬롯이 없습니다. 슬롯을 확장하거나 완료 후 수령하세요.");
+  const idx = state.eggs.findIndex(e => e.uid === eggUid);
+  if (idx < 0) return;
+  const egg = state.eggs.splice(idx, 1)[0];
+  state.hatchSlots[emptyIdx] = { egg, remainSec: egg.sec, totalSec: egg.sec, mgUsed: false };
+  playSFX("SFX_FARM_EGG_TAP");
+  logNet("POST", "/api/v1/farm/incubate", { slot: emptyIdx + 1, eggId: egg.id }, "farm:incubate_started", { totalSec: egg.sec });
+  switchTab("tab-hatch");
+}
+
+function expandHatchSlot() {
+  if (state.slotCount >= 4) return showToast("이미 최대 4슬롯까지 확장되었습니다.");
+  if (state.gem < 300) return showToast("Gem 300개가 필요합니다.");
+  state.gem -= 300;
+  state.slotCount++;
+  playSFX("SFX_SPA_HEAL_CHIME");
+  showToast(`부화 슬롯이 ${state.slotCount}칸으로 확장되었습니다!`);
+  renderAll();
+}
+
+function fastHatch(slotIdx) {
+  const s = state.hatchSlots[slotIdx];
+  if (!s || s.remainSec <= 0) return;
+  const costGem = 40;
+  const costVip = 120;
+  if (state.platform === "vip") {
+    if (state.vipCredit < costVip && state.gem < costGem) return showToast("VIP 크레딧 또는 Gem 부족");
+    if (state.vipCredit >= costVip) state.vipCredit -= costVip; else state.gem -= costGem;
+  } else {
+    if (state.gem < costGem) return showToast("Gem 40개가 필요합니다.");
+    state.gem -= costGem;
+  }
+  s.remainSec = 0;
+  playSFX("SFX_FARM_EGG_CRACK");
+  logNet("POST", "/api/v1/farm/incubate/fast", { slot: slotIdx + 1 }, "farm:hatch_ready", { egg: s.egg.name, instant: true });
+  showToast("⚡ 유료 급속 부화 완료! 알을 개봉하세요.");
+  renderAll();
+}
+
+function claimHatchedEgg(slotIdx) {
+  const s = state.hatchSlots[slotIdx];
+  if (!s || s.remainSec > 0) return;
+  state.hatchSlots[slotIdx] = null;
+  const egg = s.egg;
+  let potMin = 30, potMax = 45;
+  if (egg.code === "PAID_T1") { potMin = 46; potMax = 60; }
+  else if (egg.code === "PAID_T2") { potMin = 61; potMax = 80; }
+  else if (egg.code === "PAID_T3") { potMin = 81; potMax = 100; }
+  else if (egg.code === "HERITAGE") { potMin = egg.potMin || 55; potMax = egg.potMax || 90; }
+
+  const pot = egg.fixedPot || (potMin + Math.floor(Math.random() * (potMax - potMin + 1)));
+  const roll = (base) => Math.max(10, Math.min(pot, Math.round(base + (Math.random() * 14 - 7))));
+  const raceStyles = ["도주", "선행", "선입", "추입", "자재", "변칙"];
+  const fightStyles = ["인파이터", "아웃파이터", "브롤러", "테크니션", "밸런서"];
+  const r = egg.heritageStats
+    ? { name: egg.chickName || `${egg.name} 주니어`, ...egg.heritageStats, POT: pot,
+        raceStyle: egg.raceStyle || raceStyles[Math.floor(Math.random()*6)],
+        fightStyle: egg.fightStyle || fightStyles[Math.floor(Math.random()*5)] }
+    : { name: `${egg.name.replace(" 알", "")} 루스터`,
+        STR: roll(pot * 0.72), DEX: roll(pot * 0.72), VIT: roll(pot * 0.7), MEN: roll(pot * 0.68), LCK: roll(pot * 0.65), POT: pot,
+        raceStyle: raceStyles[Math.floor(Math.random()*6)], fightStyle: fightStyles[Math.floor(Math.random()*5)] };
+
+  const rooster = createRoosterInstance(r, egg.code, null, egg.code === "HERITAGE" ? 2 : 1, egg.heritageSkills || null);
+  state.roosters.unshift(rooster);
+  state.selectedRoosterId = rooster.uid;
+  progressQuest("QD1", 1);
+  if (egg.code === "PAID_T2" || egg.code === "PAID_T3") progressQuest("QW3", 1);
+  const a2 = state.achievements.find(a => a.id === "A2");
+  if (a2) a2.cur = Math.max(a2.cur, state.roosters.length);
+  playSFX("SFX_FARM_EGG_HATCH");
+  setTimeout(() => playSFX("SFX_CHICK_CHIRP"), 260);
+  logNet("POST", "/api/v1/farm/incubate/claim", { slot: slotIdx + 1 }, "farm:rooster_born", { uid: rooster.uid, POT: pot, gender: rooster.gender });
+
+  openProtoModal(`🐣 부화 성공! ${rooster.name}`, `
+    <div style="padding:12px; background:var(--bg-secondary); border-radius:10px; border:1px solid var(--amber);">
+      <div style="font-size:1.1rem; font-weight:800; margin-bottom:6px;">${rooster.gender === 'ROOSTER' ? '♂️ 수탉' : '♀️ 암탉'} · ${rooster.gen}세대 · ${rooster.partTier}</div>
+      <div style="font-size:0.84rem; color:var(--primary); margin-bottom:8px;">주행: <strong>${rooster.raceStyle}</strong> | 격투: <strong>${rooster.fightStyle}</strong> | 스킨: <code>${rooster.mapSkin}</code></div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span class="badge badge-amber">POT ${rooster.POT}</span>
+        <span class="badge badge-sky">STR ${rooster.STR}</span>
+        <span class="badge badge-sky">DEX ${rooster.DEX}</span>
+        <span class="badge badge-sky">VIT ${rooster.VIT}</span>
+        <span class="badge badge-sky">MEN ${rooster.MEN}</span>
+        <span class="badge badge-sky">LCK ${rooster.LCK}</span>
+      </div>
+    </div>
+  `);
+  renderAll();
+}
+
+function startMinigame() {
+  const activeSlot = state.hatchSlots.find(s => s && s.remainSec > 0);
+  if (!activeSlot) return showToast("현재 부화 중인 알 슬롯이 있어야 미니게임을 진행할 수 있습니다.");
+  state.minigame = { active:true, endAt: Date.now() + 10000, pos: 50, dir: 1, bestBonus: 0, bestGrade: "C (0%)", taps: 0 };
+  document.getElementById("btn-mg-start").disabled = true;
+  document.getElementById("btn-mg-tap").disabled = false;
+  playSFX("SFX_FARM_EGG_TAP");
+}
+
+function tapMinigame() {
+  if (!state.minigame.active) return;
+  const p = state.minigame.pos;
+  const dist = Math.abs(p - 50);
+  let grade = "C (0%)", bonus = 0;
+  if (dist <= 8) { grade = "S (-20%)"; bonus = 0.20; playSFX("SFX_SPA_HEAL_CHIME"); }
+  else if (dist <= 20) { grade = "A (-12%)"; bonus = 0.12; playSFX("SFX_FARM_EGG_CRACK"); }
+  else if (dist <= 32) { grade = "B (-5%)"; bonus = 0.05; playSFX("SFX_FARM_EGG_TAP"); }
+  else { playSFX("SFX_FARM_EGG_TAP"); }
+  state.minigame.taps++;
+  if (bonus >= state.minigame.bestBonus) {
+    state.minigame.bestBonus = bonus;
+    state.minigame.bestGrade = grade;
+  }
+  document.getElementById("mg-score-text").innerText = `터치 ${state.minigame.taps}회 · 최고: ${state.minigame.bestGrade}`;
+}
+
+// ==================== TRAINING (8종 유/무료) ====================
+function getCondMult(cond) {
+  if (cond >= 90) return 1.2;
+  if (cond >= 70) return 1.0;
+  if (cond >= 50) return 0.9;
+  return 0.7;
+}
+
+function runTraining(trId, isPaidBoost) {
+  const r = state.roosters.find(x => x.uid === state.selectedRoosterId);
+  if (!r) return showToast("훈련할 선수를 먼저 선택하세요.");
+  if (r.status !== "IDLE" && r.status !== "FATIGUED") return showToast(`현재 상태(${STATUS_LABELS[r.status].text})에서는 훈련할 수 없습니다.`);
+  if (r.fatigue >= 85) return showToast("피로도가 너무 높습니다(85+). 먼저 휴식이나 스파를 이용하세요.");
+  const tr = TRAINING_LIST.find(t => t.id === trId);
+
+  if (isPaidBoost) {
+    if (state.platform === "vip") {
+      if (state.vipCredit < tr.vipC && state.gem < tr.gem) return showToast("VIP 크레딧 또는 Gem이 부족합니다.");
+      if (state.vipCredit >= tr.vipC) state.vipCredit -= tr.vipC; else state.gem -= tr.gem;
+    } else {
+      if (state.gem < tr.gem) return showToast("Gem이 부족합니다.");
+      state.gem -= tr.gem;
+    }
+    applyTrainingReward(r, tr, true);
+    logNet("POST", "/api/v1/farm/train", { rooster: r.uid, trId, paidBoost: true }, "farm:train_done", { instant: true });
+    showToast(`⚡ 급속 부스트 훈련 완료! (${tr.name} · 0초 즉시 성장)`);
+  } else {
+    if (state.gold < tr.gold && state.platform !== "vip") return showToast("Gold가 부족합니다.");
+    if (state.platform !== "vip") state.gold -= tr.gold;
+    if (state.speed >= 999999) {
+      applyTrainingReward(r, tr, false);
+      showToast(`🏋️ 일반 훈련 즉시 완료! (${tr.name})`);
+    } else {
+      r.status = "TRAINING";
+      r.trainJob = { trId, remainSec: tr.sec, totalSec: tr.sec };
+      playSFX(tr.sound);
+      logNet("POST", "/api/v1/farm/train", { rooster: r.uid, trId, paidBoost: false }, "farm:status_changed", { status: "TRAINING", sec: tr.sec });
+      showToast(`🏋️ ${r.name}: [${tr.name}] 일반 대기 훈련 시작`);
+    }
+  }
+  renderAll();
+}
+
+function applyTrainingReward(r, tr, isBoost) {
+  const mult = getCondMult(r.condition);
+  const baseInc = isBoost ? 2 : 1;
+  const applyDelta = (key, amt) => {
+    const val = Math.max(1, Math.round(amt * mult));
+    const cap = Math.max(r.POT, r[key]);
+    r[key] = Math.min(cap, r[key] + val);
+  };
+  if (tr.bonus) {
+    applyDelta("VIT", tr.bonus.VIT * (isBoost ? 1.5 : 1));
+    applyDelta("LCK", tr.bonus.LCK * (isBoost ? 1.5 : 1));
+  } else {
+    applyDelta(tr.stat1, baseInc);
+    if (tr.stat2) applyDelta(tr.stat2, baseInc);
+  }
+  r.fatigue = Math.min(100, r.fatigue + 15);
+  r.condition = Math.max(20, r.condition - 8);
+  r.status = r.fatigue >= 70 ? "FATIGUED" : "IDLE";
+  r.trainJob = null;
+
+  // Unlock next combat skill automatically
+  const lockedSkill = PIT_SKILLS_9.find(s => !r.skills.includes(s.id));
+  if (lockedSkill) {
+    r.skills.push(lockedSkill.id);
+    if (r.equippedSkills.length < r.slotCap) r.equippedSkills.push(lockedSkill.id);
+    const a4 = state.achievements.find(a => a.id === "A4");
+    if (a4) a4.cur = Math.max(a4.cur, r.skills.length);
+  }
+  progressQuest("QD2", 1);
+  playSFX(tr.sound);
+  setTimeout(() => playSFX("SFX_SPA_HEAL_CHIME"), 180);
+}
+
+// ==================== COOP / RECOVERY / DISPATCH ====================
+function toggleRest(uid) {
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r || r.status === "INJURED" || r.status === "TRAINING") return;
+  r.resting = !r.resting;
+  r.status = r.resting ? "RESTING" : (r.fatigue >= 70 ? "FATIGUED" : "IDLE");
+  showToast(r.resting ? `${r.name} 일반 닭장 휴식 시작 (시간당 피로 -10)` : `${r.name} 휴식 종료`);
+  renderAll();
+}
+
+function feedRooster(uid) {
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r) return;
+  if (state.feed < 10) return showToast("영양 사료 10개가 필요합니다.");
+  state.feed -= 10;
+  r.fatigue = Math.max(0, r.fatigue - 20);
+  if (r.status === "FATIGUED" && r.fatigue < 70) r.status = "IDLE";
+  progressQuest("QD4", 1);
+  playSFX("SFX_CHICK_CHIRP");
+  logNet("POST", "/api/v1/farm/feed", { uid, feedUsed: 10 }, "farm:status_changed", { fatigue: r.fatigue });
+  showToast(`🌾 영양 사료 10개 급여! 피로도 -20 (현재 ${r.fatigue})`);
+  renderAll();
+}
+
+function adHealRooster(uid) {
+  if (state.platform === "vip") return showToast("VIP 라운지에서는 광고 회복이 제외됩니다.");
+  if (state.adCounts.heal >= 3) return showToast("일일 피로도 회복 광고 한도(3회)를 모두 사용했습니다.");
+  if (state.adCounts.healCd > 0) return showToast(`광고 쿨다운 남음 (${Math.ceil(state.adCounts.healCd)}초)`);
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r) return;
+  state.adCounts.heal++;
+  state.adCounts.healCd = 600;
+  r.fatigue = Math.max(0, r.fatigue - 20);
+  if (r.status === "FATIGUED" && r.fatigue < 70) r.status = "IDLE";
+  playSFX("SFX_SPA_HEAL_CHIME");
+  showToast(`📺 광고 시청 완료! 피로도 -20 (일 ${state.adCounts.heal}/3회)`);
+  renderAll();
+}
+
+function usePremiumSpa(uid) {
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r) return;
+  if (state.platform === "vip") {
+    if (state.vipCredit < 150 && state.gem < 50) return showToast("VIP 크레딧(150C) 또는 Gem(50)이 필요합니다.");
+    if (state.vipCredit >= 150) state.vipCredit -= 150; else state.gem -= 50;
+  } else {
+    if (state.gem >= 50) state.gem -= 50;
+    else if (state.gold >= 5000) state.gold -= 5000;
+    else return showToast("50 Gem 또는 5,000 Gold가 필요합니다.");
+  }
+  r.fatigue = 0;
+  r.condition = 100;
+  r.spa24h = true;
+  r.resting = false;
+  r.status = r.breedCount >= 5 ? "RETIRED" : "IDLE";
+  progressQuest("QD4", 1);
+  playSFX("SFX_SPA_WATER_IN");
+  setTimeout(() => playSFX("SFX_SPA_HEAL_CHIME"), 220);
+  logNet("POST", "/api/v1/farm/spa", { uid }, "farm:status_changed", { fatigue:0, condition:100, status:r.status });
+  showToast(`♨️ 프리미엄 스파 완료! 피로 0 완충 · 부상 완치 · 24시간 최상 100 적용`);
+  renderAll();
+}
+
+function toggleEquipSkill(uid, sid) {
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r) return;
+  const idx = r.equippedSkills.indexOf(sid);
+  if (idx >= 0) r.equippedSkills.splice(idx, 1);
+  else {
+    if (r.equippedSkills.length >= r.slotCap) return showToast(`최대 장착 슬롯(${r.slotCap}개)에 도달했습니다.`);
+    r.equippedSkills.push(sid);
+  }
+  playSFX("SFX_FARM_EGG_TAP");
+  renderAll();
+}
+
+function simulateMatch(uid, kind) {
+  const r = state.roosters.find(x => x.uid === uid);
+  if (!r) return;
+  if (r.status === "INJURED") return showToast("🏥 부상(INJURED) 상태입니다. 프리미엄 스파 완치 후 출전하세요.");
+  if (r.cooldownSec > 0 && state.speed < 999999) return showToast(`출전 쿨다운 남음 (${Math.ceil(r.cooldownSec/60)}분)`);
+
+  const winProb = Math.min(0.85, 0.35 + (r.POT - 30) / 140);
+  const won = Math.random() < winProb;
+  r.fatigue = Math.min(100, r.fatigue + 25);
+  r.cooldownSec = state.speed >= 999999 ? 0 : 1800; // 30m
+
+  const injured = r.fatigue >= 90 && Math.random() < 0.30;
+  if (injured) r.status = "INJURED";
+  else if (r.fatigue >= 70) r.status = "FATIGUED";
+  else r.status = "COOLDOWN";
+
+  const baseReward = kind === "derby" ? (won ? 4000 : 800) : (won ? 5000 : 1000);
+  const vipMult = state.platform === "vip" ? 1 : 0;
+  if (state.platform === "vip") state.vipCredit += won ? 450 : 100;
+  else state.gold += baseReward;
+
+  progressQuest("QD3", 1);
+  progressQuest("QW1", 1);
+  if (won) {
+    const ach = state.achievements.find(a => a.id === (kind === "derby" ? "A7" : "A8"));
+    if (ach && ach.cur < ach.max) ach.cur++;
+    playSFX("SFX_ROOSTER_CROW");
+  } else {
+    playSFX("SFX_TRAIN_WOOD");
+  }
+
+  logNet("POST", `/api/v1/${kind}/dispatch`, { uid }, "farm:status_changed", { won, fatigue: r.fatigue, injured });
+  const adBtn = (won && state.platform === "mobile")
+    ? `<button class="btn btn-amber" onclick="state.gold+=${baseReward}; closeProtoModal(); renderAll(); showToast('📺 상금 2배 광고 적용 +${baseReward.toLocaleString()} G!');">📺 우승 상금 2배 광고 (+${baseReward.toLocaleString()} G)</button>`
+    : "";
+  openProtoModal(`${kind === 'derby' ? '🏇 더비 레이스' : '🥊 럼블 핏'} 모의 출전 결과`, `
+    <p style="font-size:0.95rem; font-weight:800; color:${won?'var(--green)':'var(--amber)'}; margin-bottom:8px;">
+      ${won ? '🏆 승리 / 1위 입상!' : '아쉽게 패배 (참가 정산 지급)'}
+    </p>
+    <ul style="padding-left:18px; font-size:0.82rem; color:var(--text-body); margin-bottom:12px;">
+      <li>정산 보상: <strong>${state.platform==='vip' ? (won?'+450 C':'+100 C') : '+'+baseReward.toLocaleString()+' G'}</strong></li>
+      <li>피로도 적재: <strong>+25</strong> (누적 피로도: <strong>${r.fatigue}</strong>)</li>
+      <li>경기 쿨다운: 30분 · 현재 상태: <strong>${STATUS_LABELS[r.status].text}</strong> ${injured ? '⚠️ 피로 90+ 30% 부상 당첨!' : ''}</li>
+    </ul>
+    ${adBtn}
+  `);
+  renderAll();
+}
+
+// ==================== BREEDING (2세대 단일 유전) ====================
+function computeGeneticPreview(a, b) {
+  const childPot = Math.max(30, Math.min(100, Math.round(Math.max(a.POT, b.POT) * 1.05)));
+  const stats = ["STR","DEX","VIT","MEN","LCK"].map(k => {
+    const mid = Math.round(a[k] * 0.45 + b[k] * 0.45);
+    return { key: k, min: Math.max(10, Math.min(childPot, mid - 5)), max: Math.max(10, Math.min(childPot, mid + 10)) };
+  });
+  return { childPot, stats };
+}
+
+function executeBreeding() {
+  const sireId = document.getElementById("sel-sire").value;
+  const damId = document.getElementById("sel-dam").value;
+  const sire = state.roosters.find(r => r.uid === sireId);
+  const dam = state.roosters.find(r => r.uid === damId);
+  if (!sire || !dam) return showToast("부계와 모계를 모두 선택하세요.");
+  if (sire.breedCount >= 5 || dam.breedCount >= 5) return showToast("교배 한도(생애 5회)를 초과한 은퇴 닭이 있습니다.");
+  if (sire.status === "INJURED" || dam.status === "INJURED") return showToast("부상 상태의 닭은 교배할 수 없습니다.");
+  if (sire.breedCdSec > 0 || dam.breedCdSec > 0) return showToast("24시간 교배 쿨다운 중입니다.");
+
+  if (state.platform === "vip") {
+    if (state.vipCredit < 500 && state.gem < 150) return showToast("VIP 라운지 유료 교배는 VIP 크레딧(500C) 또는 Gem(150)이 필요합니다.");
+    if (state.vipCredit >= 500) state.vipCredit -= 500; else state.gem -= 150;
+  } else {
+    if (state.gem >= 150) state.gem -= 150;
+    else if (state.gold >= 10000) state.gold -= 10000;
+    else return showToast("교배 비용(150 Gem 또는 10,000 G)이 부족합니다.");
+  }
+
+  const prev = computeGeneticPreview(sire, dam);
+  const hStats = {};
+  prev.stats.forEach(st => {
+    hStats[st.key] = Math.max(10, Math.min(prev.childPot, Math.round(sire[st.key]*0.45 + dam[st.key]*0.45 + (Math.random()*15 - 5))));
+  });
+  // Inherit skills (50% each + 15% hidden F33/F34 chance)
+  const pool = Array.from(new Set([...sire.skills, ...dam.skills])).filter(() => Math.random() < 0.75);
+  if (Math.random() < 0.25 && !pool.includes("F33")) pool.push("F33");
+  if (Math.random() < 0.25 && !pool.includes("F34")) pool.push("F34");
+
+  const rPick = Math.random();
+  const raceStyle = rPick < 0.4 ? sire.raceStyle : rPick < 0.8 ? dam.raceStyle : ["도주","선행","선입","추입","자재","변칙"][Math.floor(Math.random()*6)];
+  const fightStyle = rPick < 0.4 ? sire.fightStyle : rPick < 0.8 ? dam.fightStyle : ["인파이터","아웃파이터","브롤러","테크니션","밸런서"][Math.floor(Math.random()*5)];
+
+  const egg = {
+    uid: nextUid("HEGG"),
+    id: "EGG-HERITAGE-2GEN",
+    name: `${sire.name.split(" ")[0]}×${dam.name.split(" ")[0]} 혈통 알`,
+    tier: "2세대 혈통 알 (Heritage)",
+    code: "HERITAGE",
+    price: "교배 산물",
+    pot: `${prev.childPot}`,
+    fixedPot: prev.childPot,
+    sec: 7200,
+    weight: "교배 100%",
+    note: `부모 잠재력 x1.05 공식 적용 (${sire.name} × ${dam.name})`,
+    heritageStats: hStats,
+    heritageSkills: pool.length ? pool : ["F10", "F21"],
+    raceStyle, fightStyle,
+    chickName: `${sire.name.split(" ")[0]} 2세`
+  };
+  state.eggs.push(egg);
+  sire.breedCount++; dam.breedCount++;
+  sire.breedCdSec = state.speed >= 999999 ? 0 : 86400;
+  dam.breedCdSec = state.speed >= 999999 ? 0 : 86400;
+  if (sire.breedCount >= 5) sire.status = "RETIRED";
+  if (dam.breedCount >= 5) dam.status = "RETIRED";
+
+  progressQuest("QW2", 1);
+  const a5 = state.achievements.find(a => a.id === "A5");
+  if (a5 && a5.cur < a5.max) a5.cur++;
+  playSFX("SFX_SPA_HEAL_CHIME");
+  logNet("POST", "/api/v1/farm/breed", { sire: sire.uid, dam: dam.uid }, "farm:heritage_egg_created", { eggUid: egg.uid, childPot: prev.childPot });
+  showToast(`💕 2세대 교배 성공! [${egg.name}] (부화 2시간 · POT ${prev.childPot}) 획득!`);
+  renderAll();
+}
+
+// ==================== ADMIN ACTIONS (MOBILE ONLY) ====================
+function claimQuest(id) {
+  if (state.platform === "vip") return;
+  const q = state.quests.find(x => x.id === id);
+  if (!q || q.cur < q.max || q.claimed) return;
+  q.claimed = true;
+  if (q.gold) state.gold += q.gold;
+  if (q.gem) state.gem += q.gem;
+  if (q.feed) state.feed += q.feed;
+  playSFX("SFX_SPA_HEAL_CHIME");
+  showToast(`퀘스트 [${q.name}] 보상 수령 완료! (${q.reward})`);
+  renderAll();
+}
+
+function claimAch(id) {
+  if (state.platform === "vip") return;
+  const a = state.achievements.find(x => x.id === id);
+  if (!a || a.cur < a.max || a.claimed) return;
+  a.claimed = true;
+  state.gem += a.gem;
+  playSFX("SFX_FARM_EGG_HATCH");
+  showToast(`업적 [${a.name}] 보상 +${a.gem} Gem 수령!`);
+  renderAll();
+}
+
+function equipTitle(id) {
+  if (state.platform === "vip") return;
+  state.unlockedTitles.add(id);
+  state.equippedTitle = id;
+  playSFX("SFX_FARM_EGG_TAP");
+  const t = TITLES_20.find(x => x.id === id);
+  showToast(`칭호 [${t.name}] 장착! (${t.effect})`);
+  renderAll();
+}
+
+function tryBankruptcyAid() {
+  if (state.platform === "vip") return;
+  state.gold += 1000;
+  const natPool = MASTER_EGGS_65.filter(e => e.code === "NAT");
+  const picked = natPool[0];
+  state.eggs.push({ uid: nextUid("AID"), ...picked });
+  playSFX("SFX_CHICK_CHIRP");
+  showToast("🆘 파산 긴급 구제 지급: +1,000 G & 무료 일반 알(시골 재래 알) 1개!");
+  renderAll();
+}
+
+function openMasterRoosterModal() {
+  const rows = MASTER_ROOSTERS_30.map((r, i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.raceStyle} / ${r.fightStyle}</td>
+      <td>STR ${r.STR} · DEX ${r.DEX} · VIT ${r.VIT} · MEN ${r.MEN} · LCK ${r.LCK} · <strong>POT ${r.POT}</strong></td>
+      <td><button class="btn btn-sm btn-primary" onclick="recruitMaster(${i})">+ 영입</button></td>
+    </tr>`).join("");
+  openProtoModal("🐓 1차 기본 스탯 마스터 30두 도감 (03_roosters_base_stats_1st.csv)", `<div class="tbl-wrap"><table><thead><tr><th>#</th><th>선수명</th><th>스타일</th><th>1차 스탯</th><th>테스트</th></tr></thead><tbody>${rows}</tbody></table></div>`);
+}
+
+function recruitMaster(idx) {
+  const src = MASTER_ROOSTERS_30[idx];
+  const r = createRoosterInstance(src, "PAID_T2");
+  state.roosters.unshift(r);
+  state.selectedRoosterId = r.uid;
+  playSFX("SFX_ROOSTER_CROW");
+  closeProtoModal();
+  showToast(`${r.name} 로스터 영입 완료!`);
+  renderAll();
+}
+
+// ==================== RENDERERS ====================
+function renderHUD() {
+  document.getElementById("val-gold").innerText = state.gold.toLocaleString();
+  document.getElementById("val-gem").innerText = state.gem.toLocaleString();
+  document.getElementById("val-vip").innerText = state.vipCredit.toLocaleString();
+  document.getElementById("val-feed").innerText = state.feed;
+}
+
+function renderMap() {
+  const isVip = state.platform === "vip";
+  document.getElementById("map-hatch-info").innerText = `활성 슬롯 ${state.hatchSlots.filter(Boolean).length}/${state.slotCount} · 대기 알 ${state.eggs.length}`;
+  document.getElementById("map-coop-info").innerText = `보유 닭 ${state.roosters.length}두`;
+
+  const items = [
+    ["① 알 유료 획득 (유료 35종·10연 천장)", true, "모바일/VIP 공통"],
+    ["② 유료 교배 (2세대 단일 유전·생애 5회)", true, isVip ? "VIP 크레딧 전용" : "Gold/Gem 지원"],
+    ["③ 유/무료 성장 (10초 미니게임·8종 훈련 vs 즉시)", true, "유/무료 2트랙"],
+    ["④ 유/무료 회복 (닭장·사료 vs 프리미엄 스파)", true, isVip ? "광고 제외 적용" : "광고 포함"],
+    ["출석/광고 3스탬프 무료 알 & 광고 3종", !isVip, "모바일 스토어 전용"],
+    ["유저 알 거래소 (8% / [큰손] 7%) & 경매", !isVip, "모바일 스토어 전용"],
+    ["일일 5·주간 4 퀘스트, 업적 8, 칭호 20, 6리그", !isVip, "모바일 스토어 전용"]
+  ];
+  document.getElementById("map-platform-matrix").innerHTML = items.map(([label, ok, note]) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-bottom:1px solid var(--border); font-size:0.78rem;">
+      <span>${ok ? "✅" : "🚫"} ${label}</span>
+      <span class="badge ${ok ? "badge-green" : "badge-rose"}">${note}</span>
+    </div>`).join("");
+
+  document.getElementById("map-roster-mini").innerHTML = state.roosters.map(r => `
+    <div class="rooster-item" onclick="state.selectedRoosterId='${r.uid}'; switchTab('tab-coop');">
+      <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:700;">
+        <span>${r.gender==='ROOSTER'?'♂️':'♀️'} ${r.name} <small style="color:var(--text-muted);">(${r.raceStyle}/${r.fightStyle})</small></span>
+        <span class="badge ${STATUS_LABELS[r.status].cls}">${STATUS_LABELS[r.status].text}</span>
+      </div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:3px;">POT ${r.POT} · 피로 ${r.fatigue}/100 · 컨디션 ${r.condition} · 교배 ${r.breedCount}/5</div>
+    </div>`).join("");
+
+  // Wandering rooster SVG badges
+  const spots = [[190,235],[340,185],[460,210],[570,235],[310,260],[490,150]];
+  document.getElementById("map-roosters-layer").innerHTML = state.roosters.slice(0, 6).map((r, i) => {
+    const [x, y] = spots[i % spots.length];
+    return `<g style="cursor:pointer;" onclick="state.selectedRoosterId='${r.uid}'; switchTab('tab-coop');">
+      <circle cx="${x}" cy="${y}" r="15" fill="#1e293b" stroke="#fbbf24" stroke-width="2" />
+      <text x="${x}" y="${y+5}" text-anchor="middle" font-size="16">🐓</text>
+      <rect x="${x-36}" y="${y+16}" width="72" height="16" rx="6" fill="#0f172a" fill-opacity="0.88" />
+      <text x="${x}" y="${y+27}" text-anchor="middle" fill="#f8fafc" font-size="9" font-weight="700">${r.name.slice(0,8)}</text>
+    </g>`;
+  }).join("");
+}
+
+function renderEggsTab() {
+  const isVip = state.platform === "vip";
+  document.getElementById("pity-badge").innerText = `전설 천장: ${state.pity} / 10`;
+  document.getElementById("pity-bar").style.width = `${state.pity * 10}%`;
+  document.getElementById("cost-gacha1").innerText = isVip ? "VIP 300 C (또는 100 Gem)" : "100 Gem";
+  document.getElementById("cost-gacha10").innerText = isVip ? "VIP 3,000 C (또는 1,000 Gem)" : "1,000 Gem";
+  document.getElementById("gacha-pool-desc").innerHTML = isVip
+    ? "<strong>VIP 라운지 ① 알 유료 획득 풀 (35종)</strong>: Superior 66.7% · Rare 26.7% · Legendary 6.6% (10연 시 전설 100% 천장 · 무료 알/거래소 제외)"
+    : "<strong>모바일 가차 풀 안내</strong>: 유료 가차 35종(10연 전설 확정 천장) + 출석/광고 3스탬프 무료 Natural 30종(70% 비중)";
+
+  document.getElementById("stamp-mode-tag").className = isVip ? "lock-tag" : "badge badge-green";
+  document.getElementById("stamp-mode-tag").innerText = isVip ? "VIP 미반영" : "모바일 전용";
+  document.getElementById("free-stamp-box").innerHTML = isVip
+    ? `<div class="vip-locked-panel"><strong>🚫 VIP 라운지 미반영 (출석/광고 무료 알)</strong><p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">VIP 라운지에서는 ① 알 유료 획득(35종 가차)만 제공됩니다.</p></div>`
+    : `<p style="font-size:0.8rem; margin-bottom:8px;">현재 스탬프: <strong>${state.stamp} / 3</strong> (3개 달성 시 <code>Natural</code> 30종 중 1개 자동 지급)</p>
+       <div style="display:flex; gap:8px; flex-wrap:wrap;">
+         <button class="btn btn-sm btn-green" onclick="claimStamp(false)">📅 출석 스탬프 +1</button>
+         <button class="btn btn-sm btn-primary" onclick="claimStamp(true)">📺 광고 스탬프 +1 (일 ${state.adCounts.stamp}/2${state.adCounts.stampCd>0?' · 쿨 '+Math.ceil(state.adCounts.stampCd)+'s':''})</button>
+       </div>`;
+
+  document.getElementById("market-mode-tag").className = isVip ? "lock-tag" : "badge badge-green";
+  document.getElementById("market-mode-tag").innerText = isVip ? "VIP 미반영" : "모바일 전용";
+  const feePct = state.equippedTitle === "T13" ? "7% ([큰손] 할인)" : "8%";
+  document.getElementById("marketplace-box").innerHTML = isVip
+    ? `<div class="vip-locked-panel"><strong>🚫 VIP 라운지 미반영 (유저 간 알 거래소)</strong><p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">VIP 라운지 계좌/재화는 100% 독립 분리 운영되어 P2P 거래소를 미지원합니다.</p></div>`
+    : `<p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:8px;">적용 수수료율: <strong>${feePct}</strong> · 72시간 미체결 자동 회수</p>` +
+      state.marketListings.map((m, idx) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border:1px solid var(--border); border-radius:8px; margin-bottom:6px;">
+          <div>
+            <div style="font-size:0.82rem; font-weight:700;">🥚 ${m.egg.name} <small class="badge badge-amber">${m.egg.code}</small></div>
+            <div style="font-size:0.72rem; color:var(--text-muted);">판매자: ${m.seller} · POT ${m.egg.pot}</div>
+          </div>
+          <button class="btn btn-sm btn-amber" onclick="buyMarketEgg(${idx})">🪙 ${m.price.toLocaleString()} G 구매</button>
+        </div>`).join("");
+
+  document.getElementById("inv-egg-count").innerText = state.eggs.length;
+  document.getElementById("egg-inventory-list").innerHTML = state.eggs.length === 0
+    ? `<div style="font-size:0.8rem; color:var(--text-muted);">보유 중인 알이 없습니다. 가차에서 알을 획득하세요!</div>`
+    : state.eggs.map(e => `
+      <div style="border:1px solid var(--border); background:var(--bg-secondary); border-radius:10px; padding:10px;">
+        <div style="font-weight:800; font-size:0.86rem;">🥚 ${e.name}</div>
+        <div style="font-size:0.72rem; color:var(--text-muted); margin:4px 0;">${e.tier} · POT ${e.pot} · ${Math.round(e.sec/60)}분</div>
+        <div style="display:flex; gap:5px; margin-top:6px;">
+          <button class="btn btn-sm btn-primary" onclick="placeEggInSlot('${e.uid}')">🔥 부화 투입</button>
+          ${isVip ? '' : `<button class="btn btn-sm" onclick="listEggToMarket('${e.uid}')">💰 거래소 판매</button>`}
+        </div>
+      </div>`).join("");
+
+  renderEggEncyclopedia();
+}
+
+function renderEggEncyclopedia() {
+  const tier = document.getElementById("filter-egg-tier").value;
+  const q = document.getElementById("search-egg-input").value.trim().toLowerCase();
+  const rows = MASTER_EGGS_65.filter(e => (tier === "ALL" || e.code === tier) && (!q || e.name.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)));
+  document.getElementById("egg-encyclopedia-wrap").innerHTML = `
+    <table>
+      <thead><tr><th>ID</th><th>알 이름</th><th>등급 (4단계)</th><th>POT</th><th>부화시간</th><th>가중치</th><th>가격</th></tr></thead>
+      <tbody>${rows.map(e => `<tr>
+        <td><code>${e.id}</code></td>
+        <td><strong>${e.name}</strong></td>
+        <td>${e.tier}</td>
+        <td>${e.pot}</td>
+        <td>${e.sec}s (${e.sec>=3600?(e.sec/3600)+'h':(e.sec/60)+'m'})</td>
+        <td>${e.weight}</td>
+        <td>${e.price}</td>
+      </tr>`).join("")}</tbody>
+    </table>`;
+}
+
+function renderHatchTab() {
+  document.getElementById("slot-cnt").innerText = state.slotCount;
+  document.getElementById("btn-expand-slot").disabled = state.slotCount >= 4;
+
+  let html = "";
+  for (let i = 0; i < 4; i++) {
+    if (i >= state.slotCount) {
+      html += `<div style="border:1px dashed var(--border); border-radius:10px; padding:16px; text-align:center; opacity:0.6;">
+        <div style="font-weight:700;">🔒 잠긴 슬롯 ${i+1}</div><div style="font-size:0.74rem; color:var(--text-muted); margin-top:4px;">300 Gem으로 확장 가능</div></div>`;
+      continue;
+    }
+    const s = state.hatchSlots[i];
+    if (!s) {
+      html += `<div style="border:1px dashed var(--primary); border-radius:10px; padding:16px; text-align:center;">
+        <div style="font-weight:700; color:var(--primary);">빈 인큐베이터 슬롯 ${i+1}</div><div style="font-size:0.74rem; color:var(--text-muted); margin-top:4px;">아래 대기 알을 클릭해 투입하세요</div></div>`;
+      continue;
+    }
+    const pct = Math.min(100, Math.round(((s.totalSec - s.remainSec) / Math.max(1, s.totalSec)) * 100));
+    html += `<div style="border:1px solid var(--border); background:var(--bg-secondary); border-radius:10px; padding:12px;">
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.86rem;">
+        <span>🥚 ${s.egg.name}</span>
+        <span class="badge ${s.remainSec<=0?'badge-green':'badge-amber'}">${s.remainSec<=0?'부화 완료!':Math.ceil(s.remainSec)+'초'}</span>
+      </div>
+      <div class="bar-track" style="margin:8px 0;"><div class="bar-fill" style="width:${pct}%; background:${s.remainSec<=0?'var(--green)':'var(--primary)'};"></div></div>
+      <div style="display:flex; gap:6px;">
+        ${s.remainSec <= 0
+          ? `<button class="btn btn-sm btn-green" style="flex:1;" onclick="claimHatchedEgg(${i})">🐣 병아리 부화 수령!</button>`
+          : `<button class="btn btn-sm btn-amber" style="flex:1;" onclick="fastHatch(${i})">⚡ 0초 즉시 부화 (${state.platform==='vip'?'120C':'40 Gem'})</button>`}
+      </div>
+    </div>`;
+  }
+  document.getElementById("hatch-slots-grid").innerHTML = html;
+
+  document.getElementById("hatch-waiting-eggs").innerHTML = state.eggs.length === 0
+    ? `<span style="font-size:0.8rem; color:var(--text-muted);">투입할 미부화 알이 없습니다.</span>`
+    : state.eggs.map(e => `<button class="btn btn-sm" onclick="placeEggInSlot('${e.uid}')">➕ ${e.name} (${Math.round(e.sec/60)}m)</button>`).join("");
+}
+
+function renderTrainTab() {
+  document.getElementById("train-roster-list").innerHTML = state.roosters.map(r => `
+    <div class="rooster-item ${r.uid===state.selectedRoosterId?'selected':''}" onclick="state.selectedRoosterId='${r.uid}'; renderAll();">
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.84rem;">
+        <span>${r.gender==='ROOSTER'?'♂️':'♀️'} ${r.name}</span>
+        <span class="badge ${STATUS_LABELS[r.status].cls}">${STATUS_LABELS[r.status].text}</span>
+      </div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">POT ${r.POT} · 피로 ${r.fatigue}/100 · 컨디션 ${r.condition} (x${getCondMult(r.condition)})</div>
+      ${r.trainJob ? `<div style="font-size:0.72rem; color:var(--amber); margin-top:3px;">⏳ 훈련 남음: ${Math.ceil(r.trainJob.remainSec)}초</div>` : ''}
+    </div>`).join("");
+
+  const r = state.roosters.find(x => x.uid === state.selectedRoosterId) || state.roosters[0];
+  if (!r) return;
+  state.selectedRoosterId = r.uid;
+  document.getElementById("train-target-badge").innerText = `${r.name} (POT ${r.POT} · 컨디션 보정 x${getCondMult(r.condition)})`;
+  const d2 = calcDerby2nd(r);
+  const p2 = calcPit2nd(r);
+  document.getElementById("train-selected-summary").innerHTML = `
+    <strong>1차:</strong> STR ${r.STR} · DEX ${r.DEX} · VIT ${r.VIT} · MEN ${r.MEN} · LCK ${r.LCK} · POT ${r.POT} | <strong>피로도:</strong> ${r.fatigue}/100<br>
+    <strong>2차 더비:</strong> SPD ${d2.SPD} / STA ${d2.STA} / STM ${d2.STM} / FOC ${d2.FOC} / TMP ${d2.TMP} / GUT ${d2.GUT} |
+    <strong>2차 핏:</strong> POW ${p2.POW} / DEF ${p2.DEF} / HP ${p2.HP} / REC ${p2.REC} / TEC ${p2.TEC}(${p2.recoverCd}s) / GRT ${p2.GRT}
+  `;
+
+  const isVip = state.platform === "vip";
+  document.getElementById("train-cards-grid").innerHTML = TRAINING_LIST.map(t => `
+    <div style="border:1px solid var(--border); background:var(--bg-secondary); border-radius:10px; padding:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong style="font-size:0.88rem;">${t.name}</strong>
+        <span class="badge ${t.mode==='더비'?'badge-sky':t.mode==='핏'?'badge-rose':'badge-purple'}">${t.mode}</span>
+      </div>
+      <div style="font-size:0.78rem; font-weight:700; color:var(--amber); margin-bottom:4px;">성장: ${t.target} · 피로 +15</div>
+      <div style="font-size:0.73rem; color:var(--text-muted); margin-bottom:10px;">${t.desc}</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn btn-sm btn-green" style="flex:1;" onclick="runTraining('${t.id}', false)">🕒 무료/일반 (${Math.round(t.sec/60)}m${isVip?'':' / '+t.gold+'G'})</button>
+        <button class="btn btn-sm btn-amber" style="flex:1;" onclick="runTraining('${t.id}', true)">⚡ 유료 급속 (${isVip?t.vipC+'C':t.gem+'Gem'})</button>
+      </div>
+    </div>`).join("");
+}
+
+function drawRadar(r) {
+  const svg = document.getElementById("radar-svg");
+  let labels = [], vals = [], maxV = 100;
+  if (state.radarMode === "base") {
+    labels = ["STR","DEX","VIT","MEN","LCK","POT"];
+    vals = [r.STR, r.DEX, r.VIT, r.MEN, r.LCK, r.POT];
+  } else if (state.radarMode === "derby") {
+    const d = calcDerby2nd(r);
+    labels = ["SPD","STA","STM","FOC","TMP","GUT"];
+    vals = [d.SPD, d.STA, d.STM, d.FOC, d.TMP, d.GUT];
+  } else {
+    const p = calcPit2nd(r);
+    labels = ["POW","DEF","HP/10","REC","TEC","GRT"];
+    vals = [p.POW, p.DEF, Math.round(p.HP/10), p.REC, p.TEC, p.GRT];
+  }
+  const cx = 140, cy = 130, rad = 88;
+  let gridHtml = "";
+  [0.33, 0.66, 1].forEach(scale => {
+    const pts = labels.map((_, i) => {
+      const ang = -Math.PI/2 + (i * Math.PI * 2 / 6);
+      return `${cx + rad*scale*Math.cos(ang)},${cy + rad*scale*Math.sin(ang)}`;
+    }).join(" ");
+    gridHtml += `<polygon points="${pts}" fill="none" stroke="#334155" stroke-width="1" />`;
+  });
+  const valPts = vals.map((v, i) => {
+    const ratio = Math.min(1, v / maxV);
+    const ang = -Math.PI/2 + (i * Math.PI * 2 / 6);
+    return `${cx + rad*ratio*Math.cos(ang)},${cy + rad*ratio*Math.sin(ang)}`;
+  }).join(" ");
+  const lblHtml = labels.map((lb, i) => {
+    const ang = -Math.PI/2 + (i * Math.PI * 2 / 6);
+    const lx = cx + (rad + 22) * Math.cos(ang);
+    const ly = cy + (rad + 22) * Math.sin(ang) + 4;
+    return `<text x="${lx}" y="${ly}" text-anchor="middle" fill="var(--text-main)" font-size="11" font-weight="700">${lb}(${vals[i]})</text>`;
+  }).join("");
+
+  svg.innerHTML = `${gridHtml}<polygon points="${valPts}" fill="rgba(56,189,248,0.28)" stroke="#38bdf8" stroke-width="2.5" />${lblHtml}`;
+}
+
+function setRadarMode(m) { state.radarMode = m; renderCoopTab(); }
+
+function renderCoopTab() {
+  document.getElementById("coop-roster-list").innerHTML = state.roosters.map(r => `
+    <div class="rooster-item ${r.uid===state.selectedRoosterId?'selected':''}" onclick="state.selectedRoosterId='${r.uid}'; renderAll();">
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.84rem;">
+        <span>${r.gender==='ROOSTER'?'♂️':'♀️'} ${r.name}</span>
+        <span class="badge ${STATUS_LABELS[r.status].cls}">${STATUS_LABELS[r.status].text}</span>
+      </div>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:3px;">${r.partTier} · ${r.mapSkin}</div>
+    </div>`).join("");
+
+  const r = state.roosters.find(x => x.uid === state.selectedRoosterId) || state.roosters[0];
+  if (!r) return;
+  state.selectedRoosterId = r.uid;
+  document.getElementById("coop-detail-title").innerText = `🐓 ${r.name} (${r.gen}세대 · ${r.raceStyle}/${r.fightStyle})`;
+  drawRadar(r);
+  const p2 = calcPit2nd(r);
+  document.getElementById("coop-derived-meta").innerHTML = `실제 Max HP: <strong>${p2.HP}</strong> · 호흡 정돈 쿨다운: <strong>${p2.recoverCd}초</strong> · 교배 <strong>${r.breedCount}/5</strong>`;
+
+  document.getElementById("coop-status-bars").innerHTML = `
+    <div style="font-size:0.8rem; margin-bottom:6px;">피로도 (Fatigue): <strong>${r.fatigue} / 100</strong> ${r.fatigue>=90?'⚠️ 부상 위험(30%)':''}</div>
+    <div class="bar-track" style="margin-bottom:10px;"><div class="bar-fill" style="width:${r.fatigue}%; background:${r.fatigue>=90?'var(--rose)':r.fatigue>=70?'var(--amber)':'var(--green)'};"></div></div>
+    <div style="font-size:0.8rem; margin-bottom:6px;">컨디션 (Condition): <strong>${r.condition} / 100</strong> ${r.spa24h?'<span class="badge badge-amber">24h 최상</span>':''}</div>
+    <div class="bar-track"><div class="bar-fill" style="width:${r.condition}%; background:var(--primary);"></div></div>
+  `;
+
+  document.getElementById("coop-skills-box").innerHTML = PIT_SKILLS_9.map(s => {
+    const unlocked = r.skills.includes(s.id);
+    const equipped = r.equippedSkills.includes(s.id);
+    return `<button class="skill-chip rps-${s.type}" ${!unlocked?'disabled':''} onclick="toggleEquipSkill('${r.uid}','${s.id}')" style="${equipped?'background:rgba(56,189,248,0.2); border-color:var(--primary);':''}">
+      ${equipped?'✅':unlocked?'⬜':'🔒'} ${s.name} <small>[${s.type}]</small>
+    </button>`;
+  }).join("");
+
+  const isVip = state.platform === "vip";
+  document.getElementById("coop-recovery-box").innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn btn-sm btn-green" onclick="toggleRest('${r.uid}')">${r.resting?'⏹️ 닭장 휴식 중지':'🛏️ 무료 일반 닭장 휴식 (-10/시간)'}</button>
+      <button class="btn btn-sm btn-primary" onclick="feedRooster('${r.uid}')">🌾 무료 영양 사료 10개 급여 (피로 -20)</button>
+      ${isVip
+        ? `<div style="font-size:0.74rem; color:var(--rose); padding:6px; border:1px dashed var(--rose); border-radius:6px;">🚫 광고 회복(-20)은 모바일 전용입니다 (VIP 제외)</div>`
+        : `<button class="btn btn-sm" onclick="adHealRooster('${r.uid}')">📺 피로도 회복 광고 (-20 · 일 ${state.adCounts.heal}/3${state.adCounts.healCd>0?' · 쿨 '+Math.ceil(state.adCounts.healCd)+'s':''})</button>`}
+      <button class="btn btn-amber" onclick="usePremiumSpa('${r.uid}')">♨️ 유료 프리미엄 힐링 스파 (완충·완치 · ${isVip?'VIP 150C':'50 Gem/5,000G'})</button>
+    </div>`;
+
+  document.getElementById("coop-dispatch-box").innerHTML = `
+    <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;">
+      출전 시 <strong>피로 +25</strong>, 30분 쿨다운 적재 · 피로 90+ 출격 시 30% 확률 부상(<code>INJURED</code>) 판정.<br>
+      ${r.cooldownSec>0 ? `<strong style="color:var(--amber);">⏳ 경기 쿨다운 남음: ${Math.ceil(r.cooldownSec)}초</strong>` : '✅ 즉시 출전 가능'}
+    </p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn btn-primary" onclick="simulateMatch('${r.uid}','derby')">🏇 더비 레이스 (6두 경주) 모의 출전</button>
+      <button class="btn btn-rose" onclick="simulateMatch('${r.uid}','pit')">🥊 럼블 핏 (1v1 격투) 모의 출전</button>
+    </div>`;
+}
+
+function renderBreedingTab() {
+  const sires = state.roosters.filter(r => r.gender === "ROOSTER");
+  const dams = state.roosters.filter(r => r.gender === "HEN");
+  const selS = document.getElementById("sel-sire");
+  const selD = document.getElementById("sel-dam");
+  const prevS = selS.value, prevD = selD.value;
+  selS.innerHTML = sires.length ? sires.map(r => `<option value="${r.uid}">${r.name} (POT ${r.POT} · ${r.breedCount}/5)</option>`).join("") : `<option value="">보유 수컷 없음</option>`;
+  selD.innerHTML = dams.length ? dams.map(r => `<option value="${r.uid}">${r.name} (POT ${r.POT} · ${r.breedCount}/5)</option>`).join("") : `<option value="">보유 암컷 없음</option>`;
+  if (sires.some(r => r.uid === prevS)) selS.value = prevS;
+  if (dams.some(r => r.uid === prevD)) selD.value = prevD;
+  document.getElementById("cost-breed").innerText = state.platform === "vip" ? "VIP 500 C / 150 Gem" : "150 Gem / 10,000 G";
+  renderBreedingPreview();
+}
+
+function renderBreedingPreview() {
+  const sire = state.roosters.find(r => r.uid === document.getElementById("sel-sire").value);
+  const dam = state.roosters.find(r => r.uid === document.getElementById("sel-dam").value);
+  const valBox = document.getElementById("breed-validation-box");
+  const prevBox = document.getElementById("breed-preview-box");
+  const btn = document.getElementById("btn-do-breed");
+  if (!sire || !dam) {
+    valBox.innerHTML = `<span class="badge badge-rose">♂️ 수컷과 ♀️ 암컷이 각각 최소 1두씩 필요합니다.</span>`;
+    prevBox.innerHTML = ""; btn.disabled = true; return;
+  }
+  const err = sire.breedCount >= 5 || dam.breedCount >= 5 ? "생애 5회 한도 초과 은퇴(RETIRED) 닭 포함"
+    : (sire.status === "INJURED" || dam.status === "INJURED") ? "부상(INJURED) 상태의 닭 포함"
+    : (sire.breedCdSec > 0 || dam.breedCdSec > 0) ? `24시간 교배 쿨다운 중 (남음 ${Math.ceil(Math.max(sire.breedCdSec, dam.breedCdSec))}s)` : null;
+  valBox.innerHTML = err
+    ? `<span class="badge badge-rose">⚠️ 교배 불가: ${err}</span>`
+    : `<span class="badge badge-green">✅ 교배 조건 충족 (ROOSTER+HEN · IDLE · 비쿨다운)</span>`;
+  btn.disabled = !!err;
+
+  const p = computeGeneticPreview(sire, dam);
+  prevBox.innerHTML = `
+    <div style="font-size:0.82rem; margin-bottom:8px;"><strong>자식 잠재력(POT):</strong> <code>Clamp(반올림(max(${sire.POT}, ${dam.POT}) × 1.05), 30, 100)</code> = <strong style="color:var(--amber); font-size:0.95rem;">${p.childPot}</strong></div>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:10px;">
+      ${p.stats.map(st => `<div style="padding:6px; border:1px solid var(--border); border-radius:6px; text-align:center; background:var(--bg-secondary); font-size:0.74rem;"><strong>${st.key}</strong><br>${st.min}~${st.max}</div>`).join("")}
+    </div>
+    <ul style="padding-left:18px; font-size:0.78rem; color:var(--text-muted);">
+      <li>외형 및 스타일 유전: 부계 40%(${sire.raceStyle}/${sire.fightStyle}) · 모계 40%(${dam.raceStyle}/${dam.fightStyle}) · 돌연변이 20%</li>
+      <li>전투 기술 유전: 부모 각 50% 확률 계승 + 15% 확률 히든 특수(<code>F33/F34</code> 등) 발현</li>
+      <li>성별: 수컷 50% / 암컷 50% · 부화 대기: 2시간 (Heritage 알)</li>
+    </ul>`;
+}
+
+function renderAdminTab() {
+  const isVip = state.platform === "vip";
+  document.getElementById("admin-vip-banner").style.display = isVip ? "block" : "none";
+  document.getElementById("admin-content-grid").style.opacity = isVip ? "0.45" : "1";
+  const aidBtn = document.getElementById("btn-bankruptcy-aid");
+  if (aidBtn) aidBtn.disabled = isVip;
+
+  document.getElementById("quests-list-box").innerHTML = state.quests.map(q => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 9px; border-bottom:1px solid var(--border); font-size:0.78rem;">
+      <div><span class="badge ${q.kind==='일일'?'badge-sky':'badge-purple'}">${q.kind}</span> <strong>${q.name}</strong> (${q.cur}/${q.max})</div>
+      <button class="btn btn-sm ${q.cur>=q.max&&!q.claimed?'btn-green':''}" ${isVip||q.cur<q.max||q.claimed?'disabled':''} onclick="claimQuest('${q.id}')">${q.claimed?'수령완료':q.reward}</button>
+    </div>`).join("");
+
+  document.getElementById("achievements-list-box").innerHTML = state.achievements.map(a => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-bottom:1px solid var(--border); font-size:0.76rem;">
+      <span>🏆 ${a.name} (${a.cur}/${a.max})</span>
+      <button class="btn btn-sm ${a.cur>=a.max&&!a.claimed?'btn-amber':''}" ${isVip||a.cur<a.max||a.claimed?'disabled':''} onclick="claimAch('${a.id}')">${a.claimed?'달성완료':a.reward}</button>
+    </div>`).join("");
+
+  const eq = TITLES_20.find(t => t.id === state.equippedTitle);
+  document.getElementById("equipped-title-name").innerText = eq ? `[${eq.name}] (${eq.effect})` : "-";
+  document.getElementById("titles-grid-box").innerHTML = TITLES_20.map(t => `
+    <button class="btn btn-sm" style="flex-direction:column; align-items:flex-start; text-align:left; ${state.equippedTitle===t.id?'border-color:var(--amber); background:rgba(251,191,36,0.12);':''}" ${isVip?'disabled':''} onclick="equipTitle('${t.id}')">
+      <span><strong>[${t.name}]</strong> <small class="badge badge-sky">${t.grade}</small></span>
+      <small style="color:var(--text-muted); font-weight:500;">${t.effect}</small>
+    </button>`).join("");
+}
+
+function renderAll() {
+  renderHUD();
+  renderMap();
+  renderEggsTab();
+  renderHatchTab();
+  renderTrainTab();
+  renderCoopTab();
+  renderBreedingTab();
+  renderAdminTab();
+}
+
+// ==================== TICK LOOP (TIMERS & MINIGAME) ====================
+let lastTick = Date.now();
+setInterval(() => {
+  const now = Date.now();
+  const dt = (now - lastTick) / 1000;
+  lastTick = now;
+  const effDt = dt * state.speed;
+  let dirty = false;
+
+  // Hatch slots countdown
+  state.hatchSlots.forEach(s => {
+    if (s && s.remainSec > 0) {
+      s.remainSec = Math.max(0, s.remainSec - effDt);
+      dirty = true;
+    }
+  });
+
+  // Rooster training / cooldown / rest
+  state.roosters.forEach(r => {
+    if (r.trainJob) {
+      r.trainJob.remainSec -= effDt;
+      dirty = true;
+      if (r.trainJob.remainSec <= 0) {
+        const tr = TRAINING_LIST.find(t => t.id === r.trainJob.trId);
+        applyTrainingReward(r, tr, false);
+        showToast(`✅ ${r.name} [${tr.name}] 훈련 완료!`);
+        renderAll();
+      }
+    }
+    if (r.resting && r.fatigue > 0) {
+      r.fatigue = Math.max(0, Number((r.fatigue - (10 / 3600) * effDt).toFixed(2)));
+      if (r.fatigue <= 0) { r.resting = false; r.status = "IDLE"; renderAll(); }
+      dirty = true;
+    }
+    if (r.cooldownSec > 0) {
+      r.cooldownSec = Math.max(0, r.cooldownSec - effDt);
+      if (r.cooldownSec <= 0 && r.status === "COOLDOWN") { r.status = "IDLE"; renderAll(); }
+      dirty = true;
+    }
+    if (r.breedCdSec > 0) { r.breedCdSec = Math.max(0, r.breedCdSec - effDt); dirty = true; }
+  });
+
+  if (state.adCounts.stampCd > 0) { state.adCounts.stampCd = Math.max(0, state.adCounts.stampCd - effDt); dirty = true; }
+  if (state.adCounts.healCd > 0) { state.adCounts.healCd = Math.max(0, state.adCounts.healCd - effDt); dirty = true; }
+
+  // Minigame animation
+  if (state.minigame.active) {
+    const rem = Math.max(0, (state.minigame.endAt - now) / 1000);
+    document.getElementById("mg-timer-badge").innerText = rem.toFixed(1) + "초";
+    state.minigame.pos += state.minigame.dir * 2.8;
+    if (state.minigame.pos >= 96) { state.minigame.pos = 96; state.minigame.dir = -1; }
+    if (state.minigame.pos <= 4) { state.minigame.pos = 4; state.minigame.dir = 1; }
+    document.getElementById("mg-cursor").style.left = state.minigame.pos + "%";
+    if (rem <= 0) {
+      state.minigame.active = false;
+      document.getElementById("btn-mg-start").disabled = false;
+      document.getElementById("btn-mg-tap").disabled = true;
+      document.getElementById("mg-timer-badge").innerText = "종료";
+      const s = state.hatchSlots.find(x => x && x.remainSec > 0);
+      if (s && state.minigame.bestBonus > 0) {
+        s.remainSec = Math.max(0, Math.round(s.remainSec * (1 - state.minigame.bestBonus)));
+        showToast(`🎮 10초 미니게임 종료! ${state.minigame.bestGrade} 부화 단축 적용!`);
+        logNet("POST", "/api/v1/farm/incubate/minigame", { taps: state.minigame.taps, grade: state.minigame.bestGrade }, "farm:incubate_boosted", { remainSec: s.remainSec });
+      } else {
+        showToast("🎮 10초 미니게임 종료!");
+      }
+      renderAll();
+    }
+  }
+
+  if (dirty) {
+    const activeTab = document.querySelector(".tab-pane.active")?.id;
+    if (activeTab === "tab-hatch") renderHatchTab();
+    else if (activeTab === "tab-train") renderTrainTab();
+    else if (activeTab === "tab-coop") renderCoopTab();
+  }
+}, 50);
+
+// ==================== BOOTSTRAP ====================
+(function init() {
+  // Initial 4 sample roosters from CSV 30 (2 ROOSTER, 2 HEN for immediate breeding test)
+  const sample0 = MASTER_ROOSTERS_30[0]; // 블레이징 윙
+  const sample1 = MASTER_ROOSTERS_30[5]; // 나이트 호크
+  const sample2 = MASTER_ROOSTERS_30[10]; // 레드 불릿
+  const sample3 = MASTER_ROOSTERS_30[29]; // 더스트 스퍼
+  state.roosters = [
+    createRoosterInstance(sample0, "PAID_T2", "ROOSTER", 1, ["F10","F14","F21","F23"]),
+    createRoosterInstance(sample1, "PAID_T3", "HEN", 1, ["F12","F16","F21","F33","F34"]),
+    createRoosterInstance(sample2, "PAID_T1", "ROOSTER", 1, ["F10","F22","F33"]),
+    createRoosterInstance({ ...sample3, fatigue: 75, condition: 65 }, "PAID_T1", "HEN", 1, ["F12","F23"])
+  ];
+  state.roosters[3].status = "FATIGUED";
+  state.selectedRoosterId = state.roosters[0].uid;
+
+  // Initial eggs & marketplace listings
+  state.eggs = [
+    { uid: nextUid("EGG"), ...MASTER_EGGS_65[0] },
+    { uid: nextUid("EGG"), ...MASTER_EGGS_65[30] },
+    { uid: nextUid("EGG"), ...MASTER_EGGS_65[50] }
+  ];
+  state.marketListings = [
+    { lid:"MKT-101", seller:"FarmerKim", egg: MASTER_EGGS_65[35], price: 3200 },
+    { lid:"MKT-102", seller:"DerbyPro", egg: MASTER_EGGS_65[52], price: 11500 },
+    { lid:"MKT-103", seller:"KingBreeder", egg: MASTER_EGGS_65[61], price: 28000 }
+  ];
+
+  startBgmLoop();
+  renderAll();
+})();
+</script>
+</body>
+</html>

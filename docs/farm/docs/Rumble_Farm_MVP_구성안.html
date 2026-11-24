@@ -1,15 +1,13 @@
-<!DOCTYPE html><html lang="ko" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안 (v1.2.0)</title><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script><style>:root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-accent:#334155;--text-main:#f8fafc;--text-heading:#ffffff;--text-body:#cbd5e1;--text-muted:#94a3b8;--text-dim:#64748b;--primary:#10b981;--primary-hover:#059669;--primary-tint:rgba(16,185,129,0.15);--accent-blue:#38bdf8;--accent-green:#34d399;--accent-amber:#fbbf24;--accent-purple:#c084fc;--border:#334155;--code-bg:#090d16;--code-text:#10b981;--inline-code-bg:rgba(51,65,85,0.5);--table-th-bg:rgba(15,23,42,0.7);--table-hover:rgba(51,65,85,0.4);--formula-bg:rgba(30,41,59,0.7);--formula-desc-bg:rgba(15,23,42,0.5);--sidebar-header-bg:rgba(15,23,42,0.6);--modal-overlay:rgba(0,0,0,0.75);--sidebar-width:320px}[data-theme="light"]{--bg-primary:#f8fafc;--bg-secondary:#ffffff;--bg-card:#ffffff;--bg-accent:#f1f5f9;--text-main:#0f172a;--text-heading:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-dim:#94a3b8;--primary:#059669;--primary-hover:#047857;--primary-tint:rgba(5,150,105,0.1);--accent-blue:#0284c7;--accent-green:#059669;--accent-amber:#d97706;--accent-purple:#9333ea;--border:#e2e8f0;--code-bg:#f8fafc;--code-text:#047857;--inline-code-bg:#e2e8f0;--table-th-bg:#f1f5f9;--table-hover:#f8fafc;--formula-bg:#ffffff;--formula-desc-bg:#f8fafc;--sidebar-header-bg:#f8fafc;--modal-overlay:rgba(15,23,42,0.4)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-main);line-height:1.65;display:flex;min-height:100vh;transition:background-color 0.2s ease,color 0.2s ease}aside.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background-color:var(--bg-secondary);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:background-color 0.2s ease,border-color 0.2s ease}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);background-color:var(--sidebar-header-bg);display:flex;align-items:center;justify-content:space-between}.sidebar-title h2{font-size:1.05rem;font-weight:800;color:var(--primary);border:none;padding:0;margin:0;display:flex;align-items:center;gap:6px}.sidebar-title p{font-size:0.75rem;color:var(--text-muted);margin:2px 0 0 0}.theme-toggle-btn{background:var(--bg-accent);border:1px solid var(--border);color:var(--text-main);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:5px;transition:all 0.15s ease}.theme-toggle-btn:hover{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}.sidebar-toolbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}.sidebar-search input{width:100%;padding:7px 10px;background-color:var(--bg-primary);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none;transition:border-color 0.15s}.sidebar-search input:focus{border-color:var(--primary)}.sidebar-actions{display:flex;justify-content:space-between;gap:6px}.action-btn{flex:1;padding:4px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:0.72rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}.action-btn:hover{color:var(--text-main);border-color:var(--primary);background:var(--bg-accent)}nav.toc-nav{flex:1;overflow-y:auto;padding:12px 10px}.toc-nav ul{list-style:none;padding-left:0;margin:0}.toc-group{margin-bottom:4px;border-radius:6px}.toc-group-header{display:flex;align-items:center;justify-content:space-between;border-radius:6px;transition:background-color 0.15s}.toc-group-header:hover{background-color:var(--bg-accent)}.toc-group-header a.nav-h1{flex:1;display:block;padding:7px 10px;color:var(--text-main);text-decoration:none;font-size:0.84rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-toggle-icon{padding:6px 10px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;font-size:0.7rem;user-select:none;transition:transform 0.2s ease,color 0.15s}.toc-toggle-icon:hover{color:var(--primary)}.toc-group.open .toc-toggle-icon{transform:rotate(90deg)}.toc-subgroup{display:none;padding-left:10px;margin-top:2px;margin-bottom:4px;border-left:2px solid var(--border);margin-left:12px}.toc-group.open .toc-subgroup{display:block}.toc-subgroup a{display:block;padding:5px 8px;color:var(--text-muted);text-decoration:none;font-size:0.8rem;border-radius:4px;transition:all 0.15s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-subgroup a:hover{color:var(--text-main);background-color:var(--bg-accent)}.toc-subgroup a.nav-h3{padding-left:16px;font-size:0.76rem;color:var(--text-dim)}.toc-nav a.active{color:var(--primary) !important;background-color:var(--primary-tint);font-weight:700}main.content{margin-left:var(--sidebar-width);flex:1;padding:36px 48px;max-width:1200px}header.doc-header{margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border)}header.doc-header h1{font-size:2.1rem;font-weight:800;color:var(--text-heading);margin-bottom:0;letter-spacing:-0.02em}section{margin-bottom:52px;scroll-margin-top:30px}h2{font-size:1.45rem;font-weight:800;color:var(--text-heading);border-bottom:2px solid var(--primary);padding-bottom:8px;margin-bottom:22px;display:flex;align-items:center;gap:10px}h3{font-size:1.18rem;font-weight:700;color:var(--primary);margin:26px 0 14px 0;scroll-margin-top:30px}h4{font-size:1.0rem;font-weight:700;color:var(--accent-amber);margin:18px 0 10px 0;scroll-margin-top:30px}h5{font-size:0.93rem;font-weight:700;color:var(--text-main);margin:14px 0 6px 0;scroll-margin-top:30px}p,ul,ol{margin-bottom:12px;color:var(--text-body);font-size:0.92rem}ul,ol{padding-left:22px}li{margin-bottom:5px}.table-container{width:100%;overflow-x:auto;margin:16px 0 22px 0;background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}table{width:100%;border-collapse:collapse;font-size:0.87rem;text-align:left}th,td{padding:9px 12px;border-bottom:1px solid var(--border)}th{background-color:var(--table-th-bg);color:var(--primary);font-weight:700;white-space:nowrap}tr:last-child td{border-bottom:none}tr:hover td{background-color:var(--table-hover)}.text-center{text-align:center}.text-right{text-align:right}pre{background-color:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Consolas","Courier New",monospace;font-size:0.84rem;color:var(--code-text);line-height:1.5;margin:14px 0}code{font-family:"Consolas",monospace;background-color:var(--inline-code-bg);padding:2px 5px;border-radius:4px;color:var(--code-text);font-size:0.88em}pre code{background-color:transparent;padding:0}.formula-card{background-color:var(--formula-bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:6px;padding:14px 18px;margin:14px 0 18px 0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.formula-title{font-size:0.93rem;font-weight:700;color:var(--text-heading);margin-bottom:6px}.formula-body{padding:8px 0;text-align:center;overflow-x:auto}.formula-desc{background-color:var(--formula-desc-bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:8px;font-size:0.84rem}.formula-desc-item{margin-bottom:4px}.formula-desc-item:last-child{margin-bottom:0}.tag{font-weight:700;color:var(--accent-amber)}.tag.example{color:var(--accent-green)}.csv-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}.csv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:14px 0 28px 0}.csv-card{background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:all 0.15s ease;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.csv-card:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.08);transform:translateY(-2px)}.csv-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.csv-card-title{font-size:0.9rem;font-weight:700;color:var(--text-heading)}.csv-card-sub{font-size:0.75rem;color:var(--text-muted);margin-top:3px}.csv-badge{font-size:0.7rem;padding:2px 6px;border-radius:4px;background-color:var(--primary-tint);color:var(--primary);font-weight:700;white-space:nowrap}.csv-card-actions{display:flex;gap:6px}.btn-csv{flex:1;padding:6px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:all 0.15s ease;border:1px solid var(--border);background:var(--bg-accent);color:var(--text-main);text-decoration:none}.btn-csv.primary{background:var(--primary);color:#ffffff;border-color:var(--primary)}.btn-csv.primary:hover{background:var(--primary-hover)}.btn-csv:hover:not(.primary){border-color:var(--primary);color:var(--primary)}.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:var(--modal-overlay);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}.modal-overlay.active{display:flex}.modal-container{background-color:var(--bg-card);border:1px solid var(--border);border-radius:10px;width:100%;max-width:1000px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 25px -5px rgba(0,0,0,0.3),0 8px 10px -6px rgba(0,0,0,0.3);overflow:hidden}.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background-color:var(--sidebar-header-bg)}.modal-title{font-size:1.05rem;font-weight:700;color:var(--text-heading);display:flex;align-items:center;gap:8px}.modal-close-btn{background:transparent;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:2px 8px;border-radius:4px}.modal-close-btn:hover{color:var(--text-main);background-color:var(--bg-accent)}.modal-toolbar{padding:10px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background-color:var(--bg-primary)}.modal-toolbar input{flex:1;padding:6px 10px;background-color:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none}.modal-body{flex:1;overflow:auto;padding:16px 20px}.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background-color:var(--sidebar-header-bg)}.toast{position:fixed;bottom:24px;right:24px;background-color:var(--bg-secondary);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.2);font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;transform:translateY(20px);transition:opacity 0.25s,transform 0.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}@media (max-width:900px){aside.sidebar{display:none}main.content{margin-left:0;padding:20px}}</style></head><body><aside class="sidebar"><div class="sidebar-header"><div class="sidebar-title"><h2>🐓 ROOSTER RUMBLE</h2><p>Rumble Farm 기획 명세서 (v1.2.0)</p></div><button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="화이트/다크 테마 전환"><span id="theme-icon">☀️</span><span id="theme-text">화이트</span></button></div><div class="sidebar-toolbar"><div class="sidebar-search"><input type="text" id="toc-filter" placeholder="목차 실시간 필터 검색..." onkeyup="filterTOC()"></div><div class="sidebar-actions"><button class="action-btn" onclick="expandAllTOC()">전체 펼치기</button><button class="action-btn" onclick="collapseAllTOC()">전체 접기</button></div></div><nav class="toc-nav"><ul id="toc-list">
-<li class="toc-group open" id="group-sec-1"><div class="toc-group-header"><a href="#sec-1" class="nav-h1" onclick="toggleGroupManual('group-sec-1')">1. 게임 개요 및 핵심 루프</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-1')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-1-1" class="nav-h2">1.1 프로젝트 개요 및 핵심 컨셉</a></li><li><a href="#sec-1-2" class="nav-h2">1.2 모바일 vs 온라인 웹 전략 비교</a></li><li><a href="#sec-1-3" class="nav-h2">1.3 6단계 코어 플레이 루프 &amp; 플로우</a></li></ul></li>
-<li class="toc-group open" id="group-sec-2"><div class="toc-group-header"><a href="#sec-2" class="nav-h1" onclick="toggleGroupManual('group-sec-2')">2. 알 획득, 거래소 및 가차</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-2')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-2-1" class="nav-h2">2.1 유저 거래소 및 수수료(8%)</a></li><li><a href="#sec-2-2" class="nav-h2">2.2 출석/광고 통합 무료 알 수집</a></li><li><a href="#sec-2-3" class="nav-h2">2.3 알 뽑기 65종 마스터, 확률/천장</a></li><li><a href="#sec-2-4" class="nav-h2">2.4 연동 마스터 데이터 (06_egg)</a></li></ul></li>
-<li class="toc-group open" id="group-sec-3"><div class="toc-group-header"><a href="#sec-3" class="nav-h1" onclick="toggleGroupManual('group-sec-3')">3. 알 부화 및 1차 스탯 생성</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-3')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-3-1" class="nav-h2">3.1 등급별 부화시간 및 미니게임</a></li><li><a href="#sec-3-2" class="nav-h2">3.2 1차 기본 피지컬 스탯 (6종)</a></li><li><a href="#sec-3-3" class="nav-h2">3.3 1차 스탯 초기 분배 &amp; POT 롤링</a></li></ul></li>
-<li class="toc-group open" id="group-sec-4"><div class="toc-group-header"><a href="#sec-4" class="nav-h1" onclick="toggleGroupManual('group-sec-4')">4. 닭 캐릭터 10대 상태 머신</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-4')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-4-1" class="nav-h2">4.1 10대 상태 머신 전이 규칙</a></li><li><a href="#sec-4-2" class="nav-h2">4.2 경기 출전 피로도/부상/쿨다운 환류</a></li><li><a href="#sec-4-3" class="nav-h2">4.3 닭장 휴식, 영양 사료 및 스파 치료</a></li></ul></li>
-<li class="toc-group open" id="group-sec-5"><div class="toc-group-header"><a href="#sec-5" class="nav-h1" onclick="toggleGroupManual('group-sec-5')">5. 훈련 시스템 및 파생 연동</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-5')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-5-1" class="nav-h2">5.1 훈련 종목 8종 소모재화/상승률</a></li><li><a href="#sec-5-2" class="nav-h2">5.2 경주 2차 파생 스탯 연동 공식</a></li><li><a href="#sec-5-3" class="nav-h2">5.3 격투 2차 스탯 및 7대 기술 개화</a></li></ul></li>
-<li class="toc-group open" id="group-sec-6"><div class="toc-group-header"><a href="#sec-6" class="nav-h1" onclick="toggleGroupManual('group-sec-6')">6. 2세대 교배 및 유전 메커니즘</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-6')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-6-1" class="nav-h2">6.1 교배 자격요건 및 생애 5회 제약</a></li><li><a href="#sec-6-2" class="nav-h2">6.2 부모 기반 2세대 스탯/POT 공식</a></li><li><a href="#sec-6-3" class="nav-h2">6.3 외형 및 패시브 특성 유전 확률</a></li></ul></li>
-<li class="toc-group open" id="group-sec-7"><div class="toc-group-header"><a href="#sec-7" class="nav-h1" onclick="toggleGroupManual('group-sec-7')">7. 칭호, 퀘스트 및 영구 업적</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-7')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-7-1" class="nav-h2">7.1 칭호 4대 등급 구조 및 20종 마스터</a></li><li><a href="#sec-7-2" class="nav-h2">7.2 일일 5종 / 주간 4종 퀘스트</a></li><li><a href="#sec-7-3" class="nav-h2">7.3 영구 누적 업적 8종 명세표</a></li></ul></li>
-<li class="toc-group open" id="group-sec-8"><div class="toc-group-header"><a href="#sec-8" class="nav-h1" onclick="toggleGroupManual('group-sec-8')">8. DB 논리 스키마 및 통신 API</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-8')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-8-1" class="nav-h2">8.1 7개 엔티티 논리 데이터 스키마</a></li><li><a href="#sec-8-2" class="nav-h2">8.2 핵심 REST API 명세 (육성 8종)</a></li><li><a href="#sec-8-3" class="nav-h2">8.3 실시간 WebSocket 이벤트 (3종)</a></li></ul></li>
-<li class="toc-group open" id="group-sec-9"><div class="toc-group-header"><a href="#sec-9" class="nav-h1" onclick="toggleGroupManual('group-sec-9')">9. 화면 레이아웃 및 사운드 규격</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-9')">▶</span></div><ul class="toc-subgroup"><li><a href="#sec-9-1" class="nav-h2">9.1 메인 팜 5대 핵심 공간 레이아웃</a></li><li><a href="#sec-9-2" class="nav-h2">9.2 조작 팝업 UX 및 6대 예외 처리</a></li><li><a href="#sec-9-3" class="nav-h2">9.3 팜 배경음악(2종) &amp; 효과음(10종)</a></li></ul></li>
-</ul></nav></aside><main class="content"><header class="doc-header"><div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;"><h1>🐓 ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안</h1><span style="display: inline-block; padding: 4px 12px; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 6px;">문서 버전: v1.2.0</span></div></header>
+<!DOCTYPE html><html lang="ko" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안 (v1.5.0)</title><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script><style>:root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-accent:#334155;--text-main:#f8fafc;--text-heading:#ffffff;--text-body:#cbd5e1;--text-muted:#94a3b8;--text-dim:#64748b;--primary:#10b981;--primary-hover:#059669;--primary-tint:rgba(16,185,129,0.15);--accent-blue:#38bdf8;--accent-green:#34d399;--accent-amber:#fbbf24;--accent-purple:#c084fc;--border:#334155;--code-bg:#090d16;--code-text:#10b981;--inline-code-bg:rgba(51,65,85,0.5);--table-th-bg:rgba(15,23,42,0.7);--table-hover:rgba(51,65,85,0.4);--formula-bg:rgba(30,41,59,0.7);--formula-desc-bg:rgba(15,23,42,0.5);--sidebar-header-bg:rgba(15,23,42,0.6);--modal-overlay:rgba(0,0,0,0.75);--sidebar-width:320px}[data-theme="light"]{--bg-primary:#f8fafc;--bg-secondary:#ffffff;--bg-card:#ffffff;--bg-accent:#f1f5f9;--text-main:#0f172a;--text-heading:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-dim:#94a3b8;--primary:#059669;--primary-hover:#047857;--primary-tint:rgba(5,150,105,0.1);--accent-blue:#0284c7;--accent-green:#059669;--accent-amber:#d97706;--accent-purple:#9333ea;--border:#e2e8f0;--code-bg:#f8fafc;--code-text:#047857;--inline-code-bg:#e2e8f0;--table-th-bg:#f1f5f9;--table-hover:#f8fafc;--formula-bg:#ffffff;--formula-desc-bg:#f8fafc;--sidebar-header-bg:#f8fafc;--modal-overlay:rgba(15,23,42,0.4)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-main);line-height:1.65;display:flex;min-height:100vh;transition:background-color 0.2s ease,color 0.2s ease}aside.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background-color:var(--bg-secondary);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:background-color 0.2s ease,border-color 0.2s ease}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);background-color:var(--sidebar-header-bg);display:flex;align-items:center;justify-content:space-between}.sidebar-title h2{font-size:1.05rem;font-weight:800;color:var(--primary);border:none;padding:0;margin:0;display:flex;align-items:center;gap:6px}.sidebar-title p{font-size:0.75rem;color:var(--text-muted);margin:2px 0 0 0}.theme-toggle-btn{background:var(--bg-accent);border:1px solid var(--border);color:var(--text-main);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:5px;transition:all 0.15s ease}.theme-toggle-btn:hover{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}.sidebar-toolbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}.sidebar-search input{width:100%;padding:7px 10px;background-color:var(--bg-primary);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none;transition:border-color 0.15s}.sidebar-search input:focus{border-color:var(--primary)}.sidebar-actions{display:flex;justify-content:space-between;gap:6px}.action-btn{flex:1;padding:4px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:0.72rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}.action-btn:hover{color:var(--text-main);border-color:var(--primary);background:var(--bg-accent)}nav.toc-nav{flex:1;overflow-y:auto;padding:12px 10px}.toc-nav ul{list-style:none;padding-left:0;margin:0}.toc-group{margin-bottom:4px;border-radius:6px}.toc-group-header{display:flex;align-items:center;justify-content:space-between;border-radius:6px;transition:background-color 0.15s}.toc-group-header:hover{background-color:var(--bg-accent)}.toc-group-header a.nav-h1{flex:1;display:block;padding:7px 10px;color:var(--text-main);text-decoration:none;font-size:0.84rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-toggle-icon{padding:6px 10px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;font-size:0.7rem;user-select:none;transition:transform 0.2s ease,color 0.15s}.toc-toggle-icon:hover{color:var(--primary)}.toc-group.open .toc-toggle-icon{transform:rotate(90deg)}.toc-subgroup{display:none;padding-left:10px;margin-top:2px;margin-bottom:4px;border-left:2px solid var(--border);margin-left:12px}.toc-group.open .toc-subgroup{display:block}.toc-subgroup a{display:block;padding:5px 8px;color:var(--text-muted);text-decoration:none;font-size:0.8rem;border-radius:4px;transition:all 0.15s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-subgroup a:hover{color:var(--text-main);background-color:var(--bg-accent)}.toc-subgroup a.nav-h3{padding-left:16px;font-size:0.76rem;color:var(--text-dim)}.toc-nav a.active{color:var(--primary) !important;background-color:var(--primary-tint);font-weight:700}main.content{margin-left:var(--sidebar-width);flex:1;padding:36px 48px;max-width:1200px}header.doc-header{margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border)}header.doc-header h1{font-size:2.1rem;font-weight:800;color:var(--text-heading);margin-bottom:0;letter-spacing:-0.02em}section{margin-bottom:52px;scroll-margin-top:30px}h2{font-size:1.45rem;font-weight:800;color:var(--text-heading);border-bottom:2px solid var(--primary);padding-bottom:8px;margin-bottom:22px;display:flex;align-items:center;gap:10px}h3{font-size:1.18rem;font-weight:700;color:var(--primary);margin:26px 0 14px 0;scroll-margin-top:30px}h4{font-size:1.0rem;font-weight:700;color:var(--accent-amber);margin:18px 0 10px 0;scroll-margin-top:30px}h5{font-size:0.93rem;font-weight:700;color:var(--text-main);margin:14px 0 6px 0;scroll-margin-top:30px}p,ul,ol{margin-bottom:12px;color:var(--text-body);font-size:0.92rem}ul,ol{padding-left:22px}li{margin-bottom:5px}.table-container{width:100%;overflow-x:auto;margin:16px 0 22px 0;background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}table{width:100%;border-collapse:collapse;font-size:0.87rem;text-align:left}th,td{padding:9px 12px;border-bottom:1px solid var(--border)}th{background-color:var(--table-th-bg);color:var(--primary);font-weight:700;white-space:nowrap}tr:last-child td{border-bottom:none}tr:hover td{background-color:var(--table-hover)}.text-center{text-align:center}.text-right{text-align:right}pre{background-color:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Consolas","Courier New",monospace;font-size:0.84rem;color:var(--code-text);line-height:1.5;margin:14px 0}code{font-family:"Consolas",monospace;background-color:var(--inline-code-bg);padding:2px 5px;border-radius:4px;color:var(--code-text);font-size:0.88em}pre code{background-color:transparent;padding:0}.formula-card{background-color:var(--formula-bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:6px;padding:14px 18px;margin:14px 0 18px 0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.formula-title{font-size:0.93rem;font-weight:700;color:var(--text-heading);margin-bottom:6px}.formula-body{padding:8px 0;text-align:center;overflow-x:auto}.formula-desc{background-color:var(--formula-desc-bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:8px;font-size:0.84rem}.formula-desc-item{margin-bottom:4px}.formula-desc-item:last-child{margin-bottom:0}.tag{font-weight:700;color:var(--accent-amber)}.tag.example{color:var(--accent-green)}.csv-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}.csv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:14px 0 28px 0}.csv-card{background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:all 0.15s ease;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.csv-card:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.08);transform:translateY(-2px)}.csv-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.csv-card-title{font-size:0.9rem;font-weight:700;color:var(--text-heading)}.csv-card-sub{font-size:0.75rem;color:var(--text-muted);margin-top:3px}.csv-badge{font-size:0.7rem;padding:2px 6px;border-radius:4px;background-color:var(--primary-tint);color:var(--primary);font-weight:700;white-space:nowrap}.csv-card-actions{display:flex;gap:6px}.btn-csv{flex:1;padding:6px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:all 0.15s ease;border:1px solid var(--border);background:var(--bg-accent);color:var(--text-main);text-decoration:none}.btn-csv.primary{background:var(--primary);color:#ffffff;border-color:var(--primary)}.btn-csv.primary:hover{background:var(--primary-hover)}.btn-csv:hover:not(.primary){border-color:var(--primary);color:var(--primary)}.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:var(--modal-overlay);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}.modal-overlay.active{display:flex}.modal-container{background-color:var(--bg-card);border:1px solid var(--border);border-radius:10px;width:100%;max-width:1000px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 25px -5px rgba(0,0,0,0.3),0 8px 10px -6px rgba(0,0,0,0.3);overflow:hidden}.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background-color:var(--sidebar-header-bg)}.modal-title{font-size:1.05rem;font-weight:700;color:var(--text-heading);display:flex;align-items:center;gap:8px}.modal-close-btn{background:transparent;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:2px 8px;border-radius:4px}.modal-close-btn:hover{color:var(--text-main);background-color:var(--bg-accent)}.modal-toolbar{padding:10px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background-color:var(--bg-primary)}.modal-toolbar input{flex:1;padding:6px 10px;background-color:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none}.modal-body{flex:1;overflow:auto;padding:16px 20px}.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background-color:var(--sidebar-header-bg)}.toast{position:fixed;bottom:24px;right:24px;background-color:var(--bg-secondary);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.2);font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;transform:translateY(20px);transition:opacity 0.25s,transform 0.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}@media (max-width:900px){aside.sidebar{display:none}main.content{margin-left:0;padding:20px}}</style><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>document.addEventListener("DOMContentLoaded",function(){if(window.mermaid){const isLight=localStorage.getItem("rr_theme")==="light"||document.documentElement.getAttribute("data-theme")==="light";mermaid.initialize({startOnLoad:true,theme:isLight?"default":"dark",securityLevel:"loose"});}});</script></head><body><aside class="sidebar"><div class="sidebar-header"><div class="sidebar-title"><h2>🐓 ROOSTER RUMBLE</h2><p>Rumble Farm 기획 명세서 (v1.5.0)</p></div><button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="화이트/다크 테마 전환"><span id="theme-icon">☀️</span><span id="theme-text">화이트</span></button></div><div class="sidebar-toolbar"><div class="sidebar-search"><input type="text" id="toc-filter" placeholder="목차 실시간 필터 검색..." onkeyup="filterTOC()"></div><div class="sidebar-actions"><button class="action-btn" onclick="expandAllTOC()">전체 펼치기</button><button class="action-btn" onclick="collapseAllTOC()">전체 접기</button></div></div><nav class="toc-nav"><ul id="toc-list"><li class="toc-group open" id="group-sec-1"><div class="toc-group-header"><a href="#sec-1" class="nav-h1" onclick="toggleGroupManual('group-sec-1')">1. 게임 개요 및 핵심 루프 (Game Overview &amp; Core Loop)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-1')">▶</span></div><ul class="toc-subgroup"><li><a href="#11-프로젝트-개요-및-럼블-팜rumble-farm-핵심-컨셉" class="nav-h2">1.1 프로젝트 개요 및 럼블 팜(Rumble Farm) 핵심 컨셉</a></li><li><a href="#12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교" class="nav-h2">1.2 모바일 vs 자체 온라인 웹 vs 미국 VIP 라운지 서비스 비교</a></li><li><a href="#13-럼블-팜-6단계-코어-플레이-루프-and-플로우차트" class="nav-h2">1.3 럼블 팜 6단계 코어 플레이 루프 &amp; 플로우차트</a></li></ul></li>
+<li class="toc-group open" id="group-sec-2"><div class="toc-group-header"><a href="#sec-2" class="nav-h1" onclick="toggleGroupManual('group-sec-2')">2. 알 획득, 거래소 및 가차 시스템 (Egg Acquisition &amp; Economy)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-2')">▶</span></div><ul class="toc-subgroup"><li><a href="#21-유저-간-알-거래소-egg-marketplace-거래수수료8-규칙-모바일-앱-전용" class="nav-h2">2.1 유저 간 알 거래소 (Egg Marketplace) 거래/수수료(8%) 규칙 (모바일 앱 전용)</a></li><li><a href="#22-출석광고-기반-통합-무료-알-수집-체계-모바일-앱-전용" class="nav-h2">2.2 출석/광고 기반 통합 무료 알 수집 체계 (모바일 앱 전용)</a></li><li><a href="#23-알-뽑기가차-65종-마스터-구조-등급별-확률-및-천장pity-시스템" class="nav-h2">2.3 알 뽑기(가차) 65종 마스터 구조, 등급별 확률 및 천장(Pity) 시스템</a></li><li><a href="#24-연동-마스터-데이터-06_egg_gacha_master_list_65csv" class="nav-h2">2.4 연동 마스터 데이터 (06_egg_gacha_master_list_65.csv)</a></li></ul></li>
+<li class="toc-group open" id="group-sec-3"><div class="toc-group-header"><a href="#sec-3" class="nav-h1" onclick="toggleGroupManual('group-sec-3')">3. 알 부화 및 1차 기본 피지컬 스탯 생성 시스템 (Incubation &amp; Base Stats)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-3')">▶</span></div><ul class="toc-subgroup"><li><a href="#31-등급별-부화-대기시간-및-터치-미니게임부화-가속유료-즉시-부화-규칙" class="nav-h2">3.1 등급별 부화 대기시간 및 터치 미니게임(부화 가속)·유료 즉시 부화 규칙</a></li><li><a href="#32-1차-기본-피지컬-스탯-common-core-6종-정의" class="nav-h2">3.2 1차 기본 피지컬 스탯 (Common Core 6종) 정의</a></li><li><a href="#33-부화-시-등급별-1차-기본-스탯-초기-생성-분배식-및-잠재력pot-롤링-메커니즘" class="nav-h2">3.3 부화 시 등급별 1차 기본 스탯 초기 생성 분배식 및 잠재력(POT) 롤링 메커니즘</a></li></ul></li>
+<li class="toc-group open" id="group-sec-4"><div class="toc-group-header"><a href="#sec-4" class="nav-h1" onclick="toggleGroupManual('group-sec-4')">4. 닭 캐릭터 10대 상태 머신 및 라이프사이클 관리 (Lifecycle &amp; Status)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-4')">▶</span></div><ul class="toc-subgroup"><li><a href="#41-닭-캐릭터-10대-상태-머신-전이-규칙" class="nav-h2">4.1 닭 캐릭터 10대 상태 머신 전이 규칙</a></li><li><a href="#42-경기derbypit-출전-후-피로도-적재25-부상-판정30-및-30분-쿨다운-환류-규칙" class="nav-h2">4.2 경기(Derby/Pit) 출전 후 피로도 적재(+25), 부상 판정(30%) 및 30분 쿨다운 환류 규칙</a></li><li><a href="#43-닭장-휴식-영양-사료-급여-및-수의사-치료를-통한-상태-회복-프로세스" class="nav-h2">4.3 닭장 휴식, 영양 사료 급여 및 수의사 치료를 통한 상태 회복 프로세스</a></li></ul></li>
+<li class="toc-group open" id="group-sec-5"><div class="toc-group-header"><a href="#sec-5" class="nav-h1" onclick="toggleGroupManual('group-sec-5')">5. 훈련 시스템 및 타 모드(Derby/Pit) 파생 스탯 연동 (Training &amp; Mode Linking)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-5')">▶</span></div><ul class="toc-subgroup"><li><a href="#51-훈련-종목-8종-소모-재화-대기시간-및-스탯-상승률" class="nav-h2">5.1 훈련 종목 8종 소모 재화, 대기시간 및 스탯 상승률</a></li><li><a href="#52-훈련-스탯-상승의-경주-2차-파생-스탯-연동-공식" class="nav-h2">5.2 훈련 스탯 상승의 경주 2차 파생 스탯 연동 공식</a></li><li><a href="#53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동" class="nav-h2">5.3 훈련 스탯 상승의 격투 2차 파생 스탯 및 9대 전투 기술 개화/습득 연동</a></li></ul></li>
+<li class="toc-group open" id="group-sec-6"><div class="toc-group-header"><a href="#sec-6" class="nav-h1" onclick="toggleGroupManual('group-sec-6')">6. 2세대 교배 시스템 및 유전 메커니즘 (Breeding &amp; Genetics)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-6')">▶</span></div><ul class="toc-subgroup"><li><a href="#61-교배-자격-요건-비용-및-생애-5회-교배-한도-제약" class="nav-h2">6.1 교배 자격 요건, 비용 및 생애 5회 교배 한도 제약</a></li><li><a href="#62-부모-스탯-기반-2세대-기본-스탯잠재력-유전-공식-통합-mvp-단일-공식" class="nav-h2">6.2 부모 스탯 기반 2세대 기본 스탯/잠재력 유전 공식 (통합 MVP 단일 공식)</a></li><li><a href="#63-외형스킨색상-및-패시브-특성-유전-확률표" class="nav-h2">6.3 외형(스킨/색상) 및 패시브 특성 유전 확률표</a></li></ul></li>
+<li class="toc-group open" id="group-sec-7"><div class="toc-group-header"><a href="#sec-7" class="nav-h1" onclick="toggleGroupManual('group-sec-7')">7. 칭호, 퀘스트 및 영구 업적 시스템 (Titles &amp; Achievements) (모바일 앱 전용)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-7')">▶</span></div><ul class="toc-subgroup"><li><a href="#71-칭호title-4대-등급-구조-및-20종-마스터-데이터-명세표" class="nav-h2">7.1 칭호(Title) 4대 등급 구조 및 20종 마스터 데이터 명세표</a></li><li><a href="#72-일일-퀘스트-5종-및-주간-퀘스트-4종-명세표" class="nav-h2">7.2 일일 퀘스트 5종 및 주간 퀘스트 4종 명세표</a></li><li><a href="#73-영구-누적-업적-8종-명세표" class="nav-h2">7.3 영구 누적 업적 8종 명세표</a></li></ul></li>
+<li class="toc-group open" id="group-sec-8"><div class="toc-group-header"><a href="#sec-8" class="nav-h1" onclick="toggleGroupManual('group-sec-8')">8. 데이터베이스 논리 스키마 및 통신 API 규격 (Database &amp; API Specification)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-8')">▶</span></div><ul class="toc-subgroup"><li><a href="#81-데이터베이스-분리-구성표-및-럼블-팜-핵심-엔티티-논리-스키마" class="nav-h2">8.1 데이터베이스 분리 구성표 및 럼블 팜 핵심 엔티티 논리 스키마</a></li><li><a href="#82-핵심-rest-api-엔드포인트-명세-육성-관련-13종" class="nav-h2">8.2 핵심 REST API 엔드포인트 명세 (육성 관련 13종)</a></li><li><a href="#83-실시간-websocket-이벤트-명세-육성-3종" class="nav-h2">8.3 실시간 WebSocket 이벤트 명세 (육성 3종)</a></li></ul></li>
+<li class="toc-group open" id="group-sec-9"><div class="toc-group-header"><a href="#sec-9" class="nav-h1" onclick="toggleGroupManual('group-sec-9')">9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 (UI/UX &amp; Sound Specification)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-9')">▶</span></div><ul class="toc-subgroup"><li><a href="#91-메인-팜-5대-핵심-공간-레이아웃" class="nav-h2">9.1 메인 팜 5대 핵심 공간 레이아웃</a></li><li><a href="#92-부화훈련교배-조작-팝업-uiux-인터랙션-및-오류-예외-처리" class="nav-h2">9.2 부화/훈련/교배 조작 팝업 UI/UX 인터랙션 및 오류 예외 처리</a></li><li><a href="#93-럼블-팜-전용-배경음악bgm-3종-및-효과음sfx-farm-10종-명세표" class="nav-h2">9.3 럼블 팜 전용 배경음악(BGM) 3종 및 효과음(SFX-Farm) 10종 명세표</a></li></ul></li></ul></nav></aside><main class="content"><header class="doc-header"><div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;"><h1>🐓 ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안</h1><span style="display: inline-block; padding: 4px 12px; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 6px;">문서 버전: v1.5.0</span></div></header>
 
 <!-- 문서 개정 이력 -->
 <section id="sec-revision" style="margin-bottom: 28px;">
@@ -20,20 +18,21 @@
 <div class="table-container"><table>
 <thead><tr><th style="width: 100px; text-align: center;">버전 (Version)</th><th style="width: 95px; text-align: center;">개정일 (Date)</th><th>주요 개정 내역 및 상세 변경 사항</th><th style="width: 220px; text-align: left;">관련 절 바로가기</th></tr></thead>
 <tbody>
-<tr><td style="text-align: center;"><strong>v0.0.1</strong></td><td style="text-align: center;">2026-08-11</td><td>통합 MVP 구성안 내 럼블 팜(육성 모드) 개요 및 기본 범위 최초 기획</td><td><a href="#sec-1-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1.1절 개요 및 컨셉</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.1.0</strong></td><td style="text-align: center;">2026-08-11</td><td>알 65종 가차 마스터 구조 및 등급별 부화 시간, 잠재력 범위 수치 정의</td><td><a href="#sec-2-3" style="color: var(--primary); text-decoration: underline; font-weight: 600;">2.3절 알 가차 시스템</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.2.0</strong></td><td style="text-align: center;">2026-08-13</td><td>1차 기본 피지컬 스탯(Common Core 6종) 분배식 및 부화 터치 미니게임 가속률 정립</td><td><a href="#sec-3-3" style="color: var(--primary); text-decoration: underline; font-weight: 600;">3.3절 1차 스탯 생성식</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.3.0</strong></td><td style="text-align: center;">2026-08-27</td><td>닭 캐릭터 10대 상태 머신 전이 규칙 및 유저 간 알 거래소(5% 수수료) 명세 구축</td><td><a href="#sec-4-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">4.1절 10대 상태 머신</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.4.0</strong></td><td style="text-align: center;">2026-08-27</td><td>훈련 종목 8종(피지컬/경주/격투) 스탯 상승식 및 2차 파생 스탯 연동 프로세스 확립</td><td><a href="#sec-5-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.1절 훈련 시스템</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.5.0</strong></td><td style="text-align: center;">2026-08-27</td><td>2세대 교배 유전 공식(스탯/잠재력 상속 및 생애 5회 제한), 칭호 20종 마스터 수록</td><td><a href="#sec-6-2" style="color: var(--primary); text-decoration: underline; font-weight: 600;">6.2절 교배 유전 공식</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.6.0</strong></td><td style="text-align: center;">2026-08-27</td><td>일일 퀘스트 5종, 주간 퀘스트 4종, 영구 누적 업적 8종 및 논리 DB 스키마 7종 수록</td><td><a href="#sec-7-2" style="color: var(--primary); text-decoration: underline; font-weight: 600;">7.2절 퀘스트 명세표</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.7.0</strong></td><td style="text-align: center;">2026-08-27</td><td>럼블 팜 전용 오디오 규격 신설 (BGM 2종, SFX-Farm 10종 및 이벤트 매핑 완비)</td><td><a href="#sec-9-3" style="color: var(--primary); text-decoration: underline; font-weight: 600;">9.3절 팜 효과음 명세</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.8.0</strong></td><td style="text-align: center;">2026-08-31</td><td>기획서 경계 정상화: 공간 레이아웃 5대 영역 정의 및 온보딩 튜토리얼 동선 정제</td><td><a href="#sec-9-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">9.1절 팜 공간 레이아웃</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.8.1</strong></td><td style="text-align: center;">2026-09-01</td><td>재화 순환 경제 모델(Sink &amp; Source) 수치 정합 및 출석/광고 3스탬프 무료 알 수급 일원화</td><td><a href="#sec-2-2" style="color: var(--primary); text-decoration: underline; font-weight: 600;">2.2절 무료 알 수집</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.8.2</strong></td><td style="text-align: center;">2026-09-04</td><td>경기 출전 피로도(+25), 부상(30%), 쿨다운(30분) ➔ 팜 복귀 닭장 휴식/스파 치료 환류 메커니즘 동기화</td><td><a href="#sec-4-2" style="color: var(--primary); text-decoration: underline; font-weight: 600;">4.2절 경기 출전 환류</a></td></tr>
-<tr><td style="text-align: center;"><strong>v0.9.0</strong></td><td style="text-align: center;">2026-09-07</td><td>럼블 핏 연계: 훈련을 통한 7대 전문 전투 기술 습득 및 선수 등급별 슬롯(2~5개) 장착 규격 신설</td><td><a href="#sec-5-3" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.3절 전투 기술 연동</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.0.1</strong></td><td style="text-align: center;">2026-08-11</td><td>통합 MVP 구성안 내 럼블 팜(육성 모드) 개요 및 기본 범위 최초 기획</td><td><a href="#11-프로젝트-개요-및-럼블-팜rumble-farm-핵심-컨셉" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1.1절 개요 및 컨셉</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.1.0</strong></td><td style="text-align: center;">2026-08-11</td><td>알 65종 가차 마스터 구조 및 등급별 부화 시간, 잠재력 범위 수치 정의</td><td><a href="#23-알-뽑기가차-65종-마스터-구조-등급별-확률-및-천장pity-시스템" style="color: var(--primary); text-decoration: underline; font-weight: 600;">2.3절 알 가차 시스템</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.2.0</strong></td><td style="text-align: center;">2026-08-13</td><td>1차 기본 피지컬 스탯(Common Core 6종) 분배식 및 부화 터치 미니게임 가속률 정립</td><td><a href="#33-부화-시-등급별-1차-기본-스탯-초기-생성-분배식-및-잠재력pot-롤링-메커니즘" style="color: var(--primary); text-decoration: underline; font-weight: 600;">3.3절 1차 스탯 생성식</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.3.0</strong></td><td style="text-align: center;">2026-08-27</td><td>닭 캐릭터 10대 상태 머신 전이 규칙 및 유저 간 알 거래소(5% 수수료) 명세 구축</td><td><a href="#41-닭-캐릭터-10대-상태-머신-전이-규칙" style="color: var(--primary); text-decoration: underline; font-weight: 600;">4.1절 10대 상태 머신</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.4.0</strong></td><td style="text-align: center;">2026-08-27</td><td>훈련 종목 8종(피지컬/경주/격투) 스탯 상승식 및 2차 파생 스탯 연동 프로세스 확립</td><td><a href="#51-훈련-종목-8종-소모-재화-대기시간-및-스탯-상승률" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.1절 훈련 시스템</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.5.0</strong></td><td style="text-align: center;">2026-08-27</td><td>2세대 교배 유전 공식(스탯/잠재력 상속 및 생애 5회 제한), 칭호 20종 마스터 수록</td><td><a href="#62-부모-스탯-기반-2세대-기본-스탯잠재력-유전-공식-통합-mvp-단일-공식" style="color: var(--primary); text-decoration: underline; font-weight: 600;">6.2절 교배 유전 공식</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.6.0</strong></td><td style="text-align: center;">2026-08-27</td><td>일일 퀘스트 5종, 주간 퀘스트 4종, 영구 누적 업적 8종 및 논리 DB 스키마 7종 수록</td><td><a href="#72-일일-퀘스트-5종-및-주간-퀘스트-4종-명세표" style="color: var(--primary); text-decoration: underline; font-weight: 600;">7.2절 퀘스트 명세표</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.7.0</strong></td><td style="text-align: center;">2026-08-27</td><td>럼블 팜 전용 오디오 규격 신설 (BGM 2종, SFX-Farm 10종 및 이벤트 매핑 완비)</td><td><a href="#93-럼블-팜-전용-배경음악bgm-3종-및-효과음sfx-farm-10종-명세표" style="color: var(--primary); text-decoration: underline; font-weight: 600;">9.3절 팜 효과음 명세</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.8.0</strong></td><td style="text-align: center;">2026-08-31</td><td>기획서 경계 정상화: 공간 레이아웃 5대 영역 정의 및 온보딩 튜토리얼 동선 정제</td><td><a href="#91-메인-팜-5대-핵심-공간-레이아웃" style="color: var(--primary); text-decoration: underline; font-weight: 600;">9.1절 팜 공간 레이아웃</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.8.1</strong></td><td style="text-align: center;">2026-09-01</td><td>재화 순환 경제 모델(Sink &amp; Source) 수치 정합 및 출석/광고 3스탬프 무료 알 수급 일원화</td><td><a href="#22-출석광고-기반-통합-무료-알-수집-체계-모바일-앱-전용" style="color: var(--primary); text-decoration: underline; font-weight: 600;">2.2절 무료 알 수집</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.8.2</strong></td><td style="text-align: center;">2026-09-04</td><td>경기 출전 피로도(+25), 부상(30%), 쿨다운(30분) ➔ 팜 복귀 닭장 휴식/스파 치료 환류 메커니즘 동기화</td><td><a href="#42-경기derbypit-출전-후-피로도-적재25-부상-판정30-및-30분-쿨다운-환류-규칙" style="color: var(--primary); text-decoration: underline; font-weight: 600;">4.2절 경기 출전 환류</a></td></tr>
+<tr><td style="text-align: center;"><strong>v0.9.0</strong></td><td style="text-align: center;">2026-09-07</td><td>럼블 핏 연계: 훈련을 통한 7대 전문 전투 기술 습득 및 선수 등급별 슬롯(2~5개) 장착 규격 신설</td><td><a href="#53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.3절 전투 기술 연동</a></td></tr>
 <tr><td style="text-align: center;"><strong>v0.9.1</strong></td><td style="text-align: center;">2026-09-18</td><td><strong>[단독 분리 신규 작성]</strong> 통합 MVP 구성안에서 럼블 팜 육성 모드 명세를 전면 독립화하여 완전 자립형 단독 실무 기획서 구축 (3대 모드 연관관계 100% 무결 보존)</td><td><a href="#sec-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1장 게임 개요</a></td></tr>
-<tr><td style="text-align: center;"><strong>v1.2.0</strong></td><td style="text-align: center;">2026-10-08</td><td><strong>[럼블 핏 v1.2.0 비의인화 전투 기술 명칭 및 규칙 동기화]</strong> 5.1절 및 5.3절 내 격투 훈련 종목(<code>깃털 부풀려 버티기 수련</code>) 및 7대 비의인화 전투 기술(<code>전진 부리 속사</code>, <code>낮은 발톱 할퀴기</code>, <code>비상 발톱 급습</code>, <code>광폭 발버둥 난타</code>, <code>깃털 부풀려 버티기</code>, <code>납작 엎드리기</code>, <code>맞발톱 쳐내기</code>) 명칭 동기화</td><td><a href="#sec-5-3" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.3절 전투 기술 연동</a></td></tr>
+<tr><td style="text-align: center;"><strong>v1.2.0</strong></td><td style="text-align: center;">2026-10-08</td><td><strong>[럼블 핏 v1.2.0 비의인화 전투 기술 명칭 및 규칙 동기화]</strong> 5.1절 및 5.3절 내 격투 훈련 종목(<code>깃털 부풀려 버티기 수련</code>) 및 7대 비의인화 전투 기술(<code>전진 부리 속사</code>, <code>낮은 발톱 할퀴기</code>, <code>비상 발톱 급습</code>, <code>광폭 발버둥 난타</code>, <code>깃털 부풀려 버티기</code>, <code>납작 엎드리기</code>, <code>맞발톱 쳐내기</code>) 명칭 동기화</td><td><a href="#53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.3절 전투 기술 연동</a></td></tr>
+<tr><td style="text-align: center;"><strong>v1.5.0</strong></td><td style="text-align: center;">2026-11-24</td><td><strong>[미국 VIP 라운지 4대 기능 반영 및 전체 기획 기준선 동기화]</strong><br>1. VIP 라운지 럼블 팜 4대 기능(① 알 유료 획득 35종/10연 천장, ② 유료 교배, ③ 유/무료 성장, ④ 유/무료 회복) 반영 및 모바일 전용(무료 알/거래소/퀘스트·업적·칭호) 분리<br>2. 알 65종 4등급 가중치(Natural 70% / Superior 20% / Rare 8% / Legendary 2%) 및 2세대 교배 단일 공식·9대 전투 기술(<code>F33/F34</code>) 통합<br>3. 메인 팜 5대 표준 공간, REST API 13종(<code>/api/v1/farm/*</code>), BGM 3곡/SFX 10종 동기화</td><td><a href="#12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1.2절 VIP 4대 범위</a><br><a href="#sec-8" style="color: var(--primary); text-decoration: underline; font-weight: 600;">8장 DB·API 13종</a></td></tr>
 </tbody>
 </table></div>
 </section>
@@ -48,456 +47,1485 @@
 
 <!-- 1. 게임 개요 및 핵심 루프 -->
 <section id="sec-1">
-<h2>1. 게임 개요 및 핵심 루프 (Game Overview &amp; Core Loop)</h2>
-<h3 id="sec-1-1">1.1 프로젝트 개요 및 럼블 팜(Rumble Farm) 핵심 컨셉</h3>
+<h2 id="1-게임-개요-및-핵심-루프-game-overview-and-core-loop">1. 게임 개요 및 핵심 루프 (Game Overview &amp; Core Loop)</h2>
+<h3 id="11-프로젝트-개요-및-럼블-팜rumble-farm-핵심-컨셉">1.1 프로젝트 개요 및 럼블 팜(Rumble Farm) 핵심 컨셉</h3>
 <ul>
 <li><strong>모드명</strong>: Rumble Farm (럼블 팜)</li>
-<li><strong>포지셔닝</strong>: &lt;ROOSTER RUMBLE&gt; 통합 생태계의 기반이 되는 선수(Rooster) 알 구매, 부화, 육성, 훈련, 혈통 관리 및 경기 스케줄링 전담 전초기지 모드.</li>
-<li><strong>핵심 역할</strong>:
-  <ul>
-    <li><code>Derby Race</code> (경주 모드) 및 <code>Rumble Pit</code> (격투 모드) 출전용 고성능 선수 공급원 역할 수행.</li>
-    <li>유전 교배를 통한 세대 교체 및 고유 잠재력(Potential) 개화 창구 제공.</li>
-    <li>단기 베팅/경기의 피로감을 완화하고 장기 애착을 형성하는 캐주얼 매니지먼트 영역 담당.</li>
-  </ul>
-</li>
-<li><strong>톤앤매너 및 비주얼 컨셉</strong>:
-  <ul>
-    <li>타겟층: 전연령층 누구나 직관적으로 이해 가능한 캐주얼 아케이드 농장 감성.</li>
-    <li>닭들의 유쾌한 훈련 동작 및 모션 연출 중심의 힐링/위트 조합.</li>
-    <li>따뜻한 파스텔톤의 활기찬 농장 비주얼 및 2.5D 아이소메트릭(Isometric) 뷰 적용.</li>
-  </ul>
-</li>
+<li><strong>포지셔닝</strong>: <ROOSTER RUMBLE> 통합 생태계의 기반이 되는 선수(Rooster) 알 구매, 부화, 육성, 훈련, 혈통 관리 및 경기 스케줄링 전담 전초기지 모드</li>
+<li><strong>핵심 역할</strong>:</li>
+<li><code>Derby Race</code> (경주 모드) 및 <code>Rumble Pit</code> (격투 모드) 출전용 고성능 선수 공급원 역할 수행</li>
+<li>유전 교배를 통한 세대 교체 및 고유 잠재력(Potential) 상한 돌파 창구 제공</li>
+<li>단기 베팅/경기의 피로감을 완화하고 장기 애착을 형성하는 캐주얼 매니지먼트 영역 담당</li>
+<li><strong>톤앤매너 및 비주얼 컨셉</strong>:</li>
+<li>타겟층: 전연령층 누구나 직관적으로 이해 가능한 캐주얼 아케이드 농장 감성</li>
+<li>3D 모델링 아키텍처: 리깅 결함(날개 찢김) 방지를 위한 <strong>단일 기본 리그(Rig) + 3단계 등급별 외형 파츠(볏·깃털·며느리발톱) 바리에이션 + 텍스처 맵핑 300종(추후 추가 예정)</strong> 적용</li>
+<li>따뜻한 파스텔톤의 활기찬 농장 비주얼 및 2.5D 아이소메트릭(Isometric) 뷰 적용</li>
 </ul>
-
-<h3 id="sec-1-2">1.2 모바일 vs 자체 온라인 웹 서비스 전략 비교</h3>
+<h3 id="12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교">1.2 모바일 vs 자체 온라인 웹 vs 미국 VIP 라운지 서비스 비교</h3>
 <div class="table-container"><table>
-<thead><tr><th>구분</th><th>모바일 앱 (Mobile App - Native)</th><th>자체 온라인 웹 (Online Web - Responsive)</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: left;">구분</th>
+<th style="text-align: left;">📱 모바일 앱 (Mobile App)</th>
+<th style="text-align: left;">🌐 자체 온라인 웹 (Online Web)</th>
+<th style="text-align: left;">🏆 미국 VIP 라운지 (Offline VIP Lounge)</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>서비스 성격</strong></td><td>닭 육성, 알 부화, 훈련 및 개인 농장 커스터마이징 중심</td><td>선수 혈통/스탯 조회, 알 거래소 및 원격 육성 관리 지원</td></tr>
-<tr><td><strong>주요 상호작용</strong></td><td>터치 기반 알 껍질 깨기 미니게임, 훈련 직관적 드래그 조작</td><td>웹 대시보드 기반 스탯 인포그래픽 및 간편 명령 UI</td></tr>
-<tr><td><strong>연계 모드 참전</strong></td><td>모바일 리그 6단계 경주 및 1대1 링 시합 직접 출전</td><td>경주/격투 경기 실시간 스트리밍 관전 및 승자 예측 베팅 연계</td></tr>
-<tr><td><strong>재화 및 결제</strong></td><td>인앱 결제 (In-App Purchase) 통한 Gem 충전, 사료 구매</td><td>웹 전용 코인/Credit 환전 및 P2P 알 거래 마켓플레이스</td></tr>
-<tr><td><strong>데이터베이스</strong></td><td><code>Mobile DB</code>: <code>t_rooster_farm</code>, <code>t_egg_inventory</code> 등</td><td><code>Online DB</code>: <code>t_market_egg_listing</code>, <code>t_rooster_profile</code> 등</td></tr>
+<tr>
+<td style="text-align: left;"><strong>서비스 성격</strong></td>
+<td style="text-align: left;">캐주얼 육성 + 아케이드 리그 플레이 풀버전</td>
+<td style="text-align: left;">라이브 중계 관전 + 실시간 베팅 + 유료 스파 케어</td>
+<td style="text-align: left;">오프라인 현장 대형 전광판 관전 + 좌석 태블릿 베팅·핵심 육성 동시 서비스</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>알 획득 범위</strong></td>
+<td style="text-align: left;">출석/광고 3스탬프 무료 알 + 유료 가차 35종 + 유저 거래소</td>
+<td style="text-align: left;">기본 온보딩 알 + 인게임 유료 구매</td>
+<td style="text-align: left;"><strong>알 유료 획득 전용</strong> (VIP 크레딧/Gem 유료 가차 35종 및 10연 천장, 무료 알·거래소 제외)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>성장/부화 범위</strong></td>
+<td style="text-align: left;">무료 대기·10초 미니게임·일반 8종 훈련 + 유료 가속 지원</td>
+<td style="text-align: left;">원격 스탯 조회 및 육성 연계</td>
+<td style="text-align: left;"><strong>유/무료 성장 동시 지원</strong> (무료 일반 부화·10초 미니게임·일반 훈련 + 유료 0초 즉시 부화·급속 훈련)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>회복/케어 범위</strong></td>
+<td style="text-align: left;">닭장 휴식(무료) · 사료 급여 · 광고 회복(-20) · 유료 스파</td>
+<td style="text-align: left;">닭장 휴식(무료) vs 유료 프리미엄 스파</td>
+<td style="text-align: left;"><strong>유/무료 회복 동시 지원</strong> (무료 닭장 휴식·영양 사료 급여 + 유료 프리미엄 스파; 광고 회복 제외)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>교배/메타 범위</strong></td>
+<td style="text-align: left;">교배 토큰+골드/유료 교배, 거래소(8%), 퀘스트/업적/칭호 20종</td>
+<td style="text-align: left;">유저 간 거래 비활성화 (초기 버전)</td>
+<td style="text-align: left;"><strong>유료 교배 전용</strong> (VIP 크레딧/Gem 결제 2세대 교배만 제공; 거래소/경매·분양/퀘스트·업적·칭호 제외)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>데이터베이스</strong></td>
+<td style="text-align: left;"><code>Mobile App DB</code> (독립 DB)</td>
+<td style="text-align: left;"><code>Online Web DB</code> (독립 DB)</td>
+<td style="text-align: left;"><code>VIP Lounge Local DB</code> (<strong>온·오프라인 계정/재화/선수 100% 물리 분리 운영</strong>)</td>
+</tr>
 </tbody>
 </table></div>
-
-<h3 id="sec-1-3">1.3 럼블 팜 6단계 코어 플레이 루프 &amp; 플로우차트</h3>
-<div class="formula-card"><div class="formula-title">■ 럼블 팜 핵심 순환 루프 6단계</div>
-<p><strong>[1. 알 획득]</strong> 가차(Gem), 유저 거래소(Gold), 일일 출석/광고(3스탬프) ➔ <strong>[2. 부화 및 감정]</strong> 인큐베이터 안치, 10초 터치 가속 미니게임 ➔ 선천 잠재력(POT) 및 1차 스탯 부여 ➔ <strong>[3. 목표별 훈련]</strong> 경주 특화 또는 격투 특화 훈련 수행, 격투 7대 기술 개화 ➔ <strong>[4. 시합 출전]</strong> 더비 레이스 6두 달리기 또는 럼블 핏 1대1 링 시합 참전 ➔ <strong>[5. 재화 수급 및 환류]</strong> 상금(Gold) 수령, 누적 피로도(+25) 및 부상 닭장 휴식/스파 입욕 치유 ➔ <strong>[6. 세대 교체]</strong> 생애 5회 한도 내 우수 혈통 간 교배를 통해 잠재력 상한 돌파 2세대 알 생산</p></div>
+<h4>■ 미국 VIP 라운지 내 럼블 팜 적용 범위 매트릭스 (4대 허용 vs 미반영 항목)</h4>
+<ul>
+<li><strong>VIP 라운지 동시 서비스 원칙</strong>: 경주(<code>Derby Race</code>)·격투(<code>Rumble Pit</code>) 현장 관전/베팅과 함께 좌석 태블릿에서 <strong>럼블 팜 핵심 육성 4대 기능</strong>을 동시 서비스하며, 온·오프라인 계정 및 크레딧은 일체 상호 연동하지 않음</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">구분</th>
+<th style="text-align: left;">세부 기능 항목</th>
+<th style="text-align: center;">VIP 라운지 반영 여부</th>
+<th style="text-align: left;">운영 및 과금 정책 명세</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>① 알 유료 획득</strong></td>
+<td style="text-align: left;">유료 알 가차 35종 (<code>Superior</code>/<code>Rare</code>/<code>Legendary</code>)</td>
+<td style="text-align: center;"><strong>반영 (유료 전용)</strong></td>
+<td style="text-align: left;">VIP 크레딧/Gem 유료 결제 전용 (10연속 뽑기 시 전설 알 100% 확정 천장 포함)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>② 유료 교배</strong></td>
+<td style="text-align: left;">암수 2두 2세대 혈통 교배 (<code>ROOSTER</code>+<code>HEN</code>)</td>
+<td style="text-align: center;"><strong>반영 (유료 전용)</strong></td>
+<td style="text-align: left;">VIP 크레딧/Gem 유료 결제 전용 (생애 5회 한도, 24시간 쿨다운, 단일 유전 공식 적용)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>③ 유/무료 성장</strong></td>
+<td style="text-align: left;">알 부화(대기+미니게임 / 0초 즉시) &amp; 8종 훈련(일반 / 급속)</td>
+<td style="text-align: center;"><strong>반영 (유/무료 병행)</strong></td>
+<td style="text-align: left;">무료(일반 대기·터치 미니게임·사료/골드 훈련) + 유료(크레딧 소모 0초 즉시 부화·급속 부스트 훈련)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>④ 유/무료 회복</strong></td>
+<td style="text-align: left;">닭장 자연 휴식 / 영양 사료 급여 / 프리미엄 스파</td>
+<td style="text-align: center;"><strong>반영 (유/무료 병행)</strong></td>
+<td style="text-align: left;">무료(닭장 시간당 -10, 사료 10개 -20) + 유료(프리미엄 스파 피로도 0 &amp; 부상 즉시 완치)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>제외 항목</strong></td>
+<td style="text-align: left;">3스탬프 무료 알, 보상형 광고 3종, 알 거래소(8%)·경매/분양, 일일/주간 퀘스트, 업적 8종, 칭호 20종, 모바일 6단계 리그</td>
+<td style="text-align: center;"><strong>미반영 (모바일 전용)</strong></td>
+<td style="text-align: left;">VIP 라운지 현장 태블릿 UI에서는 노출 비활성화 (모바일 스토어 앱 풀버전 전용 기능 유지)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="13-럼블-팜-6단계-코어-플레이-루프-and-플로우차트">1.3 럼블 팜 6단계 코어 플레이 루프 &amp; 플로우차트</h3>
+<div class="mermaid-box" style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0;overflow-x:auto;"><div class="mermaid">
+flowchart TD
+    A["1. 알 획득 (유료 가차 35종 / 모바일 무료 3스탬프·거래소)"] --> B["2. 부화 온실 (무료 대기·10초 미니게임 / 유료 즉시 부화)"]
+    B --> C["3. 1차 기본 피지컬 스탯 개화 (STR/DEX/VIT/MEN/LCK/POT)"]
+    C --> D["4. 개화 훈련장 (유/무료 8종 맞춤 훈련 & 9대 전투기술 습득)"]
+    D --> E["5. 시합 출전 (Derby Race 6두 경주 / Rumble Pit 1v1 격투)"]
+    E --> F["6. 경기 환류 (상금 수급 ➔ 유/무료 회복 케어 ➔ 유료 2세대 교배)"]
+    F --> A
+</div></div>
+<ul>
+<li><strong>순환 메커니즘</strong>:
+  1. <strong>알 수급</strong>: 모바일(출석/광고 3스탬프 무료 알, 유료 가차 65종 마스터, 유저 거래소) 또는 VIP 라운지(<strong>알 유료 획득</strong>: 유료 35종 가차/천장)를 통해 알 확보
+  2. <strong>부화 및 개화</strong>: 인큐베이터 안치 후 무료 대기(터치 미니게임 10초로 최대 20% 단축) 또는 유료 즉시 부화(0초 완료), 1차 피지컬 6대 스탯 및 외형 파츠 롤링
+  3. <strong>유/무료 맞춤 훈련</strong>: 경주 특화(3종)·격투 특화(4종)·공통(1종) 총 8종 훈련을 무료(일반 대기) 또는 유료(급속 부스트 0초)로 수행하여 1차/2차 스탯 성장 및 격투 9대 기술 개화
+  4. <strong>시합 출전</strong>: 더비 레이스 6두 달리기 또는 럼블 핏 1대1 원형 아레나 시합 참전
+  5. <strong>유/무료 회복 케어</strong>: 경기 결과 상금 수령 후 누적 피로도(+25) 및 부상(30%) 발생 시 무료(닭장 휴식·영양 사료) 또는 유료(프리미엄 스파)로 치유
+  6. <strong>유료 세대 교체</strong>: 생애 5회 한도 내에서 우수 암수 혈통 간 2세대 교배(VIP는 <strong>유료 교배 전용</strong>)를 통해 잠재력 상한 돌파 2세대 알 생산</li>
+</ul>
+<hr />
 </section>
-
-<!-- 2. 알 획득, 거래소 및 가차 시스템 -->
 <section id="sec-2">
-<h2>2. 알 획득, 거래소 및 가차 시스템 (Egg Acquisition &amp; Economy)</h2>
-<h3 id="sec-2-1">2.1 유저 간 알 거래소 (Egg Marketplace) 거래/수수료(8%) 규칙</h3>
+<h2 id="2-알-획득-거래소-및-가차-시스템-egg-acquisition-and-economy">2. 알 획득, 거래소 및 가차 시스템 (Egg Acquisition &amp; Economy)</h2>
+<h3 id="21-유저-간-알-거래소-egg-marketplace-거래수수료8-규칙-모바일-앱-전용">2.1 유저 간 알 거래소 (Egg Marketplace) 거래/수수료(8%) 규칙 <em>(모바일 앱 전용)</em></h3>
 <ul>
-<li><strong>거래 대상</strong>: 유저가 보유한 미부화 알 (Natural, Superior, Rare, Legendary, Heritage 교배 알).</li>
-<li><strong>거래 화폐</strong>: 인게임 골드 (Gold).</li>
-<li><strong>거래 수수료 체계</strong>:
-  <ul>
-    <li>판매 등록 수수료: 무료.</li>
-    <li>거래 체결 수수료: <strong>8.0%</strong> (구매자가 지불한 골드 중 8%를 시스템 하우스 수수료로 소각 차감 후 판매자에게 92% 정산 지급).</li>
-    <li>칭호 혜택 연동: <code>[큰손]</code> 칭호 장착 시 거래 수수료 8% ➔ <strong>7%</strong> 인하 적용.</li>
-  </ul>
-</li>
-<li><strong>유찰 및 등록 만료 규칙</strong>:
-  <ul>
-    <li>매매 등록 후 <strong>72시간</strong> 동안 미거래 시 자동 등록 취소 및 소유주 보관함 복귀.</li>
-    <li>최대 동시 등록 슬롯: 기본 3개 (VIP 레벨에 따라 최대 5개 확장).</li>
-  </ul>
-</li>
+<li><strong>적용 플랫폼</strong>: 모바일 스토어 앱 전용 (<strong>VIP 라운지 및 초기 온라인 웹 미지원</strong>)</li>
+<li><strong>거래 대상</strong>: 유저가 보유한 미부화 알 (<code>Natural</code>, <code>Superior</code>, <code>Rare</code>, <code>Legendary</code>, <code>Heritage</code> 교배 알)</li>
+<li><strong>거래 화폐</strong>: 인게임 골드(Gold)</li>
+<li><strong>거래 수수료 체계</strong>:</li>
+<li>판매 등록 수수료: 무료</li>
+<li>거래 체결 수수료: <strong>8.0%</strong> (구매자 지불 골드 중 8% 시스템 회수 후 판매자에게 92% 정산 지급)</li>
+<li>칭호 혜택 연동: <code>[큰손]</code> 칭호 장착 시 거래 수수료 8% ➔ <strong>7%</strong> 인하 적용</li>
+<li><strong>유찰 및 등록 만료 규칙</strong>:</li>
+<li>매매 등록 후 <strong>72시간</strong> 미거래 시 자동 등록 취소 및 소유주 보관함 복귀</li>
+<li>최대 동시 등록 슬롯: 기본 3개 (VIP 등급에 따라 최대 5개 확장)</li>
 </ul>
-
-<h3 id="sec-2-2">2.2 출석/광고 기반 통합 무료 알 수집 체계</h3>
+<h3 id="22-출석광고-기반-통합-무료-알-수집-체계-모바일-앱-전용">2.2 출석/광고 기반 통합 무료 알 수집 체계 <em>(모바일 앱 전용)</em></h3>
 <ul>
-<li><strong>단일 통합 3스탬프 게이지 (3/3) 시스템</strong>:
-  <ul>
-    <li>복잡한 알 파편 수집 방식 배제, 단일 직관 게이지 운용.</li>
-    <li><strong>수집 수단 A (출석 체크)</strong>: 매일 최초 로그인 시 <strong>스탬프 1개</strong> 자동 적립.</li>
-    <li><strong>수집 수단 B (보상형 광고)</strong>: 광고 1회 시청 시 <strong>스탬프 1개</strong> 추가 적립 (광고 시청 1회당 <strong>5분 쿨다운</strong>, 일일 최대 <strong>2회</strong> 시청 제한).</li>
-    <li><strong>무료 알 지급</strong>: 출석 1개 + 광고 2개 = 당일 즉시 스탬프 3개 달성 가능 ➔ 달성 즉시 일반 알 (Natural Egg, 30종 중 1종 균등 추첨) 1개 인벤토리 지급 및 게이지 리셋.</li>
-  </ul>
-</li>
+<li><strong>적용 플랫폼</strong>: 모바일 스토어 앱 전용 (<strong>VIP 라운지 제외</strong>)</li>
+<li><strong>단일 통합 3스탬프 게이지 (3/3) 시스템</strong>:</li>
+<li>복잡한 알 파편 수집 방식 배제, 단일 직관 게이지 운용</li>
+<li><strong>수집 수단 A (출석 체크)</strong>: 매일 최초 로그인 시 <strong>스탬프 1개</strong> 자동 적립</li>
+<li><strong>수집 수단 B (보상형 광고)</strong>: 광고 1회 시청 시 <strong>스탬프 1개</strong> 추가 적립 (광고 시청 1회당 <strong>5분 쿨다운</strong>, 일일 최대 <strong>2회</strong> 시청 제한)</li>
+<li><strong>무료 알 지급</strong>: 출석 1개 + 광고 2개 합산 스탬프 3개 달성 즉시 무료 일반 알(<code>Natural Egg</code>, <code>EGG-NAT-001~030</code> 30종 중 1종 균등 추첨) 1개 인벤토리 지급 및 게이지 리셋</li>
 </ul>
 <div class="table-container"><table>
-<thead><tr><th>광고 종목</th><th style="text-align: center;">일일 시청 제한</th><th style="text-align: center;">쿨다운 대기시간</th><th>보상 및 기능 명세</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">광고 종목</th>
+<th style="text-align: center;">일일 시청 제한</th>
+<th style="text-align: center;">쿨다운 대기시간</th>
+<th style="text-align: left;">보상 및 기능 명세</th>
+<th style="text-align: center;">VIP 라운지 적용</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>무료 알 스탬프 광고</strong></td><td style="text-align: center;">하루 최대 2회</td><td style="text-align: center;"><strong>5분 (300초)</strong></td><td>1회 시청 시 통합 수집 라인 <strong>스탬프 1개</strong> 적립 (총 3개 달성 시 무료 알 지급)</td></tr>
-<tr><td><strong>경기 상금 2배 광고</strong></td><td style="text-align: center;">경기 우승 시 팝업</td><td style="text-align: center;">즉시 시청</td><td>우승 상금 Gold 200% 증액 정산</td></tr>
-<tr><td><strong>피로도 회복 광고</strong></td><td style="text-align: center;">하루 최대 3회</td><td style="text-align: center;"><strong>10분 (600초)</strong></td><td>1회 시청 시 참전 닭 피로도 <strong>-20</strong> 즉시 회복</td></tr>
+<tr>
+<td style="text-align: center;"><strong>무료 알 스탬프 광고</strong></td>
+<td style="text-align: center;">하루 최대 2회</td>
+<td style="text-align: center;"><strong>5분 (300초)</strong></td>
+<td style="text-align: left;">1회 시청 시 통합 수집 라인 <strong>스탬프 1개</strong> 적립 (총 3개 달성 시 무료 알 지급)</td>
+<td style="text-align: center;"><strong>제외</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>경기 상금 2배 광고</strong></td>
+<td style="text-align: center;">경기 우승 시 팝업</td>
+<td style="text-align: center;">즉시 시청</td>
+<td style="text-align: left;">우승 상금 Gold 200% 증액 정산</td>
+<td style="text-align: center;"><strong>제외</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>피로도 회복 광고</strong></td>
+<td style="text-align: center;">하루 최대 3회</td>
+<td style="text-align: center;"><strong>10분 (600초)</strong></td>
+<td style="text-align: left;">1회 시청 시 참전 닭 피로도 <strong>-20</strong> 즉시 회복</td>
+<td style="text-align: center;"><strong>제외</strong></td>
+</tr>
 </tbody>
 </table></div>
-
-<h3 id="sec-2-3">2.3 알 뽑기(가차) 65종 마스터 구조, 등급별 확률 및 천장(Pity) 시스템</h3>
+<h3 id="23-알-뽑기가차-65종-마스터-구조-등급별-확률-및-천장pity-시스템">2.3 알 뽑기(가차) 65종 마스터 구조, 등급별 확률 및 천장(Pity) 시스템</h3>
+<ul>
+<li><strong>마스터 데이터 기준</strong>: <a href="06_egg_gacha_master_list_65.csv">06_egg_gacha_master_list_65.csv</a> 4단계 65종 기준 단일화</li>
+</ul>
 <div class="table-container"><table>
-<thead><tr><th>구분</th><th style="text-align: center;">마스터 수량</th><th style="text-align: center;">기본 획득 확률</th><th>수급 경로 및 가격</th><th style="text-align: center;">기본 부화 시간</th><th style="text-align: center;">잠재력(POT) 범위</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">구분</th>
+<th style="text-align: center;">마스터 수량</th>
+<th style="text-align: center;">CSV 전체 드롭 가중치</th>
+<th style="text-align: center;">유료 가차 풀 비중 (VIP/유료 35종)</th>
+<th style="text-align: left;">수급 경로 및 가격 (모바일 / VIP)</th>
+<th style="text-align: center;">기본 부화 시간</th>
+<th style="text-align: center;">잠재력(POT) 범위</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>무료 일반 (Natural)</strong></td><td style="text-align: center;">30종 (<code>EGG-NAT-001~030</code>)</td><td style="text-align: center;">-</td><td>출석/광고 3스탬프 달성 무료</td><td style="text-align: center;">10분 (600초)</td><td style="text-align: center;">30 ~ 45</td></tr>
-<tr><td><strong>유료 1단계 (Superior)</strong></td><td style="text-align: center;">20종 (<code>EGG-PAID1-001~020</code>)</td><td style="text-align: center;">70.0%</td><td>30 Gem 또는 3,000 Gold</td><td style="text-align: center;">1시간 (3,600초)</td><td style="text-align: center;">46 ~ 60</td></tr>
-<tr><td><strong>유료 2단계 (Rare)</strong></td><td style="text-align: center;">10종 (<code>EGG-PAID2-001~010</code>)</td><td style="text-align: center;">25.0%</td><td>100 Gem 또는 10,000 Gold</td><td style="text-align: center;">4시간 (14,400초)</td><td style="text-align: center;">61 ~ 80</td></tr>
-<tr><td><strong>유료 3단계 (Legendary)</strong></td><td style="text-align: center;">5종 (<code>EGG-PAID3-001~005</code>)</td><td style="text-align: center;">5.0%</td><td>300 Gem (10연속 천장 확정)</td><td style="text-align: center;">12시간 (43,200초)</td><td style="text-align: center;">81 ~ 100</td></tr>
+<tr>
+<td style="text-align: center;"><strong>무료 일반 (<code>Natural</code>)</strong></td>
+<td style="text-align: center;">30종 (<code>EGG-NAT-001~030</code>)</td>
+<td style="text-align: center;"><strong>70.0%</strong></td>
+<td style="text-align: center;"><em>(VIP 라운지 제외)</em></td>
+<td style="text-align: left;">모바일 출석/광고 3스탬프 무료</td>
+<td style="text-align: center;">10분 (600초)</td>
+<td style="text-align: center;">30 ~ 45</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>유료 1단계 (<code>Superior</code>)</strong></td>
+<td style="text-align: center;">20종 (<code>EGG-PAID1-001~020</code>)</td>
+<td style="text-align: center;"><strong>20.0%</strong></td>
+<td style="text-align: center;"><strong>66.7%</strong></td>
+<td style="text-align: left;">30 Gem / 3,000 Gold <em>(VIP 유료 크레딧)</em></td>
+<td style="text-align: center;">1시간 (3,600초)</td>
+<td style="text-align: center;">46 ~ 60</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>유료 2단계 (<code>Rare</code>)</strong></td>
+<td style="text-align: center;">10종 (<code>EGG-PAID2-001~010</code>)</td>
+<td style="text-align: center;"><strong>8.0%</strong></td>
+<td style="text-align: center;"><strong>26.7%</strong></td>
+<td style="text-align: left;">100 Gem / 10,000 Gold <em>(VIP 유료 크레딧)</em></td>
+<td style="text-align: center;">4시간 (14,400초)</td>
+<td style="text-align: center;">61 ~ 80</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>유료 3단계 (<code>Legendary</code>)</strong></td>
+<td style="text-align: center;">5종 (<code>EGG-PAID3-001~005</code>)</td>
+<td style="text-align: center;"><strong>2.0%</strong></td>
+<td style="text-align: center;"><strong>6.6%</strong></td>
+<td style="text-align: left;">300 Gem <em>(VIP 유료 크레딧, 10연 천장 확정)</em></td>
+<td style="text-align: center;">12시간 (43,200초)</td>
+<td style="text-align: center;">81 ~ 100</td>
+</tr>
 </tbody>
 </table></div>
 <ul>
-<li><strong>천장(Pity) 시스템 규칙</strong>: 유료 뽑기 9회 연속 Legendary 미등장 시, <strong>10회차 뽑기에서 Legendary 알 100% 확정 지급</strong>.</li>
+<li><strong>가차 천장 규칙 (Pity System — 모바일·VIP 라운지 공통)</strong>:</li>
+<li>유료 뽑기 1회 시마다 천장 카운트 <code>+1</code> 누적</li>
+<li>9회 연속 전설 알 미등장 시 <strong>10회차 뽑기에서 유료 3단계(<code>Legendary</code>) 알 100% 확정 지급</strong></li>
+<li>전설 알 획득 시 즉시 천장 카운트 0 초기화</li>
+<li><strong>알 식별자 표준 명명 체계</strong>: <code>EGG-[TIER_CODE]-[INDEX:03d]</code> 규격 준수 (<code>NAT</code>, <code>PAID1</code>, <code>PAID2</code>, <code>PAID3</code>)</li>
 </ul>
-
-<h3 id="sec-2-4">2.4 연동 마스터 데이터 (06_egg_gacha_master_list_65.csv)</h3>
+<h3 id="24-연동-마스터-데이터-06_egg_gacha_master_list_65csv">2.4 연동 마스터 데이터 (06_egg_gacha_master_list_65.csv)</h3>
 <ul>
-<li>알 가차 65종 전수 식별자, 등급, 부화 시간 및 외형 키는 마스터 데이터 <code>06_egg_gacha_master_list_65.csv</code>와 100% 동기화 운용.</li>
-<li>상단 CSV 카드 섹션에서 <code>csv06</code> 미리보기 및 다운로드 지원.</li>
+<li><strong>마스터 데이터 파일</strong>: <a href="06_egg_gacha_master_list_65.csv">06_egg_gacha_master_list_65.csv</a></li>
+<li><strong>주요 스키마</strong>: <code>알 ID (Egg ID)</code>, <code>알 이름 (Egg Name)</code>, <code>알 등급 (Tier)</code>, <code>등급 코드 (Tier Code)</code>, <code>구매 가격 (Price)</code>, <code>잠재력 범위 (Potential Cap)</code>, <code>부화 시간초 (Hatch Sec)</code>, <code>드롭 가중치 (Weight %)</code>, <code>부화 특징 명세 (Note)</code></li>
 </ul>
+<hr />
 </section>
-
-<!-- 3. 알 부화 및 1차 기본 피지컬 스탯 생성 시스템 -->
 <section id="sec-3">
-<h2>3. 알 부화 및 1차 기본 피지컬 스탯 생성 시스템 (Incubation &amp; Base Stats)</h2>
-<h3 id="sec-3-1">3.1 등급별 부화 대기시간 및 터치 미니게임(부화 가속) 규칙</h3>
-<div class="table-container"><table>
-<thead><tr><th>알 등급</th><th style="text-align: center;">기준 부화 시간</th><th style="text-align: center;">터치 미니게임 단축률</th><th style="text-align: center;">최대 단축 가능 시간</th><th>즉시 완료 비용 (Skip)</th></tr></thead>
-<tbody>
-<tr><td><strong>Natural</strong></td><td style="text-align: center;">10분 (600초)</td><td style="text-align: center;">터치당 3초 단축 (최대 50%)</td><td style="text-align: center;">5분 단축 (최종 5분 소요)</td><td>5 Gem 또는 무료 광고</td></tr>
-<tr><td><strong>Superior</strong></td><td style="text-align: center;">1시간 (3,600초)</td><td style="text-align: center;">터치당 10초 단축 (최대 30%)</td><td style="text-align: center;">18분 단축 (최종 42분 소요)</td><td>20 Gem</td></tr>
-<tr><td><strong>Rare</strong></td><td style="text-align: center;">4시간 (14,400초)</td><td style="text-align: center;">터치당 30초 단축 (최대 25%)</td><td style="text-align: center;">1시간 단축 (최종 3시간 소요)</td><td>50 Gem</td></tr>
-<tr><td><strong>Legendary</strong></td><td style="text-align: center;">12시간 (43,200초)</td><td style="text-align: center;">터치당 60초 단축 (최대 20%)</td><td style="text-align: center;">2시간 24분 단축 (최종 9.6시간)</td><td>150 Gem</td></tr>
-</tbody>
-</table></div>
+<h2 id="3-알-부화-및-1차-기본-피지컬-스탯-생성-시스템-incubation-and-base-stats">3. 알 부화 및 1차 기본 피지컬 스탯 생성 시스템 (Incubation &amp; Base Stats)</h2>
+<h3 id="31-등급별-부화-대기시간-및-터치-미니게임부화-가속유료-즉시-부화-규칙">3.1 등급별 부화 대기시간 및 터치 미니게임(부화 가속)·유료 즉시 부화 규칙</h3>
 <ul>
-<li><strong>부화 터치 미니게임 인터랙션</strong>: 인큐베이터 내 알을 10초 동안 탭(Tap)하여 껍질에 균열을 일으키며 부화 시간 가속.</li>
+<li><strong>부화 슬롯 규격</strong>: 기본 2개 무료 제공, 최대 4개 슬롯 확장 가능 (Gem 또는 VIP 크레딧 소모)</li>
+<li><strong>유/무료 성장 지원 (부화 트랙 — 모바일·VIP 라운지 공통)</strong>:
+  1. <strong>무료 부화 가속 (10초 터치 미니게임)</strong>:<ul>
+<li>발동 조건: 인큐베이터 안치 후 부화 잔여 시간 50% 경과 시 알 껍질 흔들림 이펙트 및 미니게임 팝업 노출 (알당 1회)</li>
+<li>진행 방식: 10초간 화면 지정 4개 구역에 무작위 출현하는 타깃 탭(Tap) 연타</li>
+<li>판정 및 단축 수치:</li>
+<li><strong>S등급 (15회 이상 탭 성공)</strong>: 잔여 부화 대기시간 <strong><code>20%</code></strong> 즉시 단축</li>
+<li><strong>A등급 (10~14회 탭 성공)</strong>: 잔여 부화 대기시간 <strong><code>12%</code></strong> 즉시 단축</li>
+<li><strong>B등급 (5~9회 탭 성공)</strong>: 잔여 부화 대기시간 <strong><code>5%</code></strong> 즉시 단축</li>
+<li><strong>C등급 (4회 이하 실패)</strong>: 단축 없음
+  2. <strong>유료 즉시 부화 (<code>Fast-Hatch</code>, 0초 완료)</strong>:</li>
+<li>인큐베이터 안치 중 잔여 시간에 비례한 Gem 또는 VIP 크레딧 결제 시 <strong>대기시간 0초 즉시 부화 완료(<code>HATCHED</code>)</strong> 전환</li>
 </ul>
-
-<h3 id="sec-3-2">3.2 1차 기본 피지컬 스탯 (Common Core 6종) 정의</h3>
+</li>
+</ul>
+<h3 id="32-1차-기본-피지컬-스탯-common-core-6종-정의">3.2 1차 기본 피지컬 스탯 (Common Core 6종) 정의</h3>
 <div class="table-container"><table>
-<thead><tr><th>능력치 항목명</th><th style="text-align: center;">스탯 키</th><th style="text-align: center;">밸런스 범위</th><th>기능 설명 및 타 모드 연동 규격</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: left;">스탯명</th>
+<th style="text-align: center;">영문 코드</th>
+<th style="text-align: center;">밸런스 범위</th>
+<th style="text-align: left;">육성 모드 내 역할 및 타 모드 파생 연동 영향</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>힘 (Strength)</strong></td><td style="text-align: center;"><code>STR</code></td><td style="text-align: center;">10 ~ 100</td><td>물리적 근력 척도. 경주 모드 최고속도(<code>SPD</code>), 격투 모드 공격력(<code>POW</code>) 기본값 결정</td></tr>
-<tr><td><strong>민첩 (Dexterity)</strong></td><td style="text-align: center;"><code>DEX</code></td><td style="text-align: center;">10 ~ 100</td><td>순발력/반응속도 척도. 경주 모드 가속도(<code>ACC</code>), 격투 모드 방어력(<code>DEF</code>) 및 기술력(<code>TEC</code>) 결정</td></tr>
-<tr><td><strong>활력 (Vitality)</strong></td><td style="text-align: center;"><code>VIT</code></td><td style="text-align: center;">10 ~ 100</td><td>체력/지구력 척도. 경주 모드 스태미나(<code>STM</code>), 격투 모드 최대 체력(<code>HP</code>) 및 회복력(<code>REC</code>) 결정</td></tr>
-<tr><td><strong>정신력 (Mentality)</strong></td><td style="text-align: center;"><code>MEN</code></td><td style="text-align: center;">10 ~ 100</td><td>투지/집중 척도. 경주 모드 집중력(<code>FOC</code>) 및 근성(<code>GUT</code>), 격투 모드 회복력(<code>REC</code>) 및 근성(<code>GRT</code>) 결정</td></tr>
-<tr><td><strong>행운 (Luck)</strong></td><td style="text-align: center;"><code>LCK</code></td><td style="text-align: center;">10 ~ 100</td><td>운/기회포착 척도. 경주 모드 출발반응(<code>ACC</code>) 보정, 훈련 스탯 대성공 확률 및 치명타 보정 반영</td></tr>
-<tr><td><strong>잠재력 (Potential)</strong></td><td style="text-align: center;"><code>POT</code></td><td style="text-align: center;">30 ~ 100</td><td>닭의 성장 한계치 척도. 1차 기본 5대 스탯 각각의 육성 상한선 결정 및 2차 파생 스탯 잠재력 계수 반영</td></tr>
+<tr>
+<td style="text-align: left;"><strong>힘 (Strength)</strong></td>
+<td style="text-align: center;"><code>STR</code></td>
+<td style="text-align: center;">10 ~ 100</td>
+<td style="text-align: left;">골격/근력 척도. 격투 <code>POW</code>·<code>DEF</code>·<code>HP</code> 주력 및 경주 <code>SPD</code>·<code>TMP</code> 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>민첩 (Dexterity)</strong></td>
+<td style="text-align: center;"><code>DEX</code></td>
+<td style="text-align: center;">10 ~ 100</td>
+<td style="text-align: left;">순발력/반응 척도. 경주 <code>SPD</code>·<code>STA</code>·<code>FOC</code> 주력 및 격투 <code>DEF</code>·<code>TEC</code>·<code>POW</code> 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>활력 (Vitality)</strong></td>
+<td style="text-align: center;"><code>VIT</code></td>
+<td style="text-align: center;">10 ~ 100</td>
+<td style="text-align: left;">체력/지구력 척도. 격투 <code>HP</code>·<code>REC</code>·<code>GRT</code> 주력 및 경주 <code>STM</code>·<code>GUT</code> 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>정신력 (Mentality)</strong></td>
+<td style="text-align: center;"><code>MEN</code></td>
+<td style="text-align: center;">10 ~ 100</td>
+<td style="text-align: left;">멘탈/집중 척도. 경주 <code>FOC</code>·<code>GUT</code>·<code>STM</code>·<code>TMP</code> 주력 및 격투 <code>GRT</code>·<code>REC</code>·<code>TEC</code> 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>행운 (Luck)</strong></td>
+<td style="text-align: center;"><code>LCK</code></td>
+<td style="text-align: center;">10 ~ 100</td>
+<td style="text-align: left;">운/기회포착 척도. 경주 <code>TMP</code>·<code>STA</code> 주력 및 훈련 대성공·변이 보정 반영</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>잠재력 (Potential)</strong></td>
+<td style="text-align: center;"><code>POT</code></td>
+<td style="text-align: center;">30 ~ 100</td>
+<td style="text-align: left;">성장 상한선 척도. 1차 기본 5대 스탯 상한 제어 및 2차 파생 스탯 전반(계수 0.1~0.3 / HP×2) 반영</td>
+</tr>
 </tbody>
 </table></div>
-
-<h3 id="sec-3-3">3.3 부화 시 등급별 1차 기본 스탯 초기 생성 분배식 및 잠재력(POT) 롤링 메커니즘</h3>
-<div class="formula-card"><div class="formula-title">1) 잠재력(POT) 결정 연산식</div>
-<div class="formula-body">$$\text{잠재력(POT)} = \text{RandomInteger}(\text{Min\_POT}, \;\; \text{Max\_POT})$$</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[설명]</span> 알 등급별 정의된 잠재력 범위 내 균등 정수 난수 추출 확정.</div></div></div>
-
-<div class="formula-card"><div class="formula-title">2) 1차 기본 5대 스탯 초기 생성 분배 공식</div>
-<div class="formula-body">$$\text{스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\r\r\r\right) + \text{RandomInteger}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\r\r\r\right)$$</div>
-<div class="formula-desc">
-<div class="formula-desc-item"><span class="tag">[공식 설명]</span> 잠재력(POT)의 65%를 기준값으로 설정하고, 5개 스탯(STR, DEX, VIT, MEN, LCK) 각각에 독립 난수(-3 ~ +3) 합산 후 최소 10에서 잠재력 상한선 사이로 제한.</div>
-<div class="formula-desc-item"><span class="tag example">[계산 예시 (잠재력 POT 60 알 부화 시)]</span> 기준 스탯값: $60 \times 0.65 = 39$. STR 난수 +2 발생 시: $39 + 2 = \mathbf{41\text{ STR}}$. DEX 난수 -1 발생 시: $39 - 1 = \mathbf{38\text{ DEX}}$. VIT, MEN, LCK도 독립 난수 합산 적용.</div>
-<div class="formula-desc-item"><span class="tag example">[상한 고정 예시]</span> 잠재력 POT 30 알에서 연산값 32 산출 시, 잠재력 상한선인 <strong>30</strong>으로 강제 보정.</div>
-</div></div>
+<h3 id="33-부화-시-등급별-1차-기본-스탯-초기-생성-분배식-및-잠재력pot-롤링-메커니즘">3.3 부화 시 등급별 1차 기본 스탯 초기 생성 분배식 및 잠재력(POT) 롤링 메커니즘</h3>
+<ol>
+<li><strong>잠재력(POT) 결정 연산식</strong>:</li>
+</ol>
+<div class="formula-card"><div class="formula-body">$$\text{잠재력(POT)} = \text{RandomInteger}(\text{Min\_POT}, \;\; \text{Max\_POT})$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 알 등급별 정의된 잠재력 범위(<code>[Min_POT, Max_POT]</code>) 내 균등 정수 난수 추출 확정</li>
+</ul>
+<ol start="2">
+<li><strong>1차 기본 5대 스탯 초기 생성 분배 공식</strong>:</li>
+</ol>
+<div class="formula-card"><div class="formula-body">$$\text{스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\r\r\r\r\right) + \text{난수}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\r\r\r\r\right)$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 잠재력(<code>POT</code>)의 65%를 기준값으로 설정하고, 5개 스탯(<code>STR</code>, <code>DEX</code>, <code>VIT</code>, <code>MEN</code>, <code>LCK</code>) 각각에 독립 난수(<code>-3 ~ +3</code>) 합산 후 최소 10에서 잠재력 상한선 사이로 제한 (성별 <code>ROOSTER</code>/<code>HEN</code> 각 50% 확률 부여)</li>
+<li><strong>[계산 예시 (잠재력 POT 60 알 부화 시)]</strong>:<ul>
+<li>기준 스탯값: $60 \times 0.65 = 39$</li>
+<li><code>STR</code> 난수 <code>+2</code> 발생 시: $39 + 2 = \mathbf{41\text{ STR}}$ 산출</li>
+<li><code>DEX</code> 난수 <code>-1</code> 발생 시: $39 - 1 = \mathbf{38\text{ DEX}}$ 산출</li>
+<li><code>VIT</code>, <code>MEN</code>, <code>LCK</code>도 동일 독립 난수 합산 적용</li>
+</ul>
+</li>
+<li><strong>[계산 예시 (상한 고정)]</strong>: 잠재력 <code>POT 30</code> 알에서 기준값 <code>20</code>에 난수가 가산되어 상한을 넘거나 연산값이 <code>32</code>로 산출 시 잠재력 상한선 <strong><code>30</code></strong>으로 강제 보정</li>
+</ul>
+<hr />
 </section>
-
-<!-- 4. 닭 캐릭터 10대 상태 머신 및 라이프사이클 관리 -->
 <section id="sec-4">
-<h2>4. 닭 캐릭터 10대 상태 머신 및 라이프사이클 관리 (Lifecycle &amp; Status)</h2>
-<h3 id="sec-4-1">4.1 닭 캐릭터 10대 상태 머신 전이 규칙</h3>
-<div class="table-container"><table>
-<thead><tr><th style="text-align: center;">상태 코드</th><th style="text-align: center;">상태 명칭</th><th style="text-align: center;">출전</th><th style="text-align: center;">훈련</th><th style="text-align: center;">스파</th><th>발생 조건</th><th>상태 해제 및 복귀 조건</th></tr></thead>
-<tbody>
-<tr><td style="text-align: center;"><code>EGG_WAITING</code></td><td style="text-align: center;">알 보관</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>알 획득 (가차/구매/보상/교배)</td><td>인큐베이터 슬롯 배치 시 <code>INCUBATING</code> 전환</td></tr>
-<tr><td style="text-align: center;"><code>INCUBATING</code></td><td style="text-align: center;">부화 진행</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>인큐베이터 안치</td><td>타이머 만료 &amp; 미니게임 완료 시 <code>HATCHED</code> 전환</td></tr>
-<tr><td style="text-align: center;"><code>HATCHED</code></td><td style="text-align: center;">부화 완료</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>미니게임 완료</td><td>선수 등록 버튼 클릭 시 <code>IDLE</code> 전환</td></tr>
-<tr><td style="text-align: center;"><code>IDLE</code></td><td style="text-align: center;">기본 대기</td><td style="text-align: center;">O</td><td style="text-align: center;">O</td><td style="text-align: center;">O</td><td>기본 상태</td><td>훈련 시 <code>TRAINING</code>, 출전 시 <code>IN_MATCH</code>, 교배 시 <code>BREEDING_LOCKED</code> 전환</td></tr>
-<tr><td style="text-align: center;"><code>TRAINING</code></td><td style="text-align: center;">훈련 진행</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>훈련 실행</td><td>훈련 대기시간 만료 시 스탯 상승 후 <code>IDLE</code> 복귀</td></tr>
-<tr><td style="text-align: center;"><code>IN_MATCH</code></td><td style="text-align: center;">경기 참전</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>경주/격투 출전</td><td>경기 종료 시 피로도 +25 적재 후 판정 복귀</td></tr>
-<tr><td style="text-align: center;"><code>FATIGUED</code></td><td style="text-align: center;">피로 누적</td><td style="text-align: center;">O (스탯-15%)</td><td style="text-align: center;">O</td><td style="text-align: center;">O</td><td>피로도 70 이상 누적</td><td>닭장 휴식(시간당 -10) 또는 스파 입욕 시 <code>IDLE</code> 복귀</td></tr>
-<tr><td style="text-align: center;"><code>INJURED</code></td><td style="text-align: center;">부상 상태</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">O (유료)</td><td>피로도 90 이상 출전 시 30% 확률</td><td>프리미엄 스파 이용 시 즉시 완치 후 <code>IDLE</code> 복귀 (닭장 치료 불가)</td></tr>
-<tr><td style="text-align: center;"><code>RESTING</code></td><td style="text-align: center;">스파 입욕</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>프리미엄 스파 결제</td><td>입욕 완료 즉시 피로도 0 완충 및 24시간 컨디션 100 부여 후 <code>IDLE</code> 복귀</td></tr>
-<tr><td style="text-align: center;"><code>BREEDING_LOCKED</code></td><td style="text-align: center;">씨닭 지정</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td style="text-align: center;">X</td><td>종계 등록</td><td>교배 실행 시 2세대 알 생성 후 <code>BREEDING_COOLDOWN</code> 전환</td></tr>
-<tr><td style="text-align: center;"><code>BREEDING_COOLDOWN</code></td><td style="text-align: center;">교배 휴식</td><td style="text-align: center;">O</td><td style="text-align: center;">O</td><td style="text-align: center;">O</td><td>교배 완료</td><td>24시간 경과 시 재교배 잠금 해제 후 <code>IDLE</code> 복귀</td></tr>
-</tbody>
-</table></div>
+<h2 id="4-닭-캐릭터-10대-상태-머신-및-라이프사이클-관리-lifecycle-and-status">4. 닭 캐릭터 10대 상태 머신 및 라이프사이클 관리 (Lifecycle &amp; Status)</h2>
+<h3 id="41-닭-캐릭터-10대-상태-머신-전이-규칙">4.1 닭 캐릭터 10대 상태 머신 전이 규칙</h3>
+<div class="mermaid-box" style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;margin:16px 0;overflow-x:auto;"><div class="mermaid">
+stateDiagram-v2
+    [*] --> EGG_WAITING: 알 획득
+    EGG_WAITING --> INCUBATING: 인큐베이터 안치
+    INCUBATING --> HATCHED: 타이머·미니게임 / 유료 즉시 부화
+    HATCHED --> IDLE: 선수 등록
 
-<h3 id="sec-4-2">4.2 경기(Derby/Pit) 출전 후 피로도 적재(+25), 부상 판정(30%) 및 30분 쿨다운 환류 규칙</h3>
-<ul>
-<li><strong>경기 출전 환류 규칙</strong>:
-  <ul>
-    <li>더비 레이스 또는 럼블 핏 경기 1회 출전 완료 시 피로도 <strong>+25</strong> 즉시 적재 (최대 100 상한).</li>
-    <li>럼블 핏 격투 경기 출전 시 경기 종료 후 <strong>30분간 동일 닭 출전 쿨다운 잠금</strong> 발동.</li>
-  </ul>
-</li>
-<li><strong>부상 발생 조건</strong>:
-  <ul>
-    <li>피로도 <strong>90</strong> 이상 누적 상태에서 무리하게 출전 시, <strong>30.0%</strong> 난수 확률로 <strong>부상(<code>INJURED</code>)</strong> 상태 전이.</li>
-    <li>부상 닭은 모든 경주/격투 경기 출전 및 훈련 전면 불가.</li>
-  </ul>
-</li>
-<li><strong>피로도 페널티</strong>: 피로도 70~89 구간(<code>FATIGUED</code>): 경기 출전은 가능하나 경기 중 전 스탯 <strong>-15% 페널티</strong> 적용.</li>
-</ul>
+    IDLE --> TRAINING: 유/무료 훈련 시작
+    TRAINING --> IDLE: 대기 만료 / 유료 즉시 완료 (피로+15)
 
-<h3 id="sec-4-3">4.3 닭장 휴식, 영양 사료 급여 및 수의사 치료를 통한 상태 회복 프로세스</h3>
-<div class="table-container"><table>
-<thead><tr><th style="text-align: center;">구분</th><th style="text-align: center;">소모 재화</th><th style="text-align: center;">피로도 회복 속도</th><th style="text-align: center;">컨디션 지수 변화</th><th style="text-align: center;">부상 치유 여부</th></tr></thead>
-<tbody>
-<tr><td style="text-align: center;"><strong>일반 닭장 휴식 (무료)</strong></td><td style="text-align: center;">무료</td><td style="text-align: center;"><strong>시간당 -10</strong> 자동 감소</td><td style="text-align: center;">'보통' (50~70) 유지</td><td style="text-align: center;"><strong>불가 (부상 치유 안 됨)</strong></td></tr>
-<tr><td style="text-align: center;"><strong>영양 사료 급여</strong></td><td style="text-align: center;">사료 10개</td><td style="text-align: center;">즉시 <strong>-20</strong> 회복 (일일 3회 제한)</td><td style="text-align: center;">컨디션 +10 상승</td><td style="text-align: center;">불가</td></tr>
-<tr><td style="text-align: center;"><strong>프리미엄 스파 (수의사)</strong></td><td style="text-align: center;">50 Gem 또는 5,000 Gold</td><td style="text-align: center;"><strong>즉시 0 완충</strong></td><td style="text-align: center;"><strong>24시간 동안 '최상(100)' 고정</strong></td><td style="text-align: center;"><strong>즉시 완치 (정상 IDLE 전환)</strong></td></tr>
-</tbody>
-</table></div>
-</section>
+    IDLE --> IN_MATCH: 경주/격투 출전
+    IN_MATCH --> IDLE: 경기 종료 (피로도 < 70)
+    IN_MATCH --> FATIGUED: 경기 종료 (피로도 70~89)
+    IN_MATCH --> INJURED: 경기 종료 (피로도 90 이상 30% 확률)
 
-<!-- 5. 훈련 시스템 및 타 모드 파생 스탯 연동 -->
-<section id="sec-5">
-<h2>5. 훈련 시스템 및 타 모드(Derby/Pit) 파생 스탯 연동 (Training &amp; Mode Linking)</h2>
-<h3 id="sec-5-1">5.1 훈련 종목 8종 소모 재화, 대기시간 및 스탯 상승률</h3>
-<div class="table-container"><table>
-<thead><tr><th style="text-align: center;">훈련 종목명</th><th style="text-align: center;">타깃 연계 모드</th><th style="text-align: center;">주력 상승 1차 스탯</th><th style="text-align: center;">소모 사료</th><th style="text-align: center;">소모 골드</th><th style="text-align: center;">훈련 시간</th><th style="text-align: center;">기본 스탯 상승량</th></tr></thead>
-<tbody>
-<tr><td style="text-align: center;"><strong>고속 트랙 주행</strong></td><td style="text-align: center;">Derby Race</td><td style="text-align: center;">힘 (<code>STR</code>)</td><td style="text-align: center;">10개</td><td style="text-align: center;">1,000 Gold</td><td style="text-align: center;">15분</td><td style="text-align: center;">STR <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>타이어 튀기기</strong></td><td style="text-align: center;">Derby Race</td><td style="text-align: center;">민첩 (<code>DEX</code>)</td><td style="text-align: center;">10개</td><td style="text-align: center;">1,000 Gold</td><td style="text-align: center;">15분</td><td style="text-align: center;">DEX <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>모래언덕 오르기</strong></td><td style="text-align: center;">Derby Race</td><td style="text-align: center;">정신력 (<code>MEN</code>)</td><td style="text-align: center;">12개</td><td style="text-align: center;">1,200 Gold</td><td style="text-align: center;">20분</td><td style="text-align: center;">MEN <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>통나무 타격하기</strong></td><td style="text-align: center;">Rumble Pit</td><td style="text-align: center;">힘 (<code>STR</code>)</td><td style="text-align: center;">10개</td><td style="text-align: center;">1,000 Gold</td><td style="text-align: center;">15분</td><td style="text-align: center;">STR <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>과녁 정밀 타격</strong></td><td style="text-align: center;">Rumble Pit</td><td style="text-align: center;">민첩 (<code>DEX</code>)</td><td style="text-align: center;">12개</td><td style="text-align: center;">1,200 Gold</td><td style="text-align: center;">20분</td><td style="text-align: center;">DEX <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>깃털 부풀려 버티기 수련</strong></td><td style="text-align: center;">Rumble Pit</td><td style="text-align: center;">활력 (<code>VIT</code>)</td><td style="text-align: center;">10개</td><td style="text-align: center;">1,000 Gold</td><td style="text-align: center;">15분</td><td style="text-align: center;">VIT <code>+3 ~ +5</code></td></tr>
-<tr><td style="text-align: center;"><strong>외나무 균형대</strong></td><td style="text-align: center;">Rumble Pit</td><td style="text-align: center;">정신력 (<code>MEN</code>)</td><td style="text-align: center;">15개</td><td style="text-align: center;">1,500 Gold</td><td style="text-align: center;">30분</td><td style="text-align: center;">MEN <code>+4 ~ +6</code></td></tr>
-<tr><td style="text-align: center;"><strong>진흙탕 극기 훈련</strong></td><td style="text-align: center;">공통 피지컬</td><td style="text-align: center;">활력/행운 (<code>VIT/LCK</code>)</td><td style="text-align: center;">15개</td><td style="text-align: center;">1,500 Gold</td><td style="text-align: center;">30분</td><td style="text-align: center;">VIT <code>+2</code>, LCK <code>+3</code></td></tr>
-</tbody>
-</table></div>
-<div class="formula-card"><div class="formula-title">훈련 스탯 상승 연산식</div>
-<div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{기본 상승량} \times \text{컨디션 계수}\r\r\r\right)$$</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[컨디션 계수]</span> 최상(<code>1.2</code>), 양호(<code>1.0</code>), 보통(<code>0.9</code>), 저조(<code>0.7</code>).</div></div></div>
-<div class="formula-card"><div class="formula-title">잠재력(POT) 상한 제어 공식</div>
-<div class="formula-body">$$\text{최종 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력(POT) 상한}\r\r\r\right)$$</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[성장 한계]</span> 타고난 잠재력 상한선을 초과하여 성장 불가 (잠재력 돌파는 2세대 교배로만 가능).</div></div></div>
+    FATIGUED --> IDLE: 닭장 휴식 / 사료 급여 / 스파
+    FATIGUED --> IN_MATCH: 출전 가능 (스탯 -15% 페널티)
 
-<h3 id="sec-5-2">5.2 훈련 스탯 상승의 경주 2차 파생 스탯 연동 공식</h3>
-<p>럼블 팜 1차 피지컬 스탯 상승 즉시 더비 레이스 6대 2차 스탯 자동 재연산 반영:</p>
-<div class="formula-card"><div class="formula-title">더비 레이스 6대 2차 파생 스탯 산출 공식</div>
-<div class="formula-body">
-$$\text{SPD} = \text{반올림}(\text{STR} \times 0.6 + \text{DEX} \times 0.2 + \text{POT} \times 0.2) + \text{Speed\_Bias}$$<br>
-$$\text{ACC} = \text{반올림}(\text{DEX} \times 0.5 + \text{STR} \times 0.3 + \text{LCK} \times 0.2) + \text{Start\_Bias}$$<br>
-$$\text{STM} = \text{반올림}(\text{VIT} \times 0.6 + \text{MEN} \times 0.2 + \text{POT} \times 0.2) + \text{Stamina\_Bias}$$<br>
-$$\text{FOC} = \text{반올림}(\text{MEN} \times 0.5 + \text{DEX} \times 0.3 + \text{VIT} \times 0.2) + \text{Focus\_Bias}$$<br>
-$$\text{GUT} = \text{반올림}(\text{MEN} \times 0.4 + \text{STR} \times 0.3 + \text{VIT} \times 0.3) + \text{Guts\_Bias}$$<br>
-$$\text{TMP} = \text{반올림}(\text{MEN} \times 0.6 + \text{LCK} \times 0.2 + \text{POT} \times 0.2) + \text{Temper\_Bias}$$
+    INJURED --> IDLE: 유료 프리미엄 스파 완치
+    
+    IDLE --> RESTING: 유료 스파 입욕
+    RESTING --> IDLE: 입욕 완료 (피로 0 & 컨디션 100)
+
+    IDLE --> BREEDING_LOCKED: 종계 등록 및 교배
+    BREEDING_LOCKED --> BREEDING_COOLDOWN: 교배 완료 (2세대 알 생성)
+    BREEDING_COOLDOWN --> IDLE: 24시간 쿨다운 만료 (생애 5회 미만)
+    BREEDING_COOLDOWN --> RETIRED: 생애 5회 교배 완료 (경기 출전 유지)
 </div></div>
-
-<h3 id="sec-5-3">5.3 훈련 스탯 상승의 격투 2차 파생 스탯 및 7대 전투 기술 개화/습득 연동</h3>
-<p>럼블 팜 1차 피지컬 스탯 상승 즉시 럼블 핏 6대 2차 스탯 자동 재연산 반영:</p>
-<div class="formula-card"><div class="formula-title">럼블 핏 6대 2차 파생 스탯 산출 공식</div>
-<div class="formula-body">
-$$\text{POW} = \text{반올림}(\text{STR} \times 0.5 + \text{DEX} \times 0.3 + \text{POT} \times 0.2) + \text{POW\_Bias}$$<br>
-$$\text{DEF} = \text{반올림}(\text{VIT} \times 0.5 + \text{DEX} \times 0.3 + \text{MEN} \times 0.2) + \text{DEF\_Bias}$$<br>
-$$\text{HP} = \text{반올림}((\text{VIT} \times 0.6 + \text{STR} \times 0.2 + \text{POT} \times 0.2) \times 10) + \text{HP\_Bias}$$<br>
-$$\text{REC} = \text{반올림}(\text{VIT} \times 0.5 + \text{MEN} \times 0.3 + \text{POT} \times 0.2) + \text{REC\_Bias}$$<br>
-$$\text{TEC} = \text{반올림}(\text{DEX} \times 0.4 + \text{MEN} \times 0.3 + \text{POT} \times 0.3) + \text{TEC\_Bias}$$<br>
-$$\text{GRT} = \text{반올림}(\text{MEN} \times 0.6 + \text{VIT} \times 0.2 + \text{POT} \times 0.2) + \text{GRT\_Bias}$$
-</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[호흡 정돈 쿨다운 공식 연동]</span> $\text{호흡 정돈 쿨다운} = \max(1.0, 1.5 - \frac{\text{TEC}}{200})$.</div></div></div>
+<h4>■ 10대 상태 코드 상세 명세표</h4>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">상태 코드</th>
+<th style="text-align: left;">상태 명칭</th>
+<th style="text-align: center;">출전</th>
+<th style="text-align: center;">훈련</th>
+<th style="text-align: center;">스파</th>
+<th style="text-align: left;">발생 조건</th>
+<th style="text-align: left;">상태 해제 및 복귀 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>EGG_WAITING</code></td>
+<td style="text-align: left;">알 보관</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">유료 가차/교배/거래소/무료 스탬프 획득</td>
+<td style="text-align: left;">인큐베이터 안치 시 <code>INCUBATING</code> 전환</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>INCUBATING</code></td>
+<td style="text-align: left;">부화 진행</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">인큐베이터 안치</td>
+<td style="text-align: left;">타이머·미니게임 또는 유료 즉시 부화 시 <code>HATCHED</code> 전환</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>HATCHED</code></td>
+<td style="text-align: left;">부화 완료</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">부화 완료</td>
+<td style="text-align: left;">선수 등록 버튼 클릭 시 <code>IDLE</code> 전환</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>IDLE</code></td>
+<td style="text-align: left;">기본 대기</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: left;">기본 상태</td>
+<td style="text-align: left;">훈련 시 <code>TRAINING</code>, 출전 시 <code>IN_MATCH</code>, 교배 시 <code>BREEDING_LOCKED</code> 전환</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>TRAINING</code></td>
+<td style="text-align: left;">훈련 진행</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">유/무료 훈련 실행</td>
+<td style="text-align: left;">대기 만료 또는 유료 즉시 완료 시 스탯 상승 및 피로도 <code>+15</code> 적재 후 <code>IDLE</code> 복귀</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>IN_MATCH</code></td>
+<td style="text-align: left;">경기 참전</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">경주/격투 출전</td>
+<td style="text-align: left;">경기 종료 시 피로도 <code>+25</code> 적재 후 <code>IDLE</code>/<code>FATIGUED</code>/<code>INJURED</code> 판정</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>FATIGUED</code></td>
+<td style="text-align: left;">피로 누적</td>
+<td style="text-align: center;">O (스탯-15%)</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: left;">피로도 70 이상 누적</td>
+<td style="text-align: left;">닭장 휴식(시간당 -10), 사료(-20), 스파 입욕 시 <code>IDLE</code> 복귀</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>INJURED</code></td>
+<td style="text-align: left;">부상 상태</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">O (유료)</td>
+<td style="text-align: left;">피로도 90 이상 출전 시 30% 확률</td>
+<td style="text-align: left;">유료 프리미엄 스파 이용 시 즉시 완치 후 <code>IDLE</code> 복귀 (닭장 치료 불가)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>RESTING</code></td>
+<td style="text-align: left;">스파 입욕</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: left;">유료 프리미엄 스파 결제</td>
+<td style="text-align: left;">입욕 완료 즉시 피로도 0 완충 및 24시간 컨디션 100 부여 후 <code>IDLE</code> 복귀</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>BREEDING_LOCKED</code></td>
+<td style="text-align: left;">씨닭 지정 / 은퇴(<code>RETIRED</code>)</td>
+<td style="text-align: center;">X (종계중) / O (은퇴후)</td>
+<td style="text-align: center;">X / O</td>
+<td style="text-align: center;">X / O</td>
+<td style="text-align: left;">종계 등록 또는 5회 교배 완료</td>
+<td style="text-align: left;">교배 실행 시 <code>BREEDING_COOLDOWN</code> 전환, 5회 도달 시 영구 교배 은퇴(<code>RETIRED</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>BREEDING_COOLDOWN</code></td>
+<td style="text-align: left;">교배 휴식</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: left;">교배 완료</td>
+<td style="text-align: left;">24시간 경과 시 재교배 잠금 해제 후 <code>IDLE</code> 복귀</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-경기derbypit-출전-후-피로도-적재25-부상-판정30-및-30분-쿨다운-환류-규칙">4.2 경기(Derby/Pit) 출전 후 피로도 적재(+25), 부상 판정(30%) 및 30분 쿨다운 환류 규칙</h3>
 <ul>
-<li><strong>7대 전투 기술 훈련 개화 및 슬롯 장착</strong>:
-  <ul>
-    <li>훈련 누적 완료 시 특정 전투 기술 개화 (예: 통나무 타격 ➔ <code>[공2:낮은 발톱 할퀴기]</code>, 과녁 정밀 ➔ <code>[공3:비상 발톱 급습]</code>, 깃털 수련 ➔ <code>[방1:깃털 부풀려 버티기]</code>, 외나무 ➔ <code>[방3:맞발톱 쳐내기]</code>).</li>
-    <li>선수 등급별 슬롯 (일반 2개, 희귀 3개, 영웅 4개, 전설 5개) 범위 내에서 자유 장착/교체 지원.</li>
-  </ul>
-</li>
+<li><strong>경기 출전 환류 규칙 (모바일·VIP 라운지 공통)</strong>:</li>
+<li>더비 레이스 또는 럼블 핏 경기 1회 출전 완료 시 피로도 <strong><code>+25</code></strong> 즉시 적재 (최대 100 상한)</li>
+<li>럼블 핏 격투 경기 출전 시 경기 종료 후 <strong>30분간 동일 닭 출전 쿨다운 잠금</strong>, 더비 레이스 출전 시 <strong>2개 레이스(40분간) 참전 쿨다운 잠금</strong> 발동</li>
+<li><strong>부상 발생 조건</strong>:</li>
+<li>피로도 <strong><code>90</code></strong> 이상 누적 상태에서 무리하게 출전 시 <strong><code>30.0%</code></strong> 난수 확률로 <strong>부상(<code>INJURED</code>)</strong> 상태 전이</li>
+<li>부상 닭은 모든 경주/격투 경기 출전 및 훈련 전면 불가</li>
+<li><strong>피로도 페널티</strong>:</li>
+<li>피로도 70~89 구간(<code>FATIGUED</code>): 경기 출전 시 경기 중 전 스탯 <strong><code>-15%</code> 페널티</strong> 적용</li>
 </ul>
+<h3 id="43-닭장-휴식-영양-사료-급여-및-수의사-치료를-통한-상태-회복-프로세스">4.3 닭장 휴식, 영양 사료 급여 및 수의사 치료를 통한 상태 회복 프로세스</h3>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">구분</th>
+<th style="text-align: center;">구분(과금)</th>
+<th style="text-align: center;">적용 플랫폼</th>
+<th style="text-align: center;">소모 재화</th>
+<th style="text-align: center;">피로도 회복 속도</th>
+<th style="text-align: center;">컨디션 지수 변화</th>
+<th style="text-align: center;">부상 치유 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>일반 닭장 휴식</strong></td>
+<td style="text-align: center;"><strong>무료 회복</strong></td>
+<td style="text-align: center;">모바일 / 웹 / <strong>VIP 라운지</strong></td>
+<td style="text-align: center;">무료</td>
+<td style="text-align: center;"><strong>시간당 <code>-10</code></strong> 자동 감소</td>
+<td style="text-align: center;">'보통' (50~70) 유지</td>
+<td style="text-align: center;"><strong>불가 (부상 치유 불가)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>영양 사료 급여</strong></td>
+<td style="text-align: center;"><strong>무료 회복</strong></td>
+<td style="text-align: center;">모바일 / <strong>VIP 라운지</strong></td>
+<td style="text-align: center;">사료 10개</td>
+<td style="text-align: center;">즉시 <strong><code>-20</code></strong> 회복 (일일 3회 제한)</td>
+<td style="text-align: center;">컨디션 <code>+10</code> ('좋음' 70~85) 상승</td>
+<td style="text-align: center;"><strong>불가</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>피로도 회복 광고</strong></td>
+<td style="text-align: center;">광고 보상</td>
+<td style="text-align: center;">모바일 전용 (<strong>VIP 제외</strong>)</td>
+<td style="text-align: center;">보상형 광고 (쿨다운 10분)</td>
+<td style="text-align: center;">즉시 <strong><code>-20</code></strong> 회복 (일일 3회 제한)</td>
+<td style="text-align: center;">현재 컨디션 유지</td>
+<td style="text-align: center;"><strong>불가</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>프리미엄 스파 (수의사)</strong></td>
+<td style="text-align: center;"><strong>유료 회복</strong></td>
+<td style="text-align: center;">모바일 / 웹 / <strong>VIP 라운지</strong></td>
+<td style="text-align: center;">50 Gem 또는 5,000 Gold <em>(VIP 크레딧)</em></td>
+<td style="text-align: center;"><strong>즉시 <code>0</code> 완충</strong></td>
+<td style="text-align: center;"><strong>24시간 동안 '최상(100)' 고정</strong></td>
+<td style="text-align: center;"><strong>즉시 완치 (<code>IDLE</code> 전환)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
 </section>
-
-<!-- 6. 2세대 교배 시스템 및 유전 메커니즘 -->
+<section id="sec-5">
+<h2 id="5-훈련-시스템-및-타-모드derbypit-파생-스탯-연동-training-and-mode-linking">5. 훈련 시스템 및 타 모드(Derby/Pit) 파생 스탯 연동 (Training &amp; Mode Linking)</h2>
+<h3 id="51-훈련-종목-8종-소모-재화-대기시간-및-스탯-상승률">5.1 훈련 종목 8종 소모 재화, 대기시간 및 스탯 상승률</h3>
+<ul>
+<li><strong>유/무료 성장 옵션 (모바일·VIP 라운지 공통)</strong>:</li>
+<li><strong>무료(일반) 훈련</strong>: 아래 표의 사료 + 골드를 소모하고 15~30분 훈련 대기시간 경과 후 완료 (완료 시 피로도 <code>+15</code> 적재)</li>
+<li><strong>유료(급속) 부스트 훈련</strong>: VIP 크레딧 또는 Gem 추가 결제 시 <strong>대기시간 0초 즉시 완료</strong> 및 <strong>유료 부스트 보너스 <code>+2</code> 추가 상승</strong> 적용</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">훈련 종목명</th>
+<th style="text-align: center;">타깃 연계 모드</th>
+<th style="text-align: center;">주력 상승 1차 스탯</th>
+<th style="text-align: center;">소모 사료</th>
+<th style="text-align: center;">소모 골드</th>
+<th style="text-align: center;">무료 훈련 시간</th>
+<th style="text-align: center;">유료 즉시 옵션</th>
+<th style="text-align: center;">기본 스탯 상승량</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>고속 트랙 주행</strong></td>
+<td style="text-align: center;">Derby Race</td>
+<td style="text-align: center;">민첩 (<code>DEX</code>) / 최고속도</td>
+<td style="text-align: center;">10개</td>
+<td style="text-align: center;">1,000 Gold</td>
+<td style="text-align: center;">15분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">DEX <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>타이어 튀기기</strong></td>
+<td style="text-align: center;">Derby Race</td>
+<td style="text-align: center;">민첩·행운 (<code>DEX·LCK</code>) / 가속</td>
+<td style="text-align: center;">10개</td>
+<td style="text-align: center;">1,000 Gold</td>
+<td style="text-align: center;">15분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">DEX·LCK <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>모래언덕 오르기</strong></td>
+<td style="text-align: center;">Derby Race</td>
+<td style="text-align: center;">활력·정신력 (<code>VIT·MEN</code>) / 지구력·근성</td>
+<td style="text-align: center;">12개</td>
+<td style="text-align: center;">1,200 Gold</td>
+<td style="text-align: center;">20분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">VIT·MEN <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>통나무 타격하기</strong></td>
+<td style="text-align: center;">Rumble Pit</td>
+<td style="text-align: center;">힘 (<code>STR</code>) / 공격력(<code>POW</code>)</td>
+<td style="text-align: center;">10개</td>
+<td style="text-align: center;">1,000 Gold</td>
+<td style="text-align: center;">15분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">STR <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>과녁 정밀 타격</strong></td>
+<td style="text-align: center;">Rumble Pit</td>
+<td style="text-align: center;">민첩·정신력 (<code>DEX·MEN</code>) / 기술(<code>TEC</code>)</td>
+<td style="text-align: center;">12개</td>
+<td style="text-align: center;">1,200 Gold</td>
+<td style="text-align: center;">20분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">DEX·MEN <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>깃털 부풀려 버티기 수련</strong></td>
+<td style="text-align: center;">Rumble Pit</td>
+<td style="text-align: center;">민첩·힘 (<code>DEX·STR</code>) / 방어(<code>DEF</code>)</td>
+<td style="text-align: center;">10개</td>
+<td style="text-align: center;">1,000 Gold</td>
+<td style="text-align: center;">15분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">DEX·STR <code>+3 ~ +5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>외나무 밸런스 균형대</strong></td>
+<td style="text-align: center;">Rumble Pit</td>
+<td style="text-align: center;">정신력·활력 (<code>MEN·VIT</code>) / 근성(<code>GRT</code>)</td>
+<td style="text-align: center;">15개</td>
+<td style="text-align: center;">1,500 Gold</td>
+<td style="text-align: center;">30분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">MEN·VIT <code>+4 ~ +6</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>진흙탕 극기 훈련</strong></td>
+<td style="text-align: center;">공통 피지컬</td>
+<td style="text-align: center;">활력·행운 (<code>VIT·LCK</code>)</td>
+<td style="text-align: center;">15개</td>
+<td style="text-align: center;">1,500 Gold</td>
+<td style="text-align: center;">30분</td>
+<td style="text-align: center;">0초 완료 (+2)</td>
+<td style="text-align: center;">VIT <code>+2</code>, LCK <code>+3</code></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>훈련 스탯 상승 연산식</strong>:</li>
+</ul>
+<div class="formula-card"><div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{기본 상승량} \times \text{컨디션 계수}\r\r\r\r\right) + \text{유료 부스트 보너스}(0\text{ 또는 }2)$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 훈련 기본 상승량에 컨디션 계수(최상 <code>1.2</code>, 양호 <code>1.0</code>, 보통 <code>0.9</code>, 저조 <code>0.7</code>)를 곱해 반올림하고 유료 급속 훈련 시 <code>+2</code> 가산</li>
+<li><strong>[계산 예시]</strong>: 기본 상승량 <code>+5</code>, 컨디션 최상(<code>1.2</code>), 일반 무료 훈련 시: $\text{반올림}(5 \times 1.2) = \mathbf{+6}$ 상승 (유료 급속 훈련 시 $+8$ 산출)</li>
+<li><strong>잠재력(POT) 상한 제어 공식</strong>:</li>
+</ul>
+<div class="formula-card"><div class="formula-body">$$\text{최종 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력(POT) 상한}\r\r\r\r\right)$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 타고난 잠재력 상한선을 초과하여 성장 불가 (잠재력 상한 돌파는 2세대 교배로만 가능)</li>
+<li><strong>[계산 예시]</strong>: 현재 <code>DEX 60</code>, 상승 <code>+6</code>, 잠재력 <code>POT 64</code> 기준: $60 + 6 = 66$이나 상한선 제어로 <code>+4</code>만 적용되어 최종 <strong><code>64</code></strong> 확정</li>
+</ul>
+<h3 id="52-훈련-스탯-상승의-경주-2차-파생-스탯-연동-공식">5.2 훈련 스탯 상승의 경주 2차 파생 스탯 연동 공식</h3>
+<ul>
+<li>럼블 팜 1차 피지컬 스탯 상승 즉시 <a href="04_roosters_derby_stats_2nd.csv">04_roosters_derby_stats_2nd.csv</a> 규격의 더비 레이스 6대 2차 스탯 자동 재연산 반영:
+  1. <strong>속도 (<code>SPD</code>)</strong>: $\text{반올림}(\text{DEX} \times 0.5 + \text{STR} \times 0.3 + \text{POT} \times 0.2) + \text{Speed\_Bias}$
+  2. <strong>출발 (<code>STA</code>)</strong>: $\text{반올림}(\text{DEX} \times 0.7 + \text{LCK} \times 0.2 + \text{POT} \times 0.1) + \text{Start\_Bias}$
+  3. <strong>지구력 (<code>STM</code>)</strong>: $\text{반올림}(\text{VIT} \times 0.6 + \text{MEN} \times 0.2 + \text{POT} \times 0.2) + \text{Stamina\_Bias}$
+  4. <strong>집중력 (<code>FOC</code>)</strong>: $\text{반올림}(\text{MEN} \times 0.5 + \text{DEX} \times 0.3 + \text{POT} \times 0.2) + \text{Focus\_Bias}$
+  5. <strong>기질 (<code>TMP</code>)</strong>: $\text{반올림}(\text{LCK} \times 0.6 + \text{MEN} \times 0.2 + \text{STR} \times 0.2) + \text{Temper\_Bias}$
+  6. <strong>근성 (<code>GUT</code>)</strong>: $\text{반올림}(\text{MEN} \times 0.5 + \text{VIT} \times 0.3 + \text{POT} \times 0.2) + \text{Guts\_Bias}$</li>
+</ul>
+<h3 id="53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동">5.3 훈련 스탯 상승의 격투 2차 파생 스탯 및 9대 전투 기술 개화/습득 연동</h3>
+<ul>
+<li>럼블 팜 1차 피지컬 스탯 상승 즉시 <a href="05_roosters_pit_stats_2nd.csv">05_roosters_pit_stats_2nd.csv</a> 규격의 럼블 핏 6대 2차 스탯 자동 재연산 반영:
+  1. <strong>공격력 (<code>POW</code>)</strong>: $\text{반올림}(\text{STR} \times 0.6 + \text{DEX} \times 0.2 + \text{POT} \times 0.2) + \text{POW\_Bias}$
+  2. <strong>방어력 (<code>DEF</code>)</strong>: $+8$0
+  3. <strong>최대 체력 (<code>HP</code>)</strong>: $+8$1
+  4. <strong>회복력 (<code>REC</code>)</strong>: $+8$2
+  5. <strong>기술력 (<code>TEC</code>)</strong>: $+8$3<ul>
+<li>기력 호흡 정돈 쿨다운 연동: $+8$4
+  6. <strong>근성 (<code>GRT</code>)</strong>: $+8$5</li>
+</ul>
+</li>
+<li><strong>비의인화 9대 전투 기술 개화 및 4대 상성·슬롯 연동 (<code>통합 MVP v1.4.0</code> 기준)</strong>:</li>
+<li><strong>기술 풀 (총 9종)</strong>: 기본 공격 4종(<code>[공1] 전진 부리 속사</code>, <code>[공2] 낮은 발톱 할퀴기</code>, <code>[공3] 비상 발톱 급습</code>, <code>[공4] 광폭 발버둥 난타</code>) + 기본 방어 3종(<code>[방1] 깃털 부풀려 버티기</code>, <code>[방2] 납작 엎드리기</code>, <code>[방3] 맞발톱 쳐내기</code>) + <strong>특수 액션 2종(<code>[특공] 머리 잡아 바닥 찍기 (F33)</code>, <code>[특방] 머리 풀고 반격하기 (F34)</code>)</strong></li>
+<li><strong>4대 가위바위보 순환 상성</strong>: <code>[타격(공1/공2) ➔ 가드(방1) ➔ 잡기([특공] F33) ➔ 반격([특방] F34) ➔ 타격]</code> 순환 상성 및 피격자 잔여 HP별 3대 후속 플로우(HP=0 즉시 KO <code>13_Down_Land_60f</code> / HP&lt;20% 그로기 / HP≥20% 일반 넉다운 <code>15_Down_Land_30f</code> 후 2초 기상) 연계</li>
+<li><strong>훈련 개화 매핑</strong>: 훈련 누적 완수 시 연관 기술 확률 개화 (예: 통나무 타격 ➔ <code>[공2:낮은 발톱 할퀴기]</code>/<code>[특공:머리 잡아 바닥 찍기 F33]</code>, 과녁 정밀 ➔ <code>[공3:비상 발톱 급습]</code>/<code>[특방:머리 풀고 반격하기 F34]</code>, 깃털 수련 ➔ <code>[방1:깃털 부풀려 버티기]</code>, 외나무 ➔ <code>[방3:맞발톱 쳐내기]</code>)</li>
+<li><strong>슬롯 장착 및 외형 파츠</strong>: 선수 등급별 슬롯(일반 2개, 희귀 3개, 영웅 4개, 전설 5개) 내 자유 장착 및 단일 기본 리그(Rig) 기반 3단계 등급별 외형 파츠(볏/깃털/며느리발톱) 자동 적용</li>
+</ul>
+<hr />
+</section>
 <section id="sec-6">
-<h2>6. 2세대 교배 시스템 및 유전 메커니즘 (Breeding &amp; Genetics)</h2>
-<h3 id="sec-6-1">6.1 교배 자격 요건, 비용 및 생애 5회 교배 한도 제약</h3>
+<h2 id="6-2세대-교배-시스템-및-유전-메커니즘-breeding-and-genetics">6. 2세대 교배 시스템 및 유전 메커니즘 (Breeding &amp; Genetics)</h2>
+<h3 id="61-교배-자격-요건-비용-및-생애-5회-교배-한도-제약">6.1 교배 자격 요건, 비용 및 생애 5회 교배 한도 제약</h3>
 <ul>
-<li><strong>교배 자격 조건</strong>: 암수 닭 2두 보유 (레벨 10 이상 육성 완료), 상태: 정상(<code>IDLE</code>) 상태, 생애 교배 횟수: 각 닭당 <strong>5회 미만</strong> (<code>breeding_count &lt; 5</code>).</li>
-<li><strong>교배 소모 비용</strong>: 교배 토큰 1개 + <strong>5,000 Gold</strong>.</li>
-<li><strong>생애 최대 교배 횟수 상한 (Lifetime Limit)</strong>:
-  <ul>
-    <li>닭 1두당 평생 최대 <strong>5회</strong>까지만 교배 가능.</li>
-    <li>교배 1회 실행 완료 시 <code>breeding_count += 1</code> 가산 및 <strong>24시간 재교배 쿨다운(<code>BREEDING_COOLDOWN</code>)</strong> 발동.</li>
-    <li>5회 최대치 도달 시 영구 교배 은퇴 상태(<code>RETIRED</code>) 전환 (단, 경주/격투 경기 출전은 영구 유지 가능).</li>
-  </ul>
-</li>
+<li><strong>교배 자격 조건 (모바일·VIP 라운지 공통)</strong>:</li>
+<li>수탉(<code>ROOSTER</code>) 1두 + 암탉(<code>HEN</code>) 1두 보유 (부화 시 각 50% 확률 성별 결정)</li>
+<li>상태: 양측 모두 정상(<code>IDLE</code>) 상태 (훈련/출전/부상/교배 쿨다운 중 불가)</li>
+<li>생애 교배 횟수: 각 닭당 <strong>5회 미만</strong> (<code>breeding_count &lt; 5</code>)</li>
+<li><strong>교배 소모 비용 (유료 교배 정책)</strong>:</li>
+<li><strong>모바일 앱</strong>: 교배 토큰 1개 + <code>5,000 Gold</code> 또는 유료 재화(<code>Gem</code>) 결제</li>
+<li><strong>미국 VIP 라운지</strong>: <strong>유료 교배 전용</strong> — VIP 크레딧 또는 Gem 유료 결제 전용 (무료 교배 토큰 미지원, 교배 직후 유료 0초 즉시 부화 연계 가능)</li>
+<li><strong>생애 최대 교배 횟수 상한 (Lifetime Limit)</strong>:</li>
+<li>닭 1두당 평생 최대 <strong>5회</strong> 교배 가능 (<code>breeding_count &lt;= 5</code>)</li>
+<li>교배 1회 실행 완료 시 <code>breeding_count += 1</code> 가산, <code>Heritage Egg</code>(기본 부화 2시간/7,200초) 생성 및 <strong>24시간 재교배 쿨다운(<code>BREEDING_COOLDOWN</code>)</strong> 발동</li>
+<li>5회 최대치 도달 시 영구 교배 은퇴(<code>RETIRED</code>) 전환 (선수 능력치 및 경주/격투 경기 출전 자격 영구 유지)</li>
 </ul>
-
-<h3 id="sec-6-2">6.2 부모 스탯 기반 2세대 기본 스탯/잠재력 유전 공식</h3>
-<div class="formula-card"><div class="formula-title">1) 2세대 잠재력(POT) 유전 공식</div>
-<div class="formula-body">$$\text{자손 POT} = \text{Clamp}\left(\text{반올림}\left(\frac{\text{부 POT} + \text{모 POT}}{2}\r\r\r\right) + \text{RandomInteger}(-2, +5), \;\; 30, \;\; 100\r\r\r\right)$$</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[공식 설명]</span> 부모 잠재력 평균값에 -2 ~ +5의 유전 변이 난수 가산 (우수 혈통 교배 시 부모보다 최대 +5 높은 잠재력 돌파 가능).</div></div></div>
-
-<div class="formula-card"><div class="formula-title">2) 2세대 1차 기본 5대 스탯 상속 연산식</div>
-<div class="formula-body">$$\text{자손 스탯}_i = \text{Clamp}\left(\text{반올림}\left(\frac{\text{부 스탯}_i + \text{모 스탯}_i}{2} \times 0.70\r\r\r\right) + \text{RandomInteger}(-3, +3), \;\; 10, \;\; \text{자손 POT}\r\r\r\right)$$</div>
-<div class="formula-desc"><div class="formula-desc-item"><span class="tag">[공식 설명]</span> 부모 스탯 평균의 70%를 기초 스탯으로 인계받아 1세대보다 빠른 육성 기반 제공.</div></div></div>
-
-<h3 id="sec-6-3">6.3 외형(스킨/색상) 및 패시브 특성 유전 확률표</h3>
+<h3 id="62-부모-스탯-기반-2세대-기본-스탯잠재력-유전-공식-통합-mvp-단일-공식">6.2 부모 스탯 기반 2세대 기본 스탯/잠재력 유전 공식 <em>(통합 MVP 단일 공식)</em></h3>
+<ol>
+<li><strong>자손 잠재력(<code>POT</code>) 상한 유전 공식</strong>:</li>
+</ol>
+<div class="formula-card"><div class="formula-body">$$\text{자식 POT} = \text{Clamp}\left(\text{반올림}\left(\max(\text{부모A POT}, \;\; \text{부모B POT}) \times 1.05\r\r\r\r\right), \;\; 30, \;\; 100\r\r\r\r\right)$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 부모 중 더 높은 잠재력 수치에 <code>5%</code> 보너스(<code>1.05배</code>)를 곱하여 반올림한 뒤 30~100 범위로 제한</li>
+<li><strong>[계산 예시]</strong>: 부모A 잠재력 <code>70</code>, 부모B 잠재력 <code>80</code> 기준: $\text{반올림}(\max(70, 80) \times 1.05) = 80 \times 1.05 = \mathbf{84\text{ POT}}$ 확정</li>
+</ul>
+<ol start="2">
+<li><strong>자손 1차 기본 5대 스탯 (<code>STR/DEX/VIT/MEN/LCK</code>) 상속 연산식</strong>:</li>
+</ol>
+<div class="formula-card"><div class="formula-body">$$\text{자식 스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{부모A}_i \times 0.45 + \text{부모B}_i \times 0.45\r\r\r\r\right) + \text{난수}(-5, +10), \;\; 10, \;\; \text{자식 POT}\r\r\r\r\right)$$</div></div>
+<ul>
+<li><strong>[연산식 설명]</strong>: 부모 A, B 스탯의 각 45%를 합산한 90% 계승치에 <code>-5 ~ +10</code> 범위의 유전 변동 난수를 더하고, 최소 10에서 산출된 <code>자식 POT</code> 상한선 사이로 고정</li>
+<li><strong>[계산 예시]</strong>: 부모A 힘 <code>60</code>, 부모B 힘 <code>50</code>, 유전 난수 <code>+4</code>, <code>자식 POT 84</code> 기준: $\text{반올림}(60 \times 0.45 + 50 \times 0.45) + 4 = \text{반올림}(27 + 22.5) + 4 = 50 + 4 = \mathbf{54\text{ STR}}$ 확정</li>
+</ul>
+<h3 id="63-외형스킨색상-및-패시브-특성-유전-확률표">6.3 외형(스킨/색상) 및 패시브 특성 유전 확률표</h3>
 <div class="table-container"><table>
-<thead><tr><th>유전 항목</th><th style="text-align: center;">부(Father) 계승</th><th style="text-align: center;">모(Mother) 계승</th><th style="text-align: center;">돌연변이 신규 발현</th><th>비고</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">구분</th>
+<th style="text-align: center;">부(Father) 특성 상속</th>
+<th style="text-align: center;">모(Mother) 특성 상속</th>
+<th style="text-align: center;">돌연변이 / 믹스 변이</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>외형 깃털 색상</strong></td><td style="text-align: center;">45.0%</td><td style="text-align: center;">45.0%</td><td style="text-align: center;"><strong>10.0%</strong></td><td>신규 레어 색상(황금/흑요석) 돌연변이 출현</td></tr>
-<tr><td><strong>볏/부리 외형</strong></td><td style="text-align: center;">50.0%</td><td style="text-align: center;">50.0%</td><td style="text-align: center;">0.0%</td><td>부모 중 1두 외형 100% 승계</td></tr>
-<tr><td><strong>패시브 특성 슬롯 1</strong></td><td style="text-align: center;">70.0% (부 1특성)</td><td style="text-align: center;">20.0% (모 1특성)</td><td style="text-align: center;">10.0%</td><td>상위 등급 패시브로 돌연변이 업그레이드 가능</td></tr>
-<tr><td><strong>패시브 특성 슬롯 2</strong></td><td style="text-align: center;">20.0% (부 2특성)</td><td style="text-align: center;">70.0% (모 2특성)</td><td style="text-align: center;">10.0%</td><td>모계 우성 인계 반영</td></tr>
+<tr>
+<td style="text-align: center;"><strong>외형 파츠 / 텍스처 스킨</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>20.0%</strong> (믹스·희귀 변이 파츠/맵핑)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>주행 스타일 (Derby 6종)</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>20.0%</strong> (무작위 6종 스타일 변이)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>격투 스타일 (Pit 5종)</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>40.0%</strong></td>
+<td style="text-align: center;"><strong>20.0%</strong> (무작위 5종 스타일 변이)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>보유 패시브 · 전투 기술</strong></td>
+<td style="text-align: center;"><strong>50.0%</strong> (부모 보유 기술 각 50% 독립 계승)</td>
+<td style="text-align: center;"><strong>50.0%</strong> (부모 보유 기술 각 50% 독립 계승)</td>
+<td style="text-align: center;"><strong>15.0%</strong> (신규 히든 변이 기술 발현)</td>
+</tr>
 </tbody>
 </table></div>
+<hr />
 </section>
-
-<!-- 7. 칭호, 퀘스트 및 영구 업적 시스템 -->
 <section id="sec-7">
-<h2>7. 칭호, 퀘스트 및 영구 업적 시스템 (Titles &amp; Achievements)</h2>
-<h3 id="sec-7-1">7.1 칭호(Title) 4대 등급 구조 및 20종 마스터 데이터 명세표</h3>
+<h2 id="7-칭호-퀘스트-및-영구-업적-시스템-titles-and-achievements-모바일-앱-전용">7. 칭호, 퀘스트 및 영구 업적 시스템 (Titles &amp; Achievements) (모바일 앱 전용)</h2>
+<blockquote>
+<p><strong>플랫폼 적용 구분</strong>: 제7장(칭호 20종, 일일/주간 퀘스트, 영구 누적 업적 8종)은 <strong>모바일 스토어 앱 풀버전 전용</strong> 메타 리텐션 시스템이며, <strong>미국 VIP 라운지 버전에서는 제외(미반영)</strong> 처리됨.</p>
+</blockquote>
+<h3 id="71-칭호title-4대-등급-구조-및-20종-마스터-데이터-명세표">7.1 칭호(Title) 4대 등급 구조 및 20종 마스터 데이터 명세표</h3>
 <div class="table-container"><table>
-<thead><tr><th style="text-align: center;">No</th><th>칭호명</th><th style="text-align: center;">등급</th><th style="text-align: center;">카테고리</th><th>획득 조건</th><th>장착 시 패시브 효과</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">No</th>
+<th style="text-align: left;">칭호명</th>
+<th style="text-align: center;">등급</th>
+<th style="text-align: center;">카테고리</th>
+<th style="text-align: left;">획득 조건</th>
+<th style="text-align: left;">장착 시 패시브 효과</th>
+</tr>
+</thead>
 <tbody>
-<tr><td style="text-align: center;">1</td><td><strong><code>[병아리 감별사]</code></strong></td><td style="text-align: center;">일반</td><td style="text-align: center;">육성</td><td>알 부화 누적 10회 달성</td><td>알 부화 대기시간 <strong>-2%</strong> 단축</td></tr>
-<tr><td style="text-align: center;">2</td><td><strong><code>[열정의 조련사]</code></strong></td><td style="text-align: center;">일반</td><td style="text-align: center;">육성</td><td>선수 훈련 누적 30회 완료</td><td>훈련 소모 사료 <strong>-1개</strong> 절감</td></tr>
-<tr><td style="text-align: center;">3</td><td><strong><code>[외양간 주인]</code></strong></td><td style="text-align: center;">일반</td><td style="text-align: center;">육성</td><td>닭 5두 이상 동시 보유</td><td>닭장 피로도 자동 회복 속도 <strong>+5%</strong></td></tr>
-<tr><td style="text-align: center;">4</td><td><strong><code>[새벽의 사육사]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">육성</td><td>연속 7일 일일 훈련 완료</td><td>훈련 성공 시 스탯 상승치 <strong>+1</strong> 추가 확률 10%</td></tr>
-<tr><td style="text-align: center;">5</td><td><strong><code>[부화의 달인]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">육성</td><td>알 부화 누적 50회 달성</td><td>알 부화 대기시간 <strong>-5%</strong> 단축</td></tr>
-<tr><td style="text-align: center;">6</td><td><strong><code>[명문 가문]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">육성</td><td>2세대 교배 누적 10회 완료</td><td>교배 소모 골드 <strong>-10%</strong> 할인</td></tr>
-<tr><td style="text-align: center;">7</td><td><strong><code>[스파 테라피스트]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">육성</td><td>프리미엄 스파 이용 20회</td><td>스파 이용 비용 <strong>-10%</strong> 할인</td></tr>
-<tr><td style="text-align: center;">8</td><td><strong><code>[황금 둥지]</code></strong></td><td style="text-align: center;">영웅</td><td style="text-align: center;">육성</td><td>Legendary 등급 알 부화 3회</td><td>부화 시 잠재력(POT) 최소값 <strong>+3</strong> 보정</td></tr>
-<tr><td style="text-align: center;">9</td><td><strong><code>[전설의 조련사]</code></strong></td><td style="text-align: center;">영웅</td><td style="text-align: center;">육성</td><td>선수 훈련 누적 300회 완료</td><td>훈련 시간 <strong>-15%</strong> 단축</td></tr>
-<tr><td style="text-align: center;">10</td><td><strong><code>[신의 손]</code></strong></td><td style="text-align: center;"><strong>전설</strong></td><td style="text-align: center;">육성</td><td>POT 95 이상 선수 3두 육성</td><td>교배 시 유전 돌연변이 확률 <strong>+5%</strong></td></tr>
-<tr><td style="text-align: center;">11</td><td><strong><code>[트랙의 루키]</code></strong></td><td style="text-align: center;">일반</td><td style="text-align: center;">경주</td><td>더비 레이스 최초 1회 출전</td><td>없음 (치장용)</td></tr>
-<tr><td style="text-align: center;">12</td><td><strong><code>[질주의 화신]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">경주</td><td>더비 레이스 누적 30회 우승</td><td>경주 승리 상금 <strong>+3%</strong> 추가</td></tr>
-<tr><td style="text-align: center;">13</td><td><strong><code>[더비 마스터]</code></strong></td><td style="text-align: center;"><strong>전설</strong></td><td style="text-align: center;">경주</td><td>더비 레이스 누적 100회 우승</td><td>경주 승리 상금 <strong>+5%</strong>, 전용 오라 이펙트</td></tr>
-<tr><td style="text-align: center;">14</td><td><strong><code>[링의 도전자]</code></strong></td><td style="text-align: center;">일반</td><td style="text-align: center;">격투</td><td>럼블 핏 최초 1회 출전</td><td>없음 (치장용)</td></tr>
-<tr><td style="text-align: center;">15</td><td><strong><code>[KO 펀처]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">격투</td><td>럼블 핏 1라운드 KO승 20회</td><td>격투 승리 파이트 머니 <strong>+3%</strong></td></tr>
-<tr><td style="text-align: center;">16</td><td><strong><code>[핏의 지배자]</code></strong></td><td style="text-align: center;"><strong>전설</strong></td><td style="text-align: center;">격투</td><td>럼블 핏 누적 100승 달성</td><td>격투 승리 파이트 머니 <strong>+5%</strong>, 전용 뱃지</td></tr>
-<tr><td style="text-align: center;">17</td><td><strong><code>[베팅의 귀재]</code></strong></td><td style="text-align: center;">희귀</td><td style="text-align: center;">베팅</td><td>단일 베팅 당첨 배당 5.0배 이상</td><td>베팅 적중 환급금 <strong>+1%</strong> 가산</td></tr>
-<tr><td style="text-align: center;">18</td><td><strong><code>[큰손]</code></strong></td><td style="text-align: center;">영웅</td><td style="text-align: center;">경제</td><td>거래소 누적 거래액 50만 Gold</td><td>거래소 수수료 8% ➔ <strong>7%</strong> 감면</td></tr>
-<tr><td style="text-align: center;">19</td><td><strong><code>[골드 리치]</code></strong></td><td style="text-align: center;">영웅</td><td style="text-align: center;">경제</td><td>보유 골드 1,000,000 Gold 달성</td><td>일일 퀘스트 골드 보상 <strong>+10%</strong></td></tr>
-<tr><td style="text-align: center;">20</td><td><strong><code>[올라운더]</code></strong></td><td style="text-align: center;"><strong>전설</strong></td><td style="text-align: center;">통합</td><td>육성·경주·격투 마스터 칭호 보유</td><td>전 모드 경험치 <strong>+10%</strong>, 황금 닉네임 표출</td></tr>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong><code>[초보 사육사]</code></strong></td>
+<td style="text-align: center;">일반</td>
+<td style="text-align: center;">육성</td>
+<td style="text-align: left;">최초 1마리 닭 부화 완료</td>
+<td style="text-align: left;">없음 (치장용)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong><code>[부화의 달인]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">육성</td>
+<td style="text-align: left;">알 누적 50회 부화 성공</td>
+<td style="text-align: left;">알 부화 터치 미니게임 판정 범위 +5%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong><code>[명문 혈통]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">육성</td>
+<td style="text-align: left;">2세대 교배로 잠재력 90 이상 닭 획득</td>
+<td style="text-align: left;">2세대 교배 쿨다운 시간 -10%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong><code>[열혈 트레이너]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">훈련</td>
+<td style="text-align: left;">훈련 누적 100회 완수</td>
+<td style="text-align: left;">훈련 소모 사료(Feed) 1개 고정 할인</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong><code>[근성의 화신]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">훈련</td>
+<td style="text-align: left;">단일 닭 6대 스탯 합산 400 돌파</td>
+<td style="text-align: left;">모든 훈련 대기시간 -5% 단축</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;"><strong><code>[스파 VIP]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">케어</td>
+<td style="text-align: left;">프리미엄 스파 누적 20회 이용</td>
+<td style="text-align: left;">스파 이용 골드/젬 비용 5% 할인</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: left;"><strong><code>[첫 발걸음]</code></strong></td>
+<td style="text-align: center;">일반</td>
+<td style="text-align: center;">경주</td>
+<td style="text-align: left;">더비 레이스 최초 1회 출전</td>
+<td style="text-align: left;">없음 (치장용)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: left;"><strong><code>[광속의 질주]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">경주</td>
+<td style="text-align: left;">더비 레이스 누적 50회 우승(1위)</td>
+<td style="text-align: left;">경주 모드 획득 상금(Gold) +3%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: left;"><strong><code>[추입의 마술사]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">경주</td>
+<td style="text-align: left;">'추입' 주행 스타일로 누적 30회 1위</td>
+<td style="text-align: left;">추입 스타일 편성 시 라스트 스퍼트 +1</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;"><strong><code>[더비의 제왕]</code></strong></td>
+<td style="text-align: center;"><strong>전설</strong></td>
+<td style="text-align: center;">경주</td>
+<td style="text-align: left;">모바일 챔피언십 리그 주간 1위 달성</td>
+<td style="text-align: left;">경주 모드 획득 상금 +5%, 프로필 특수 이펙트</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;"><strong><code>[링의 도전자]</code></strong></td>
+<td style="text-align: center;">일반</td>
+<td style="text-align: center;">격투</td>
+<td style="text-align: left;">럼블 핏 최초 1회 출전</td>
+<td style="text-align: left;">없음 (치장용)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;"><strong><code>[KO 펀처]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">격투</td>
+<td style="text-align: left;">럼블 핏 1라운드 KO승 누적 20회 달성</td>
+<td style="text-align: left;">격투 승리 파이트 머니 +3%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;"><strong><code>[철벽의 방패]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">격투</td>
+<td style="text-align: left;">누적 100 라운드 이상 노그로기(No-Groggy) 승리</td>
+<td style="text-align: left;">격투 모드 시작 시 닭 최대체력 +20</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;"><strong><code>[핏의 지배자]</code></strong></td>
+<td style="text-align: center;"><strong>전설</strong></td>
+<td style="text-align: center;">격투</td>
+<td style="text-align: left;">럼블 핏 누적 100승 달성</td>
+<td style="text-align: left;">격투 승리 파이트 머니 +5%, 프로필 특수 이펙트</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: left;"><strong><code>[적중의 신]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">베팅</td>
+<td style="text-align: left;">단일 경기 10.0배 이상 배당 적중</td>
+<td style="text-align: left;">온라인 베팅 정산 수수료 1% 감면</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: left;"><strong><code>[인생 역전]</code></strong></td>
+<td style="text-align: center;"><strong>전설</strong></td>
+<td style="text-align: center;">베팅</td>
+<td style="text-align: left;">단일 경기 50.0배 이상 고배당 적중</td>
+<td style="text-align: left;">온라인 베팅 정산 수수료 2% 감면</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>17</strong></td>
+<td style="text-align: left;"><strong><code>[큰손]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">경제</td>
+<td style="text-align: left;">유저 거래소 누적 거래액 100만 Gold 돌파</td>
+<td style="text-align: left;">거래소 거래 체결 수수료 8% ➔ 7% 인하</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: left;"><strong><code>[성실한 농장주]</code></strong></td>
+<td style="text-align: center;">희귀</td>
+<td style="text-align: center;">출석</td>
+<td style="text-align: left;">연속 출석 30일 달성</td>
+<td style="text-align: left;">일일 출석 무료 사료 지급량 +5개</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>19</strong></td>
+<td style="text-align: left;"><strong><code>[컬렉터]</code></strong></td>
+<td style="text-align: center;">영웅</td>
+<td style="text-align: center;">수집</td>
+<td style="text-align: left;">65종 알 도감 중 40종 이상 등록</td>
+<td style="text-align: left;">가차 뽑기 시 희귀(Rare) 이상 확률 +1%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>20</strong></td>
+<td style="text-align: left;"><strong><code>[불멸의 럼블러]</code></strong></td>
+<td style="text-align: center;"><strong>전설</strong></td>
+<td style="text-align: center;">마스터</td>
+<td style="text-align: left;">1~19번 칭호 중 15개 이상 수집 완료</td>
+<td style="text-align: left;">전 모드 골드 획득 +5%, 전용 골드 테두리</td>
+</tr>
 </tbody>
 </table></div>
-
-<h3 id="sec-7-2">7.2 일일 퀘스트 5종 및 주간 퀘스트 4종 명세표</h3>
-<div class="table-container"><table>
-<thead><tr><th>퀘스트 ID</th><th>퀘스트 명칭</th><th>분류</th><th>달성 조건</th><th>지급 보상</th></tr></thead>
-<tbody>
-<tr><td><strong>D-1</strong></td><td><strong>아침 모이 주기</strong></td><td>일일</td><td>선수 영양 사료 급여 2회</td><td>500 Gold + 사료 5개</td></tr>
-<tr><td><strong>D-2</strong></td><td><strong>체력 단련의 날</strong></td><td>일일</td><td>선수 훈련 3회 완료</td><td>1,000 Gold + 5 Gem</td></tr>
-<tr><td><strong>D-3</strong></td><td><strong>생명의 신비</strong></td><td>일일</td><td>알 1회 부화 완료</td><td>1,500 Gold</td></tr>
-<tr><td><strong>D-4</strong></td><td><strong>링 위의 결투</strong></td><td>일일</td><td>더비 레이스 또는 럼블 핏 출전 2회</td><td>2,000 Gold + 10 Gem</td></tr>
-<tr><td><strong>D-5</strong></td><td><strong>농장 청소</strong></td><td>일일</td><td>일일 퀘스트 4종 모두 완료</td><td><strong>3,000 Gold + 20 Gem</strong></td></tr>
-<tr><td><strong>W-1</strong></td><td><strong>명문 농장의 길</strong></td><td>주간</td><td>선수 훈련 누적 25회 완료</td><td>10,000 Gold + 50 Gem</td></tr>
-<tr><td><strong>W-2</strong></td><td><strong>새 생명의 축복</strong></td><td>주간</td><td>알 부화 누적 7회 완료</td><td>15,000 Gold + 교배 토큰 1개</td></tr>
-<tr><td><strong>W-3</strong></td><td><strong>연승 가도</strong></td><td>주간</td><td>경주 또는 격투 경기 10회 승리</td><td>20,000 Gold + 80 Gem</td></tr>
-<tr><td><strong>W-4</strong></td><td><strong>주간 결산 마스터</strong></td><td>주간</td><td>주간 퀘스트 3종 완료</td><td><strong>30,000 Gold + 150 Gem</strong></td></tr>
-</tbody>
-</table></div>
-
-<h3 id="sec-7-3">7.3 영구 누적 업적 8종 명세표</h3>
-<div class="table-container"><table>
-<thead><tr><th>업적 ID</th><th>업적 명칭</th><th>단계별 목표</th><th>단계별 보상</th></tr></thead>
-<tbody>
-<tr><td><strong>A-1</strong></td><td><strong>대농장주</strong></td><td>1단계(10두) / 2단계(30두) / 3단계(50두 등록)</td><td>10,000 G / 30,000 G + 50 Gem / 100,000 G + 200 Gem</td></tr>
-<tr><td><strong>A-2</strong></td><td><strong>부화의 대가</strong></td><td>1단계(20회) / 2단계(100회) / 3단계(300회 부화)</td><td>5,000 G / 20,000 G + 100 Gem / 50,000 G + 300 Gem</td></tr>
-<tr><td><strong>A-3</strong></td><td><strong>피지컬 마스터</strong></td><td>선수 1차 스탯 90 이상 1개 / 3개 / 5개 달성</td><td>10,000 G / 50,000 G + 100 Gem / 200,000 G + 500 Gem</td></tr>
-<tr><td><strong>A-4</strong></td><td><strong>우수 혈통 개척자</strong></td><td>2세대 교배 5회 / 20회 / 50회 완료</td><td>교배 토큰 2개 / 토큰 5개 + 100 Gem / 전설 알 1개</td></tr>
-<tr><td><strong>A-5</strong></td><td><strong>무패의 챔피언</strong></td><td>경주/격투 경기 10승 / 50승 / 200승 달성</td><td>10,000 G / 50,000 G + 100 Gem / 200,000 G + 500 Gem</td></tr>
-<tr><td><strong>A-6</strong></td><td><strong>거래의 달인</strong></td><td>거래소 알 판매 완료 5회 / 20회 / 50회</td><td>5,000 G / 20,000 G / 50,000 G + 수수료 영구 할인</td></tr>
-<tr><td><strong>A-7</strong></td><td><strong>온천 매니아</strong></td><td>프리미엄 스파 이용 10회 / 30회 / 100회</td><td>무료 스파 이용권 2장 / 5장 / 20장</td></tr>
-<tr><td><strong>A-8</strong></td><td><strong>마스터 콜렉터</strong></td><td>칭호 5개 / 10개 / 18개 이상 수집</td><td>20,000 G / 50,000 G + 100 Gem / <strong>전설 칭호 [올라운더]</strong></td></tr>
-</tbody>
-</table></div>
-</section>
-
-<!-- 8. 데이터베이스 논리 스키마 및 통신 API 규격 -->
-<section id="sec-8">
-<h2>8. 데이터베이스 논리 스키마 및 통신 API 규격 (Database &amp; API Specification)</h2>
-<h3 id="sec-8-1">8.1 데이터베이스 분리 구성표 및 럼블 팜 관련 7개 엔티티 논리 스키마</h3>
-<div class="table-container"><table>
-<thead><tr><th>엔티티명</th><th>물리 테이블명</th><th>소속 DB</th><th>역할 및 저장 데이터 명세</th></tr></thead>
-<tbody>
-<tr><td><strong>선수 기본 정보</strong></td><td><code>t_rooster_farm</code></td><td>Mobile App DB</td><td>선수 고유 ID, 이름, 세대, 1차 기본 5대 스탯, POT, 10대 상태 코드, 생애 교배 횟수</td></tr>
-<tr><td><strong>알 인벤토리</strong></td><td><code>t_egg_inventory</code></td><td>Mobile App DB</td><td>보유 알 ID, 등급(Natural~Legendary), 부화 개시 일시, 남은 초, 인큐베이터 슬롯 번호</td></tr>
-<tr><td><strong>훈련 이력</strong></td><td><code>t_farm_training</code></td><td>Mobile App DB</td><td>훈련 세션 ID, 대상 선수 ID, 종목 코드, 소모 재화, 시작/종료 일시, 상승 스탯 결과</td></tr>
-<tr><td><strong>교배 이력</strong></td><td><code>t_breeding_history</code></td><td>Mobile App DB</td><td>교배 세션 ID, 부 Rooster ID, 모 Rooster ID, 생성 알 ID, 적용 유전 변이치</td></tr>
-<tr><td><strong>스파 이용 이력</strong></td><td><code>t_spa_history</code></td><td>Mobile App DB</td><td>이용 세션 ID, 대상 선수 ID, 소모 재화(Gem/Gold), 부상 완치 여부, 컨디션 버프 만료일</td></tr>
-<tr><td><strong>알 거래소 등록</strong></td><td><code>t_market_egg_listing</code></td><td>Online Web DB</td><td>거래 매물 ID, 판매자 User ID, 알 정보, 등록 가격, 등록 일시, 거래 상태(대기/완료/취소)</td></tr>
-<tr><td><strong>유저 보유 칭호</strong></td><td><code>t_user_titles</code></td><td>Mobile App DB</td><td>User ID, 칭호 ID, 해금 일시, 현재 장착 여부 플래그</td></tr>
-</tbody>
-</table></div>
-
-<h3 id="sec-8-2">8.2 핵심 REST API 엔드포인트 명세 (육성 관련 8종)</h3>
-<div class="table-container"><table>
-<thead><tr><th style="text-align: center;">메서드</th><th>엔드포인트 URI</th><th>기능 설명</th><th>주요 Request Payload</th><th>주요 Response 데이터</th></tr></thead>
-<tbody>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/egg/incubate</code></td><td>인큐베이터 알 안치</td><td><code>egg_id</code>, <code>slot_index</code></td><td><code>incubate_start_time</code>, <code>duration_sec</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/egg/speedup</code></td><td>터치 미니게임 가속</td><td><code>egg_id</code>, <code>tap_count</code></td><td><code>reduced_seconds</code>, <code>remain_seconds</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/egg/hatch</code></td><td>알 부화 완료 및 스탯 생성</td><td><code>egg_id</code></td><td><code>rooster_id</code>, <code>stats_1st</code>, <code>pot</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/rooster/train</code></td><td>선수 훈련 개시</td><td><code>rooster_id</code>, <code>training_type</code></td><td><code>cost</code>, <code>finish_at</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/rooster/train/complete</code></td><td>훈련 완료 및 스탯 가산</td><td><code>rooster_id</code>, <code>session_id</code></td><td><code>stat_gains</code>, <code>updated_stats</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/rooster/spa</code></td><td>프리미엄 스파 입욕 치유</td><td><code>rooster_id</code>, <code>pay_currency</code></td><td><code>fatigue_reset</code>, <code>injured_healed</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/breeding/start</code></td><td>2세대 교배 실행</td><td><code>sire_id</code>, <code>dam_id</code></td><td><code>child_egg_id</code>, <code>cooldown_until</code></td></tr>
-<tr><td style="text-align: center;"><code>POST</code></td><td><code>/api/v1/farm/market/buy</code></td><td>거래소 알 구매 체결</td><td><code>listing_id</code></td><td><code>egg_id</code>, <code>settled_gold</code>, <code>fee</code></td></tr>
-</tbody>
-</table></div>
-
-<h3 id="sec-8-3">8.3 실시간 WebSocket 이벤트 명세 (육성 3종)</h3>
-<div class="table-container"><table>
-<thead><tr><th>이벤트 토픽 (Topic)</th><th>방향</th><th>페이로드 핵심 필드</th><th>클라이언트 처리 내용</th></tr></thead>
-<tbody>
-<tr><td><code>farm:egg_ready</code></td><td>Server ➔ Client</td><td><code>egg_id</code>, <code>slot_index</code>, <code>timestamp</code></td><td>부화 완료 이펙트 재생 및 선수 등록 버튼 활성화</td></tr>
-<tr><td><code>farm:training_done</code></td><td>Server ➔ Client</td><td><code>rooster_id</code>, <code>training_type</code>, <code>gains</code></td><td>훈련 완료 축하 팝업 표출 및 스탯 UI 실시간 갱신</td></tr>
-<tr><td><code>farm:market_trade</code></td><td>Server ➔ Client</td><td><code>listing_id</code>, <code>buyer_id</code>, <code>gold_amount</code></td><td>알 판매 체결 알림 토스트 출력 및 골드 계정 실시간 정산</td></tr>
-</tbody>
-</table></div>
-</section>
-
-<!-- 9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 -->
-<section id="sec-9">
-<h2>9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 (UI/UX &amp; Sound Specification)</h2>
-<h3 id="sec-9-1">9.1 메인 팜 5대 핵심 공간 레이아웃</h3>
-<div class="table-container"><table>
-<thead><tr><th style="text-align: center;">공간 명칭</th><th style="text-align: center;">배치 영역</th><th>역할 및 오브젝트 인터랙션 명세</th></tr></thead>
-<tbody>
-<tr><td style="text-align: center;"><strong>1. 중앙 닭장 (Coop)</strong></td><td style="text-align: center;">화면 정중앙</td><td>선수 닭들의 자유 배회 및 휴식 공간. 터치 시 닭 상태창 및 피로도 툴팁 출력</td></tr>
-<tr><td style="text-align: center;"><strong>2. 부화장 (Hatchery)</strong></td><td style="text-align: center;">화면 좌측 상단</td><td>인큐베이터 슬롯(기본 3개, 최대 6개). 알 거치, 타이머 표시 및 터치 가속 미니게임</td></tr>
-<tr><td style="text-align: center;"><strong>3. 훈련장 (Gym)</strong></td><td style="text-align: center;">화면 우측 상단</td><td>8대 훈련 기구(통나무, 타이어, 모래언덕 등). 훈련 중 닭의 익살스러운 운동 애니메이션 연출</td></tr>
-<tr><td style="text-align: center;"><strong>4. 힐링 스파 (Spa)</strong></td><td style="text-align: center;">화면 좌측 하단</td><td>온천 욕조 및 수의사 데스크. 피로 완충 입욕 및 부상 깁스 닭 치료 연출</td></tr>
-<tr><td style="text-align: center;"><strong>5. 번식 둥지 (Nest)</strong></td><td style="text-align: center;">화면 우측 하단</td><td>우수 혈통 암수 닭 안치 및 교배 둥지. 하트 이펙트와 함께 2세대 알 산란 연출</td></tr>
-</tbody>
-</table></div>
-
-<h3 id="sec-9-2">9.2 조작 팝업 UI/UX 인터랙션 및 오류 예외 처리</h3>
+<h3 id="72-일일-퀘스트-5종-및-주간-퀘스트-4종-명세표">7.2 일일 퀘스트 5종 및 주간 퀘스트 4종 명세표</h3>
 <ul>
-<li><strong>부화 연출 (Hatch UX)</strong>: 10초 미니게임 완료 시 껍질에 금이 가는 3단계 크랙 애니메이션 (<code>SFX_EGG_CRACK</code>). 알이 깨지며 병아리 탄생 모션 ➔ 1차 피지컬 스탯 카드 롤링 연출 표출.</li>
-<li><strong>6대 예외 및 오류 처리</strong>:
-  <ul>
-    <li>부화 슬롯 가득 참: "인큐베이터 슬롯 부족. 슬롯 확장 또는 부화 완료 알 우선 수령 필요" 안내 팝업 표출.</li>
-    <li>사료/골드 부족: 훈련 시작 차단 및 즉시 상점 충전 모달 유도.</li>
-    <li>부상 닭 출전 시도: "부상 상태 선수 출전 불가. 스파 치료 우선 진행 필요" 안내 팝업 표출 및 차단.</li>
-    <li>교배 한도 초과: "생애 5회 교배 한도 소진 은퇴 종계" 안내 경고 표출.</li>
-    <li>네트워크 단절 중 훈련 완료: 로컬 타이머 완료 시 서버 재접속 즉시 멱등성 검증 후 스탯 동기화.</li>
-  </ul>
-</li>
+<li><strong>일일 퀘스트 (매일 00:00 KST 초기화 / 올클리어 시 보석 30 Gem + 무료 스탬프 1개 + 3,000 Gold)</strong>:</li>
 </ul>
-
-<h3 id="sec-9-3">9.3 럼블 팜 전용 배경음악(BGM) 2종 및 효과음(SFX-Farm) 10종 명세표</h3>
 <div class="table-container"><table>
-<thead><tr><th>사운드 큐 식별자</th><th>음원 파일명</th><th style="text-align: center;">템포 / 루프</th><th>연출 목적 및 앰비언스 설명</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">No</th>
+<th style="text-align: left;">퀘스트 명칭</th>
+<th style="text-align: left;">퀘스트 목표 및 달성 조건</th>
+<th style="text-align: left;">개별 지급 보상</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong><code>BGM_FARM_MAIN</code></strong></td><td><code>bgm_farm_main.ogg</code></td><td style="text-align: center;">102 BPM / 무한루프</td><td>평화롭고 따뜻한 어쿠스틱 기타/우쿨렐레 기반 목가적 농장 일상 테마</td></tr>
-<tr><td><strong><code>BGM_FARM_MINIGAME</code></strong></td><td><code>bgm_farm_minigame.ogg</code></td><td style="text-align: center;">138 BPM / 10초루프</td><td>부화 가속 미니게임 진행 시 긴장감과 재미를 주는 경쾌한 타악기 리듬 테마</td></tr>
+<tr>
+<td style="text-align: center;"><strong>D-1</strong></td>
+<td style="text-align: left;"><strong>농장 출근 도장</strong></td>
+<td style="text-align: left;">게임 로비 일일 1회 접속</td>
+<td style="text-align: left;">사료(Feed) 15개 + 1,000 Gold</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D-2</strong></td>
+<td style="text-align: left;"><strong>체력 단련의 시간</strong></td>
+<td style="text-align: left;">닭 캐릭터 훈련 누적 3회 실행</td>
+<td style="text-align: left;">사료(Feed) 20개 + 1,500 Gold</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D-3</strong></td>
+<td style="text-align: left;"><strong>트랙 위 질주</strong></td>
+<td style="text-align: left;">더비 레이스(경주) 누적 2회 출전</td>
+<td style="text-align: left;">2,000 Gold + 10 Gem</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D-4</strong></td>
+<td style="text-align: left;"><strong>링 위의 결투</strong></td>
+<td style="text-align: left;">럼블 핏(격투) 누적 2회 출전</td>
+<td style="text-align: left;">2,000 Gold + 10 Gem</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>D-5</strong></td>
+<td style="text-align: left;"><strong>승부사의 촉</strong></td>
+<td style="text-align: left;">경주 또는 격투 무료 승자 예측 1회 참여</td>
+<td style="text-align: left;">1,500 Gold + 사료 10개</td>
+</tr>
 </tbody>
 </table></div>
-
+<ul>
+<li><strong>주간 퀘스트 (매주 월요일 00:00 KST 초기화 / 완주 보너스: 고급 알 1개 + 100 Gem + 20,000 Gold)</strong>:</li>
+</ul>
 <div class="table-container"><table>
-<thead><tr><th>사운드 큐 식별자</th><th>음원 파일명</th><th style="text-align: center;">볼륨</th><th style="text-align: center;">재생 채널</th><th>연출 트리거 및 설명</th></tr></thead>
+<thead>
+<tr>
+<th style="text-align: center;">No</th>
+<th style="text-align: left;">퀘스트 명칭</th>
+<th style="text-align: left;">퀘스트 목표 및 달성 조건</th>
+<th style="text-align: left;">개별 지급 보상</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong><code>SFX_EGG_CRACK</code></strong></td><td><code>sfx_egg_crack.ogg</code></td><td style="text-align: center;">0.85</td><td style="text-align: center;">SFX</td><td>인큐베이터 알 터치 시 껍질에 금이 가는 소리</td></tr>
-<tr><td><strong><code>SFX_CHICK_CHIRP</code></strong></td><td><code>sfx_chick_chirp.ogg</code></td><td style="text-align: center;">0.90</td><td style="text-align: center;">SFX</td><td>부화 성공 즉시 귀여운 병아리 탄생 울음소리</td></tr>
-<tr><td><strong><code>SFX_TRAIN_PUNCH</code></strong></td><td><code>sfx_train_punch.ogg</code></td><td style="text-align: center;">0.80</td><td style="text-align: center;">SFX</td><td>훈련장에서 통나무/타이어 타격 훈련 시 타격음</td></tr>
-<tr><td><strong><code>SFX_TRAIN_SUCCESS</code></strong></td><td><code>sfx_train_success.ogg</code></td><td style="text-align: center;">0.85</td><td style="text-align: center;">SFX</td><td>훈련 완료 시 스탯 상승 축하 나팔 연출</td></tr>
-<tr><td><strong><code>SFX_SPA_WATER</code></strong></td><td><code>sfx_spa_water.ogg</code></td><td style="text-align: center;">0.75</td><td style="text-align: center;">SFX</td><td>프리미엄 스파 입욕 시 따뜻한 온천 물소리</td></tr>
-<tr><td><strong><code>SFX_BREED_HEART</code></strong></td><td><code>sfx_breed_heart.ogg</code></td><td style="text-align: center;">0.85</td><td style="text-align: center;">SFX</td><td>2세대 교배 완료 시 하트 이펙트 및 탄생 팡파르</td></tr>
-<tr><td><strong><code>SFX_MARKET_BELL</code></strong></td><td><code>sfx_market_bell.ogg</code></td><td style="text-align: center;">0.80</td><td style="text-align: center;">SFX</td><td>거래소 알 판매 체결 또는 거래 완료 알림 벨</td></tr>
-<tr><td><strong><code>SFX_FEED_EAT</code></strong></td><td><code>sfx_feed_eat.ogg</code></td><td style="text-align: center;">0.75</td><td style="text-align: center;">SFX</td><td>영양 사료 급여 시 모이 쪼아먹는 효과음</td></tr>
-<tr><td><strong><code>SFX_POTENTIAL_MAX</code></strong></td><td><code>sfx_potential_max.ogg</code></td><td style="text-align: center;">0.90</td><td style="text-align: center;">SFX</td><td>훈련으로 잠재력 상한선 도달 시 특수 차임벨</td></tr>
-<tr><td><strong><code>SFX_TITLE_UNLOCK</code></strong></td><td><code>sfx_title_unlock.ogg</code></td><td style="text-align: center;">0.95</td><td style="text-align: center;">SFX</td><td>신규 칭호 해금 시 웅장한 오케스트라 팡파르</td></tr>
+<tr>
+<td style="text-align: center;"><strong>W-1</strong></td>
+<td style="text-align: left;"><strong>엘리트 육성가</strong></td>
+<td style="text-align: left;">닭 캐릭터 훈련 누적 20회 완수</td>
+<td style="text-align: left;">사료 100개 + 10,000 Gold</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>W-2</strong></td>
+<td style="text-align: left;"><strong>더비 레이스 정복자</strong></td>
+<td style="text-align: left;">더비 레이스 1위(우승) 누적 10회 달성</td>
+<td style="text-align: left;">50 Gem + 15,000 Gold</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>W-3</strong></td>
+<td style="text-align: left;"><strong>링의 파이터</strong></td>
+<td style="text-align: left;">럼블 핏 승리 누적 10회 달성</td>
+<td style="text-align: left;">50 Gem + 15,000 Gold</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>W-4</strong></td>
+<td style="text-align: left;"><strong>알 부화 전문가</strong></td>
+<td style="text-align: left;">인큐베이터 부화 누적 5회 성공</td>
+<td style="text-align: left;">고급 알(Superior) 티켓 1장</td>
+</tr>
 </tbody>
 </table></div>
+<h3 id="73-영구-누적-업적-8종-명세표">7.3 영구 누적 업적 8종 명세표</h3>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">No</th>
+<th style="text-align: left;">업적 명칭</th>
+<th style="text-align: left;">1단계 목표 및 보상</th>
+<th style="text-align: left;">2단계 목표 및 보상</th>
+<th style="text-align: left;">3단계 (최종) 목표 및 보상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>A-1</strong></td>
+<td style="text-align: left;"><strong>대규모 양계장</strong></td>
+<td style="text-align: left;">닭 5마리 보유 (5,000 G)</td>
+<td style="text-align: left;">닭 15마리 보유 (15,000 G + 50 Gem)</td>
+<td style="text-align: left;">닭 30마리 보유 (50,000 G + 200 Gem)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-2</strong></td>
+<td style="text-align: left;"><strong>황금 알의 기적</strong></td>
+<td style="text-align: left;">고급 알 1회 부화 (30 Gem)</td>
+<td style="text-align: left;">희귀 알 1회 부화 (100 Gem)</td>
+<td style="text-align: left;">전설 알 1회 부화 (500 Gem + 전설 알 1장)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-3</strong></td>
+<td style="text-align: left;"><strong>스피드 스타</strong></td>
+<td style="text-align: left;">경주 10회 우승 (10,000 G)</td>
+<td style="text-align: left;">경주 50회 우승 (50,000 G + 100 Gem)</td>
+<td style="text-align: left;">경주 200회 우승 (200,000 G + 500 Gem)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-4</strong></td>
+<td style="text-align: left;"><strong>무패의 파이터</strong></td>
+<td style="text-align: left;">격투 10회 승리 (10,000 G)</td>
+<td style="text-align: left;">격투 50회 승리 (50,000 G + 100 Gem)</td>
+<td style="text-align: left;">격투 200회 승리 (200,000 G + 500 Gem)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-5</strong></td>
+<td style="text-align: left;"><strong>교배의 마술사</strong></td>
+<td style="text-align: left;">2세대 1회 교배 (5,000 G)</td>
+<td style="text-align: left;">2세대 10회 교배 (30,000 G + 50 Gem)</td>
+<td style="text-align: left;">2세대 50회 교배 (100,000 G + 300 Gem)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-6</strong></td>
+<td style="text-align: left;"><strong>백만장자</strong></td>
+<td style="text-align: left;">누적 10만 Gold 보유 (50 Gem)</td>
+<td style="text-align: left;">누적 100만 Gold 보유 (300 Gem)</td>
+<td style="text-align: left;">누적 1,000만 Gold 보유 (1,000 Gem + [황금 양계장] 전용 테마 스킨)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-7</strong></td>
+<td style="text-align: left;"><strong>명예 수집가</strong></td>
+<td style="text-align: left;">칭호 3개 획득 (30 Gem)</td>
+<td style="text-align: left;">칭호 10개 획득 (150 Gem)</td>
+<td style="text-align: left;">칭호 20개 전수 획득 (1,000 Gem + 전설 칭호)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>A-8</strong></td>
+<td style="text-align: left;"><strong>온천 매니아</strong></td>
+<td style="text-align: left;">스파 5회 이용 (사료 50개)</td>
+<td style="text-align: left;">스파 20회 이용 (20,000 G + 50 Gem)</td>
+<td style="text-align: left;">스파 100회 이용 (100,000 G + 300 Gem)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
 </section>
-
-</main><div class="modal-overlay" id="csv-modal" onclick="closeModalOnBackdrop(event)"><div class="modal-container"><div class="modal-header"><div class="modal-title" id="modal-title">📊 마스터 데이터 뷰어</div><button class="modal-close-btn" onclick="closeModal()">&times;</button></div><div class="modal-toolbar"><input type="text" id="modal-search" placeholder="테이블 내 실시간 검색..." onkeyup="filterModalTable()"><span id="modal-row-count" style="font-size: 0.8rem; color: var(--text-muted);"></span></div><div class="modal-body" id="modal-table-container"></div><div class="modal-footer"><button class="btn-csv" id="modal-copy-btn">📋 클립보드 복사</button><button class="btn-csv primary" id="modal-download-btn">💾 CSV 다운로드</button></div></div></div><div class="toast" id="toast"><span>ℹ️</span><span id="toast-msg">알림 메시지</span></div><script>const MASTER_CSV_DATA = {"csv03": "﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),격투 스타일 (Fight Style),힘 (STR),민첩 (DEX),활력 (VIT),정신력 (MEN),행운 (LCK),잠재력 (POT),1차 스탯 합계 (Total)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,아웃파이터,56,77,54,43,68,37,335\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,아웃파이터,55,83,47,45,75,30,335\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,아웃파이터,35,68,63,42,83,44,335\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,아웃파이터,62,80,53,48,43,30,316\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,아웃파이터,75,91,44,47,29,30,316\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,브롤러,84,52,81,70,0,30,317\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,브롤러,71,41,74,50,58,30,324\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,브롤러,80,37,66,58,48,30,319\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,브롤러,64,55,80,50,36,30,315\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,브롤러,79,52,72,63,19,30,315\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,인파이터,64,73,59,46,48,30,320\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,인파이터,59,75,54,51,46,30,315\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,인파이터,74,65,56,48,63,30,336\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,인파이터,52,82,57,48,48,30,317\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,인파이터,67,83,60,52,23,30,315\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,밸런서,61,63,71,50,43,30,318\n골리앗-(-goliath),골리앗 (Goliath),자재,밸런서,56,54,72,46,58,30,316\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,밸런서,64,67,65,52,37,30,315\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,밸런서,56,52,77,44,57,30,316\n마라토너-(-marathoner),마라토너 (Marathoner),자재,밸런서,61,66,66,51,41,30,315\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,밸런서,74,74,67,47,23,30,315\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,밸런서,65,74,66,47,34,30,316\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,밸런서,72,70,63,52,29,30,316\n스태빌리티-(-stability),스태빌리티 (Stability),선입,밸런서,64,72,72,49,28,30,315\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,밸런서,67,75,63,52,29,30,316\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,테크니션,71,57,49,59,63,30,329\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,테크니션,40,61,64,51,78,30,324\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,테크니션,82,49,41,54,77,32,335\n카오스-(-chaos),카오스 (Chaos),변칙,테크니션,38,69,68,42,89,30,336\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,테크니션,34,57,59,55,87,46,338\n", "csv04": "﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),종합 평가 (Overall),속도 (Speed),출발 (Start),지구력 (Stamina),집중력 (Focus),기질 (Temper),근성 (Guts)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,345,66,79,44,52,59,45\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,349,67,84,39,53,63,43\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,346,56,77,51,50,63,49\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,333,68,76,43,54,46,46\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,335,77,80,38,57,40,43\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,325,57,34,73,57,31,73\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,313,48,38,64,43,59,61\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,307,48,33,61,46,56,63\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,320,53,44,68,48,44,63\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,320,56,38,66,53,40,67\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,338,64,69,51,51,51,52\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,339,63,70,49,54,50,53\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,342,63,66,49,50,62,52\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,346,65,75,50,55,49,52\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,343,70,71,52,57,38,55\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,333,58,56,65,54,48,52\n골리앗-(-goliath),골리앗 (Goliath),자재,323,52,52,64,49,55,51\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,332,61,57,61,56,45,52\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,322,51,51,67,48,54,51\n마라토너-(-marathoner),마라토너 (Marathoner),자재,331,59,57,62,55,47,51\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,330,69,63,56,54,38,50\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,333,66,66,55,54,43,49\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,331,67,62,54,55,42,51\n스태빌리티-(-stability),스태빌리티 (Stability),선입,332,65,63,59,54,39,52\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,335,68,65,54,56,41,51\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,336,58,59,47,53,72,47\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,340,50,64,55,50,73,48\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,327,57,56,42,48,81,43\n카오스-(-chaos),카오스 (Chaos),변칙,350,54,72,55,48,77,44\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,354,50,65,56,54,78,51\n", "csv05": "﻿선수 ID (ID),선수 이름 (Name),격투 스타일 (Fight Style),공격력 (POW),방어력 (DEF),최대 체력 (Max HP),회복력 (REC),기술력 (TEC),근성 (GRT)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),아웃파이터,53,63,726,50,58,44\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),아웃파이터,53,64,640,46,59,42\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),아웃파이터,40,53,788,56,56,47\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),아웃파이터,56,65,714,50,58,45\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),아웃파이터,66,74,650,45,63,43\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),브롤러,75,62,1038,68,48,64\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),브롤러,65,53,942,58,37,51\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),브롤러,69,53,880,56,38,54\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),브롤러,63,58,988,61,43,52\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),브롤러,72,61,938,61,46,58\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),인파이터,64,58,778,49,52,45\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),인파이터,61,57,718,48,54,47\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),인파이터,68,57,768,48,49,46\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),인파이터,59,59,734,49,56,46\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),인파이터,68,64,794,52,58,49\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),밸런서,55,56,892,56,49,50\n골리앗-(-goliath),골리앗 (Goliath),밸런서,50,50,892,56,44,48\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),밸런서,58,59,838,54,51,50\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),밸런서,50,49,942,58,43,48\n마라토너-(-marathoner),마라토너 (Marathoner),밸런서,56,57,842,54,51,50\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),밸런서,65,65,878,54,53,48\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),밸런서,60,62,850,53,53,47\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),밸런서,63,63,834,53,53,50\n스태빌리티-(-stability),스태빌리티 (Stability),밸런서,59,61,908,57,52,50\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),밸런서,61,64,824,53,55,50\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),테크니션,60,53,692,48,58,51\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),테크니션,42,45,780,53,57,49\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),테크니션,65,52,638,43,53,47\n카오스-(-chaos),카오스 (Chaos),테크니션,43,49,816,53,57,45\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),테크니션,41,45,750,55,61,54\n", "csv06": "﻿알 ID (Egg ID),알 이름 (Egg Name),알 등급 (Tier),등급 코드 (Tier Code),구매 가격 (Price),잠재력 범위 (Potential Cap),부화 시간초 (Hatch Sec),드롭 가중치 (Weight %),부화 특징 명세 (Note)\nEGG-NAT-001,시골 재래 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-002,청계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-003,오계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-004,토종닭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-005,약계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-006,들판 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-007,산기슭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-008,강변 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-009,농장 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-010,모이통 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-011,황토 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-012,짚풀 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-013,햇살 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-014,바람 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-015,이슬 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-016,돌담 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-017,개울 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-018,가을 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-019,보리 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-020,벼이삭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-021,새벽 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-022,노을 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-023,구름 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-024,단풍 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-025,솔방울 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-026,풀잎 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-027,도토리 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-028,샘물 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-029,언덕 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-030,평야 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-PAID1-001,강철 깃털 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-002,바람 발차기 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-003,붉은 벼슬 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-004,투지 불꽃 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-005,맹수 발톱 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-006,달빛 주행 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-007,태양 태엽 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-008,암석 가슴 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-009,번개 눈빛 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-010,폭풍 부리 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-011,신풍 날개 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-012,용맹 수탉 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-013,쾌속 질주 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-014,칠흑 그림자 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-015,황금 깃털 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-016,은빛 스퍼 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-017,거친 인파이트 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-018,유연 아웃파이트 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-019,강력 브롤러 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-020,정밀 테크닉 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID2-001,화산 불꽃 전사 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-002,극지 얼음 수호자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-003,질풍 대시 마스터 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-004,아이언 월 방어자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-005,크리티컬 헌터 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-006,하이퍼 밸런서 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-007,쉐도우 닌자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-008,킹 크레스트 왕관 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-009,스피드 피닉스 불새 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-010,타이탄 골리앗 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID3-001,드래곤 클럭 신화 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-002,신주 불사조 계승 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-003,천상 챔피언 왕좌 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-004,칠흑 마왕 루스터 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-005,제우스 썬더 볼트 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\n"};function toggleTheme(){const html=document.documentElement;const isDark=html.getAttribute('data-theme')==='dark';const newTheme=isDark?'light':'dark';html.setAttribute('data-theme',newTheme);document.getElementById('theme-icon').innerText=isDark?'🌙':'☀️';document.getElementById('theme-text').innerText=isDark?'다크':'화이트';localStorage.setItem('rr_theme',newTheme);showToast(isDark?'라이트 테마로 전환되었습니다.':'다크 테마로 전환되었습니다.');}
+<section id="sec-8">
+<h2 id="8-데이터베이스-논리-스키마-및-통신-api-규격-database-and-api-specification">8. 데이터베이스 논리 스키마 및 통신 API 규격 (Database &amp; API Specification)</h2>
+<h3 id="81-데이터베이스-분리-구성표-및-럼블-팜-핵심-엔티티-논리-스키마">8.1 데이터베이스 분리 구성표 및 럼블 팜 핵심 엔티티 논리 스키마</h3>
+<ul>
+<li><strong>물리/논리 DB 분리 원칙</strong>: 모바일(<code>Mobile App DB</code>), 온라인 웹(<code>Online Web DB</code>), 미국 VIP 라운지(<code>VIP Lounge Local DB</code>) 3대 DB를 완전 독립 분리 운영</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">엔티티명</th>
+<th style="text-align: center;">적용 DB (<code>Mobile</code> / <code>VIP Local</code>)</th>
+<th style="text-align: left;">주요 관리 데이터 및 논리 스키마 (<code>t_*</code> 표준)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>t_user_mobile</code> / <code>t_user_vip</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>user_id</code>(PK), <code>nickname</code>, <code>gold_balance</code>, <code>gem_balance</code>, <code>vip_credit_balance</code>(VIP), <code>feed_balance</code>, <code>free_egg_stamps</code>(모바일)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_rooster_farm</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>rooster_id</code>(PK), <code>user_id</code>, <code>name</code>, <code>gender</code>, <code>tier</code>, <code>generation</code>, <code>str</code>, <code>dex</code>, <code>vit</code>, <code>men</code>, <code>lck</code>, <code>pot</code>, <code>state</code>, <code>fatigue</code>, <code>is_injured</code>, <code>cooldown_until</code>, <code>breeding_count</code>, <code>race_style_id</code>, <code>fight_style_id</code>, <code>skills[]</code>, <code>appearance_parts</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_egg_inventory</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>egg_instance_id</code>(PK), <code>user_id</code>, <code>egg_id</code>(FK), <code>tier</code>, <code>acquire_route</code>('PAID_GACHA'/'BREED'/'STAMP'/'MARKET'), <code>acquired_at</code>, <code>status</code>('EGG_WAITING'/'INCUBATING'/'HATCHED'), <code>slot_index</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_incubator_slot</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>slot_id</code>(PK), <code>user_id</code>, <code>egg_instance_id</code>(FK), <code>start_time</code>, <code>end_time</code>, <code>minigame_played</code>, <code>speedup_rate</code>, <code>is_instant_paid</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_training_log</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>training_id</code>(PK), <code>rooster_id</code>(FK), <code>program_id</code>, <code>train_mode</code>('FREE'/'PAID'), <code>started_at</code>, <code>end_at</code>, <code>stat_type</code>, <code>gained_val</code>, <code>unlocked_skill_id</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_breeding_log</code></strong></td>
+<td style="text-align: center;">모바일 / VIP 독립</td>
+<td style="text-align: left;"><code>breed_id</code>(PK), <code>sire_id</code>(부), <code>dam_id</code>(모), <code>offspring_egg_id</code>, <code>pay_type</code>('VIP_CREDIT'/'GEM'/'TOKEN_GOLD'), <code>created_at</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_spa_premium_log</code></strong></td>
+<td style="text-align: center;">모바일 / 웹 / VIP 독립</td>
+<td style="text-align: left;"><code>log_id</code>(PK), <code>user_id</code>, <code>rooster_id</code>, <code>cost_type</code>, <code>cost_amount</code>, <code>applied_at</code>, <code>expires_at</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_market_trade</code></strong></td>
+<td style="text-align: center;"><strong>모바일 전용</strong> (<code>VIP 제외</code>)</td>
+<td style="text-align: left;"><code>trade_id</code>(PK), <code>seller_id</code>, <code>buyer_id</code>, <code>egg_instance_id</code>, <code>price_gold</code>, <code>fee_gold</code>(8% / <code>[큰손]</code> 7%), <code>status</code>, <code>expires_at</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>t_user_titles</code> / <code>t_user_quests</code></strong></td>
+<td style="text-align: center;"><strong>모바일 전용</strong> (<code>VIP 제외</code>)</td>
+<td style="text-align: left;"><code>title_id</code>, <code>is_equipped</code> / <code>quest_progress_id</code>, <code>quest_code</code>, <code>current_count</code>, <code>target_count</code>, <code>is_claimed</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="82-핵심-rest-api-엔드포인트-명세-육성-관련-13종">8.2 핵심 REST API 엔드포인트 명세 (육성 관련 13종)</h3>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">메서드</th>
+<th style="text-align: left;">URI 엔드포인트</th>
+<th style="text-align: center;">적용 플랫폼</th>
+<th style="text-align: left;">호출 목적 및 요청·응답 스펙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>GET</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/roosters</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">보유 선수단·스탯 6종·상태·피로도 조회 ➔ <code>{ "roosters": [...] }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/egg/stamp</code></td>
+<td style="text-align: center;">모바일 전용</td>
+<td style="text-align: left;">출석/광고 스탬프 적립 및 무료 알 수령 <code>{ "type": "ATTEND"\|"AD" }</code> ➔ <code>{ "stamps": 3, "reward_egg": {...} }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/egg/gacha</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">유료 알 가차 뽑기 <code>{ "tier": "PAID1"\|"PAID2"\|"PAID3", "count": 1\|10, "pay_type": "CREDIT"\|"GEM"\|"GOLD" }</code> ➔ <code>{ "acquired_eggs": [...], "pity_count": N }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/incubator/set</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">알 인큐베이터 안치 <code>{ "slot_id": 1, "egg_instance_id": "..." }</code> ➔ <code>{ "end_time": "..." }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/incubator/minigame</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">부화 가속 터치 미니게임 제출 <code>{ "slot_id": 1, "tap_count": 16 }</code> ➔ <code>{ "grade": "S", "reduced_rate": 0.20 }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/incubator/hatch</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">부화 완료 또는 유료 즉시 부화 <code>{ "slot_id": 1, "instant_paid": true\|false }</code> ➔ <code>{ "rooster": {...} }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/training/start</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">유/무료 8종 훈련 개시 <code>{ "rooster_id": "...", "program_id": 1, "train_mode": "FREE"\|"PAID" }</code> ➔ <code>{ "training_id": "...", "finish_at": "..." }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/training/claim</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">훈련 완료 수령 및 2차 스탯·기술 개화 <code>{ "training_id": "..." }</code> ➔ <code>{ "gained_val": 6, "unlocked_skill": "..." }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/breeding/exec</code></td>
+<td style="text-align: center;">모바일 / VIP (유료)</td>
+<td style="text-align: left;">2세대 교배 실행 <code>{ "sire_id": "...", "dam_id": "...", "pay_type": "CREDIT"\|"GEM"\|"TOKEN" }</code> ➔ <code>{ "offspring_egg": {...}, "cooldown_until": "..." }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/care/rest</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">무료 닭장 휴식 진입 <code>{ "rooster_id": "..." }</code> ➔ <code>{ "fatigue_rate_per_hour": -10 }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/care/feed</code></td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">무료 영양 사료 급여 <code>{ "rooster_id": "..." }</code> ➔ <code>{ "fatigue_reduced": -20, "daily_remain": 2 }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/spa/enter</code></td>
+<td style="text-align: center;">모바일 / 웹 / VIP</td>
+<td style="text-align: left;">유료 프리미엄 스파 입욕 <code>{ "rooster_id": "...", "currency_type": "CREDIT"\|"GEM"\|"GOLD" }</code> ➔ <code>{ "fatigue": 0, "is_injured": false, "condition": 100 }</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/v1/farm/market/trade</code></td>
+<td style="text-align: center;">모바일 전용</td>
+<td style="text-align: left;">유저 알 거래소 등록/구매 체결 <code>{ "action": "LIST"\|"BUY", "price_gold": 10000 }</code> ➔ <code>{ "fee_gold": 800, "settled_gold": 9200 }</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-실시간-websocket-이벤트-명세-육성-3종">8.3 실시간 WebSocket 이벤트 명세 (육성 3종)</h3>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">이벤트 채널 식별자</th>
+<th style="text-align: center;">패킷 전송 방향</th>
+<th style="text-align: center;">적용 플랫폼</th>
+<th style="text-align: left;">발송 트리거 및 페이로드(Payload) 주요 데이터 스펙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>farm:hatch_ready</code></strong></td>
+<td style="text-align: center;">Server ➔ Client</td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">인큐베이터 부화 타이머 만료 또는 유료 즉시 부화 시 ➔ <code>user_id</code>, <code>slot_id</code>, <code>egg_instance_id</code>, <code>ready_at</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>farm:train_done</code></strong></td>
+<td style="text-align: center;">Server ➔ Client</td>
+<td style="text-align: center;">모바일 / VIP</td>
+<td style="text-align: left;">훈련 타이머 만료 또는 유료 급속 훈련 완료 시 ➔ <code>user_id</code>, <code>rooster_id</code>, <code>program_id</code>, <code>gained_stat</code>, <code>new_val</code>, <code>unlocked_skill</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>farm:market_sold</code></strong></td>
+<td style="text-align: center;">Server ➔ Client</td>
+<td style="text-align: center;">모바일 전용</td>
+<td style="text-align: left;">유저 거래소 등록 알 판매 체결 시 ➔ <code>seller_id</code>, <code>trade_id</code>, <code>settled_gold</code>, <code>fee_gold</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+</section>
+<section id="sec-9">
+<h2 id="9-화면-레이아웃-uiux-및-사운드-연출-규격-uiux-and-sound-specification">9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 (UI/UX &amp; Sound Specification)</h2>
+<h3 id="91-메인-팜-5대-핵심-공간-레이아웃">9.1 메인 팜 5대 핵심 공간 레이아웃</h3>
+<ul>
+<li><strong>뷰포트 및 공간 시점</strong>: 2.5D 아이소메트릭(Isometric) 쿼터뷰 농장 전경 (모바일 세로/가로 반응형 및 VIP 라운지 좌석 태블릿 16:9 가로 패스트트랙 패드 지원)</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">번호</th>
+<th style="text-align: left;">표준 공간 명칭</th>
+<th style="text-align: left;">영문 코드</th>
+<th style="text-align: left;">주요 역할 및 VIP 라운지 적용 구성</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>부화 온실</strong></td>
+<td style="text-align: left;"><code>Hatchery Greenhouse</code></td>
+<td style="text-align: left;">인큐베이터 슬롯(2~4개), 무료 대기·10초 터치 미니게임 및 유료 즉시 부화(0초) 조작</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>개화 훈련장</strong></td>
+<td style="text-align: left;"><code>Training Field</code></td>
+<td style="text-align: left;">8대 훈련 기구(트랙, 타이어, 모래언덕, 통나무, 과녁, 깃털대, 외나무, 진흙탕) 유/무료 훈련 연출</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>선수 닭장 &amp; 힐링 스파</strong></td>
+<td style="text-align: left;"><code>Coop &amp; Healing Spa</code></td>
+<td style="text-align: left;">보유 닭 로스터·방사형 육각 차트·출전 관리 + 무료 휴식/사료 급여 및 유료 스파 온천 완치 연출</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>혈통 교배소</strong></td>
+<td style="text-align: left;"><code>Breeding Pen</code></td>
+<td style="text-align: left;">암수 종계 2두 안치, 2세대 예상 POT 범위 프리뷰, 유료 교배 및 하트·산란 연출</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>관리동 &amp; 파머스 마켓</strong></td>
+<td style="text-align: left;"><code>Farm House &amp; Market</code></td>
+<td style="text-align: left;">유료 알 가차 상점(VIP 공통) + 알 거래소(8%)·퀘스트·업적·칭호 관리동(모바일 전용)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92-부화훈련교배-조작-팝업-uiux-인터랙션-및-오류-예외-처리">9.2 부화/훈련/교배 조작 팝업 UI/UX 인터랙션 및 오류 예외 처리</h3>
+<ul>
+<li><strong>부화 연출 (Hatch UX)</strong>:</li>
+<li>10초 미니게임 또는 유료 즉시 부화 완료 시 껍질에 금이 가는 3단계 크랙 애니메이션 (<code>SFX_FARM_EGG_CRACK</code>)</li>
+<li>알 깨짐 및 병아리 탄생 모션(<code>SFX_FARM_EGG_HATCH</code>, <code>SFX_CHICK_CHIRP</code>) ➔ 1차 피지컬 스탯 카드 롤링 표출</li>
+<li><strong>6대 예외 및 오류 처리</strong>:</li>
+<li>부화 슬롯 가득 참: <code>"인큐베이터 슬롯 부족. 슬롯 확장 또는 부화 완료 알 우선 수령 필요"</code> 안내 팝업 표출</li>
+<li>사료/골드/크레딧 부족: 훈련·교배·가차 시작 차단 및 충전 모달 유도</li>
+<li>부상 닭 출전 시도: <code>"부상 상태 선수 출전 불가. 스파 치료 우선 진행 필요"</code> 안내 팝업 표출 및 차단</li>
+<li>교배 한도 초과: <code>"생애 5회 교배 한도 소진 은퇴 종계"</code> 안내 경고 표출 (경기 출전은 정상 허용)</li>
+<li>VIP 라운지 제한 기능 접근: 무료 알/광고/거래소/퀘스트·칭호 메뉴 비활성화 및 VIP 4대 허용 기능 중심 패스트트랙 유도</li>
+<li>네트워크 단절 중 훈련 완료: 로컬 타이머 완료 시 서버 재접속 즉시 멱등성 검증 후 스탯 동기화</li>
+</ul>
+<h3 id="93-럼블-팜-전용-배경음악bgm-3종-및-효과음sfx-farm-10종-명세표">9.3 럼블 팜 전용 배경음악(BGM) 3종 및 효과음(SFX-Farm) 10종 명세표</h3>
+<ul>
+<li><strong>럼블 팜 전용 배경음악 (BGM 3종 — <code>통합 MVP</code> §7.2 기준 통일)</strong>:</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">사운드 큐 식별자</th>
+<th style="text-align: left;">트랙 명칭</th>
+<th style="text-align: left;">재생 씬 / 모드</th>
+<th style="text-align: left;">테마 및 악기 구성</th>
+<th style="text-align: center;">루프 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>BGM_LOBBY_01</code></strong></td>
+<td style="text-align: left;"><strong>평화로운 아침 농장</strong></td>
+<td style="text-align: left;">메인 로비 &amp; 농장 전경</td>
+<td style="text-align: left;">컨트리 어쿠스틱 (기타, 밴조)</td>
+<td style="text-align: center;">루프 (Loop)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>BGM_TRAIN_02</code></strong></td>
+<td style="text-align: left;"><strong>땀방울의 리듬</strong></td>
+<td style="text-align: left;">훈련장 &amp; 부화 온실 미니게임</td>
+<td style="text-align: left;">펑키 디스코 (일렉 베이스, 브라스)</td>
+<td style="text-align: center;">루프 (Loop)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>BGM_MARKET_03</code></strong></td>
+<td style="text-align: left;"><strong>시끌벅적 계란 장터</strong></td>
+<td style="text-align: left;">유료 알 가차 상점 &amp; 거래소</td>
+<td style="text-align: left;">스윙 재즈 (피아노 트리오, 워킹 베이스)</td>
+<td style="text-align: center;">루프 (Loop)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>럼블 팜 전용 효과음 (SFX-Farm 10종 — <code>통합 MVP</code> §7.4 기준 통일)</strong>:</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">사운드 큐 식별자</th>
+<th style="text-align: left;">사운드 명칭</th>
+<th style="text-align: left;">출력 타이밍 (트리거 시점)</th>
+<th style="text-align: left;">연출 효과 및 음색 가이드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_FARM_EGG_TAP</code></strong></td>
+<td style="text-align: left;"><strong>알 터치 타격</strong></td>
+<td style="text-align: left;">부화 미니게임 화면 터치</td>
+<td style="text-align: left;">단단한 달걀 껍질 두드리는 맑은 소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_FARM_EGG_CRACK</code></strong></td>
+<td style="text-align: left;"><strong>껍질 금 감</strong></td>
+<td style="text-align: left;">미니게임 게이지 50% 돌파 또는 즉시 부화</td>
+<td style="text-align: left;">계란 껍질 갈라지는 크랙 사운드</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_FARM_EGG_HATCH</code></strong></td>
+<td style="text-align: left;"><strong>부화 성공</strong></td>
+<td style="text-align: left;">부화 완료 알 깨짐</td>
+<td style="text-align: left;">껍질 깨지며 빛 이펙트 터지는 소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_CHICK_CHIRP</code></strong></td>
+<td style="text-align: left;"><strong>병아리 삐약</strong></td>
+<td style="text-align: left;">부화 직후 갓 태어난 상태</td>
+<td style="text-align: left;">높고 귀여운 병아리 울음소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_ROOSTER_CROW</code></strong></td>
+<td style="text-align: left;"><strong>수탉 아침 기상</strong></td>
+<td style="text-align: left;"><code>IDLE</code> 상태 닭 터치 인터랙션</td>
+<td style="text-align: left;">당당하고 우렁찬 수탉 울음소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_TRAIN_TRACK</code></strong></td>
+<td style="text-align: left;"><strong>트랙 고속 질주</strong></td>
+<td style="text-align: left;">고속 트랙·모래언덕·균형대·진흙탕 훈련</td>
+<td style="text-align: left;">모래 트랙을 빠르게 스쳐 지나가는 소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_TRAIN_WOOD</code></strong></td>
+<td style="text-align: left;"><strong>통나무 타격</strong></td>
+<td style="text-align: left;">통나무·과녁·깃털 버티기 훈련</td>
+<td style="text-align: left;">부리와 발톱이 나무에 꽂히는 타격음</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_TRAIN_TIRE</code></strong></td>
+<td style="text-align: left;"><strong>타이어 튀기기</strong></td>
+<td style="text-align: left;">타이어 튀기기 훈련 중</td>
+<td style="text-align: left;">고무 타이어 튕기는 묵직한 반발음</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_SPA_WATER_IN</code></strong></td>
+<td style="text-align: left;"><strong>온천 풍덩</strong></td>
+<td style="text-align: left;">유료 프리미엄 스파 입욕 시</td>
+<td style="text-align: left;">따뜻한 온천수에 몸 담그는 물소리</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>SFX_SPA_HEAL_CHIME</code></strong></td>
+<td style="text-align: left;"><strong>완전 회복 챠임</strong></td>
+<td style="text-align: left;">스파 완충 및 부상 완치</td>
+<td style="text-align: left;">영롱하고 따스한 힐링 윈드차임 사운드</td>
+</tr>
+</tbody>
+</table></div>
+</section></main><div class="modal-overlay" id="csv-modal" onclick="closeModalOnBackdrop(event)"><div class="modal-container"><div class="modal-header"><div class="modal-title" id="modal-title">📊 마스터 데이터 뷰어</div><button class="modal-close-btn" onclick="closeModal()">&times;</button></div><div class="modal-toolbar"><input type="text" id="modal-search" placeholder="테이블 내 실시간 검색..." onkeyup="filterModalTable()"><span id="modal-row-count" style="font-size: 0.8rem; color: var(--text-muted);"></span></div><div class="modal-body" id="modal-table-container"></div><div class="modal-footer"><button class="btn-csv" id="modal-copy-btn">📋 클립보드 복사</button><button class="btn-csv primary" id="modal-download-btn">💾 CSV 다운로드</button></div></div></div><div class="toast" id="toast"><span>ℹ️</span><span id="toast-msg">알림 메시지</span></div><script>const MASTER_CSV_DATA = {"csv03": "﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),격투 스타일 (Fight Style),힘 (STR),민첩 (DEX),활력 (VIT),정신력 (MEN),행운 (LCK),잠재력 (POT),1차 스탯 합계 (Total)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,아웃파이터,56,77,54,43,68,37,335\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,아웃파이터,55,83,47,45,75,30,335\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,아웃파이터,35,68,63,42,83,44,335\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,아웃파이터,62,80,53,48,43,30,316\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,아웃파이터,75,91,44,47,29,30,316\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,브롤러,84,52,81,70,0,30,317\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,브롤러,71,41,74,50,58,30,324\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,브롤러,80,37,66,58,48,30,319\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,브롤러,64,55,80,50,36,30,315\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,브롤러,79,52,72,63,19,30,315\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,인파이터,64,73,59,46,48,30,320\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,인파이터,59,75,54,51,46,30,315\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,인파이터,74,65,56,48,63,30,336\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,인파이터,52,82,57,48,48,30,317\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,인파이터,67,83,60,52,23,30,315\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,밸런서,61,63,71,50,43,30,318\n골리앗-(-goliath),골리앗 (Goliath),자재,밸런서,56,54,72,46,58,30,316\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,밸런서,64,67,65,52,37,30,315\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,밸런서,56,52,77,44,57,30,316\n마라토너-(-marathoner),마라토너 (Marathoner),자재,밸런서,61,66,66,51,41,30,315\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,밸런서,74,74,67,47,23,30,315\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,밸런서,65,74,66,47,34,30,316\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,밸런서,72,70,63,52,29,30,316\n스태빌리티-(-stability),스태빌리티 (Stability),선입,밸런서,64,72,72,49,28,30,315\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,밸런서,67,75,63,52,29,30,316\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,테크니션,71,57,49,59,63,30,329\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,테크니션,40,61,64,51,78,30,324\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,테크니션,82,49,41,54,77,32,335\n카오스-(-chaos),카오스 (Chaos),변칙,테크니션,38,69,68,42,89,30,336\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,테크니션,34,57,59,55,87,46,338\n", "csv04": "﻿선수 ID (ID),선수 이름 (Name),경주 스타일 (Race Style),종합 평가 (Overall),속도 (Speed),출발 (Start),지구력 (Stamina),집중력 (Focus),기질 (Temper),근성 (Guts)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),도주,345,66,79,44,52,59,45\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),도주,349,67,84,39,53,63,43\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),도주,346,56,77,51,50,63,49\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),도주,333,68,76,43,54,46,46\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),도주,335,77,80,38,57,40,43\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),추입,325,57,34,73,57,31,73\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),추입,313,48,38,64,43,59,61\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),추입,307,48,33,61,46,56,63\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),추입,320,53,44,68,48,44,63\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),추입,320,56,38,66,53,40,67\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),선행,338,64,69,51,51,51,52\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),선행,339,63,70,49,54,50,53\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),선행,342,63,66,49,50,62,52\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),선행,346,65,75,50,55,49,52\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),선행,343,70,71,52,57,38,55\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),자재,333,58,56,65,54,48,52\n골리앗-(-goliath),골리앗 (Goliath),자재,323,52,52,64,49,55,51\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),자재,332,61,57,61,56,45,52\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),자재,322,51,51,67,48,54,51\n마라토너-(-marathoner),마라토너 (Marathoner),자재,331,59,57,62,55,47,51\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),선입,330,69,63,56,54,38,50\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),선입,333,66,66,55,54,43,49\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),선입,331,67,62,54,55,42,51\n스태빌리티-(-stability),스태빌리티 (Stability),선입,332,65,63,59,54,39,52\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),선입,335,68,65,54,56,41,51\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),변칙,336,58,59,47,53,72,47\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),변칙,340,50,64,55,50,73,48\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),변칙,327,57,56,42,48,81,43\n카오스-(-chaos),카오스 (Chaos),변칙,350,54,72,55,48,77,44\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),변칙,354,50,65,56,54,78,51\n", "csv05": "﻿선수 ID (ID),선수 이름 (Name),격투 스타일 (Fight Style),공격력 (POW),방어력 (DEF),최대 체력 (Max HP),회복력 (REC),기술력 (TEC),근성 (GRT)\n블레이징-윙-(-blazing-wing),블레이징 윙 (Blazing Wing),아웃파이터,53,63,726,50,58,44\n썬더-스트라이크-(-thunder-strike),썬더 스트라이크 (Thunder Strike),아웃파이터,53,64,640,46,59,42\n래피드-로드-(-rapid-road),래피드 로드 (Rapid Road),아웃파이터,40,53,788,56,56,47\n윈드-러너-(-wind-runner),윈드 러너 (Wind Runner),아웃파이터,56,65,714,50,58,45\n페더-대시-(-feather-dash),페더 대시 (Feather Dash),아웃파이터,66,74,650,45,63,43\n나이트-호크-(-night-hawk),나이트 호크 (Night Hawk),브롤러,75,62,1038,68,48,64\n섀도우-페더-(-shadow-feather),섀도우 페더 (Shadow Feather),브롤러,65,53,942,58,37,51\n사일런트-킬러-(-silent-killer),사일런트 킬러 (Silent Killer),브롤러,69,53,880,56,38,54\n아이언-힐-(-iron-heel),아이언 힐 (Iron Heel),브롤러,63,58,988,61,43,52\n라스트-스퍼터-(-last-spurter),라스트 스퍼터 (Last Spurter),브롤러,72,61,938,61,46,58\n레드-불릿-(-red-bullet),레드 불릿 (Red Bullet),인파이터,64,58,778,49,52,45\n스피디-피닉스-(-speedy-phoenix),스피디 피닉스 (Speedy Phoenix),인파이터,61,57,718,48,54,47\n에어로-대시-(-aero-dash),에어로 대시 (Aero Dash),인파이터,68,57,768,48,49,46\n골든-크레스트-(-golden-crest),골든 크레스트 (Golden Crest),인파이터,59,59,734,49,56,46\n스프린트-마스터-(-sprint-master),스프린트 마스터 (Sprint Master),인파이터,68,64,794,52,58,49\n아이언-cluck-(-iron-cluck),아이언 Cluck (Iron Cluck),밸런서,55,56,892,56,49,50\n골리앗-(-goliath),골리앗 (Goliath),밸런서,50,50,892,56,44,48\n엔듀어런스-(-endurance),엔듀어런스 (Endurance),밸런서,58,59,838,54,51,50\n스톤-벽-(-stone-wall),스톤 벽 (Stone Wall),밸런서,50,49,942,58,43,48\n마라토너-(-marathoner),마라토너 (Marathoner),밸런서,56,57,842,54,51,50\n서니-cluck-(-sunny-cluck),서니 Cluck (Sunny Cluck),밸런서,65,65,878,54,53,48\n이븐-킬-(-even-keel),이븐 킬 (Even Keel),밸런서,60,62,850,53,53,47\n블루-리본-(-blue-ribbon),블루 리본 (Blue Ribbon),밸런서,63,63,834,53,53,50\n스태빌리티-(-stability),스태빌리티 (Stability),밸런서,59,61,908,57,52,50\n퍼펙트-밸런스-(-perfect-balance),퍼펙트 밸런스 (Perfect Balance),밸런서,61,64,824,53,55,50\n매드-루스터-(-mad-rooster),매드 루스터 (Mad Rooster),테크니션,60,53,692,48,58,51\n와일드-카드-(-wild-card),와일드 카드 (Wild Card),테크니션,42,45,780,53,57,49\n러시안-룰렛-(-russian-roulette),러시안 룰렛 (Russian Roulette),테크니션,65,52,638,43,53,47\n카오스-(-chaos),카오스 (Chaos),테크니션,43,49,816,53,57,45\n더스트-스퍼-(-dust-spur),더스트 스퍼 (Dust Spur),테크니션,41,45,750,55,61,54\n", "csv06": "﻿알 ID (Egg ID),알 이름 (Egg Name),알 등급 (Tier),등급 코드 (Tier Code),구매 가격 (Price),잠재력 범위 (Potential Cap),부화 시간초 (Hatch Sec),드롭 가중치 (Weight %),부화 특징 명세 (Note)\nEGG-NAT-001,시골 재래 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-002,청계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-003,오계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-004,토종닭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-005,약계 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-006,들판 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-007,산기슭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-008,강변 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-009,농장 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-010,모이통 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-011,황토 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-012,짚풀 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-013,햇살 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-014,바람 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-015,이슬 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-016,돌담 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-017,개울 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-018,가을 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-019,보리 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-020,벼이삭 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-021,새벽 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-022,노을 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-023,구름 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-024,단풍 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-025,솔방울 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-026,풀잎 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-027,도토리 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-028,샘물 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-029,언덕 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-NAT-030,평야 알,무료 일반 (Natural),NAT,무료 (통합 3스템프: 출석/광고),30~45,600,70.0%,일반 피지컬 병아리 부화\nEGG-PAID1-001,강철 깃털 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-002,바람 발차기 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-003,붉은 벼슬 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-004,투지 불꽃 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-005,맹수 발톱 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-006,달빛 주행 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-007,태양 태엽 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-008,암석 가슴 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-009,번개 눈빛 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-010,폭풍 부리 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-011,신풍 날개 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-012,용맹 수탉 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-013,쾌속 질주 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-014,칠흑 그림자 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-015,황금 깃털 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-016,은빛 스퍼 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-017,거친 인파이트 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-018,유연 아웃파이트 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-019,강력 브롤러 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID1-020,정밀 테크닉 알,유료 1단계 (Superior),PAID_T1,\"30 Gem / 3,000 Gold\",46~60,3600,20.0%,상급 파이팅 병아리 부화\nEGG-PAID2-001,화산 불꽃 전사 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-002,극지 얼음 수호자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-003,질풍 대시 마스터 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-004,아이언 월 방어자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-005,크리티컬 헌터 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-006,하이퍼 밸런서 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-007,쉐도우 닌자 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-008,킹 크레스트 왕관 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-009,스피드 피닉스 불새 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID2-010,타이탄 골리앗 알,유료 2단계 (Rare),PAID_T2,\"100 Gem / 10,000 Gold\",61~80,14400,8.0%,희귀 혈통 패시브 병아리 부화\nEGG-PAID3-001,드래곤 클럭 신화 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-002,신주 불사조 계승 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-003,천상 챔피언 왕좌 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-004,칠흑 마왕 루스터 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\nEGG-PAID3-005,제우스 썬더 볼트 알,유료 3단계 (Legendary),PAID_T3,300 Gem (가차 확정),81~100,43200,2.0%,전설 히든 변이 병아리 100% 확정\n"};function toggleTheme(){const html=document.documentElement;const isDark=html.getAttribute('data-theme')==='dark';const newTheme=isDark?'light':'dark';html.setAttribute('data-theme',newTheme);document.getElementById('theme-icon').innerText=isDark?'🌙':'☀️';document.getElementById('theme-text').innerText=isDark?'다크':'화이트';localStorage.setItem('rr_theme',newTheme);showToast(isDark?'라이트 테마로 전환되었습니다.':'다크 테마로 전환되었습니다.');}
 const savedTheme=localStorage.getItem('rr_theme');if(savedTheme==='light'){document.documentElement.setAttribute('data-theme','light');document.getElementById('theme-icon').innerText='🌙';document.getElementById('theme-text').innerText='다크';}
 function toggleGroupManual(groupId){const grp=document.getElementById(groupId);if(grp)grp.classList.toggle('open');}
 function expandAllTOC(){document.querySelectorAll('.toc-group').forEach(g=>g.classList.add('open'));}

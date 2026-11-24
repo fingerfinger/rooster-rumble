@@ -2054,7 +2054,7 @@
       <button class="btn btn-toc-toggle" onclick="toggleTOC()" title="목차 열기" aria-label="목차 열기">☰ <span class="toc-btn-text">목차</span></button>
       <div class="logo-badge">🐓</div>
       <div class="header-title">
-        <h1>ROOSTER RUMBLE 마일스톤 명세서 <span class="badge badge-primary">v1.5.1</span></h1>
+        <h1>ROOSTER RUMBLE 마일스톤 명세서 <span class="badge badge-primary">v1.6.0</span></h1>
       </div>
     </div>
     <div class="header-actions">
@@ -2153,7 +2153,7 @@
         <div class="callout">
           <div class="callout-title">🎯 수립 목적</div>
           <div class="callout-content">
-            시연 피드백을 수렴하여 경주(Derby Race) 및 격투(Rumble Pit) 모드의 비주얼/속도감/타격감/상용화 연출을 격상하고, 3차 마일스톤까지 <strong>미국 VIP 라운지 버전 개발 및 현장 런칭 준비(VIP 라운지용 농장 기능 완비)</strong>를 완료하여 4차 초기에 현장 정식 런칭을 단행하며, 4차 마일스톤부터 양대 마켓 런칭 준비에 착수하고 <strong>5차 마켓용 버전 고도화(2027.01)</strong>를 거쳐 <strong>2027년 상반기 글로벌 정식 런칭</strong>을 달성하기 위함.
+            시연 피드백을 수렴하여 경주(Derby Race) 및 격투(Rumble Pit) 모드의 비주얼/속도감/타격감/상용화 연출을 격상하고, 3차 마일스톤까지 <strong>미국 VIP 라운지 버전 개발 및 현장 런칭 준비(VIP 라운지 럼블 팜 4대 기능(유료 알·유료 교배·유무료 성장·유무료 회복) 완비)</strong>를 완료하여 4차 초기에 현장 정식 런칭을 단행하며, 4차 마일스톤부터 양대 마켓 런칭 준비에 착수하고 <strong>5차 마켓용 버전 고도화(2027.01)</strong>를 거쳐 <strong>2027년 상반기 글로벌 정식 런칭</strong>을 달성하기 위함.
           </div>
         </div>
 
@@ -2167,7 +2167,7 @@
           <li>
             <strong>2차 마일스톤 (~11/18) 카툰 셰이더·배경 모델 최종 완료 & VIP 1차 빌드 & 농장 1단계 착수</strong>: 1차에서 확정된 컨셉을 기반으로 닭 캐릭터 3D 카툰 셰이더 및 배경 모델링을 최종 적용 완료하고, 6종 주행 스타일 외형 차별화 모델 분기 및 환경 물리 보정 연동. 이와 병행하여 10/29부터 농장 모드 개발에 착수하여 알 부화·스탯 생성·기본 훈련 8종 및 팜 뷰를 구축하고, 미국 VIP 라운지 1차 시연 빌드 패키징.
           </li>
-          <li><strong>3차 마일스톤 (~12/09) 미국 VIP 라운지 버전 완료 및 런칭 준비 완료</strong>: 현장 전용 디스플레이/태블릿 UI, 키오스크 결제/크레딧 정산 및 VIP 라운지용 농장 주요 기능 상용 버전 빌드 완성 및 현장 리허설/런칭 준비 완비.</li>
+          <li><strong>3차 마일스톤 (~12/09) 미국 VIP 라운지 버전 완료 및 런칭 준비 완료</strong>: 현장 전용 디스플레이/태블릿 UI, 키오스크 결제/크레딧 정산 및 VIP 라운지 럼블 팜 4대 기능 포함 상용 버전 빌드 완성 및 현장 리허설/런칭 준비 완비.</li>
           <li>
             <strong>온·오프라인 계정 및 크레딧 분리 운영 (상호 연동 배제)</strong>:
             <span style="color: var(--danger); font-weight: 700;">규제 리스크 방지 및 각 플랫폼별 운영 독립성을 위해 미국 VIP 라운지(오프라인 현장 단말기/키오스크)와 온라인 모바일 앱(Google Play / Apple App Store) 간의 유저 계정, 게임 재화, 베팅 크레딧은 상호 연동하지 않고 100% 분리 운영 (독립 DB 및 독립 빌드 유지).</span>
@@ -2221,66 +2221,33 @@
         <!-- 2.2 럼블 핏 -->
         <div id="sec-pit">
           <h3 class="sub-header">🥊 2.2 럼블 핏 (Rumble Pit - 격투 모드)</h3>
-          
-          <h4 class="group-title">1) 모델 (3D Model & Arena Environment)</h4>
           <ul class="styled-list">
-            <li><strong>비의인화 조류 골격 기반 카툰 3D 모델 (더비 모델과의 차별화/신규 컨셉 검토)</strong>: 인간형 관절 꺾임을 배제하고 실제 투계의 신체 비율(목, 가슴, 날개, 다리, 며느리발톱)에 부합하는 카툰 렌더 모델 구축. 더비 레이스 모델과의 공용 여부 또는 격투 전용 신규 모델 분기 컨셉 확정 선행 및 타격 부위 시인성 강화.</li>
-            <li><strong>5대 격투 스타일별 외형 분기</strong>: 인파이터(근육형, 붉은볏), 아웃파이터(날렵, 긴다리), 브롤러(거대흉곽, 거친깃털), 테크니션(정교한부리, 화려함), 밸런서(표준체형).</li>
-            <li><strong>원형 벽면 경기장 (Circular Walled Arena)</strong>: 사각 링을 배제하고 직경 10m 목재/철망 구조 원형 투계장 모델 배치.</li>
-          </ul>
-
-          <h4 class="group-title">2) 모션 (Avian Motions & Combat Actions)</h4>
-          <ul class="styled-list">
-            <li><strong>조류 6대 이동 모션 완비 & 대전 시뮬레이터 개발 연계</strong>: 전진 총총걸음, 짧은 뒤로 홉, 목 빼고 질주, 날개 퍼덕 후방 이탈, 측면 사이드 홉, 원형 탐색 걸음 연동 및 이를 관장하는 <strong>대전 시뮬레이터 기본 프레임워크 개발</strong> 병행 착수.</li>
-            <li><strong>비의인화 7대 전투 기술(공4/방3) 매핑</strong>: [공1] 전진 부리 속사, [공2] 낮은 발톱 할퀴기, [공3] 비상 발톱 급습, [공4] 광폭 발버둥 난타 / [방1] 깃털 부풀려 버티기, [방2] 납작 엎드리기, [방3] 맞발톱 쳐내기.</li>
-            <li><strong>스탠딩 그로기 모션</strong>: 강타 피격 시 바닥에 쓰러지지 않고 1.0~1.5초간 두 다리를 비틀거리며 서스펜스 부여.</li>
-            <li><strong>즉시 바닥 다운 모션</strong>: 체력 0 도달 시 10카운트 없이 다운 즉시 승패 확정 및 경기 종료.</li>
-          </ul>
-
-          <h4 class="group-title">3) 연출 (Direction - 상용화 버전 적용)</h4>
-          <ul class="styled-list">
-            <li><strong>아케이드 섬광 & 스파크 타격 이펙트</strong>: 히트 섬광과 황금빛 스파크 FX로 타격감 극대화. 부리 공격 시 핀포인트 스파크, 발톱 할퀴기 시 슬래시 궤적.</li>
-            <li><strong>크리티컬 히트 한정 화면 렌즈 혈흔 FX</strong>: 몸에 피를 묻히지 않고, 크리티컬 적중 시 렌즈에 붉은 핏방울이 튀었다가 0.8초 내 페이드아웃.</li>
-            <li><strong>히트스톱 및 딥 다이브 줌인 배제</strong>: 타격 순간 프레임 정지 없이 선수 간 거리에 비례하여 부드럽게 줌인/줌아웃되는 객관적 스포츠 중계 시점 유지.</li>
-            <li><strong>사운드 타종 & 보이스 연출</strong>: 라운드 개시 보이스("FIGHT!") ➔ 단독 타종 징소리, KO 판정 시 연속 타종 벨소리.</li>
+            <li><strong>3D 모델 및 파츠 분기</strong>: <strong>단일 기본 리그(Rig) + 3단계 등급별 외형 파츠</strong> 기반 인파이터·아웃파이터·브롤러·테크니션·밸런서 5종 분기 및 바리에이션 300종 적용.</li>
+            <li><strong>조류 보법 &amp; 9대 전투 기술</strong>: 조류 6대 이동 보법 + <strong>9대 전투 기술(공격 4 + 방어 3 + 특수 2 <code>[특공] 머리 잡아 바닥 찍기 (F33)</code>·<code>[특방] 머리 풀고 반격하기 (F34)</code>)</strong> 및 <strong>4대 순환 상성(타격➔가드➔잡기➔반격)</strong> 완성.</li>
+            <li><strong>타격/넉다운 및 KO 분리 판정</strong>: 일반 피격 넉다운(<code>15_Down_Land_30f</code>, 2초 기상 재대치) vs 체력 0 도달 시 카운트 없는 즉시 KO(<code>13_Down_Land_60f</code>) 분리 및 실무 가공 5종 모션 클립 적용.</li>
+            <li><strong>연출/VFX/사운드</strong>: 치명타 렌즈 혈흔(0.8초 페이드아웃), <code>F33</code> 바닥 찍기 지면 충격 폭발, 아나운서 콜 보이스 및 전용 SFX 20종(타격/특수 16+벨/관중 4).</li>
           </ul>
         </div>
-
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
-
-        <!-- 2.3 럼블 팜 -->
         <div id="sec-farm">
-          <h3 class="sub-header">🌾 2.3 럼블 팜 (Rumble Farm - 육성 모드: 2차 마일스톤 적용)</h3>
-          
+          <h3 class="sub-header">🌾 2.3 럼블 팜 (Rumble Farm - 육성 모드 · VIP 4대 기능 통합)</h3>
           <h4 class="group-title">1) 공간 및 비주얼 (2.5D Isometric Farm)</h4>
           <ul class="styled-list">
-            <li><strong>메인 팜 5대 핵심 공간 구축</strong>: 부화실(Incubator), 훈련장(Training Field), 닭장 및 스파(Rest & Spa), 교배소(Breeding Pen), 관리동(Farm House).</li>
-            <li><strong>캐주얼 아케이드 2.5D 아이소메트릭 뷰</strong>: 따뜻한 파스텔톤 농장 뷰포트 및 닭들의 유쾌한 자율 배회 연출.</li>
+            <li><strong>메인 팜 5대 표준 공간 구축</strong>: <strong>부화 온실(<code>Hatchery Greenhouse</code>), 개화 훈련장(<code>Training Field</code>), 선수 닭장 &amp; 힐링 스파(<code>Coop &amp; Healing Spa</code>), 혈통 교배소(<code>Breeding Pen</code>), 관리동 &amp; 파머스 마켓(<code>Farm House &amp; Market</code>)</strong>.</li>
+            <li><strong>음원 및 효과음 규격</strong>: 팜 배경음악 <strong>BGM 3곡</strong>(아침 농장/훈련장/마켓) 및 전용 효과음 <strong>SFX-Farm 10종</strong> 적용.</li>
           </ul>
-
-          <h4 class="group-title">2) 육성 및 라이프사이클 (Core Breeding & Status)</h4>
+          <h4 class="group-title">2) 육성, 훈련 및 라이프사이클 (Unified Baseline)</h4>
           <ul class="styled-list">
-            <li><strong>알 획득 & 부화 시스템</strong>: 65종 알 가차 마스터 연동, 등급별 부화 대기시간 및 터치 미니게임(시간 가속), 1차 기본 피지컬 스탯(체력/근력/순발력/지구력/공격성/회복력) 생성 및 잠재력(POT) 롤링.</li>
-            <li><strong>8종 훈련 시스템</strong>: 트레드밀, 샌드백 등 8종 훈련 기구 재화 소모 및 스탯 성장 로직.</li>
-            <li><strong>10대 상태 머신</strong>: 미부화 ➔ 대기 ➔ 훈련중 ➔ 출전중 ➔ 휴식중 ➔ 부상 ➔ 치료중 ➔ 교배중 ➔ 교배쿨다운 ➔ 은퇴.</li>
+            <li><strong>알 획득 &amp; 4등급 65종 부화</strong>: <code>Natural</code>(30종/70%/10m)·<code>Superior</code>(20종/20%/1h)·<code>Rare</code>(10종/8%/4h)·<code>Legendary</code>(5종/2%/12h, 10연 천장) + 10초 미니게임(<code>S -20%/A -12%/B -5%/C 0%</code>) 및 1차 스탯 6종(<code>STR/DEX/VIT/MEN/LCK/POT</code>) 생성.</li>
+            <li><strong>8종 훈련 &amp; 9대 기술·2세대 교배</strong>: 8종 훈련 기구, 10대 상태 머신, 경기 환류(피로+25/부상30%/30m 쿨다운), 2차 파생 스탯 및 <strong>9대 전투 기술(<code>F33/F34</code> 포함)</strong> 연동, 2세대 단일 유전 교배(생애 5회, 24h 쿨다운).</li>
           </ul>
-
-          <h4 class="group-title">3) 모드 간 환류 및 교배 (Cross-Mode Circulation)</h4>
+          <h4 class="group-title">3) 미국 VIP 라운지 서비스 적용 범위 (4대 핵심 기능 한정 · 온/오프라인 독립 분리)</h4>
           <ul class="styled-list">
-            <li><strong>경기 출전 환류 루프</strong>: Derby/Pit 출전 시 피로도 적재(+25), 부상 판정(30%), 30분 쿨다운 ➔ 닭장 휴식/스파 치료 복귀.</li>
-            <li><strong>2차 파생 스탯 & 7대 전투 기술 연동</strong>: 훈련 스탯 ➔ 경주(최고속/가속 등) 및 격투(공격/방어 등) 2차 파생 스탯 및 7대 전투 기술 개화/장착 연동.</li>
-            <li><strong>2세대 교배 시스템</strong>: 부모 스탯/잠재력 상속 유전 공식, 생애 5회 교배 한도 제약, 외형 및 특성 유전 확률표 적용.</li>
-          </ul>
-
-          <h4 class="group-title">4) 미국 VIP 라운지 전용 농장 특화 기능 (3차 개발완료 & 4차초기 런칭)</h4>
-          <ul class="styled-list">
-            <li><strong>현장 태블릿/키오스크 맞춤형 패스트 트랙 UX</strong>: 16:9 가로 뷰포트에서 1~2터치로 선수 선택/육성/출전 원스톱 완료.</li>
-            <li><strong>현장 즉시 육성(Fast-Breeding) 시스템</strong>: VIP 크레딧 즉시 소모를 통한 급속 부화, 고속 훈련 및 부상 즉각 치료.</li>
-            <li><strong>VIP 전용 희귀 알 수급 및 현장 경기 즉시 출전</strong>: VIP 전용 고등급(Unique/Legendary) 알 풀 및 즉시 경기 출전 슬롯 제공.</li>
-            <li>
-              <strong>오프라인 독자 운영 체계 (모바일 앱 연동 전면 배제)</strong>:
-              <span style="color: var(--danger); font-weight: 700;">VIP 라운지의 농장 육성 데이터, 보유 닭, 크레딧은 현장 폐쇄망 독립 서버에서만 운용되며 모바일 앱과는 계정/재화 일체 미연동.</span>
-            </li>
+            <li><strong>① 알 유료 획득</strong>: VIP 크레딧/Gem 유료 알 35종(<code>Superior/Rare/Legendary</code>, 10연 전설 천장) 전용 *(무료 알/거래소 제외)*.</li>
+            <li><strong>② 유료 교배</strong>: VIP 크레딧/Gem 유료 결제 전용 2세대 혈통 교배 (<code>ROOSTER</code>+<code>HEN</code>, 생애 5회 한도).</li>
+            <li><strong>③ 유/무료 성장</strong>: 무료(일반 대기 부화·10초 터치 미니게임·일반 8종 훈련) + 유료(0초 즉시 부화·급속 부스트 훈련) 병행.</li>
+            <li><strong>④ 유/무료 회복</strong>: 무료(닭장 휴식 -10/h·영양 사료 10개 -20) + 유료(프리미엄 스파 즉시 완충/완치) 병행 *(광고 회복 제외)*.</li>
+            <li><strong>VIP 미반영(모바일 스토어 전용)</strong>: 출석/광고 3스탬프 무료 알, 보상형 광고 3종, 유저 알 거래소(8%, <code>[큰손]</code> 7%), 일일 5·주간 4 퀘스트, 영구 업적 8종, 칭호 20종, 모바일 6단계 리그 전면 제외. <span style="color: var(--danger); font-weight: 700;">(VIP Lounge Local DB ↔ Mobile App DB ↔ Online Web DB 100% 분리)</span></li>
           </ul>
         </div>
       </section>
@@ -2850,74 +2817,27 @@
 
         <!-- 5.2 3차 마일스톤 -->
         <div id="sec-m3" style="margin-bottom: 2rem;">
-          <h3 class="sub-header">📍 5.2 [3차 마일스톤: ~12/09] 미국 VIP 라운지 버전 완료 및 런칭 준비 완료 & [농장 2단계] VIP 농장 기능 및 전 모드 환류 완성</h3>
+          <h3 class="sub-header">📍 5.2 [3차 마일스톤: ~12/09] 미국 VIP 라운지 버전 완료 &amp; [농장 2단계] VIP 럼블 팜 4대 기능·환류 완성</h3>
           <ul class="styled-list">
-            <li>
-              <strong>미국 VIP 라운지 상용 버전 개발 완료 및 현장 런칭 준비 완비</strong>:
+            <li><strong>미국 VIP 라운지 상용 버전 완성 (경주·격투 + VIP 럼블 팜 4대 기능)</strong>:
               <ul class="styled-sublist">
-                <li><strong>현장 전용 대형 스크린 & 태블릿 가로 UI 완성</strong>: VIP 라운지 대형 관전 모니터 중계 뷰와 좌석 태블릿 간 0.1초 실시간 동기화.</li>
-                <li><strong>현장 키오스크 결제 및 실시간 베팅/크레딧 정산 시스템 구현 완료</strong>: 현금/카드/VIP 멤버십 크레딧 충전, 경기별 베팅 티켓 발권, 적중 시 크레딧 즉시 환급/출금 연동.</li>
-                <li><strong>VIP 현장 네트워크/기기 환경 안정화 및 런칭 리허설 완료</strong>: 로컬 서버 및 통신 장애 대비 오프라인 캐시 및 자동 페일오버 완비, 현장 런칭 전 최종 리허설 검증.</li>
-                <li><small style="color: var(--text-dim);">※ 미국 VIP 라운지 현장 정식 런칭 및 오픈 작업은 4차 마일스톤 초기에 진행</small></li>
-              </ul>
-            </li>
-            <li>
-              <strong>농장 모드 2단계 (VIP 라운지용 농장 기능 & 전 모드 환류)</strong>:
-              <ul class="styled-sublist">
-                <li><strong>VIP 라운지 특화 패스트 트랙 UX</strong>: 복잡한 육성 뎁스를 압축하여 1~2터치로 선수 선택/육성/출전을 원스톱 진행하는 태블릿 전용 UI 제공.</li>
-                <li><strong>현장 급속 육성(Fast-Breeding) 시스템</strong>: VIP 크레딧 즉시 소모를 통한 알 급속 부화, 고속 훈련, 피로 회복 및 부상 즉각 치료(스파 VIP 케어) 연계.</li>
-                <li><strong>VIP 전용 희귀 알 수급 및 현장 경기 즉시 출전</strong>: VIP 전용 고등급(Unique/Legendary) 알 가차 풀 및 현장 더비/피트 경기 즉시 엔트리 슬롯 제공.</li>
-                <li><strong>경기 출전 환류 루프</strong>: 경기 종료 후 피로도(+25), 부상(30%), 쿨다운 적재 ➔ 닭장 휴식/스파 치료 복귀 환류 사이클 완성.</li>
-                <li><strong>2차 파생 스탯 & 7대 전투 기술 연동</strong>: 훈련 스탯 ➔ 경주(최고속/가속 등) 및 격투(공격/방어/기술슬롯 등) 2차 파생 스탯 공식 탑재.</li>
-                <li><strong>2세대 교배 시스템 완성</strong>: 부모 스탯/잠재력 상속 유전 공식, 생애 5회 교배 제한, 외형/특성 유전 확률표 적용.</li>
+                <li>현장 대형 스크린(16:9) 관전 뷰 &amp; 좌석 태블릿 가로 전용 대시보드(베팅+VIP 4대 팜 통합 UX) 완성.</li>
+                <li><strong>VIP 럼블 팜 4대 기능 탑재</strong>: ① <strong>알 유료 획득</strong>(유료 35종/10연 천장), ② <strong>유료 교배</strong>(유료 전용 2세대 유전 교배), ③ <strong>유/무료 성장</strong>(대기·10초 미니게임·일반 8종 훈련 vs 0초 즉시 부화·급속 훈련), ④ <strong>유/무료 회복</strong>(닭장·사료 vs 스파 완충). *(무료 알·광고·거래소·퀘스트·칭호·업적 미반영)*</li>
+                <li>경기 출전 환류(피로+25/부상30%/30m 쿨다운), 2차 파생 스탯 및 <strong>9대 전투 기술(<code>F33/F34</code>)·다운/KO 분리</strong> 완성, <code>VIP Lounge Local DB</code> 폐쇄망 독립 운영 및 페일오버 검증 완료.</li>
               </ul>
             </li>
           </ul>
         </div>
-
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
-
-        <!-- 5.3 4차 마일스톤 -->
         <div id="sec-m4" style="margin-bottom: 2rem;">
-          <h3 class="sub-header">📍 5.3 [4차 마일스톤: ~12/30] [4차 초기] 미국 VIP 라운지 정식 런칭, 양대 마켓 런칭 준비 착수, 스토어 심사 접수 & [농장 3단계] 완비</h3>
+          <h3 class="sub-header">📍 5.3 [4차 마일스톤: ~12/30] [4차 초기] 미국 VIP 라운지 정식 런칭, 양대 마켓 준비 &amp; [농장 3단계] 완비</h3>
           <ul class="styled-list">
-            <li>
-              <strong>[4차 초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong>:
-              <ul class="styled-sublist">
-                <li>3차에서 개발 및 런칭 준비가 완료된 VIP 라운지 전용 상용 빌드(경주/격투/VIP농장)를 현장 기기에 배포 및 정식 오픈.</li>
-                <li>현장 관전 스크린 중계, 유저별 좌석 태블릿 베팅, 키오스크 크레딧 충전/정산 및 VIP 농장 라이브 운영 개시.</li>
-                <li>현장 전담 CS 및 실시간 운영 모니터링/장애 대응 프로세스 가동.</li>
-              </ul>
-            </li>
-            <li>
-              <strong>양대 마켓(Google Play / Apple App Store) 모바일 런칭 준비 착수</strong>:
-              <ul class="styled-sublist">
-                <li><strong>인앱 결제 SDK 및 플랫폼 보안</strong>: Google Play Billing 및 Apple In-App Purchase 모듈 연동, 영수증 검증 서버 보안 강화, 치팅 방지 로직 적용.</li>
-                <li><strong>심사 규격 및 법적 고지 UI</strong>: IARC 설문 기반 연령등급 표시, 글로벌 개인정보처리방침, 서비스 이용약관 팝업 구현.</li>
-                <li><strong>모바일 클라이언트 최적화</strong>: 저사양 기기 메모리 최적화, 네트워크 단절 및 백그라운드 전환 시 자동 재접속/세션 복구 프로세스 완비.</li>
-                <li><strong>양대 마켓 스토어 제출용 마스터 빌드 패키징 및 심사 접수 완료</strong>.</li>
-              </ul>
-            </li>
-            <li>
-              <strong>농장 모드 3단계 (Ecosystem Completion & Balance)</strong>:
-              <ul class="styled-sublist">
-                <li><strong>유저 간 알 거래소(Egg Marketplace)</strong>: 알 등록/구매 및 8% 거래 수수료 회수 로직 구현.</li>
-                <li><strong>퀘스트, 업적 및 칭호 시스템</strong>: 일일 퀘스트 5종, 주간 퀘스트 4종, 영구 누적 업적 8종, 칭호 20종 마스터 데이터 연동.</li>
-                <li><strong>통합 경제 밸런스 튜닝</strong>: 실데이터 기반 재화 순환 경제 모델(Sink & Source) 및 훈련/교배/치료 밸런스 최적화.</li>
-              </ul>
-            </li>
-            <li>
-              <strong>소프트 런칭 및 CBT 시범 출시</strong>:
-              <ul class="styled-sublist">
-                <li>특정 국가(동남아 등) 시범 소프트 런칭 개시 및 실제 유저 유입을 통한 경기/육성 실데이터 1차 수집.</li>
-              </ul>
-            </li>
+            <li><strong>[4차 초기] 미국 VIP 라운지 현장 정식 런칭</strong>: 경주·격투 및 VIP 럼블 팜 4대 기능 라이브 오픈.</li>
+            <li><strong>양대 마켓 심사 접수 &amp; 소프트 런칭</strong>: Google/Apple IAP SDK, IARC 연령등급, 약관/치팅 방지 보안, 스토어 심사 접수 및 소프트 런칭 실데이터 수집.</li>
+            <li><strong>[농장 3단계 (모바일 풀버전 완성)]</strong>: 유저 간 알 거래소(수수료 8%, <code>[큰손]</code> 7%), 일일 5·주간 4 퀘스트, 영구 업적 8종, 칭호 20종 마스터, 3스탬프 무료 알 연동.</li>
           </ul>
         </div>
-
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
-
-        <!-- 5.4 5차 마일스톤 -->
         <div id="sec-m5" style="margin-bottom: 2rem;">
           <h3 class="sub-header">📍 5.4 [5차 마일스톤: 2027.01 (01/02 ~ 01/22)] 마켓용 버전 고도화 및 최종 안정화</h3>
           <ul class="styled-list">
@@ -2979,740 +2899,112 @@
       <section id="sec-volume" class="card">
         <h2 class="section-header">
           <span>6. 전 모드 구성 요소(비주얼 에셋 포함) 볼륨 픽스 및 마일스톤별 투입 총괄표</span>
-          <span class="badge badge-success">Asset Baseline Fixed</span>
+          <span class="badge badge-primary">Volume v1.2.0 Sync</span>
         </h2>
-        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
-          ROOSTER RUMBLE 프로젝트 전 모드(경주·격투·농장·VIP라운지·온라인 마켓)의 모든 세부 구성 요소, 3D 모델, 모션/애니메이션, VFX 파티클, UI/UX 화면, 오디오, 마스터 데이터 및 시스템 볼륨을 정량적으로 체크 및 픽스(Fix)하고, 3주 단위 마일스톤(1차~후속)과 1:1 매핑한 공식 기준 볼륨 총괄표입니다.
-        </p>
-
-        <!-- 6.1 총괄 에셋 볼륨 요약 배지 그리드 -->
         <div id="sec-vol-summary">
-          <h3 class="sub-header">📊 6.1 비주얼 & 제작 에셋 총괄 현황 요약 (Fix Status)</h3>
-          <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 1.5rem;">
-            <div class="kpi-box primary">
-              <div class="kpi-label">3D 모델 & 배경</div>
-              <div class="kpi-value">11종 + 7곳</div>
-              <div class="kpi-desc">11개 베이스메쉬 / 6부착물 / 7대 경기장·팜</div>
-            </div>
-            <div class="kpi-box" style="border-left: 4px solid #f43f5e;">
-              <div class="kpi-label">선수 맵핑 바리에이션</div>
-              <div class="kpi-value">총 300종</div>
-              <div class="kpi-desc">11종 모델 기반 텍스처/컬러 (추후 추가 예정)</div>
-            </div>
-            <div class="kpi-box warning">
-              <div class="kpi-label">모션 / 애니메이션</div>
-              <div class="kpi-value">35종</div>
-              <div class="kpi-desc">경주(7종) + 격투(16종) + 팜 자율/훈련/스파(12종)</div>
-            </div>
-            <div class="kpi-box" style="border-left: 4px solid #a855f7;">
-              <div class="kpi-label">VFX 및 파티클</div>
-              <div class="kpi-value">24종</div>
-              <div class="kpi-desc">타격·스피드·환경·혈흔·부화 연출 FX</div>
-            </div>
-            <div class="kpi-box success">
-              <div class="kpi-label">UI / UX 화면</div>
-              <div class="kpi-value">42개 화면</div>
-              <div class="kpi-desc">경주(6) + 격투(6) + 팜(14) + VIP(8) + 스토어(8)</div>
-            </div>
-            <div class="kpi-box" style="border-left: 4px solid #06b6d4;">
-              <div class="kpi-label">2D 에셋 & 아이콘</div>
-              <div class="kpi-value">135종+</div>
-              <div class="kpi-desc">알 65종, 훈련 8종, 칭호 20종, 업적 8종, 상태 10종</div>
-            </div>
-            <div class="kpi-box" style="border-left: 4px solid #ec4899;">
-              <div class="kpi-label">오디오 사운드</div>
-              <div class="kpi-value">105종+</div>
-              <div class="kpi-desc">BGM 8곡, 효과음 52종, 음성 보이스 45종+</div>
-            </div>
-          </div>
-
-          <!-- 총괄 에셋 픽스 요약 테이블 -->
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 180px;">제작 영역</th>
-                  <th style="width: 110px; text-align: center;">확정 수량</th>
-                  <th style="width: 70px; text-align: center;">단위</th>
-                  <th style="width: 120px; text-align: center;">픽스 상태</th>
-                  <th>상세 세부 내역 및 비고</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="제작 영역"><strong>3D 캐릭터 모델 (베이스 메쉬)</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">11</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">경주 6종 주행 스타일 외형 분기(도주/선행/선입/추입/자재/변칙) + 격투 5종 파이터 분기(인파이터/아웃파이터/브롤러/테크니션/밸런서) 기본 뼈대 메쉬</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>선수 바리에이션용 맵핑</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary" style="background: #e11d48;">300</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역"><strong>총 300개의 바리에이션용 텍스처/컬러 맵핑 (추후 추가 예정)</strong> - 기본 11종 선수 메쉬에 적용되는 품종별 깃털 무늬, 컬러 패턴, 스킨 맵핑 300세트</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>3D 캐릭터 부착물 에셋</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">6</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">1~6번 게이트 번호판 및 고유 컬러 인디케이터 머리 위 3D 부착물 에셋</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>3D 경기장/배경 스테이지</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-primary">7</span></td>
-                  <td data-label="단위" style="text-align: center;">개소</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">더비 타원형 트랙(1곳), 직경 10m 원형 핏 아레나(1곳), 팜 5대 핵심 공간(부화실/훈련장/닭장스파/교배소/관리동)</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>모션 / 애니메이션 클립</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-warning">35</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">경주 7종(대기3, 질주2, 감속런/세리머니2) + 격투 16종(보법6, 기술7, 피격/그로기/다운3) + 팜 12종(배회4, 훈련8)</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>VFX 및 파티클 이펙트</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-accent">24</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">경주 7종(스피드라인, 흙먼지, 환경3, START/FINISH) + 격투 7종(타격3, 혈흔, 벽면/방어2) + 팜/공통 10종(부화3, 훈련/스파4 등)</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>UI 화면 및 모달 패널</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-success">42</span></td>
-                  <td data-label="단위" style="text-align: center;">개</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">더비 6화면(HUD4, 슬로우, 옵션) + 핏 6화면(HUD4, FIGHT/KO) + 팜 14화면 + VIP 현장 8화면 + 스토어/공통 8화면</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>2D 아이콘 및 그래픽 에셋</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">135+</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">알 가차 65종(커먼20/언커먼15/레어15/에픽10/전설5), 훈련 기구 8종, 상태 머신 배지 10종, 칭호 20종, 영구 업적 8종, 퀘스트 9종 등</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>BGM 음원</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">8</span></td>
-                  <td data-label="단위" style="text-align: center;">곡</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">로비, 더비 대기/질주, 핏 긴장, 팜 어쿠스틱, VIP 라운지, 우승 팡파레 3종</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>효과음 (SFX)</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">52</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">경주 12종(비프, 총성, 발자국, 날개 등) + 격투 18종(타격, 피격, 타종 징/벨 등) + 팜/공통 22종(부화, 훈련8, 스파, UI음)</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>음성 보이스 클립</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">45+</span></td>
-                  <td data-label="단위" style="text-align: center;">종</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">동적 아나운서 중계 25종 + 격투 콜 10종 + 닭 울음/비명 10종</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>마스터 데이터 테이블</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">6</span></td>
-                  <td data-label="단위" style="text-align: center;">세트</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">알 65종 가차 마스터, 30두 스탯 테이블, 24시간 타임 스케줄, 훈련/유전 공식, 경제 밸런스 테이블 등</td>
-                </tr>
-                <tr>
-                  <td data-label="제작 영역"><strong>핵심 엔진 & 서버 시스템</strong></td>
-                  <td data-label="확정 수량" style="text-align: center;"><span class="badge badge-secondary">5</span></td>
-                  <td data-label="단위" style="text-align: center;">대모듈</td>
-                  <td data-label="픽스 상태" style="text-align: center;"><span class="badge badge-success">FIXED</span></td>
-                  <td data-label="상세 세부 내역">결정론적 경주 물리, 핏 대전 시뮬레이터, 팜 유전/스탯 엔진, 오프라인 VIP 독립 폐쇄 서버, 10만 동접 클라우드 인프라</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <h3 class="sub-header">📊 6.1 비주얼 &amp; 제작 에셋 총괄 현황 요약 (Fix Status)</h3>
+          <div class="table-container"><table><thead><tr><th>제작 영역</th><th style="text-align: center;">세부 항목 수량</th><th style="text-align: center;">단위</th><th style="text-align: center;">볼륨 픽스 상태 (Fix Status)</th><th>비고</th></tr></thead><tbody>
+<tr><td><strong>3D 캐릭터 모델 (단일 리그+파츠)</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>단일 리그 + 11스타일</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>단일 기본 리그(Rig) + 3단계 등급별 외형 파츠 + 경주 6/격투 5 스타일 분기</td></tr>
+<tr><td><strong>선수 바리에이션용 맵핑</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>300</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td><strong>총 300개의 텍스처/컬러 맵핑 바리에이션 (추후 추가 예정)</strong></td></tr>
+<tr><td><strong>3D 캐릭터 부착물 에셋</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>6</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>1~6번 게이트 고유 번호판 인디케이터 머리 위 부착물</td></tr>
+<tr><td><strong>3D 경기장/배경 스테이지</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>7</strong></span></td><td style="text-align: center;">개소</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>더비 트랙(1), 핏 아레나(1), 팜 5대 공간(부화 온실/훈련장/닭장·스파/교배소/관리동·마켓)</td></tr>
+<tr><td><strong>모션 / 애니메이션 클립</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>37+</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>경주(7종) + 격투(18종, 실무 가공 5종 포함) + 팜 자율/훈련/스파(12종+)</td></tr>
+<tr><td><strong>VFX 및 파티클 이펙트</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>24</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>경주(7종) + 격투(7종) + 팜 및 연출(10종)</td></tr>
+<tr><td><strong>UI 화면 및 모달 패널</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>42</strong></span></td><td style="text-align: center;">개</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>경주(6) + 격투(6) + 팜(14) + VIP현장(8: VIP 팜 4대 기능 포함) + 스토어/공통(8)</td></tr>
+<tr><td><strong>2D 아이콘 및 그래픽 에셋</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>135+</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>알 65종(4단계), 훈련 8종, 상태 10종, 칭호 20종, 업적 8종, 퀘스트 9종, 전투기술 9종 등</td></tr>
+<tr><td><strong>BGM 음원</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>8</strong></span></td><td style="text-align: center;">곡</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>팜/로비 3곡(<code>BGM_LOBBY_01</code>, <code>BGM_TRAIN_02</code>, <code>BGM_MARKET_03</code>) + 경주 3곡 + 격투 1곡 + 우승 팡파레 1곡</td></tr>
+<tr><td><strong>효과음 (SFX)</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>54</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>경주(12종) + 격투(20종) + 팜(<code>SFX-Farm</code> 10종)/공통 UI(12종)</td></tr>
+<tr><td><strong>음성 보이스 클립</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>45+</strong></span></td><td style="text-align: center;">종</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>아나운서 중계(25종+) + 격투 콜(10종) + 닭 울음소리(10종)</td></tr>
+<tr><td><strong>마스터 데이터 테이블</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>6</strong></span></td><td style="text-align: center;">세트</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>알 65종, 30두 스탯, 24시간 스케줄, 훈련/유전, 경제 밸런스, 4대 연출 CSV(<code>Proto_Editor</code>)</td></tr>
+<tr><td><strong>핵심 엔진 &amp; 서버 시스템</strong></td><td style="text-align: center;"><span class="badge badge-primary"><strong>5</strong></span></td><td style="text-align: center;">대모듈</td><td style="text-align: center;"><span class="badge badge-success"><strong>FIXED</strong></span></td><td>경주 물리, 핏 시뮬레이터, 팜 유전, VIP 폐쇄서버(4대 팜 포함), 10만 동접 인프라</td></tr>
+</tbody></table></div>
         </div>
-
-        <!-- 6.2 모드별 상세 볼륨 명세 -->
         <div id="sec-vol-modes" style="margin-top: 2rem;">
           <h3 class="sub-header">🎮 6.2 모드별 세부 구성 요소 확정 볼륨 명세표</h3>
-
-          <!-- 경주 모드 표 -->
-          <h4 style="margin: 1.25rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
-            <span>🏇 1) 더비 레이스 (Derby Race - 경주 모드)</span>
-            <span class="badge badge-primary">경주 확정</span>
-          </h4>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 100px;">대분류</th>
-                  <th style="width: 200px;">세부 구성 항목</th>
-                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
-                  <th>상세 규격 및 작업 스펙</th>
-                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">주행 스타일별 3D 모델 분기</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
-                  <td data-label="상세 스펙">도주, 선행, 선입, 추입, 자재, 변칙 6종 체형 실루엣 및 깃털 차별화 메쉬</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차컨셉 ➔ 2차완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">게이트 번호 인디케이터</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
-                  <td data-label="상세 스펙">1~6번 게이트 고유 컬러 및 번호판 머리 위 3D 부착물 에셋</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 맵핑</span></td>
-                  <td data-label="세부 구성 항목">선수 바리에이션용 맵핑</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong style="color: #f43f5e;">총 300종</strong></td>
-                  <td data-label="상세 스펙">기본 11종 선수 메쉬 기반 깃털 무늬, 컬러 패턴, 품종 스킨 맵핑 300세트 (추후 추가 예정)</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차(6)➔2차(30)➔3차(100)➔4차(200)➔5차(300)</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">카툰 셰이더 머티리얼</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">아케이드 툰 셰이딩, 외곽선(Outline), 림라이트, 채도 보정 셰이더</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">트랙 및 스타트/골인 아레나</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">타원형 오벌 트랙, 6구 스타트 게이트, 피니쉬 아치, 우승 단상, 관중석</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">게이트 대기 모션</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">발구르기, 날개털기, 고개짓 등 출발 카운트다운 랜덤 대기 모션 클립</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">질주 모션 튜닝</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">기본 질주 템포 +30% 가속 모션, 라스트 스퍼트 강풍 날개짓 파워 모션</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">피니쉬 및 세리머니</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">결승 통과 후 감속 런다운 모션 1종, 1위 완주 닭 단상 도약/날개 펼침 세리머니 1종</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기획 ➔ 2차연동</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">속도감 및 주행 파티클</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">측면 가속 스피드 라인 FX, 발굽 지면 흙먼지 킥(Kick Dust) 파티클</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">환경 변수 연출</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">트랙 비(Rain) 파티클, 바람-낙엽 흩날림 파티클, 지면 열기 아지랑이 셰이더 FX</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차연출 ➔ 2차결합</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">레이스 스타트/피니쉬 FX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">출발 0초 볼드 "START" 팝업, 1위 결승 통과 "FINISH!" 팡파레 축하 버스트 FX</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">레이스 카메라 워킹</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">기본 쿼터뷰 트랙 카메라, 다이내믹 박력 추적 카메라, 결승 통과 클로즈업 카메라</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">1초 슬로우 리플레이</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">결승 1초 전후 다이내믹 앵글 슬로우 모션 리플레이 및 [Skip] 인터랙션</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기획 ➔ 2차구현</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">레이스 인게임 HUD</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
-                  <td data-label="상세 스펙">상단 실시간 순위 바, 미니맵 트랙 진행 인디케이터, 배당률 표출창, 결과창</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">레이스 SFX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>12종</strong></td>
-                  <td data-label="상세 스펙">카운트다운 비프(2회), GO 비프, 출발 신호총, 발자국 흙길/잔디 루프, 날개 퍼덕임 등</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">상황 반응형 아나운서</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>25종</strong></td>
-                  <td data-label="상세 스펙">출발, 선두 다툼, 외곽 추월, 접전 경합, 라스트 스퍼트, 골인 등 동적 보이스 풀</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기초 ➔ 2차확장</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">레이스 BGM</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3곡</strong></td>
-                  <td data-label="상세 스펙">경기 대기 룸 BGM, 박진감 질주 BGM, 우승 팡파레 BGM</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 격투 모드 표 -->
-          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
-            <span>🥊 2) 럼블 핏 (Rumble Pit - 격투 모드)</span>
-            <span class="badge badge-warning">격투 확정</span>
-          </h4>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 100px;">대분류</th>
-                  <th style="width: 200px;">세부 구성 항목</th>
-                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
-                  <th>상세 규격 및 작업 스펙</th>
-                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">5대 파이터 3D 모델 분기</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
-                  <td data-label="상세 스펙">인파이터(근육/붉은볏), 아웃파이터(날렵/린다리), 브롤러(거대흉곽), 테크니션(정교), 밸런서</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차2종 ➔ 2차5종</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">3D 모델</span></td>
-                  <td data-label="세부 구성 항목">원형 벽면 아레나 (10m)</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">직경 10m 목재/철망 구조 원형 투계장, 흙바닥 링 텍스처, 원형 펜스 벽면</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차배치 ➔ 2차완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">조류 6대 이동 보법</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>6종</strong></td>
-                  <td data-label="상세 스펙">전진 총총, 짧은 뒤로 홉, 목 빼고 질주 대시, 날개 퍼덕 후방 이탈, 측면 사이드 홉, 원형 탐색 걸음</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연동 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">비의인화 7대 전투 기술</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>7종</strong></td>
-                  <td data-label="상세 스펙">[공격4] 부리 속사, 낮은 발톱 할퀴기, 비상 발톱 급습, 광폭 발버둥 난타 / [방어3] 버티기, 엎드리기, 맞발톱 쳐내기</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차클립 ➔ 2차시뮬</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">피격 및 피니시 모션</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">강타 피격 단발 모션, 스탠딩 그로기(1.0초 비틀거림), 즉시 캔버스 다운(Knockdown)</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연동 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">격돌/벽면 충돌 모션</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">동시 격돌(Clash) 튕김 모션, 아레나 벽면 충돌(Wall Impact) 바운드 모션</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">아케이드 타격 FX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">부리 핀포인트 스파크, 발톱 할퀴기 슬래시 궤적, 날개 난타 광역 충격파 파티클</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">크리티컬 렌즈 혈흔 FX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">치명타 적중 시 화면 렌즈에 붉은 핏방울 일시 표출 후 0.8초 내 페이드아웃</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">벽면 충돌 및 방어 FX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">벽면 충돌 파편 흙먼지 FX, 깃털 부풀려 가드 시 깃털 흩날림 파티클</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">격투 관전 카메라</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1종</strong></td>
-                  <td data-label="상세 스펙">두 선수 간 거리에 비례하여 부드럽게 줌인/줌아웃되는 객관적 스포츠 중계 카메라</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">대전 인게임 HUD</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
-                  <td data-label="상세 스펙">좌우 2두 체력 게이지(HP Bar), 배당률 표시창, 라운드/타이머 표출창, 대전 결과 모달</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/카메라</span></td>
-                  <td data-label="세부 구성 항목">대전 시각 연출 그래픽</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">라운드 시작 볼드 "FIGHT!" 표출, 승패 판정 센터 볼드 "KO" 그래픽 표출</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">격투 타격/피격 SFX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>14종</strong></td>
-                  <td data-label="상세 스펙">부리 타격음, 발톱 슬래시, 날개 강타, 뼈 충돌, 조류 피격 비명, 그로기 헐떡임 등</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">타종 및 관중 SFX</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
-                  <td data-label="상세 스펙">단독 타종 징소리, KO 연속 타종 벨소리(SFX_PIT_KO_BELL), 관중 함성/탄식</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">보이스 및 BGM</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">라운드 개시 보이스("First Round... FIGHT!"), 대전 긴장 BGM, KO 승리 팡파레</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">엔진</span></td>
-                  <td data-label="세부 구성 항목">대전 시뮬레이터</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1모듈</strong></td>
-                  <td data-label="상세 스펙">두 선수 간격, 타격축, 회피/판정, 콤보 캔슬 및 상성 역습을 관장하는 전용 시뮬레이터</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차기초 ➔ 2차고도화</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 농장 모드 표 -->
-          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
-            <span>🏡 3) 럼블 팜 (Rumble Farm - 육성 모드)</span>
-            <span class="badge badge-success">육성 확정</span>
-          </h4>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 100px;">대분류</th>
-                  <th style="width: 200px;">세부 구성 항목</th>
-                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
-                  <th>상세 규격 및 작업 스펙</th>
-                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
-                  <td data-label="세부 구성 항목">메인 팜 5대 핵심 공간</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
-                  <td data-label="상세 스펙">부화실(Incubator), 훈련장(Training Field), 닭장/스파(Rest & Spa), 교배소(Breeding Pen), 관리동(Farm House)</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 1단계 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
-                  <td data-label="세부 구성 항목">농장 배경/지형 에셋</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1세트</strong></td>
-                  <td data-label="상세 스펙">2.5D 아이소메트릭 파스텔톤 타일맵, 울타리, 잔디, 조경 오브젝트 세트</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">2.5D 에셋</span></td>
-                  <td data-label="세부 구성 항목">8종 훈련 기구 오브젝트</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>8종</strong></td>
-                  <td data-label="상세 스펙">트레드밀, 샌드백, 밸런스 짐볼, 속도 래더, 타격 목인, 타이어 끌기, 점프대, 명상대</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
-                  <td data-label="세부 구성 항목">알 가차 2D 그래픽</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>65종</strong></td>
-                  <td data-label="상세 스펙">커먼(20종), 언커먼(15종), 레어(15종), 에픽(10종), 레전더리(5종) 고유 알 그래픽 에셋</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
-                  <td data-label="세부 구성 항목">상태 머신 배지 아이콘</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>10종</strong></td>
-                  <td data-label="상세 스펙">미부화, 대기, 훈련중, 출전중, 휴식중, 부상, 치료중, 교배중, 쿨다운, 은퇴 인디케이터</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">2D 에셋</span></td>
-                  <td data-label="세부 구성 항목">칭호 / 업적 / 퀘스트 아이콘</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>33종</strong></td>
-                  <td data-label="상세 스펙">칭호 20종, 영구 업적 8종 트로피, 일일(5종)/주간(4종) 퀘스트 인디케이터</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차 3단계 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">닭 캐릭터 팜 자율 배회</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
-                  <td data-label="상세 스펙">모이 쪼기, 꼬꼬댁 고개짓, 흙목욕 털기, 횟대 낮잠 자율 모션</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">8종 훈련 인터랙션 모션</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>8종</strong></td>
-                  <td data-label="상세 스펙">8개 기구별 특화 운동 모션 (트레드밀 달리기, 샌드백 부리 쪼기, 짐볼 중심잡기 등)</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-motion">모션</span></td>
-                  <td data-label="세부 구성 항목">치료 및 휴식 모션</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2종</strong></td>
-                  <td data-label="상세 스펙">스파 온천 배스 모션, 부상 붕대 감기 치료 모션</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">알 부화 연출 파티클</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3종</strong></td>
-                  <td data-label="상세 스펙">알 흔들림/금가기, 등급별(일반/희귀/전설) 부화 폭발 광원 버스트 FX</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VFX</span></td>
-                  <td data-label="세부 구성 항목">훈련/스파 파티클</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4종</strong></td>
-                  <td data-label="상세 스펙">스탯 성장 스파클 FX, 훈련 땀방울 파티클, 스파 온천김 파티클, 하트 힐링 FX</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">UI/화면</span></td>
-                  <td data-label="세부 구성 항목">농장 관리 HUD 및 모달</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>14화면</strong></td>
-                  <td data-label="상세 스펙">메인 팜 뷰포트, 인큐베이터 슬롯 패널, 부화 가속 미니게임 UI, 훈련 지정창, 선수 프로필 방사형 육각 스탯 차트, 교배창, 알 거래소(마켓), 퀘스트창, 업적/칭호창 등</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2~4차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">사운드</span></td>
-                  <td data-label="세부 구성 항목">팜 인터랙션 SFX & BGM</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>17종</strong></td>
-                  <td data-label="상세 스펙">알 부화 껍질 깨짐음, 훈련 기구 구동음 8종, 스파 물소리, 치료 완료 벨, UI 클릭음 + 평화 팜 BGM 1곡</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차 완성</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- VIP 라운지 및 마켓/시스템 표 -->
-          <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
-            <span>🎰 4) 미국 VIP 라운지 & 온라인 마켓/시스템</span>
-            <span class="badge badge-accent">상용화 확정</span>
-          </h4>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 100px;">대분류</th>
-                  <th style="width: 200px;">세부 구성 항목</th>
-                  <th style="width: 90px; text-align: center;">확정 볼륨</th>
-                  <th>상세 규격 및 작업 스펙</th>
-                  <th style="width: 130px; text-align: center;">마일스톤 배분</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
-                  <td data-label="세부 구성 항목">16:9 대형 스크린 관전 뷰</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2화면</strong></td>
-                  <td data-label="상세 스펙">라운지 메인 관전 디스플레이 1080p/4K 전광판 UI (더비 중계 뷰, 피트 중계 뷰)</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
-                  <td data-label="세부 구성 항목">좌석 태블릿 가로 전용 UI</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>4화면</strong></td>
-                  <td data-label="상세 스펙">1~2터치 선수 선택 패스트트랙, 실시간 베팅 슬립 발권 UI, 경기 관전창, 정산창</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">VIP UI</span></td>
-                  <td data-label="세부 구성 항목">키오스크 결제/정산 UI</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2화면</strong></td>
-                  <td data-label="상세 스펙">현금/카드/VIP 멤버십 크레딧 충전 화면, 당첨 티켓 바코드 스캔 및 즉시 출금 화면</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">VIP 기능</span></td>
-                  <td data-label="세부 구성 항목">VIP 즉시 육성 모듈</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3기능</strong></td>
-                  <td data-label="상세 스펙">VIP 크레딧 즉각 소모를 통한 부화 0초 완료, 훈련 즉시 완료, 스파 즉각 치료 모듈</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">VIP 기능</span></td>
-                  <td data-label="세부 구성 항목">VIP 전용 알 & 엔트리 슬롯</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>2기능</strong></td>
-                  <td data-label="상세 스펙">VIP 전용 고등급(Unique/Legendary) 알 풀 제공, 더비/피트 즉시 출전 VIP 전용 엔트리 슬롯</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">서버/인프라</span></td>
-                  <td data-label="세부 구성 항목">오프라인 로컬 독립 서버</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
-                  <td data-label="상세 스펙">현장 폐쇄망 로컬 독립 DB, 게임 세션 서버, 온·오프라인 계정 분리 운영 검증</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차준비 ➔ 4차런칭</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">서버/인프라</span></td>
-                  <td data-label="세부 구성 항목">통신 장애 대비 자동 페일오버</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
-                  <td data-label="상세 스펙">단말기-키오스크 간 오프라인 로컬 캐시 및 통신 단절 시 데이터 무결성 보존 모듈</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-direct">스토어 SDK</span></td>
-                  <td data-label="세부 구성 항목">결제(IAP) & 스토어 승인 화면</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>5종</strong></td>
-                  <td data-label="상세 스펙">Google Play Billing / Apple IAP 연동, IARC 연령등급, 개인정보방침, 이용약관 등</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차접수 ➔ 5차승인</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">클라이언트</span></td>
-                  <td data-label="세부 구성 항목">모바일 최적화 & 안티치트</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>3세트</strong></td>
-                  <td data-label="상세 스펙">안드로이드 발열/메모리 최적화, 자동 세션 복구 및 메모리 변조 방지 안티치트</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차~5차 완성</span></td>
-                </tr>
-                <tr>
-                  <td data-label="대분류"><span class="cat-badge cat-model">글로벌 서버</span></td>
-                  <td data-label="세부 구성 항목">10만 동접 클라우드 인프라</td>
-                  <td data-label="확정 볼륨" style="text-align: center;"><strong>1시스템</strong></td>
-                  <td data-label="상세 스펙">글로벌 다중 리전 분산 서버, DB 커넥션 풀 최적화, 10만 동접 부하 스트레스 검증</td>
-                  <td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-success">5차 완료</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <h4 class="group-title">1) 더비 레이스 (Derby Race - 경주 모드)</h4>
+          <div class="table-container"><table><thead><tr><th>대분류</th><th>세부 구성 항목</th><th style="text-align: center;">확정 볼륨 (Fix)</th><th>상세 규격 및 작업 스펙</th><th style="text-align: center;">마일스톤 배분</th></tr></thead><tbody>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>3D 모델</strong></span></td><td data-label="세부 구성 항목">단일 리그 기반 주행 스타일 외형 파츠</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>6종 스타일</strong></strong></td><td data-label="상세 규격 및 작업 스펙">도주, 선행, 선입, 추입, 자재, 변칙 6종 스타일별 파츠(볏·깃털·발톱) 차별화</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 컨셉 확정 ➔ 2차 최종 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">게이트 번호 인디케이터</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>6종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">1~6번 게이트 고유 컬러 및 번호판 머리 위 3D 부착물 에셋</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">선수 바리에이션용 맵핑</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>총 300종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">단일 리그 기반 깃털 무늬, 컬러 패턴, 품종 스킨 맵핑 (추후 추가 예정)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차 6종 ➔ 2차 30종 ➔ 3차 100종 ➔ 4차 200종 ➔ 5차 300종</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">카툰 셰이더 머티리얼</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">아케이드 툰 셰이딩, 외곽선(Outline), 림라이트, 채도 보정 셰이더</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">트랙 및 스타트/골인 아레나</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">타원형 오벌 트랙, 6구 스타트 게이트, 피니쉬 아치, 우승 단상, 관중석</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>모션</strong></span></td><td data-label="세부 구성 항목">게이트 대기 모션</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">발구르기, 날개털기, 고개짓 등 출발 카운트다운 랜덤 대기 모션 클립</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">질주 모션 튜닝</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">기본 질주 템포 +30% 가속 모션, 라스트 스퍼트 강풍 날개짓 파워 모션 (<code>07_Run_22f</code>)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">피니쉬 및 세리머니</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">결승 통과 후 감속 런다운 모션 1종, 1위 완주 닭 단상 도약/날개 펼침 세리머니 1종</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 기획 ➔ 2차 본연동</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>VFX</strong></span></td><td data-label="세부 구성 항목">속도감 및 주행 파티클</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">측면 가속 스피드 라인 FX, 발굽 지면 흙먼지 킥(Kick Dust) 파티클</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">환경 변수 연출</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">트랙 비(Rain) 파티클, 바람-낙엽 흩날림 파티클, 지면 열기 아지랑이 셰이더 FX</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연출 ➔ 2차 물리 결합</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">레이스 스타트/피니쉬 FX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">출발 0초 볼드 "START" 팝업, 1위 결승 통과 "FINISH!" 팡파레 축하 버스트 FX</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>UI/UX</strong></span></td><td data-label="세부 구성 항목">레이스 카메라 워킹</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">기본 쿼터뷰 트랙 카메라, 다이내믹 박력 추적 카메라, 결승 통과 클로즈업 카메라</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 3종 ➔ 2차 2종 옵션화</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">1초 슬로우 리플레이</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">결승 1초 전후 다이내믹 앵글 슬로우 모션 리플레이 및 [Skip] 인터랙션</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 기획 ➔ 2차 구현</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">레이스 인게임 HUD</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">상단 실시간 순위 바, 미니맵 트랙 진행 인디케이터, 배당률 표출창, 결과창</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>사운드</strong></span></td><td data-label="세부 구성 항목">레이스 SFX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>12종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">카운트다운 비프(2회), GO 비프, 출발 신호총, 발자국 흙길/잔디 루프, 날개 퍼덕임 등</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">상황 반응형 아나운서</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>25종+</strong></strong></td><td data-label="상세 규격 및 작업 스펙">연결 호흡 분할 파이프라인(독립 10+초반 11+중반 10 등) 동적 보이스 풀</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 기초 ➔ 2차 확장</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">BGM</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3곡</strong></strong></td><td data-label="상세 규격 및 작업 스펙">경기 대기 룸 BGM, 박진감 질주 BGM, 라스트 스퍼트 BGM</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+</tbody></table></div>
+          <h4 class="group-title" style="margin-top:1.5rem;">2) 럼블 핏 (Rumble Pit - 격투 모드)</h4>
+          <div class="table-container"><table><thead><tr><th>대분류</th><th>세부 구성 항목</th><th style="text-align: center;">확정 볼륨 (Fix)</th><th>상세 규격 및 작업 스펙</th><th style="text-align: center;">마일스톤 배분</th></tr></thead><tbody>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>3D 모델</strong></span></td><td data-label="세부 구성 항목">단일 리그 기반 5대 파이터 파츠</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>5종 스타일</strong></strong></td><td data-label="상세 규격 및 작업 스펙">단일 기본 리그(Rig) + 3단계 등급별 파츠 기반 인파이터/아웃파이터/브롤러/테크니션/밸런서</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 2종(베이스) ➔ 2차 5종 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">원형 벽면 아레나 (10m)</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">직경 10m 목재/철망 구조 원형 투계장, 흙바닥 링 텍스처, 원형 펜스 벽면</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 배치 ➔ 2차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>모션</strong></span></td><td data-label="세부 구성 항목">조류 6대 이동 보법</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>6종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">전진 총총, 짧은 뒤로 홉, 목 빼고 질주 대시, 날개 퍼덕 후방 이탈, 측면 사이드 홉, 원형 탐색 걸음</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 연동 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">비의인화 9대 전투 기술</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>9종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">[공격4] 부리 속사, 낮은 발톱 할퀴기, 비상 발톱 급습, 광폭 발버둥 난타 / [방어3] 버티기, 엎드리기, 맞발톱 쳐내기 / <strong>[특수2] 머리 잡아 바닥 찍기(<code>F33</code>), 머리 풀고 반격하기(<code>F34</code>)</strong></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차 클립 ➔ 2~3차 시뮬 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">피격·넉다운 및 KO 분리 모션</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">강타 피격 단발, 스탠딩 그로기, <strong>일반 넉다운(<code>15_Down_Land_30f</code>, 2초 기상)</strong>, <strong>즉시 KO 다운(<code>13_Down_Land_60f</code>)</strong></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1차 연동 ➔ 3차 분리 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">실무 가공 5종 &amp; 격돌/벽면 충돌</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>7종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">실무 5종(<code>08_atk</code>, <code>09_Mirror</code>, <code>11_x2</code>, <code>12_crit</code>, <code>16_crit</code>), 동시 격돌(<code>Clash</code>), 벽면 충돌(<code>Wall Impact</code>)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2~3차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>VFX</strong></span></td><td data-label="세부 구성 항목">아케이드 타격 &amp; 슬램 FX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">부리 스파크, 발톱 슬래시, 날개 난타 충격파, <strong><code>F33</code> 머리 찍기 지면 흙먼지 폭발</strong></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1~3차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">크리티컬 렌즈 혈흔 FX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">치명타 적중 시 화면 렌즈에 붉은 핏방울 일시 표출 후 0.8초 내 페이드아웃</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">벽면 충돌 및 방어 FX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">벽면 충돌 파편 흙먼지 FX, 깃털 부풀려 가드 시 깃털 흩날림 파티클</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>UI/UX</strong></span></td><td data-label="세부 구성 항목">격투 관전 카메라</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">두 선수 간 거리 비례 객관적 스포츠 중계 카메라 + <code>F_SLAM_CLOSE</code> 로우앵글 연동</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">대전 인게임 HUD</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">좌우 2두 체력 게이지(HP Bar), 배당률 표시창, 라운드/타이머 표출창, 대전 결과 모달</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">대전 시각 연출 그래픽</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">라운드 시작 볼드 <code>"FIGHT!"</code> 표출, 승패 판정 센터 볼드 <code>"KO"</code> 그래픽 표출</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>사운드</strong></span></td><td data-label="세부 구성 항목">격투 타격/피격·특수 SFX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>16종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">부리 타격, 발톱 슬래시, 날개 강타, <strong>특공 바닥 찍기(<code>SFX_PIT_SLAM</code>), 잡기 반격(<code>SFX_PIT_BREAK</code>)</strong> 등</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">1~3차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">타종 및 관중 SFX</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">단독 타종 징소리, KO 연속 타종 벨소리(<code>SFX_PIT_KO_BELL</code>), 관중 함성/탄식</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">보이스 및 BGM</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">라운드 개시 보이스("First Round... FIGHT!"), 대전 긴장 BGM, KO 승리 팡파레</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 완료</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>엔진</strong></span></td><td data-label="세부 구성 항목">대전 시뮬레이터</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1모듈</strong></strong></td><td data-label="상세 규격 및 작업 스펙">4대 순환 상성(<code>타격➔가드➔잡기➔반격</code>), 콤보 캔슬, 상성 역습 및 다운/KO 분리를 관장하는 전용 시뮬레이터</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">1차 기초 ➔ 2차 고도화</span></td></tr>
+</tbody></table></div>
+          <h4 class="group-title" style="margin-top:1.5rem;">3) 럼블 팜 (Rumble Farm - 육성 모드)</h4>
+          <div class="table-container"><table><thead><tr><th>대분류</th><th>세부 구성 항목</th><th style="text-align: center;">확정 볼륨 (Fix)</th><th>상세 규격 및 작업 스펙</th><th style="text-align: center;">마일스톤 배분</th></tr></thead><tbody>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>2.5D 에셋</strong></span></td><td data-label="세부 구성 항목">메인 팜 5대 핵심 공간</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>5종</strong></strong></td><td data-label="상세 규격 및 작업 스펙"><strong>부화 온실(<code>Hatchery Greenhouse</code>), 개화 훈련장(<code>Training Field</code>), 선수 닭장 &amp; 힐링 스파(<code>Coop &amp; Healing Spa</code>), 혈통 교배소(<code>Breeding Pen</code>), 관리동 &amp; 파머스 마켓(<code>Farm House &amp; Market</code>)</strong></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 1단계 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">농장 배경/지형 에셋</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1세트</strong></strong></td><td data-label="상세 규격 및 작업 스펙">2.5D 아이소메트릭 파스텔톤 타일맵, 울타리, 잔디, 조경 오브젝트 세트</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">8종 훈련 기구 오브젝트</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>8종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">고속 트랙, 타이어, 모래언덕, 통나무, 과녁, 깃털 방어대, 외나무 균형대, 진흙탕</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>2D 에셋</strong></span></td><td data-label="세부 구성 항목">알 가차 2D 그래픽</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>65종</strong></strong></td><td data-label="상세 규격 및 작업 스펙"><strong>4단계 등급</strong>: 무료 일반(<code>Natural</code> 30종), 유료 1단계(<code>Superior</code> 20종), 유료 2단계(<code>Rare</code> 10종), 유료 3단계(<code>Legendary</code> 5종) + 교배 혈통 알(<code>Heritage</code>)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">상태 머신 배지 아이콘</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>10종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">알 보관, 부화 진행, 부화 완료, 대기, 훈련, 출전, 피로, 부상, 스파, 교배잠금/쿨다운/은퇴</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">칭호 / 업적 / 퀘스트 아이콘 <em>(모바일 전용)</em></td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>33종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">칭호 20종, 영구 업적 8종 트로피, 일일(5종)/주간(4종) 퀘스트 인디케이터 <em>(VIP 제외)</em></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차 3단계 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>모션</strong></span></td><td data-label="세부 구성 항목">닭 캐릭터 팜 자율 배회</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">모이 쪼기, 꼬꼬댁 고개짓, 흙목욕 털기, 횟대 낮잠 자율 모션</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">8종 훈련 인터랙션 모션</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>8종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">8개 기구별 특화 운동 모션 (트랙 질주, 통나무 타격, 균형대 중심잡기 등)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">치료 및 휴식 모션</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">스파 온천 배스 모션, 부상 붕대 감기 치료 모션</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>VFX</strong></span></td><td data-label="세부 구성 항목">알 부화 연출 파티클</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">알 흔들림/금가기, 등급별(일반/희귀/전설) 부화 폭발 광원 버스트 FX</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">훈련/스파/교배 파티클</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">스탯 성장 스파클 FX, 훈련 땀방울 파티클, 스파 온천김·하트 힐링/교배 FX</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>UI/UX</strong></span></td><td data-label="세부 구성 항목">농장 관리 HUD 및 모달</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>14화면</strong></strong></td><td data-label="상세 규격 및 작업 스펙">메인 팜 뷰포트, 인큐베이터 슬롯(2~4), 10초 미니게임, 유/무료 훈련, 육각 스탯 차트, 닭장·스파 회복, 유료 교배창, 유료 가차(35종) <em>(VIP 4대 기능 포함)</em> + 거래소·퀘스트·업적·칭호 <em>(모바일 전용)</em></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차~4차 단계별 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-motion"><strong>사운드</strong></span></td><td data-label="세부 구성 항목">팜 전용 효과음 (<code>SFX-Farm</code>)</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>10종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">알 터치, 껍질 크랙, 부화 성공, 병아리 울음, 수탉 기상, 트랙·통나무·타이어 훈련 3종, 온천 물소리, 회복 챠임</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">팜 배경음악 (<code>BGM</code>)</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3곡</strong></strong></td><td data-label="상세 규격 및 작업 스펙"><code>BGM_LOBBY_01</code>(아침 농장), <code>BGM_TRAIN_02</code>(훈련장/미니게임), <code>BGM_MARKET_03</code>(알 상점/거래소)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-primary">2차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>데이터</strong></span></td><td data-label="세부 구성 항목">마스터 데이터 세트</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">알 65종 가차 마스터, 8종 훈련 성장 테이블, 10대 상태 머신, 2세대 단일 유전 공식표</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">2차~3차 완성</span></td></tr>
+</tbody></table></div>
+          <h4 class="group-title" style="margin-top:1.5rem;">4) 미국 VIP 라운지 (VIP 럼블 팜 4대 기능 포함) 및 마켓/시스템</h4>
+          <div class="table-container"><table><thead><tr><th>대분류</th><th>세부 구성 항목</th><th style="text-align: center;">확정 볼륨 (Fix)</th><th>상세 규격 및 작업 스펙</th><th style="text-align: center;">마일스톤 배분</th></tr></thead><tbody>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>VIP UI</strong></span></td><td data-label="세부 구성 항목">16:9 대형 스크린 관전 뷰</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2화면</strong></strong></td><td data-label="상세 규격 및 작업 스펙">라운지 메인 관전 디스플레이 1080p/4K 전광판 UI (더비 중계 뷰, 피트 중계 뷰)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">좌석 태블릿 가로 전용 UI</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>4화면</strong></strong></td><td data-label="상세 규격 및 작업 스펙">실시간 베팅 슬립, 경기 관전, 정산창 + <strong>VIP 럼블 팜 4대 기능 통합 가로 대시보드</strong></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">키오스크 결제/정산 UI</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2화면</strong></strong></td><td data-label="상세 규격 및 작업 스펙">현금/카드/VIP 멤버십 크레딧 충전 화면, 당첨 티켓 바코드 스캔 및 즉시 출금 화면</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>VIP 럼블 팜</strong></span></td><td data-label="세부 구성 항목"><strong>① 알 유료 획득</strong></td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>35종 풀</strong></strong></td><td data-label="상세 규격 및 작업 스펙">VIP 크레딧/Gem 유료 알 35종(<code>Superior</code>/<code>Rare</code>/<code>Legendary</code>, 10연 전설 천장) 전용 <em>(무료 알/거래소 제외)</em></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>(4대 기능 한정)</strong></span></td><td data-label="세부 구성 항목"><strong>② 유료 교배</strong></td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1모듈</strong></strong></td><td data-label="상세 규격 및 작업 스펙">VIP 크레딧/Gem 결제 전용 2세대 혈통 교배 (<code>ROOSTER</code>+<code>HEN</code>, 생애 5회 한도, 24h 쿨다운)</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목"><strong>③ 유/무료 성장</strong></td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2트랙</strong></strong></td><td data-label="상세 규격 및 작업 스펙">무료(일반 대기 부화·10초 미니게임·일반 8종 훈련) + 유료(0초 즉시 부화·급속 부스트 훈련) 병행</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목"><strong>④ 유/무료 회복</strong></td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2트랙</strong></strong></td><td data-label="상세 규격 및 작업 스펙">무료(일반 닭장 시간당 -10, 영양 사료 10개 -20) + 유료(프리미엄 스파 즉시 완충·완치) <em>(광고 제외)</em></td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>서버/인프라</strong></span></td><td data-label="세부 구성 항목">오프라인 로컬 독립 서버</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1시스템</strong></strong></td><td data-label="상세 규격 및 작업 스펙">현장 폐쇄망 로컬 독립 DB(<code>VIP Lounge Local DB</code>), 온·오프라인 계정/재화 100% 분리 운영</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 준비 ➔ 4차 런칭</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">통신 장애 대비 자동 페일오버</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1시스템</strong></strong></td><td data-label="상세 규격 및 작업 스펙">단말기-키오스크 간 오프라인 로컬 캐시 및 통신 단절 시 데이터 무결성 보존 모듈</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">3차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>스토어 SDK</strong></span></td><td data-label="세부 구성 항목">결제 및 플랫폼 연동</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>2종</strong></strong></td><td data-label="상세 규격 및 작업 스펙">Google Play Billing 및 Apple In-App Purchase 모듈 연동 및 서버 영수증 검증</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차 심사 접수</span></td></tr>
+<tr><td data-label="대분류"></td><td data-label="세부 구성 항목">규정 준수 및 법적 고지</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3화면</strong></strong></td><td data-label="상세 규격 및 작업 스펙">IARC 연령등급 표시, 글로벌 개인정보처리방침 팝업, 서비스 이용약관 동의 모달</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차 접수 ➔ 5차 승인</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-direct"><strong>클라이언트</strong></span></td><td data-label="세부 구성 항목">모바일 최적화 &amp; 안티치트</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>3세트</strong></strong></td><td data-label="상세 규격 및 작업 스펙">안드로이드 발열/메모리 최적화, 자동 세션 복구 및 메모리 변조 방지 안티치트</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">4차~5차 완성</span></td></tr>
+<tr><td data-label="대분류"><span class="cat-badge cat-model"><strong>글로벌 서버</strong></span></td><td data-label="세부 구성 항목">10만 동접 클라우드 인프라</td><td data-label="확정 볼륨 (Fix)" style="text-align: center;"><strong><strong>1시스템</strong></strong></td><td data-label="상세 규격 및 작업 스펙">글로벌 다중 리전 분산 서버, DB 커넥션 풀 최적화, 10만 동접 부하 스트레스 검증</td><td data-label="마일스톤 배분" style="text-align: center;"><span class="badge badge-warning">5차 완료</span></td></tr>
+</tbody></table></div>
         </div>
-
-        <!-- 6.3 마일스톤별 투입 볼륨 매핑표 -->
         <div id="sec-vol-milestones" style="margin-top: 2rem;">
           <h3 class="sub-header">📅 6.3 차수별(1차~후속) 마일스톤별 투입 볼륨 매핑표</h3>
-          <div class="table-container milestone-table">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 90px; text-align: center;">마일스톤</th>
-                  <th style="width: 140px; text-align: center;">개발 기간</th>
-                  <th>확정 투입 볼륨 (Fixed Deliverables)</th>
-                  <th style="width: 250px;">중점 관리 지표 및 산출물 규격</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-primary">1차</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>10/12 ~ 10/28</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(17일간)</span></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>3D 모델 & 맵핑</strong>: 캐릭터/배경 비주얼 컨셉 확정, 게이트 번호 인디케이터 <strong>6종</strong> 부착, 격투 베이스 모델 <strong>2종</strong> 준비, 초기 기본 맵핑 <strong>6종</strong> 적용</li>
-                      <li><strong>모션</strong>: 스타트 대기 모션 <strong>3종</strong>, 가속 질주 모션, 조류 6대 이동 보법 <strong>6종</strong>, 7대 전투 기술 클립 <strong>7종</strong>, 그로기/다운 모션 <strong>2종</strong></li>
-                      <li><strong>VFX</strong>: 스피드라인, 흙먼지 킥, START 플래시, 피니쉬 표출, 타격 섬광 스파크, 렌즈 혈흔 FX (<strong>6종</strong>)</li>
-                      <li><strong>UI/카메라</strong>: 중계 카메라 워킹 <strong>3종</strong> 랜덤 적용, 결승 1초 슬로우 리플레이 기획, 피니시 3단계 기획 수립</li>
-                      <li><strong>사운드/시스템</strong>: 상황 반응형 아나운서 보이스 구조(R-12), 라운드 타종 징소리, KO 연속 벨소리(<code>SFX_PIT_KO_BELL</code>), 대전 시뮬레이터 기초 프레임워크</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>10/28 내부 시연용 상용화 수준 경주/격투 1차 빌드 무결성 확보</strong></td>
-                </tr>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-secondary" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7;">2차</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>10/29 ~ 11/18</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>3D 모델 & 맵핑</strong>: <strong>3D 카툰 셰이더 최종 적용 완료</strong>, 트랙/배경 3D 모델링 확정, 6종 주행 스타일 외형 분기, 핏 5대 파이터 모델 확정 (<strong>11종</strong> 베이스 메쉬), 1차 상용 30두 닭 기본 맵핑 <strong>30종</strong> 완성</li>
-                      <li><strong>배경/공간</strong>: 직경 10m 원형 투계장 아레나 완성, 메인 팜 <strong>5대 핵심 공간</strong> 2.5D 에셋 배치, 훈련 기구 <strong>8종</strong> 배치</li>
-                      <li><strong>2D/에셋</strong>: 알 가차 <strong>65종</strong>, 상태 머신 배지 <strong>10종</strong>, 팜 모션 <strong>14종</strong>, 알 부화/훈련 파티클 <strong>7종</strong></li>
-                      <li><strong>엔진/VIP</strong>: 대전 시뮬레이터 상성 완성, 팜 6대 스탯 생성, 미국 VIP 라운지 1차 시연 빌드 패키징</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>카툰 셰이더 및 배경 100% 안착 & VIP 1차 시연 & 팜 1단계 릴리즈</strong></td>
-                </tr>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-secondary" style="background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #ec4899;">3차</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>11/19 ~ 12/09</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>VIP 라운지 완성</strong>: 현장 대형 스크린(16:9) 관전 뷰 UI <strong>2종</strong>, 좌석 태블릿 가로 전용 UI <strong>4종</strong>, 키오스크 충전/정산 UI <strong>2종</strong> 완성</li>
-                      <li><strong>선수 맵핑 확장</strong>: VIP 전용 고등급(Unique/Legendary) 닭 및 2세대 교배 파생 바리에이션 등 누적 <strong>100종</strong> 맵핑 연동</li>
-                      <li><strong>VIP 전용 농장</strong>: 태블릿 패스트트랙 1~2터치 UX, 급속 부화/훈련/치료 기능, VIP 전용 희귀 알 수급 및 즉시 출전 슬롯 <strong>2기능</strong></li>
-                      <li><strong>환류 & 교배</strong>: 경기 출전 환류 루프(피로도/부상/쿨다운), 2차 파생 스탯 및 7대 전투 기술 개화/장착 완성, 2세대 교배 유전 시스템 탑재</li>
-                      <li><strong>오프라인 인프라</strong>: 현장 폐쇄망 로컬 독립 DB 구축, 온·오프라인 계정 분리 운영 검증, 자동 페일오버 완비, 현장 런칭 최종 리허설</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>미국 VIP 라운지 상용 버전 개발 완료 및 현장 런칭 준비 100% 완비</strong></td>
-                </tr>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-warning">4차</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>12/10 ~ 12/30</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>[4차초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong> (12월 중순 현장 오픈, 라이브 관전/베팅/키오스크 정산/VIP농장 가동)</li>
-                      <li><strong>선수 맵핑 확장</strong>: 알 가차(65종) 닭 품종 파생 및 거래소 대응 누적 <strong>200종</strong> 맵핑 연동</li>
-                      <li><strong>양대 마켓 런칭 준비</strong>: Google Play / Apple App Store 결제(IAP) SDK 연동, IARC 연령등급 표시, 약관/보안 모듈, 스토어 심사 접수 완료</li>
-                      <li><strong>팜 3단계 생태계</strong>: 알 거래소(8% 수수료 회수 로직), 칭호 <strong>20종</strong>, 영구 업적 <strong>8종</strong>, 일일/주간 퀘스트 <strong>9종</strong> 데이터 연동</li>
-                      <li><strong>소프트 런칭</strong>: 특정 국가 시범 소프트 런칭/CBT 운영 개시 및 경기/육성 실데이터 1차 수집</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>미국 VIP 현장 정식 라이브 오픈 & 양대 마켓 심사 접수 & 소프트런칭</strong></td>
-                </tr>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-success">5차</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>01/02 ~ 01/22</code><br><span style="font-size: 0.75rem; color: var(--text-dim);">(21일간)</span></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>바리에이션 맵핑 300종 완성</strong>: 글로벌 정식 출시 대비 <strong>총 300종 텍스처/컬러 바리에이션 맵핑 100% 완성 및 리소스 최적화 (추후 추가 예정)</strong></li>
-                      <li><strong>밸런스 고도화</strong>: 소프트런칭/CBT 유저 실데이터 기반 배당률 알고리즘 및 닭 AI 난이도 튜닝, 인게임 이코노미 Sink & Source 최적화</li>
-                      <li><strong>모바일 최적화</strong>: 저사양 기기 발열 완화, 메모리 누수 원천 차단, 다양한 화면비 반응형 렌더링 최적화</li>
-                      <li><strong>스토어 승인</strong>: Google Play 및 Apple App Store 심사 피드백 대응 완료 및 최종 스토어 승인 확보</li>
-                      <li><strong>서버 안정화</strong>: 글로벌 런칭 대비 10만 동접 클라우드 오토스케일링 부하 스트레스 검증 완료</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>마켓용 버전 고도화 완료 & 300종 맵핑 완비 & 스토어 최종 승인</strong></td>
-                </tr>
-                <tr>
-                  <td data-label="마일스톤" style="text-align: center;"><span class="badge badge-accent">후속</span></td>
-                  <td data-label="개발 기간" style="text-align: center;"><code>2027 상반기</code></td>
-                  <td data-label="확정 투입 볼륨">
-                    <ul class="styled-list" style="font-size: 0.85rem;">
-                      <li><strong>글로벌 그랜드 오픈</strong>: 양대 마켓 글로벌 전 권역 동시 정식 출시</li>
-                      <li><strong>글로벌 라이브 운영 & 추가 바리에이션</strong>: 정규 글로벌 토너먼트 리그 가동, 시즌제 랭킹전, 시즌별 신규 닭 바리에이션 맵핑 지속 추가 확장</li>
-                    </ul>
-                  </td>
-                  <td data-label="중점 지표"><strong>ROOSTER RUMBLE 글로벌 서비스 성공 안착</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="table-container"><table><thead><tr><th style="text-align: center;">마일스톤</th><th style="text-align: center;">기간</th><th>확정 투입 볼륨 (Fixed Deliverables)</th><th>중점 관리 지표 및 산출물 규격</th></tr></thead><tbody>
+<tr><td style="text-align: center;"><span class="badge badge-primary"><strong>1차</strong></span></td><td style="text-align: center;"><code>10/12 ~ 10/28</code><br>(17일간)</td><td>• <strong>3D 모델 &amp; 맵핑</strong>: 캐릭터/배경 비주얼 컨셉 확정, 게이트 번호 인디케이터 <strong>6종</strong> 부착, 격투 베이스 모델 <strong>2종</strong> 준비, 초기 기본 맵핑 <strong>6종</strong> 적용<br>• <strong>모션</strong>: 스타트 대기 모션 <strong>3종</strong>, 가속 질주 모션, 조류 6대 이동 보법 <strong>6종</strong>, 7대 전투 기술 클립 <strong>7종</strong>, 그로기/다운 모션 <strong>2종</strong><br>• <strong>VFX</strong>: 스피드라인, 흙먼지 킥, START 플래시, 피니쉬 표출, 타격 섬광 스파크, 렌즈 혈흔 FX (<strong>6종</strong>)<br>• <strong>UI/카메라</strong>: 중계 카메라 워킹 <strong>3종</strong> 랜덤 적용, 결승 1초 슬로우 리플레이 기획, 피니시 3단계 기획 수립<br>• <strong>사운드</strong>: 상황 반응형 아나운서 보이스 구조(R-12), 라운드 타종 징소리, KO 연속 벨소리(<code>SFX_PIT_KO_BELL</code>)<br>• <strong>시스템</strong>: 대전 시뮬레이터 기초 프레임워크 구축 착수</td><td>10/28 내부 시연용 상용화 수준 경주/격투 1차 빌드 무결성 확보</td></tr>
+<tr><td style="text-align: center;"><span class="badge badge-primary"><strong>2차</strong></span></td><td style="text-align: center;"><code>10/29 ~ 11/18</code><br>(21일간)</td><td>• <strong>3D 모델 &amp; 맵핑</strong>: <strong>3D 카툰 셰이더 및 단일 기본 리그+등급별 파츠 완료</strong>, 트랙/배경 3D 모델링 확정, 경주 6/격투 5 스타일 분기, 1차 상용 30두 닭 기본 맵핑 <strong>30종</strong> 완성<br>• <strong>배경/공간</strong>: 직경 10m 원형 투계장 아레나 완성, 메인 팜 <strong>5대 핵심 공간</strong> 2.5D 에셋 배치, 훈련 기구 <strong>8종</strong> 배치<br>• <strong>2D/에셋</strong>: 알 가차 <strong>65종(4단계)</strong> 마스터 연동, 닭 10대 상태 머신 배지 <strong>10종</strong><br>• <strong>모션</strong>: 팜 자율 배회 모션 <strong>4종</strong>, 훈련 기구 인터랙션 모션 <strong>8종</strong>, 스파 휴식 모션 <strong>2종</strong>, 우승 세리머니 단상 도약 본 연동<br>• <strong>VFX/연출</strong>: 환경 변수 트랙 주행 물리 결합(비/바람/아지랑이), 알 부화 광원 버스트 FX <strong>3종</strong>, 훈련/스파 파티클 <strong>4종</strong><br>• <strong>엔진/시스템</strong>: 대전 시뮬레이터 상성/격돌 완성, 팜 1차 피지컬 6대 스탯 생성 로직 탑재<br>• <strong>VIP 1차 빌드</strong>: 미국 VIP 라운지 1차 시연 빌드 패키징 및 키오스크 정산 플로우 프로토타입 검증</td><td>카툰 셰이더 및 배경 100% 안착 &amp; VIP 1차 시연 &amp; 팜 1단계 릴리즈</td></tr>
+<tr><td style="text-align: center;"><span class="badge badge-warning"><strong>3차</strong></span></td><td style="text-align: center;"><code>11/19 ~ 12/09</code><br>(21일간)</td><td>• <strong>VIP 라운지 완성</strong>: 현장 대형 스크린(16:9) 관전 뷰 UI <strong>2종</strong>, 좌석 태블릿 가로 전용 UI <strong>4종</strong>, 키오스크 충전/정산 UI <strong>2종</strong> 완성<br>• <strong>선수 맵핑 확장</strong>: VIP 전용 고등급 알 부화 닭 및 2세대 유료 교배 파생 바리에이션 등 누적 <strong>100종</strong> 맵핑 연동<br>• <strong>VIP 전용 럼블 팜 (4대 기능 한정)</strong>: ① <strong>알 유료 획득</strong>(유료 35종 가차/10연 천장), ② <strong>유료 교배</strong>(VIP 크레딧 전용 2세대 교배), ③ <strong>유/무료 성장</strong>(대기·10초 미니게임·일반 훈련 vs 0초 즉시 부화·급속 훈련), ④ <strong>유/무료 회복</strong>(닭장·사료 vs 프리미엄 스파)<br>• <strong>환류 &amp; 전투/교배</strong>: 경기 출전 환류 루프(피로도/부상/쿨다운), 2차 파생 스탯 및 <strong>9대 전투 기술(공4+방3+특수2 <code>F33/F34</code>)</strong> 개화/장착·일반 넉다운/즉시 KO 분리 완성, 2세대 단일 유전 공식 탑재<br>• <strong>오프라인 인프라</strong>: 현장 폐쇄망 로컬 독립 DB 구축, 온·오프라인 계정 분리 운영 검증, 자동 페일오버 완비, 현장 런칭 최종 리허설</td><td>미국 VIP 라운지 상용 버전 개발 완료 (경주·격투 + VIP 럼블 팜 4대 기능)</td></tr>
+<tr><td style="text-align: center;"><span class="badge badge-warning"><strong>4차</strong></span></td><td style="text-align: center;"><code>12/10 ~ 12/30</code><br>(21일간)</td><td>• <strong>[4차초기] 미국 VIP 라운지 현장 정식 런칭 및 운영 개시</strong> (12월 중순 현장 오픈, 라이브 관전/베팅/키오스크 정산/VIP 농장 4대 기능 가동)<br>• <strong>선수 맵핑 확장</strong>: 알 가차(65종) 닭 품종 파생 및 거래소 대응 누적 <strong>200종</strong> 맵핑 연동<br>• <strong>양대 마켓 런칭 준비</strong>: Google Play / Apple App Store 결제(IAP) SDK 연동, IARC 연령등급 표시, 약관/보안 모듈, 스토어 심사 접수 완료<br>• <strong>팜 3단계 생태계 (모바일 풀버전)</strong>: 유저 간 알 거래소(8% 수수료, <code>[큰손]</code> 7%), 칭호 <strong>20종</strong>, 영구 업적 <strong>8종</strong>, 일일/주간 퀘스트 <strong>9종</strong>, 3스탬프 무료 알 연동<br>• <strong>소프트 런칭</strong>: 특정 국가 시범 소프트 런칭/CBT 운영 개시 및 경기/육성 실데이터 1차 수집</td><td>미국 VIP 현장 정식 라이브 오픈 &amp; 양대 마켓 심사 접수 &amp; 소프트런칭</td></tr>
+<tr><td style="text-align: center;"><span class="badge badge-warning"><strong>5차</strong></span></td><td style="text-align: center;"><code>01/02 ~ 01/22</code><br>(21일간)</td><td>• <strong>바리에이션 맵핑 300종 완성</strong>: 글로벌 정식 출시 대비 <strong>총 300종 텍스처/컬러 바리에이션 맵핑 100% 완성 및 리소스 최적화 (추후 추가 예정)</strong><br>• <strong>밸런스 고도화</strong>: 소프트런칭/CBT 유저 실데이터 기반 배당률 알고리즘 및 닭 AI 난이도 튜닝, 인게임 이코노미 Sink &amp; Source 최적화<br>• <strong>모바일 최적화</strong>: 저사양 기기 발열 완화, 메모리 누수 원천 차단, 다양한 화면비 반응형 렌더링 최적화<br>• <strong>스토어 승인</strong>: Google Play 및 Apple App Store 심사 피드백 대응 완료 및 최종 스토어 승인 확보<br>• <strong>서버 안정화</strong>: 글로벌 런칭 대비 10만 동접 클라우드 오토스케일링 부하 스트레스 검증 완료</td><td>마켓용 버전 고도화 완료 &amp; 300종 맵핑 완비 &amp; 스토어 최종 승인</td></tr>
+<tr><td style="text-align: center;"><span class="badge badge-success"><strong>후속</strong></span></td><td style="text-align: center;"><code>2027 상반기</code></td><td>• <strong>글로벌 그랜드 오픈</strong>: 양대 마켓 글로벌 전 권역 동시 정식 출시<br>• <strong>글로벌 라이브 운영 &amp; 추가 바리에이션</strong>: 정규 글로벌 토너먼트 리그 가동, 시즌제 랭킹전, 시즌별 신규 닭 바리에이션 맵핑 지속 추가 확장</td><td>ROOSTER RUMBLE 글로벌 서비스 성공 안착</td></tr>
+</tbody></table></div>
         </div>
       </section>
 

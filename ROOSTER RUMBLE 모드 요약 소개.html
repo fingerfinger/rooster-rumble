@@ -1200,6 +1200,7 @@
           <a href="#artstyle" style="color: #f59e0b;">그래픽 &amp; 원화</a>
           <a href="#derby">경주 모드</a>
           <a href="#pit">격투 모드</a>
+          <a href="#farm" style="color: #22c55e;">육성 모드</a>
           <a href="#compare">모드 비교</a>
           <a href="#qalist" style="color: #38bdf8;">QA 체크 리스트</a>
           <a href="#tech">기술 사양</a>
@@ -1220,7 +1221,7 @@
 
     <div class="doc-meta">
       <h1 class="doc-title">ROOSTER RUMBLE 모드 요약 소개</h1>
-      <p class="doc-desc">경주(Derby Race) 및 격투(Rumble Pit) 핵심 모드 사양 요약</p>
+      <p class="doc-desc">경주(Derby Race) · 격투(Rumble Pit) · 육성(Rumble Farm &amp; VIP 4대 기능) 통합 모드 사양 요약 (v1.5.0)</p>
     </div>
 
     <section id="overview">
@@ -1236,14 +1237,11 @@
           </ul>
         </div>
         <div class="panel">
-          <h4>2대 핵심 모드 포지셔닝</h4>
+          <h4>3대 핵심 모드 포지셔닝 (경주 · 격투 · 육성)</h4>
           <ul class="clean-list">
-            <li><strong>🏇 Derby Race (경주 모드)</strong>:
-              <br>6마리 다자간 스피드 주행 및 단승/복승 예측 베팅 (30초 턴)
-            </li>
-            <li style="margin-top: 10px;"><strong>🥊 Rumble Pit (격투 모드)</strong>:
-              <br>1대1 격투 타격 액션 및 실시간 전황 연동 인플레이 변동 배당 베팅
-            </li>
+            <li><strong>🏇 Derby Race (경주 모드)</strong>: 6마리 다자간 스피드 주행 및 단승/복승 예측 베팅 (30초 턴)</li>
+            <li style="margin-top: 8px;"><strong>🥊 Rumble Pit (격투 모드)</strong>: 1대1 격투 액션(9대 기술 <code>F33/F34</code>·4대 상성·다운/KO 분리) 및 라이브 베팅</li>
+            <li style="margin-top: 8px;"><strong>🌾 Rumble Farm (육성 모드)</strong>: 65종 알 부화 · 8종 유/무료 훈련 · 2세대 교배 · <strong>VIP 라운지 4대 기능(유료 알·유료 교배·유/무료 성장·유/무료 회복) 동시 서비스</strong></li>
           </ul>
         </div>
       </div>
@@ -1653,6 +1651,32 @@
       </div>
     </section>
 
+    <!-- 4-B. Rumble Farm (육성 모드) -->
+    <section id="farm" style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 36px;">
+      <h2 class="section-title" style="border-left-color: #22c55e;">4-B. Rumble Farm (육성 모드 · VIP 4대 기능 동시 서비스)</h2>
+      <div class="grid-2">
+        <div class="panel">
+          <h4>핵심 육성 &amp; 경기 환류 사양</h4>
+          <ul class="clean-list">
+            <li><strong>5대 농장 공간</strong>: 부화 온실, 개화 훈련장, 선수 닭장 &amp; 힐링 스파, 혈통 교배소, 관리동 &amp; 파머스 마켓</li>
+            <li><strong>알 65종 4단계 &amp; 부화</strong>: Natural(30·모바일 3스탬프) / Superior(20) / Rare(10) / Legendary(5, 10연 천장), 10초 터치 미니게임</li>
+            <li><strong>8종 훈련 &amp; 파생</strong>: 경주 3 + 격투 4 + 공용 1 ➔ 1차(6종) → 2차 파생 스탯 및 <strong>9대 전투 기술(<code>F33/F34</code> 포함)</strong> 개화</li>
+            <li><strong>2세대 혈통 교배</strong>: <code>ROOSTER</code>+<code>HEN</code> 유료 교배(생애 5회 한도, 24h 쿨다운, Heritage 알 2h 부화)</li>
+          </ul>
+        </div>
+        <div class="panel" style="border-left: 3px solid #f59e0b;">
+          <h4>🏆 미국 VIP 라운지 럼블 팜 반영 범위 (4대 기능 한정)</h4>
+          <ul class="clean-list">
+            <li><strong>① 알 유료 획득</strong>: VIP 크레딧/Gem 유료 알 35종 가차 전용 *(무료 3스탬프·거래소 제외)*</li>
+            <li><strong>② 유료 교배</strong>: VIP 크레딧/Gem 결제 전용 2세대 교배 *(무료 토큰 제외)*</li>
+            <li><strong>③ 유/무료 성장</strong>: 무료(대기·10초 미니게임·일반 훈련) + 유료(0초 즉시 부화·급속 훈련)</li>
+            <li><strong>④ 유/무료 회복</strong>: 무료(닭장 -10/h·사료 -20) + 유료(프리미엄 스파 즉시 완충/완치) *(광고 제외)*</li>
+            <li style="color: #fbbf24;">※ 퀘스트(일5/주4)·영구 업적(8종)·칭호(20종)·알 거래소(8%)·모바일 6단계 리그는 모바일 스토어 전용 유지</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- 5. 모드 비교 요약 -->
     <section id="compare">
       <h2 class="section-title" style="border-left-color: #6366f1;">5. 모드 비교 요약</h2>
@@ -1662,33 +1686,39 @@
             <th>구분</th>
             <th>Derby Race (경주)</th>
             <th>Rumble Pit (격투)</th>
+            <th>Rumble Farm (육성 · VIP 4대)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>인원</td>
+            <td>규모/대상</td>
             <td>6마리 동시 주행</td>
-            <td>1대1 대전</td>
+            <td>1대1 아레나 대전 (9대 기술 <code>F33/F34</code>)</td>
+            <td>농장 5대 공간 · 65종 알 · 전속 수탉 로스터</td>
           </tr>
           <tr>
-            <td>경기 시간</td>
-            <td>약 30초</td>
-            <td>약 45~60초</td>
+            <td>진행/호흡</td>
+            <td>약 30초 (일 72회)</td>
+            <td>약 45~60초 (일 48회 · 다운/KO 분리)</td>
+            <td>실시간 부화/훈련/회복/교배 · 경기 출전 환류</td>
           </tr>
           <tr>
-            <td>베팅 구조</td>
-            <td>사전 베팅 (단승식, 복승식)</td>
-            <td>사전 베팅 + 실시간 인플레이 변동 베팅</td>
+            <td>VIP 라운지</td>
+            <td>전면 서비스 (관전 + 태블릿 베팅)</td>
+            <td>전면 서비스 (관전 + 라이브 베팅)</td>
+            <td><strong>4대 기능 동시 서비스</strong> (유료 알·유료 교배·유/무료 성장·유/무료 회복)</td>
           </tr>
           <tr>
-            <td>판정 방식</td>
+            <td>판정/결과</td>
             <td>결승선 통과 랩타임 순위</td>
-            <td>HP 고갈(KO) 또는 시간 종료 시 잔여 HP 판정</td>
+            <td>즉시 KO(<code>13_Down</code>) 또는 잔여 HP 판정</td>
+            <td>1·2차 파생 스탯·기술 개화 ➔ 경주/격투 전력 투입</td>
           </tr>
           <tr>
             <td>운영 목적</td>
             <td>빠른 회전율 중심 플레이</td>
             <td>전황 분석 기반 실시간 베팅 플레이</td>
+            <td>모바일(풀 생태계) / VIP(유료 알·교배·성장·회복 순환)</td>
           </tr>
         </tbody>
       </table>
@@ -2920,28 +2950,33 @@
                 <th>구분</th>
                 <th>Derby Race (경주)</th>
                 <th>Rumble Pit (격투)</th>
+                <th>Rumble Farm (육성 · VIP 4대)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>인원</td>
+                <td>대상/규모</td>
                 <td>6마리 동시 주행</td>
-                <td>1대1 대전</td>
+                <td>1대1 대전 (9대 기술 <code>F33/F34</code>)</td>
+                <td>5대 농장 공간 · 65종 알 4단계</td>
               </tr>
               <tr>
-                <td>경기 시간</td>
+                <td>호흡/Cycle</td>
                 <td>약 30초</td>
-                <td>약 45~60초</td>
+                <td>약 45~60초 (넉다운/즉시 KO 분리)</td>
+                <td>부화·8종 훈련·교배·스파 ➔ 경기 출전 환류</td>
               </tr>
               <tr>
-                <td>베팅 구조</td>
-                <td>사전 베팅 (단승식, 복승식)</td>
-                <td><strong>사전 베팅 + 실시간 인플레이 변동 베팅</strong></td>
+                <td>VIP 라운지</td>
+                <td>사전 베팅 (단승·복승)</td>
+                <td><strong>사전 + 실시간 인플레이 베팅</strong></td>
+                <td><strong>4대 기능 한정</strong> (유료 알·유료 교배·유/무료 성장·유/무료 회복)</td>
               </tr>
               <tr>
-                <td>판정 방식</td>
+                <td>핵심 연동</td>
                 <td>결승선 통과 랩타임 순위</td>
-                <td>HP 고갈(KO) 또는 시간 종료 시 잔여 HP 판정</td>
+                <td>HP 고갈(KO) / 잔여 HP 판정</td>
+                <td>모바일(거래소 8%·퀘스트·칭호 포함) vs VIP 독립 DB 분리</td>
               </tr>
             </tbody>
           </table>
