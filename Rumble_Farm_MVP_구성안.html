@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="ko" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안 (v1.5.0)</title><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script><style>:root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-accent:#334155;--text-main:#f8fafc;--text-heading:#ffffff;--text-body:#cbd5e1;--text-muted:#94a3b8;--text-dim:#64748b;--primary:#10b981;--primary-hover:#059669;--primary-tint:rgba(16,185,129,0.15);--accent-blue:#38bdf8;--accent-green:#34d399;--accent-amber:#fbbf24;--accent-purple:#c084fc;--border:#334155;--code-bg:#090d16;--code-text:#10b981;--inline-code-bg:rgba(51,65,85,0.5);--table-th-bg:rgba(15,23,42,0.7);--table-hover:rgba(51,65,85,0.4);--formula-bg:rgba(30,41,59,0.7);--formula-desc-bg:rgba(15,23,42,0.5);--sidebar-header-bg:rgba(15,23,42,0.6);--modal-overlay:rgba(0,0,0,0.75);--sidebar-width:320px}[data-theme="light"]{--bg-primary:#f8fafc;--bg-secondary:#ffffff;--bg-card:#ffffff;--bg-accent:#f1f5f9;--text-main:#0f172a;--text-heading:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-dim:#94a3b8;--primary:#059669;--primary-hover:#047857;--primary-tint:rgba(5,150,105,0.1);--accent-blue:#0284c7;--accent-green:#059669;--accent-amber:#d97706;--accent-purple:#9333ea;--border:#e2e8f0;--code-bg:#f8fafc;--code-text:#047857;--inline-code-bg:#e2e8f0;--table-th-bg:#f1f5f9;--table-hover:#f8fafc;--formula-bg:#ffffff;--formula-desc-bg:#f8fafc;--sidebar-header-bg:#f8fafc;--modal-overlay:rgba(15,23,42,0.4)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-main);line-height:1.65;display:flex;min-height:100vh;transition:background-color 0.2s ease,color 0.2s ease}aside.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background-color:var(--bg-secondary);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:background-color 0.2s ease,border-color 0.2s ease}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);background-color:var(--sidebar-header-bg);display:flex;align-items:center;justify-content:space-between}.sidebar-title h2{font-size:1.05rem;font-weight:800;color:var(--primary);border:none;padding:0;margin:0;display:flex;align-items:center;gap:6px}.sidebar-title p{font-size:0.75rem;color:var(--text-muted);margin:2px 0 0 0}.theme-toggle-btn{background:var(--bg-accent);border:1px solid var(--border);color:var(--text-main);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:5px;transition:all 0.15s ease}.theme-toggle-btn:hover{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}.sidebar-toolbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}.sidebar-search input{width:100%;padding:7px 10px;background-color:var(--bg-primary);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none;transition:border-color 0.15s}.sidebar-search input:focus{border-color:var(--primary)}.sidebar-actions{display:flex;justify-content:space-between;gap:6px}.action-btn{flex:1;padding:4px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:0.72rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}.action-btn:hover{color:var(--text-main);border-color:var(--primary);background:var(--bg-accent)}nav.toc-nav{flex:1;overflow-y:auto;padding:12px 10px}.toc-nav ul{list-style:none;padding-left:0;margin:0}.toc-group{margin-bottom:4px;border-radius:6px}.toc-group-header{display:flex;align-items:center;justify-content:space-between;border-radius:6px;transition:background-color 0.15s}.toc-group-header:hover{background-color:var(--bg-accent)}.toc-group-header a.nav-h1{flex:1;display:block;padding:7px 10px;color:var(--text-main);text-decoration:none;font-size:0.84rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-toggle-icon{padding:6px 10px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;font-size:0.7rem;user-select:none;transition:transform 0.2s ease,color 0.15s}.toc-toggle-icon:hover{color:var(--primary)}.toc-group.open .toc-toggle-icon{transform:rotate(90deg)}.toc-subgroup{display:none;padding-left:10px;margin-top:2px;margin-bottom:4px;border-left:2px solid var(--border);margin-left:12px}.toc-group.open .toc-subgroup{display:block}.toc-subgroup a{display:block;padding:5px 8px;color:var(--text-muted);text-decoration:none;font-size:0.8rem;border-radius:4px;transition:all 0.15s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-subgroup a:hover{color:var(--text-main);background-color:var(--bg-accent)}.toc-subgroup a.nav-h3{padding-left:16px;font-size:0.76rem;color:var(--text-dim)}.toc-nav a.active{color:var(--primary) !important;background-color:var(--primary-tint);font-weight:700}main.content{margin-left:var(--sidebar-width);flex:1;padding:36px 48px;max-width:1200px}header.doc-header{margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border)}header.doc-header h1{font-size:2.1rem;font-weight:800;color:var(--text-heading);margin-bottom:0;letter-spacing:-0.02em}section{margin-bottom:52px;scroll-margin-top:30px}h2{font-size:1.45rem;font-weight:800;color:var(--text-heading);border-bottom:2px solid var(--primary);padding-bottom:8px;margin-bottom:22px;display:flex;align-items:center;gap:10px}h3{font-size:1.18rem;font-weight:700;color:var(--primary);margin:26px 0 14px 0;scroll-margin-top:30px}h4{font-size:1.0rem;font-weight:700;color:var(--accent-amber);margin:18px 0 10px 0;scroll-margin-top:30px}h5{font-size:0.93rem;font-weight:700;color:var(--text-main);margin:14px 0 6px 0;scroll-margin-top:30px}p,ul,ol{margin-bottom:12px;color:var(--text-body);font-size:0.92rem}ul,ol{padding-left:22px}li{margin-bottom:5px}.table-container{width:100%;overflow-x:auto;margin:16px 0 22px 0;background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}table{width:100%;border-collapse:collapse;font-size:0.87rem;text-align:left}th,td{padding:9px 12px;border-bottom:1px solid var(--border)}th{background-color:var(--table-th-bg);color:var(--primary);font-weight:700;white-space:nowrap}tr:last-child td{border-bottom:none}tr:hover td{background-color:var(--table-hover)}.text-center{text-align:center}.text-right{text-align:right}pre{background-color:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Consolas","Courier New",monospace;font-size:0.84rem;color:var(--code-text);line-height:1.5;margin:14px 0}code{font-family:"Consolas",monospace;background-color:var(--inline-code-bg);padding:2px 5px;border-radius:4px;color:var(--code-text);font-size:0.88em}pre code{background-color:transparent;padding:0}.formula-card{background-color:var(--formula-bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:6px;padding:14px 18px;margin:14px 0 18px 0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.formula-title{font-size:0.93rem;font-weight:700;color:var(--text-heading);margin-bottom:6px}.formula-body{padding:8px 0;text-align:center;overflow-x:auto}.formula-desc{background-color:var(--formula-desc-bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:8px;font-size:0.84rem}.formula-desc-item{margin-bottom:4px}.formula-desc-item:last-child{margin-bottom:0}.tag{font-weight:700;color:var(--accent-amber)}.tag.example{color:var(--accent-green)}.csv-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}.csv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:14px 0 28px 0}.csv-card{background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:all 0.15s ease;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.csv-card:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.08);transform:translateY(-2px)}.csv-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.csv-card-title{font-size:0.9rem;font-weight:700;color:var(--text-heading)}.csv-card-sub{font-size:0.75rem;color:var(--text-muted);margin-top:3px}.csv-badge{font-size:0.7rem;padding:2px 6px;border-radius:4px;background-color:var(--primary-tint);color:var(--primary);font-weight:700;white-space:nowrap}.csv-card-actions{display:flex;gap:6px}.btn-csv{flex:1;padding:6px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:all 0.15s ease;border:1px solid var(--border);background:var(--bg-accent);color:var(--text-main);text-decoration:none}.btn-csv.primary{background:var(--primary);color:#ffffff;border-color:var(--primary)}.btn-csv.primary:hover{background:var(--primary-hover)}.btn-csv:hover:not(.primary){border-color:var(--primary);color:var(--primary)}.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:var(--modal-overlay);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}.modal-overlay.active{display:flex}.modal-container{background-color:var(--bg-card);border:1px solid var(--border);border-radius:10px;width:100%;max-width:1000px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 25px -5px rgba(0,0,0,0.3),0 8px 10px -6px rgba(0,0,0,0.3);overflow:hidden}.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background-color:var(--sidebar-header-bg)}.modal-title{font-size:1.05rem;font-weight:700;color:var(--text-heading);display:flex;align-items:center;gap:8px}.modal-close-btn{background:transparent;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:2px 8px;border-radius:4px}.modal-close-btn:hover{color:var(--text-main);background-color:var(--bg-accent)}.modal-toolbar{padding:10px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background-color:var(--bg-primary)}.modal-toolbar input{flex:1;padding:6px 10px;background-color:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none}.modal-body{flex:1;overflow:auto;padding:16px 20px}.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background-color:var(--sidebar-header-bg)}.toast{position:fixed;bottom:24px;right:24px;background-color:var(--bg-secondary);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.2);font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;transform:translateY(20px);transition:opacity 0.25s,transform 0.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}@media (max-width:900px){aside.sidebar{display:none}main.content{margin-left:0;padding:20px}}</style><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>document.addEventListener("DOMContentLoaded",function(){if(window.mermaid){const isLight=localStorage.getItem("rr_theme")==="light"||document.documentElement.getAttribute("data-theme")==="light";mermaid.initialize({startOnLoad:true,theme:isLight?"default":"dark",securityLevel:"loose"});}});</script></head><body><aside class="sidebar"><div class="sidebar-header"><div class="sidebar-title"><h2>🐓 ROOSTER RUMBLE</h2><p>Rumble Farm 기획 명세서 (v1.5.0)</p></div><button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="화이트/다크 테마 전환"><span id="theme-icon">☀️</span><span id="theme-text">화이트</span></button></div><div class="sidebar-toolbar"><div class="sidebar-search"><input type="text" id="toc-filter" placeholder="목차 실시간 필터 검색..." onkeyup="filterTOC()"></div><div class="sidebar-actions"><button class="action-btn" onclick="expandAllTOC()">전체 펼치기</button><button class="action-btn" onclick="collapseAllTOC()">전체 접기</button></div></div><nav class="toc-nav"><ul id="toc-list"><li class="toc-group open" id="group-sec-1"><div class="toc-group-header"><a href="#sec-1" class="nav-h1" onclick="toggleGroupManual('group-sec-1')">1. 게임 개요 및 핵심 루프 (Game Overview &amp; Core Loop)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-1')">▶</span></div><ul class="toc-subgroup"><li><a href="#11-프로젝트-개요-및-럼블-팜rumble-farm-핵심-컨셉" class="nav-h2">1.1 프로젝트 개요 및 럼블 팜(Rumble Farm) 핵심 컨셉</a></li><li><a href="#12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교" class="nav-h2">1.2 모바일 vs 자체 온라인 웹 vs 미국 VIP 라운지 서비스 비교</a></li><li><a href="#13-럼블-팜-6단계-코어-플레이-루프-and-플로우차트" class="nav-h2">1.3 럼블 팜 6단계 코어 플레이 루프 &amp; 플로우차트</a></li></ul></li>
+<!DOCTYPE html><html lang="ko" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안 (v1.5.1)</title><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script><style>:root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-accent:#334155;--text-main:#f8fafc;--text-heading:#ffffff;--text-body:#cbd5e1;--text-muted:#94a3b8;--text-dim:#64748b;--primary:#10b981;--primary-hover:#059669;--primary-tint:rgba(16,185,129,0.15);--accent-blue:#38bdf8;--accent-green:#34d399;--accent-amber:#fbbf24;--accent-purple:#c084fc;--border:#334155;--code-bg:#090d16;--code-text:#10b981;--inline-code-bg:rgba(51,65,85,0.5);--table-th-bg:rgba(15,23,42,0.7);--table-hover:rgba(51,65,85,0.4);--formula-bg:rgba(30,41,59,0.7);--formula-desc-bg:rgba(15,23,42,0.5);--sidebar-header-bg:rgba(15,23,42,0.6);--modal-overlay:rgba(0,0,0,0.75);--sidebar-width:320px}[data-theme="light"]{--bg-primary:#f8fafc;--bg-secondary:#ffffff;--bg-card:#ffffff;--bg-accent:#f1f5f9;--text-main:#0f172a;--text-heading:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-dim:#94a3b8;--primary:#059669;--primary-hover:#047857;--primary-tint:rgba(5,150,105,0.1);--accent-blue:#0284c7;--accent-green:#059669;--accent-amber:#d97706;--accent-purple:#9333ea;--border:#e2e8f0;--code-bg:#f8fafc;--code-text:#047857;--inline-code-bg:#e2e8f0;--table-th-bg:#f1f5f9;--table-hover:#f8fafc;--formula-bg:#ffffff;--formula-desc-bg:#f8fafc;--sidebar-header-bg:#f8fafc;--modal-overlay:rgba(15,23,42,0.4)}*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,Roboto,sans-serif;background-color:var(--bg-primary);color:var(--text-main);line-height:1.65;display:flex;min-height:100vh;transition:background-color 0.2s ease,color 0.2s ease}aside.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background-color:var(--bg-secondary);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:background-color 0.2s ease,border-color 0.2s ease}.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);background-color:var(--sidebar-header-bg);display:flex;align-items:center;justify-content:space-between}.sidebar-title h2{font-size:1.05rem;font-weight:800;color:var(--primary);border:none;padding:0;margin:0;display:flex;align-items:center;gap:6px}.sidebar-title p{font-size:0.75rem;color:var(--text-muted);margin:2px 0 0 0}.theme-toggle-btn{background:var(--bg-accent);border:1px solid var(--border);color:var(--text-main);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;display:flex;align-items:center;gap:5px;transition:all 0.15s ease}.theme-toggle-btn:hover{background:var(--primary-tint);border-color:var(--primary);color:var(--primary)}.sidebar-toolbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}.sidebar-search input{width:100%;padding:7px 10px;background-color:var(--bg-primary);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none;transition:border-color 0.15s}.sidebar-search input:focus{border-color:var(--primary)}.sidebar-actions{display:flex;justify-content:space-between;gap:6px}.action-btn{flex:1;padding:4px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:4px;color:var(--text-muted);font-size:0.72rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}.action-btn:hover{color:var(--text-main);border-color:var(--primary);background:var(--bg-accent)}nav.toc-nav{flex:1;overflow-y:auto;padding:12px 10px}.toc-nav ul{list-style:none;padding-left:0;margin:0}.toc-group{margin-bottom:4px;border-radius:6px}.toc-group-header{display:flex;align-items:center;justify-content:space-between;border-radius:6px;transition:background-color 0.15s}.toc-group-header:hover{background-color:var(--bg-accent)}.toc-group-header a.nav-h1{flex:1;display:block;padding:7px 10px;color:var(--text-main);text-decoration:none;font-size:0.84rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-toggle-icon{padding:6px 10px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;font-size:0.7rem;user-select:none;transition:transform 0.2s ease,color 0.15s}.toc-toggle-icon:hover{color:var(--primary)}.toc-group.open .toc-toggle-icon{transform:rotate(90deg)}.toc-subgroup{display:none;padding-left:10px;margin-top:2px;margin-bottom:4px;border-left:2px solid var(--border);margin-left:12px}.toc-group.open .toc-subgroup{display:block}.toc-subgroup a{display:block;padding:5px 8px;color:var(--text-muted);text-decoration:none;font-size:0.8rem;border-radius:4px;transition:all 0.15s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toc-subgroup a:hover{color:var(--text-main);background-color:var(--bg-accent)}.toc-subgroup a.nav-h3{padding-left:16px;font-size:0.76rem;color:var(--text-dim)}.toc-nav a.active{color:var(--primary) !important;background-color:var(--primary-tint);font-weight:700}main.content{margin-left:var(--sidebar-width);flex:1;padding:36px 48px;max-width:1200px}header.doc-header{margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--border)}header.doc-header h1{font-size:2.1rem;font-weight:800;color:var(--text-heading);margin-bottom:0;letter-spacing:-0.02em}section{margin-bottom:52px;scroll-margin-top:30px}h2{font-size:1.45rem;font-weight:800;color:var(--text-heading);border-bottom:2px solid var(--primary);padding-bottom:8px;margin-bottom:22px;display:flex;align-items:center;gap:10px}h3{font-size:1.18rem;font-weight:700;color:var(--primary);margin:26px 0 14px 0;scroll-margin-top:30px}h4{font-size:1.0rem;font-weight:700;color:var(--accent-amber);margin:18px 0 10px 0;scroll-margin-top:30px}h5{font-size:0.93rem;font-weight:700;color:var(--text-main);margin:14px 0 6px 0;scroll-margin-top:30px}p,ul,ol{margin-bottom:12px;color:var(--text-body);font-size:0.92rem}ul,ol{padding-left:22px}li{margin-bottom:5px}.table-container{width:100%;overflow-x:auto;margin:16px 0 22px 0;background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}table{width:100%;border-collapse:collapse;font-size:0.87rem;text-align:left}th,td{padding:9px 12px;border-bottom:1px solid var(--border)}th{background-color:var(--table-th-bg);color:var(--primary);font-weight:700;white-space:nowrap}tr:last-child td{border-bottom:none}tr:hover td{background-color:var(--table-hover)}.text-center{text-align:center}.text-right{text-align:right}pre{background-color:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:"Consolas","Courier New",monospace;font-size:0.84rem;color:var(--code-text);line-height:1.5;margin:14px 0}code{font-family:"Consolas",monospace;background-color:var(--inline-code-bg);padding:2px 5px;border-radius:4px;color:var(--code-text);font-size:0.88em}pre code{background-color:transparent;padding:0}.formula-card{background-color:var(--formula-bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:6px;padding:14px 18px;margin:14px 0 18px 0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.formula-title{font-size:0.93rem;font-weight:700;color:var(--text-heading);margin-bottom:6px}.formula-body{padding:8px 0;text-align:center;overflow-x:auto}.formula-desc{background-color:var(--formula-desc-bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin-top:8px;font-size:0.84rem}.formula-desc-item{margin-bottom:4px}.formula-desc-item:last-child{margin-bottom:0}.tag{font-weight:700;color:var(--accent-amber)}.tag.example{color:var(--accent-green)}.csv-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}.csv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:14px 0 28px 0}.csv-card{background-color:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:all 0.15s ease;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.csv-card:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.08);transform:translateY(-2px)}.csv-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.csv-card-title{font-size:0.9rem;font-weight:700;color:var(--text-heading)}.csv-card-sub{font-size:0.75rem;color:var(--text-muted);margin-top:3px}.csv-badge{font-size:0.7rem;padding:2px 6px;border-radius:4px;background-color:var(--primary-tint);color:var(--primary);font-weight:700;white-space:nowrap}.csv-card-actions{display:flex;gap:6px}.btn-csv{flex:1;padding:6px 10px;border-radius:5px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:all 0.15s ease;border:1px solid var(--border);background:var(--bg-accent);color:var(--text-main);text-decoration:none}.btn-csv.primary{background:var(--primary);color:#ffffff;border-color:var(--primary)}.btn-csv.primary:hover{background:var(--primary-hover)}.btn-csv:hover:not(.primary){border-color:var(--primary);color:var(--primary)}.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:var(--modal-overlay);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}.modal-overlay.active{display:flex}.modal-container{background-color:var(--bg-card);border:1px solid var(--border);border-radius:10px;width:100%;max-width:1000px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 25px -5px rgba(0,0,0,0.3),0 8px 10px -6px rgba(0,0,0,0.3);overflow:hidden}.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background-color:var(--sidebar-header-bg)}.modal-title{font-size:1.05rem;font-weight:700;color:var(--text-heading);display:flex;align-items:center;gap:8px}.modal-close-btn{background:transparent;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;padding:2px 8px;border-radius:4px}.modal-close-btn:hover{color:var(--text-main);background-color:var(--bg-accent)}.modal-toolbar{padding:10px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;background-color:var(--bg-primary)}.modal-toolbar input{flex:1;padding:6px 10px;background-color:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-main);font-size:0.82rem;outline:none}.modal-body{flex:1;overflow:auto;padding:16px 20px}.modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background-color:var(--sidebar-header-bg)}.toast{position:fixed;bottom:24px;right:24px;background-color:var(--bg-secondary);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.2);font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;transform:translateY(20px);transition:opacity 0.25s,transform 0.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}@media (max-width:900px){aside.sidebar{display:none}main.content{margin-left:0;padding:20px}}</style><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>document.addEventListener("DOMContentLoaded",function(){if(window.mermaid){const isLight=localStorage.getItem("rr_theme")==="light"||document.documentElement.getAttribute("data-theme")==="light";mermaid.initialize({startOnLoad:true,theme:isLight?"default":"dark",securityLevel:"loose"});}});</script></head><body><aside class="sidebar"><div class="sidebar-header"><div class="sidebar-title"><h2>🐓 ROOSTER RUMBLE</h2><p>Rumble Farm 기획 명세서 (v1.5.1)</p></div><button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="화이트/다크 테마 전환"><span id="theme-icon">☀️</span><span id="theme-text">화이트</span></button></div><div class="sidebar-toolbar"><div class="sidebar-search"><input type="text" id="toc-filter" placeholder="목차 실시간 필터 검색..." onkeyup="filterTOC()"></div><div class="sidebar-actions"><button class="action-btn" onclick="expandAllTOC()">전체 펼치기</button><button class="action-btn" onclick="collapseAllTOC()">전체 접기</button></div></div><nav class="toc-nav"><ul id="toc-list"><li class="toc-group open" id="group-sec-1"><div class="toc-group-header"><a href="#sec-1" class="nav-h1" onclick="toggleGroupManual('group-sec-1')">1. 게임 개요 및 핵심 루프 (Game Overview &amp; Core Loop)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-1')">▶</span></div><ul class="toc-subgroup"><li><a href="#11-프로젝트-개요-및-럼블-팜rumble-farm-핵심-컨셉" class="nav-h2">1.1 프로젝트 개요 및 럼블 팜(Rumble Farm) 핵심 컨셉</a></li><li><a href="#12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교" class="nav-h2">1.2 모바일 vs 자체 온라인 웹 vs 미국 VIP 라운지 서비스 비교</a></li><li><a href="#13-럼블-팜-6단계-코어-플레이-루프-and-플로우차트" class="nav-h2">1.3 럼블 팜 6단계 코어 플레이 루프 &amp; 플로우차트</a></li></ul></li>
 <li class="toc-group open" id="group-sec-2"><div class="toc-group-header"><a href="#sec-2" class="nav-h1" onclick="toggleGroupManual('group-sec-2')">2. 알 획득, 거래소 및 가차 시스템 (Egg Acquisition &amp; Economy)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-2')">▶</span></div><ul class="toc-subgroup"><li><a href="#21-유저-간-알-거래소-egg-marketplace-거래수수료8-규칙-모바일-앱-전용" class="nav-h2">2.1 유저 간 알 거래소 (Egg Marketplace) 거래/수수료(8%) 규칙 (모바일 앱 전용)</a></li><li><a href="#22-출석광고-기반-통합-무료-알-수집-체계-모바일-앱-전용" class="nav-h2">2.2 출석/광고 기반 통합 무료 알 수집 체계 (모바일 앱 전용)</a></li><li><a href="#23-알-뽑기가차-65종-마스터-구조-등급별-확률-및-천장pity-시스템" class="nav-h2">2.3 알 뽑기(가차) 65종 마스터 구조, 등급별 확률 및 천장(Pity) 시스템</a></li><li><a href="#24-연동-마스터-데이터-06_egg_gacha_master_list_65csv" class="nav-h2">2.4 연동 마스터 데이터 (06_egg_gacha_master_list_65.csv)</a></li></ul></li>
 <li class="toc-group open" id="group-sec-3"><div class="toc-group-header"><a href="#sec-3" class="nav-h1" onclick="toggleGroupManual('group-sec-3')">3. 알 부화 및 1차 기본 피지컬 스탯 생성 시스템 (Incubation &amp; Base Stats)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-3')">▶</span></div><ul class="toc-subgroup"><li><a href="#31-등급별-부화-대기시간-및-터치-미니게임부화-가속유료-즉시-부화-규칙" class="nav-h2">3.1 등급별 부화 대기시간 및 터치 미니게임(부화 가속)·유료 즉시 부화 규칙</a></li><li><a href="#32-1차-기본-피지컬-스탯-common-core-6종-정의" class="nav-h2">3.2 1차 기본 피지컬 스탯 (Common Core 6종) 정의</a></li><li><a href="#33-부화-시-등급별-1차-기본-스탯-초기-생성-분배식-및-잠재력pot-롤링-메커니즘" class="nav-h2">3.3 부화 시 등급별 1차 기본 스탯 초기 생성 분배식 및 잠재력(POT) 롤링 메커니즘</a></li></ul></li>
 <li class="toc-group open" id="group-sec-4"><div class="toc-group-header"><a href="#sec-4" class="nav-h1" onclick="toggleGroupManual('group-sec-4')">4. 닭 캐릭터 10대 상태 머신 및 라이프사이클 관리 (Lifecycle &amp; Status)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-4')">▶</span></div><ul class="toc-subgroup"><li><a href="#41-닭-캐릭터-10대-상태-머신-전이-규칙" class="nav-h2">4.1 닭 캐릭터 10대 상태 머신 전이 규칙</a></li><li><a href="#42-경기derbypit-출전-후-피로도-적재25-부상-판정30-및-30분-쿨다운-환류-규칙" class="nav-h2">4.2 경기(Derby/Pit) 출전 후 피로도 적재(+25), 부상 판정(30%) 및 30분 쿨다운 환류 규칙</a></li><li><a href="#43-닭장-휴식-영양-사료-급여-및-수의사-치료를-통한-상태-회복-프로세스" class="nav-h2">4.3 닭장 휴식, 영양 사료 급여 및 수의사 치료를 통한 상태 회복 프로세스</a></li></ul></li>
 <li class="toc-group open" id="group-sec-5"><div class="toc-group-header"><a href="#sec-5" class="nav-h1" onclick="toggleGroupManual('group-sec-5')">5. 훈련 시스템 및 타 모드(Derby/Pit) 파생 스탯 연동 (Training &amp; Mode Linking)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-5')">▶</span></div><ul class="toc-subgroup"><li><a href="#51-훈련-종목-8종-소모-재화-대기시간-및-스탯-상승률" class="nav-h2">5.1 훈련 종목 8종 소모 재화, 대기시간 및 스탯 상승률</a></li><li><a href="#52-훈련-스탯-상승의-경주-2차-파생-스탯-연동-공식" class="nav-h2">5.2 훈련 스탯 상승의 경주 2차 파생 스탯 연동 공식</a></li><li><a href="#53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동" class="nav-h2">5.3 훈련 스탯 상승의 격투 2차 파생 스탯 및 9대 전투 기술 개화/습득 연동</a></li></ul></li>
 <li class="toc-group open" id="group-sec-6"><div class="toc-group-header"><a href="#sec-6" class="nav-h1" onclick="toggleGroupManual('group-sec-6')">6. 2세대 교배 시스템 및 유전 메커니즘 (Breeding &amp; Genetics)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-6')">▶</span></div><ul class="toc-subgroup"><li><a href="#61-교배-자격-요건-비용-및-생애-5회-교배-한도-제약" class="nav-h2">6.1 교배 자격 요건, 비용 및 생애 5회 교배 한도 제약</a></li><li><a href="#62-부모-스탯-기반-2세대-기본-스탯잠재력-유전-공식-통합-mvp-단일-공식" class="nav-h2">6.2 부모 스탯 기반 2세대 기본 스탯/잠재력 유전 공식 (통합 MVP 단일 공식)</a></li><li><a href="#63-외형스킨색상-및-패시브-특성-유전-확률표" class="nav-h2">6.3 외형(스킨/색상) 및 패시브 특성 유전 확률표</a></li></ul></li>
 <li class="toc-group open" id="group-sec-7"><div class="toc-group-header"><a href="#sec-7" class="nav-h1" onclick="toggleGroupManual('group-sec-7')">7. 칭호, 퀘스트 및 영구 업적 시스템 (Titles &amp; Achievements) (모바일 앱 전용)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-7')">▶</span></div><ul class="toc-subgroup"><li><a href="#71-칭호title-4대-등급-구조-및-20종-마스터-데이터-명세표" class="nav-h2">7.1 칭호(Title) 4대 등급 구조 및 20종 마스터 데이터 명세표</a></li><li><a href="#72-일일-퀘스트-5종-및-주간-퀘스트-4종-명세표" class="nav-h2">7.2 일일 퀘스트 5종 및 주간 퀘스트 4종 명세표</a></li><li><a href="#73-영구-누적-업적-8종-명세표" class="nav-h2">7.3 영구 누적 업적 8종 명세표</a></li></ul></li>
-<li class="toc-group open" id="group-sec-8"><div class="toc-group-header"><a href="#sec-8" class="nav-h1" onclick="toggleGroupManual('group-sec-8')">8. 데이터베이스 논리 스키마 및 통신 API 규격 (Database &amp; API Specification)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-8')">▶</span></div><ul class="toc-subgroup"><li><a href="#81-데이터베이스-분리-구성표-및-럼블-팜-핵심-엔티티-논리-스키마" class="nav-h2">8.1 데이터베이스 분리 구성표 및 럼블 팜 핵심 엔티티 논리 스키마</a></li><li><a href="#82-핵심-rest-api-엔드포인트-명세-육성-관련-13종" class="nav-h2">8.2 핵심 REST API 엔드포인트 명세 (육성 관련 13종)</a></li><li><a href="#83-실시간-websocket-이벤트-명세-육성-3종" class="nav-h2">8.3 실시간 WebSocket 이벤트 명세 (육성 3종)</a></li></ul></li>
-<li class="toc-group open" id="group-sec-9"><div class="toc-group-header"><a href="#sec-9" class="nav-h1" onclick="toggleGroupManual('group-sec-9')">9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 (UI/UX &amp; Sound Specification)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-9')">▶</span></div><ul class="toc-subgroup"><li><a href="#91-메인-팜-5대-핵심-공간-레이아웃" class="nav-h2">9.1 메인 팜 5대 핵심 공간 레이아웃</a></li><li><a href="#92-부화훈련교배-조작-팝업-uiux-인터랙션-및-오류-예외-처리" class="nav-h2">9.2 부화/훈련/교배 조작 팝업 UI/UX 인터랙션 및 오류 예외 처리</a></li><li><a href="#93-럼블-팜-전용-배경음악bgm-3종-및-효과음sfx-farm-10종-명세표" class="nav-h2">9.3 럼블 팜 전용 배경음악(BGM) 3종 및 효과음(SFX-Farm) 10종 명세표</a></li></ul></li></ul></nav></aside><main class="content"><header class="doc-header"><div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;"><h1>🐓 ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안</h1><span style="display: inline-block; padding: 4px 12px; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 6px;">문서 버전: v1.5.0</span></div></header>
+<li class="toc-group open" id="group-sec-8"><div class="toc-group-header"><a href="#sec-8" class="nav-h1" onclick="toggleGroupManual('group-sec-8')">8. 데이터 관리 및 서버 통신 구현 가이드 (Program Part Guide)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-8')">▶</span></div><ul class="toc-subgroup"><li><a href="#81-플랫폼별-데이터-분리-및-핵심-영속성-관리-가이드" class="nav-h2">8.1 플랫폼별 데이터 분리 및 핵심 영속성 관리 가이드</a></li><li><a href="#82-클라이언트-서버-기능별-통신-및-서버-검증-가이드" class="nav-h2">8.2 클라이언트-서버 기능별 통신 및 서버 검증 가이드</a></li><li><a href="#83-비동기-완료-알림-및-동시성보안-대응-가이드" class="nav-h2">8.3 비동기 완료 알림 및 동시성·보안 대응 가이드</a></li></ul></li>
+<li class="toc-group open" id="group-sec-9"><div class="toc-group-header"><a href="#sec-9" class="nav-h1" onclick="toggleGroupManual('group-sec-9')">9. 화면 레이아웃, UI/UX 및 사운드 연출 규격 (UI/UX &amp; Sound Specification)</a><span class="toc-toggle-icon" onclick="toggleGroupManual('group-sec-9')">▶</span></div><ul class="toc-subgroup"><li><a href="#91-메인-팜-5대-핵심-공간-레이아웃" class="nav-h2">9.1 메인 팜 5대 핵심 공간 레이아웃</a></li><li><a href="#92-부화훈련교배-조작-팝업-uiux-인터랙션-및-오류-예외-처리" class="nav-h2">9.2 부화/훈련/교배 조작 팝업 UI/UX 인터랙션 및 오류 예외 처리</a></li><li><a href="#93-럼블-팜-전용-배경음악bgm-3종-및-효과음sfx-farm-10종-명세표" class="nav-h2">9.3 럼블 팜 전용 배경음악(BGM) 3종 및 효과음(SFX-Farm) 10종 명세표</a></li></ul></li></ul></nav></aside><main class="content"><header class="doc-header"><div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;"><h1>🐓 ROOSTER RUMBLE: Rumble Farm (육성 모드) MVP 세부 기획 구성안</h1><span style="display: inline-block; padding: 4px 12px; font-size: 0.85rem; font-weight: 700; color: var(--primary); background: var(--primary-tint); border: 1px solid var(--primary); border-radius: 6px;">문서 버전: v1.5.1</span></div></header>
 
 <!-- 문서 개정 이력 -->
 <section id="sec-revision" style="margin-bottom: 28px;">
@@ -33,6 +33,7 @@
 <tr><td style="text-align: center;"><strong>v0.9.1</strong></td><td style="text-align: center;">2026-09-18</td><td><strong>[단독 분리 신규 작성]</strong> 통합 MVP 구성안에서 럼블 팜 육성 모드 명세를 전면 독립화하여 완전 자립형 단독 실무 기획서 구축 (3대 모드 연관관계 100% 무결 보존)</td><td><a href="#sec-1" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1장 게임 개요</a></td></tr>
 <tr><td style="text-align: center;"><strong>v1.2.0</strong></td><td style="text-align: center;">2026-10-08</td><td><strong>[럼블 핏 v1.2.0 비의인화 전투 기술 명칭 및 규칙 동기화]</strong> 5.1절 및 5.3절 내 격투 훈련 종목(<code>깃털 부풀려 버티기 수련</code>) 및 7대 비의인화 전투 기술(<code>전진 부리 속사</code>, <code>낮은 발톱 할퀴기</code>, <code>비상 발톱 급습</code>, <code>광폭 발버둥 난타</code>, <code>깃털 부풀려 버티기</code>, <code>납작 엎드리기</code>, <code>맞발톱 쳐내기</code>) 명칭 동기화</td><td><a href="#53-훈련-스탯-상승의-격투-2차-파생-스탯-및-9대-전투-기술-개화습득-연동" style="color: var(--primary); text-decoration: underline; font-weight: 600;">5.3절 전투 기술 연동</a></td></tr>
 <tr><td style="text-align: center;"><strong>v1.5.0</strong></td><td style="text-align: center;">2026-11-24</td><td><strong>[미국 VIP 라운지 4대 기능 반영 및 전체 기획 기준선 동기화]</strong><br>1. VIP 라운지 럼블 팜 4대 기능(① 알 유료 획득 35종/10연 천장, ② 유료 교배, ③ 유/무료 성장, ④ 유/무료 회복) 반영 및 모바일 전용(무료 알/거래소/퀘스트·업적·칭호) 분리<br>2. 알 65종 4등급 가중치(Natural 70% / Superior 20% / Rare 8% / Legendary 2%) 및 2세대 교배 단일 공식·9대 전투 기술(<code>F33/F34</code>) 통합<br>3. 메인 팜 5대 표준 공간, REST API 13종(<code>/api/v1/farm/*</code>), BGM 3곡/SFX 10종 동기화</td><td><a href="#12-모바일-vs-자체-온라인-웹-vs-미국-vip-라운지-서비스-비교" style="color: var(--primary); text-decoration: underline; font-weight: 600;">1.2절 VIP 4대 범위</a><br><a href="#sec-8" style="color: var(--primary); text-decoration: underline; font-weight: 600;">8장 DB·API 13종</a></td></tr>
+<tr><td style="text-align: center;"><strong>v1.5.1</strong></td><td style="text-align: center;">2026-11-26</td><td><strong>[8장 프로그램 파트 구현 가이드 전환]</strong><br>세부 DB 테이블·컬럼 스키마(<code>t_*</code>) 및 구체적 REST/WebSocket 명세를 제거하고, 프로그램 파트 담당자가 자체 설계·구현할 수 있도록 플랫폼 분리·핵심 영속성 관리 영역·서버 권위 검증·동시성 체크리스트 중심의 구현 가이드로 개정</td><td><a href="#sec-8" style="color: var(--primary); text-decoration: underline; font-weight: 600;">8장 구현 가이드</a></td></tr>
 </tbody>
 </table></div>
 </section>
@@ -1166,189 +1167,128 @@ stateDiagram-v2
 <hr />
 </section>
 <section id="sec-8">
-<h2 id="8-데이터베이스-논리-스키마-및-통신-api-규격-database-and-api-specification">8. 데이터베이스 논리 스키마 및 통신 API 규격 (Database &amp; API Specification)</h2>
-<h3 id="81-데이터베이스-분리-구성표-및-럼블-팜-핵심-엔티티-논리-스키마">8.1 데이터베이스 분리 구성표 및 럼블 팜 핵심 엔티티 논리 스키마</h3>
+<h2 id="8-데이터-관리-및-서버-통신-구현-가이드-program-part-guide">8. 데이터 관리 및 서버 통신 구현 가이드 (Program Part Guide)</h2>
+<blockquote>
+<p><strong>문서 역할 및 설계 위임 원칙</strong>: 세부 데이터베이스 테이블·컬럼 스키마, REST/RPC URI·메서드·패킷 페이로드, 실시간 푸시 전송 프로토콜(WebSocket/SSE/Polling 등)은 <strong>프로그램 파트 담당자가 아키텍처에 맞게 자율 설계·확정</strong>할 영역임. 본 장은 기획 의도와 플랫폼 정책이 누락 없이 구현되도록 <strong>필수 데이터 분리 기준·관리 영역·서버 검증 규칙·동시성 체크리스트</strong>만 가이드로 제시함.</p>
+</blockquote>
+<h3 id="81-플랫폼별-데이터-분리-및-핵심-영속성-관리-가이드">8.1 플랫폼별 데이터 분리 및 핵심 영속성 관리 가이드</h3>
 <ul>
-<li><strong>물리/논리 DB 분리 원칙</strong>: 모바일(<code>Mobile App DB</code>), 온라인 웹(<code>Online Web DB</code>), 미국 VIP 라운지(<code>VIP Lounge Local DB</code>) 3대 DB를 완전 독립 분리 운영</li>
+<li><strong>3대 서비스 환경 독립 분리 원칙</strong>:</li>
+<li><strong>모바일 스토어 앱 DB</strong> / <strong>자체 온라인 웹 DB</strong> / <strong>미국 VIP 라운지 현장 로컬 DB</strong> 간 유저 계정, 재화(Gold/Gem/VIP 크레딧), 보유 알·선수 데이터는 <strong>물리·논리적으로 100% 분리 운영</strong> 필수.</li>
+<li>VIP 라운지 현장 폐쇄망 환경은 온라인 웹/모바일 계좌·거래소와 어떠한 동기화 브리지도 연결하지 않는 독립 구조로 설계 권고.</li>
 </ul>
 <div class="table-container"><table>
 <thead>
 <tr>
-<th style="text-align: left;">엔티티명</th>
-<th style="text-align: center;">적용 DB (<code>Mobile</code> / <code>VIP Local</code>)</th>
-<th style="text-align: left;">주요 관리 데이터 및 논리 스키마 (<code>t_*</code> 표준)</th>
+<th style="text-align: left;">관리 영역 (Domain)</th>
+<th style="text-align: center;">적용 플랫폼</th>
+<th style="text-align: left;">담당자 설계 시 필수 저장·관리 항목 및 제약 기준</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong><code>t_user_mobile</code> / <code>t_user_vip</code></strong></td>
+<td style="text-align: left;"><strong>1. 유저 자산·수급 게이지</strong></td>
 <td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>user_id</code>(PK), <code>nickname</code>, <code>gold_balance</code>, <code>gem_balance</code>, <code>vip_credit_balance</code>(VIP), <code>feed_balance</code>, <code>free_egg_stamps</code>(모바일)</td>
+<td style="text-align: left;">유저 식별자, 재화 잔액(모바일 Gold·Gem / VIP 현장 크레딧·Gem), 영양 사료 수량, <strong>3스탬프 무료 알 누적 카운트·광고 쿨다운<em>(모바일 전용)</em></strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><code>t_rooster_farm</code></strong></td>
+<td style="text-align: left;"><strong>2. 닭 선수 개체 상태·스탯</strong></td>
 <td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>rooster_id</code>(PK), <code>user_id</code>, <code>name</code>, <code>gender</code>, <code>tier</code>, <code>generation</code>, <code>str</code>, <code>dex</code>, <code>vit</code>, <code>men</code>, <code>lck</code>, <code>pot</code>, <code>state</code>, <code>fatigue</code>, <code>is_injured</code>, <code>cooldown_until</code>, <code>breeding_count</code>, <code>race_style_id</code>, <code>fight_style_id</code>, <code>skills[]</code>, <code>appearance_parts</code></td>
+<td style="text-align: left;">개체 식별자, 성별(<code>ROOSTER</code>/<code>HEN</code>), 등급/세대(1~2세대), 1차 기본 스탯 6종(<code>STR/DEX/VIT/MEN/LCK/POT</code>), 10대 상태 머신 코드, 피로도(0~100), 부상 여부, 출전/교배 쿨다운 만료 시각, 누적 교배 횟수(0~5, 5회 시 <code>RETIRED</code>), 스타일·보유/장착 기술(최대 9종 중 슬롯 상한 적용)·외형 파츠 조합</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><code>t_egg_inventory</code></strong></td>
+<td style="text-align: left;"><strong>3. 알 인벤토리·부화 슬롯</strong></td>
 <td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>egg_instance_id</code>(PK), <code>user_id</code>, <code>egg_id</code>(FK), <code>tier</code>, <code>acquire_route</code>('PAID_GACHA'/'BREED'/'STAMP'/'MARKET'), <code>acquired_at</code>, <code>status</code>('EGG_WAITING'/'INCUBATING'/'HATCHED'), <code>slot_index</code></td>
+<td style="text-align: left;">알 마스터 ID(65종·혈통 알 구분), 획득 경로(유료 가차/교배/무료 스탬프/거래소), 상태(보관/부화중/완료), 인큐베이터 슬롯(2~4칸), 부화 완료 예정 시각, 10초 터치 미니게임 가속률 반영 여부, 유료 즉시 부화 처리 이력</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><code>t_incubator_slot</code></strong></td>
+<td style="text-align: left;"><strong>4. 훈련·교배·스파 이력</strong></td>
 <td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>slot_id</code>(PK), <code>user_id</code>, <code>egg_instance_id</code>(FK), <code>start_time</code>, <code>end_time</code>, <code>minigame_played</code>, <code>speedup_rate</code>, <code>is_instant_paid</code></td>
+<td style="text-align: left;">8종 훈련 종목·진행 방식(<code>무료 대기</code>/<code>유료 급속</code>)·종료 시각·상승 결과 로그(감사/CS 복구용), 교배 부계/모계/산출 알 매핑 및 24h 쿨다운 이력, 프리미엄 스파 적용 및 24h 최상 컨디션 유지 만료 시각</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong><code>t_training_log</code></strong></td>
-<td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>training_id</code>(PK), <code>rooster_id</code>(FK), <code>program_id</code>, <code>train_mode</code>('FREE'/'PAID'), <code>started_at</code>, <code>end_at</code>, <code>stat_type</code>, <code>gained_val</code>, <code>unlocked_skill_id</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>t_breeding_log</code></strong></td>
-<td style="text-align: center;">모바일 / VIP 독립</td>
-<td style="text-align: left;"><code>breed_id</code>(PK), <code>sire_id</code>(부), <code>dam_id</code>(모), <code>offspring_egg_id</code>, <code>pay_type</code>('VIP_CREDIT'/'GEM'/'TOKEN_GOLD'), <code>created_at</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>t_spa_premium_log</code></strong></td>
-<td style="text-align: center;">모바일 / 웹 / VIP 독립</td>
-<td style="text-align: left;"><code>log_id</code>(PK), <code>user_id</code>, <code>rooster_id</code>, <code>cost_type</code>, <code>cost_amount</code>, <code>applied_at</code>, <code>expires_at</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>t_market_trade</code></strong></td>
+<td style="text-align: left;"><strong>5. 거래소·칭호·퀘스트·업적</strong></td>
 <td style="text-align: center;"><strong>모바일 전용</strong> (<code>VIP 제외</code>)</td>
-<td style="text-align: left;"><code>trade_id</code>(PK), <code>seller_id</code>, <code>buyer_id</code>, <code>egg_instance_id</code>, <code>price_gold</code>, <code>fee_gold</code>(8% / <code>[큰손]</code> 7%), <code>status</code>, <code>expires_at</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>t_user_titles</code> / <code>t_user_quests</code></strong></td>
-<td style="text-align: center;"><strong>모바일 전용</strong> (<code>VIP 제외</code>)</td>
-<td style="text-align: left;"><code>title_id</code>, <code>is_equipped</code> / <code>quest_progress_id</code>, <code>quest_code</code>, <code>current_count</code>, <code>target_count</code>, <code>is_claimed</code></td>
+<td style="text-align: left;">유저 거래소 매물·체결 상태·수수료 정산(<code>8%</code>, <code>[큰손]</code> 7%)·72시간 만료 회수 스케줄, 칭호 20종 해금/장착 상태, 일일(5)/주간(4) 퀘스트 및 영구 업적(8) 진행도·수령 여부</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="82-핵심-rest-api-엔드포인트-명세-육성-관련-13종">8.2 핵심 REST API 엔드포인트 명세 (육성 관련 13종)</h3>
+<h3 id="82-클라이언트-서버-기능별-통신-및-서버-검증-가이드">8.2 클라이언트-서버 기능별 통신 및 서버 검증 가이드</h3>
+<ul>
+<li><strong>구현 원칙</strong>: 엔드포인트 경로, HTTP 메서드, 직렬화 포맷은 프로그램 파트 표준에 일임하며, 모든 확률·타이머·재화 차감·상태 전이는 <strong>서버 권위(Server-Authoritative)</strong>로 처리 필수.</li>
+</ul>
 <div class="table-container"><table>
 <thead>
 <tr>
-<th style="text-align: center;">메서드</th>
-<th style="text-align: left;">URI 엔드포인트</th>
+<th style="text-align: left;">기능 영역</th>
 <th style="text-align: center;">적용 플랫폼</th>
-<th style="text-align: left;">호출 목적 및 요청·응답 스펙</th>
+<th style="text-align: left;">클라이언트 요청 의도</th>
+<th style="text-align: left;">서버 필수 검증 및 상태 처리 가이드</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><code>GET</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/roosters</code></td>
+<td style="text-align: left;"><strong>농장/선수단 현황 조회</strong></td>
 <td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">보유 선수단·스탯 6종·상태·피로도 조회 ➔ <code>{ "roosters": [...] }</code></td>
+<td style="text-align: left;">보유 선수·알·부화 슬롯·훈련/쿨다운 잔여 시간 동기화</td>
+<td style="text-align: left;">2차 파생 스탯 및 현재 유효 컨디션(스파 24h 버프/시간 경과 휴식 회복분) 계산 후 전달</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/egg/stamp</code></td>
-<td style="text-align: center;">모바일 전용</td>
-<td style="text-align: left;">출석/광고 스탬프 적립 및 무료 알 수령 <code>{ "type": "ATTEND"\|"AD" }</code> ➔ <code>{ "stamps": 3, "reward_egg": {...} }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/egg/gacha</code></td>
+<td style="text-align: left;"><strong>유료 알 가차 (<code>35종</code>)</strong></td>
 <td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">유료 알 가차 뽑기 <code>{ "tier": "PAID1"\|"PAID2"\|"PAID3", "count": 1\|10, "pay_type": "CREDIT"\|"GEM"\|"GOLD" }</code> ➔ <code>{ "acquired_eggs": [...], "pity_count": N }</code></td>
+<td style="text-align: left;"><code>Superior/Rare/Legendary</code> 1회 또는 10연 뽑기</td>
+<td style="text-align: left;">재화 차감 선행, 천장 카운터(<code>0~10</code>) 서버 측 원자적 갱신 및 10회차 전설 100% 확정 보장</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/incubator/set</code></td>
+<td style="text-align: left;"><strong>출석/광고 스탬프 알</strong></td>
+<td style="text-align: center;"><strong>모바일 전용</strong></td>
+<td style="text-align: left;">출석 체크 또는 광고 시청 후 스탬프 +1 요청</td>
+<td style="text-align: left;">일일 한도(광고 2회) 및 5분(300초) 쿨다운 검증, 스탬프 3/3 도달 시 <code>Natural</code> 30종 중 1종 지급 후 리셋</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>부화 배치·미니게임·수령</strong></td>
 <td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">알 인큐베이터 안치 <code>{ "slot_id": 1, "egg_instance_id": "..." }</code> ➔ <code>{ "end_time": "..." }</code></td>
+<td style="text-align: left;">빈 슬롯 알 배치 / 10초 미니게임 결과 제출 / 부화 완료 또는 0초 유료 부화 수령</td>
+<td style="text-align: left;">슬롯 보유/점유 확인, 미니게임 단축률(최대 <code>-20%</code>) 합리성 검증, 유료 즉시 부화 시 재화 차감 후 난수(POT/스탯/성별/외형) 생성</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/incubator/minigame</code></td>
+<td style="text-align: left;"><strong>유/무료 8종 훈련</strong></td>
 <td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">부화 가속 터치 미니게임 제출 <code>{ "slot_id": 1, "tap_count": 16 }</code> ➔ <code>{ "grade": "S", "reduced_rate": 0.20 }</code></td>
+<td style="text-align: left;">선수 지정 후 무료 대기 또는 유료 급속 훈련 개시·수령</td>
+<td style="text-align: left;">선수 <code>IDLE</code>·비부상·피로 85 미만 여부 체크, 컨디션 계수 및 <code>POT</code> 상한 클램핑 후 피로 +15·기술 개화 처리</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/incubator/hatch</code></td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">부화 완료 또는 유료 즉시 부화 <code>{ "slot_id": 1, "instant_paid": true\|false }</code> ➔ <code>{ "rooster": {...} }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/training/start</code></td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">유/무료 8종 훈련 개시 <code>{ "rooster_id": "...", "program_id": 1, "train_mode": "FREE"\|"PAID" }</code> ➔ <code>{ "training_id": "...", "finish_at": "..." }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/training/claim</code></td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">훈련 완료 수령 및 2차 스탯·기술 개화 <code>{ "training_id": "..." }</code> ➔ <code>{ "gained_val": 6, "unlocked_skill": "..." }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/breeding/exec</code></td>
+<td style="text-align: left;"><strong>2세대 유료 교배</strong></td>
 <td style="text-align: center;">모바일 / VIP (유료)</td>
-<td style="text-align: left;">2세대 교배 실행 <code>{ "sire_id": "...", "dam_id": "...", "pay_type": "CREDIT"\|"GEM"\|"TOKEN" }</code> ➔ <code>{ "offspring_egg": {...}, "cooldown_until": "..." }</code></td>
+<td style="text-align: left;">수컷+암컷 종계 선택 후 2세대 혈통 알 생성 요청</td>
+<td style="text-align: left;"><code>ROOSTER+HEN</code>·<code>IDLE</code>·비부상·<code>breedCount&lt;5</code>·<code>24h</code> 쿨다운 5대 요건 검증, 단일 유전 공식 산출 및 양 부모 교배 횟수 +1</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/care/rest</code></td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">무료 닭장 휴식 진입 <code>{ "rooster_id": "..." }</code> ➔ <code>{ "fatigue_rate_per_hour": -10 }</code></td>
+<td style="text-align: left;"><strong>유/무료 회복 케어</strong></td>
+<td style="text-align: center;">모바일 / VIP <em>(광고 제외)</em></td>
+<td style="text-align: left;">무료 닭장 휴식/영양 사료 급여 또는 유료 프리미엄 스파 입욕</td>
+<td style="text-align: left;">무료 회복(휴식 <code>-10/h</code>, 사료 <code>-20</code>) 시간·수량 검증, 스파 결제 시 피로 <code>0</code>·부상 완치·<code>24h</code> 최상 100 일괄 반영</td>
 </tr>
 <tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/care/feed</code></td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">무료 영양 사료 급여 <code>{ "rooster_id": "..." }</code> ➔ <code>{ "fatigue_reduced": -20, "daily_remain": 2 }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/spa/enter</code></td>
-<td style="text-align: center;">모바일 / 웹 / VIP</td>
-<td style="text-align: left;">유료 프리미엄 스파 입욕 <code>{ "rooster_id": "...", "currency_type": "CREDIT"\|"GEM"\|"GOLD" }</code> ➔ <code>{ "fatigue": 0, "is_injured": false, "condition": 100 }</code></td>
-</tr>
-<tr>
-<td style="text-align: center;"><code>POST</code></td>
-<td style="text-align: left;"><code>/api/v1/farm/market/trade</code></td>
-<td style="text-align: center;">모바일 전용</td>
-<td style="text-align: left;">유저 알 거래소 등록/구매 체결 <code>{ "action": "LIST"\|"BUY", "price_gold": 10000 }</code> ➔ <code>{ "fee_gold": 800, "settled_gold": 9200 }</code></td>
+<td style="text-align: left;"><strong>유저 알 거래소 매매</strong></td>
+<td style="text-align: center;"><strong>모바일 전용</strong></td>
+<td style="text-align: left;">미부화 알 시세 등록·구매 체결·취소</td>
+<td style="text-align: left;">판매 알 잠금(중복 매매·부화 방지), 구매 시 <code>[큰손]</code> 칭호 여부로 수수료(7% vs 8%) 서버 계산, 72시간 미체결 자동 반환 배치 처리</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="83-실시간-websocket-이벤트-명세-육성-3종">8.3 실시간 WebSocket 이벤트 명세 (육성 3종)</h3>
-<div class="table-container"><table>
-<thead>
-<tr>
-<th style="text-align: left;">이벤트 채널 식별자</th>
-<th style="text-align: center;">패킷 전송 방향</th>
-<th style="text-align: center;">적용 플랫폼</th>
-<th style="text-align: left;">발송 트리거 및 페이로드(Payload) 주요 데이터 스펙</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong><code>farm:hatch_ready</code></strong></td>
-<td style="text-align: center;">Server ➔ Client</td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">인큐베이터 부화 타이머 만료 또는 유료 즉시 부화 시 ➔ <code>user_id</code>, <code>slot_id</code>, <code>egg_instance_id</code>, <code>ready_at</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>farm:train_done</code></strong></td>
-<td style="text-align: center;">Server ➔ Client</td>
-<td style="text-align: center;">모바일 / VIP</td>
-<td style="text-align: left;">훈련 타이머 만료 또는 유료 급속 훈련 완료 시 ➔ <code>user_id</code>, <code>rooster_id</code>, <code>program_id</code>, <code>gained_stat</code>, <code>new_val</code>, <code>unlocked_skill</code></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong><code>farm:market_sold</code></strong></td>
-<td style="text-align: center;">Server ➔ Client</td>
-<td style="text-align: center;">모바일 전용</td>
-<td style="text-align: left;">유저 거래소 등록 알 판매 체결 시 ➔ <code>seller_id</code>, <code>trade_id</code>, <code>settled_gold</code>, <code>fee_gold</code></td>
-</tr>
-</tbody>
-</table></div>
+<h3 id="83-비동기-완료-알림-및-동시성보안-대응-가이드">8.3 비동기 완료 알림 및 동시성·보안 대응 가이드</h3>
+<ul>
+<li><strong>비동기 상태 갱신 알림 가이드</strong> <em>(WebSocket, SSE, 푸시 등 전송 방식은 프로그램 파트 선택)</em>:</li>
+<li><strong>부화 완료 알림</strong>: 인큐베이터 타이머 만료 또는 유료 즉시 부화 확정 시 클라이언트에 슬롯 완료 상태 통지.</li>
+<li><strong>훈련 완료 알림</strong>: 일반 8종 훈련 대기 완료 시 클라이언트에 스탯 변화·신규 전투 기술 개화 여부 통지.</li>
+<li><strong>거래소 체결 알림<em>(모바일 전용)</em></strong>: 등록한 알 판매 체결 시 판매자 잔액·매물 상태 즉시 갱신.</li>
+<li><strong>동시성·무결성 필수 방어 체크리스트</strong>:
+  1. <strong>이중 소비 및 중복 클릭 방어</strong>: 가차, 유료 부화/훈련, 스파, 교배, 거래소 구매 등 모든 재화 소모성 요청에 <strong>멱등성 키(Idempotency Key)</strong> 및 DB 행/분산 락 적용.
+  2. <strong>상태 전이 단일 진실(State Lock)</strong>: 출전(<code>IN_MATCH</code>), 훈련(<code>TRAINING</code>), 부상(<code>INJURED</code>), 은퇴(<code>RETIRED</code>) 상태 상호 배타 검증으로 경기 중인 선수의 훈련·교배·매매 원천 차단.
+  3. <strong>클라이언트 조작 차단</strong>: 부화 타이머·미니게임 성적·가차 확률·거래 수수료율은 클라이언트 계산값을 신뢰하지 않고 서버 타임스탬프·RNG 기준으로 최종 판정.
+  4. <strong>VIP 라운지 오프라인 복구</strong>: 현장 로컬 네트워크/키오스크 단절 대비 트랜잭션 롤백·로컬 큐잉 페일오버 전략 적용 권고.</li>
+</ul>
 <hr />
 </section>
 <section id="sec-9">
