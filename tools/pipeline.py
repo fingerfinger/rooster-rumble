@@ -40,6 +40,9 @@ def fix_html_latex_escapes(html_path: str) -> None:
     with open(html_path, "r", encoding="utf-8") as f:
         text = f.read()
     orig = text
+    # Fix accumulated \r+\right) and He\r+\right) corruption idempotently
+    text = re.sub(r"He(?:\\r)+\\right\)", "Height)", text)
+    text = re.sub(r"(?:\\r)+\\right\)", lambda _: r"\right)", text)
     # Fix control characters that were accidentally produced from \text, \times, \frac, \right, \alpha
     text = text.replace("\text{", r"\text{")
     text = text.replace("\times", r"\times")
@@ -47,7 +50,6 @@ def fix_html_latex_escapes(html_path: str) -> None:
     text = text.replace("\x0crac{", r"\frac{")
     text = text.replace("\right)", r"\right)")
     text = text.replace("\nigh", r"\righ")
-    text = text.replace("ight)", r"\right)")
     text = text.replace(r"\\right)", r"\right)")
     text = text.replace("\x07lpha", r"\alpha")
     text = text.replace(" lpha", r" \alpha")

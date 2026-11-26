@@ -372,7 +372,7 @@
 <p><strong>1차 기본 5대 스탯 초기 생성 연산식</strong>:</p>
 </li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{초기 기본 스탯} = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\r\r\r\r\right) + \text{난수}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{초기 기본 스탯} = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\right) + \text{난수}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 잠재력(<code>POT</code>)의 65%를 기준 기본 능력치로 설정하고, 5개 스탯(<code>STR</code>, <code>DEX</code>, <code>VIT</code>, <code>MEN</code>, <code>LCK</code>) 각각에 대해 독립적으로 <code>-3 ~ +3</code>의 개체 편차 난수를 합산한 후, 최소 10에서 잠재력 상한선 사이로 고정</li>
 <li><strong>[계산 예시 (잠재력 POT 60 알 부화 시)]</strong>:<ul>
@@ -660,7 +660,7 @@
 <ol>
 <li><strong>상승 스탯 연산식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{훈련 기본 상승량} \times \text{컨디션 보너스 계수}\r\r\r\r\right) + \text{유료 부스트}(0\text{ 또는 }2)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{훈련 기본 상승량} \times \text{컨디션 보너스 계수}\right) + \text{유료 부스트}(0\text{ 또는 }2)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 훈련 종목별 기본 상승량에 컨디션 보너스 계수를 곱한 뒤 반올림하고 유료 급속 훈련 시 <code>+2</code> 가산</li>
 <li><strong>[계산 예시]</strong>: 훈련 기본 상승량 <code>+5</code>, 컨디션 최상(<code>1.2</code>) 일반 훈련 기준: $5 \times 1.2 = +6$ 스탯 상승 산출 (유료 급속 시 $+8$)</li>
@@ -668,7 +668,7 @@
 <ol start="2">
 <li><strong>상승 후 스탯 및 잠재력 상한 제어 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{상승 후 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력 상한}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{상승 후 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력 상한}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 현재 스탯에 상승 스탯을 합산하되, 선수의 타고난 잠재력 상한선을 초과하지 않도록 상한 고정 처리</li>
 <li><strong>[계산 예시]</strong>: 현재 속도 <code>60</code>, 상승 스탯 <code>+6</code>, 잠재력 상한 <code>64</code> 기준: $60 + 6 = 66$이나 상한선(<code>64</code>) 제어로 <strong><code>+4</code>만 상승</strong>하여 최종 <strong><code>64</code></strong> 확정 적용</li>
@@ -686,7 +686,7 @@
 <ol>
 <li><strong>병아리 잠재력 상한 유전 수식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{자식 잠재력 상한} = \text{Clamp}\left(\text{반올림}\left(\text{최댓값}\left(\text{부모A 잠재력}, \;\; \text{부모B 잠재력}\r\r\r\r\right) \times 1.05\r\r\r\r\right), \;\; 30, \;\; 100\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{자식 잠재력 상한} = \text{Clamp}\left(\text{반올림}\left(\text{최댓값}\left(\text{부모A 잠재력}, \;\; \text{부모B 잠재력}\right) \times 1.05\right), \;\; 30, \;\; 100\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 부모 중 더 높은 잠재력 수치에 5% 보너스(1.05배)를 곱하여 반올림한 뒤 30~100 범위로 제한</li>
 <li><strong>[계산 예시]</strong>: 부모A 잠재력 <code>70</code>, 부모B 잠재력 <code>80</code> 기준: $\text{최댓값}(70, 80) \times 1.05 = 80 \times 1.05 = 84$ 잠재력 상한 확정</li>
@@ -694,7 +694,7 @@
 <ol start="2">
 <li><strong>병아리 1차 기본 스탯 유전 수식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{자식 기본 스탯} = \text{Clamp}\left(\text{반올림}\left(\text{부모A 스탯} \times 0.45 + \text{부모B 스탯} \times 0.45\r\r\r\r\right) + \text{난수}(-5, +10), \;\; 10, \;\; \text{자식 잠재력 상한}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{자식 기본 스탯} = \text{Clamp}\left(\text{반올림}\left(\text{부모A 스탯} \times 0.45 + \text{부모B 스탯} \times 0.45\right) + \text{난수}(-5, +10), \;\; 10, \;\; \text{자식 잠재력 상한}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 부모 A, B 스탯의 각 45%를 합산한 90% 계승치에 <code>-5 ~ +10</code> 범위의 유전 변동 난수를 더하고, 최종 값을 <code>10 ~ 자식 잠재력 상한</code> 범위로 고정 산출</li>
 <li><strong>[계산 예시]</strong>: 부모A 힘 <code>60</code>, 부모B 힘 <code>50</code>, 유전 난수 <code>+4</code>, 자식 잠재력 <code>84</code> 기준: $(60 \times 0.45 + 50 \times 0.45) + 4 = (27 + 22.5) + 4 = 50 + 4 = 54$ 스탯 확정</li>
@@ -1109,7 +1109,7 @@
 <ul>
 <li><strong>종합 평가값 (<code>card_overall</code>)</strong>: 카드 UI 표시 및 기본 등급(티어) 분류용 고정 마스터 점수 (컨디션 미반영, 알파 30두 평균 368.68 기준)</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{종합 평가} = \text{버림}\left(\frac{\text{능력치 6종 총합}}{368.68} \times 1000\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{종합 평가} = \text{버림}\left(\frac{\text{능력치 6종 총합}}{368.68} \times 1000\right)$$</div></div>
 <ul>
 <li><strong>매칭 판정값 (<code>match_score</code>)</strong>: 매칭 밸런스 검증 점수 (기본 스탯 + 당일 컨디션 보정치)</li>
 <li><strong>레이스 연산값 (<code>race_physics_stat</code>)</strong>: 실제 경주 시간 연산값 (기본 스탯 + 컨디션 보정치 + 레이스 무작위 난수 $\pm 3$)</li>
@@ -1309,7 +1309,7 @@
 <ol start="2">
 <li><strong>최종 배당률 보정 (Clamp) 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{최종 배당률} = \text{Clamp}\left(\text{기본 배당률}, \;\; 1.01, \;\; 99.00\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{최종 배당률} = \text{Clamp}\left(\text{기본 배당률}, \;\; 1.01, \;\; 99.00\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 산출된 기본 배당률을 최소 1.01배 ~ 최대 99.00배 범위로 제한 고정 (원금 미만 손실 방지 및 비정상 고배당 리스크 제어)</li>
 <li><strong>[계산 예시]</strong>:<ul>
@@ -1631,7 +1631,7 @@
 <ol>
 <li><strong>스타일별 가중 능력치 연산</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{가중 능력치} = \sum \left(\text{최종 능력치} \times \text{스타일별 가중치}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{가중 능력치} = \sum \left(\text{최종 능력치} \times \text{스타일별 가중치}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 주행 스타일별 핵심 스탯 가중치(%)를 각 능력치에 곱한 후 전수 합산하여 단일 종합 가중 스탯 산출</li>
 <li><strong>[계산 예시 (도주 스타일)]</strong>: 도주 스타일(출발 40%, 속도 40%, 지구력 20%) 기준: $\text{가중 능력치} = (\text{출발} \times 0.4) + (\text{속도} \times 0.4) + (\text{지구력} \times 0.2)$ 산출 적용</li>
@@ -1639,7 +1639,7 @@
 <ol start="2">
 <li><strong>기본 경주 시간 산출 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{기본 경주 시간} = 20.0\text{초} - \left(\left(\text{가중 능력치} - 60\r\r\r\r\right) \times 0.05\text{초}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{기본 경주 시간} = 20.0\text{초} - \left(\left(\text{가중 능력치} - 60\right) \times 0.05\text{초}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 기준 스탯 60점 기준 기본 완주 시간 20.0초 설정 (가중 능력치 1점 상승 시 완주 시간 0.05초 단축, 1점 하락 시 0.05초 지연 적용)</li>
 <li><strong>[계산 예시]</strong>: 가중 능력치 80점 보유 선수: 기준(60점) 대비 +20점이므로 $20.0 - (20 \times 0.05) = 19.0\text{초}$ 기본 완주 시간 산출</li>
@@ -1654,7 +1654,7 @@
 <p><strong>최종 도착 시간 산출 연산</strong>:</p>
 </li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{최종 경주 시간} = \text{Clamp}\left(\frac{\lfloor(\text{기본 경주 시간} + \text{시간 난수}) \times 1000\rfloor}{1000}, \;\; 16.000\text{초}, \;\; 24.000\text{초}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{최종 경주 시간} = \text{Clamp}\left(\frac{\lfloor(\text{기본 경주 시간} + \text{시간 난수}) \times 1000\rfloor}{1000}, \;\; 16.000\text{초}, \;\; 24.000\text{초}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>:<ul>
 <li><strong>① 미세 시간 난수 합산</strong>: 기본 경주 시간에 당일 경기 미세 오차(<code>시간 난수</code>) 합산</li>
@@ -1751,7 +1751,7 @@
 <ul>
 <li><strong>격투 종합 지수 산출식</strong>:</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{격투 종합 지수} = \text{POW} + \text{DEF} + \text{버림}\left(\frac{\text{HP}}{10}\r\r\r\r\right) + \text{REC} + \text{TEC} + \text{GRT} + \text{당일 컨디션 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{격투 종합 지수} = \text{POW} + \text{DEF} + \text{버림}\left(\frac{\text{HP}}{10}\right) + \text{REC} + \text{TEC} + \text{GRT} + \text{당일 컨디션 보정}$$</div></div>
 <ul>
 <li><strong>대등 매칭 원칙</strong>: 출전하는 2두 선수의 격투 종합 지수 격차가 균등한 매치업 성립을 원칙으로 설정</li>
 </ul>
@@ -2080,7 +2080,7 @@ graph TD
 <li>연속 가드(<code>[방1: 깃털 부풀려 버티기]</code>) 중 관통·대기술 누적 피격 시에도 가드가 파괴되어 <strong>0.5~1.0초 짧은 스탠딩 그로기(무방비 취약)</strong> 및 <strong>1.5배 관통 피해</strong> 피격 후 위기 탈출 3지선다(<code>방2+이5</code> / <code>방1+이4</code> / <code>방3</code>) 수행.</li>
 <li><strong>기력 호흡 정돈 및 쿨다운</strong>: 3연속기 완주 즉시 공방 템포 조율용 <code>[이6: 원형 탐색 걸음]</code> 상태 진입 (기본 이동, 단발 가드/회피만 허용, 신규 연속기 즉시 연속 사용 제한).</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{호흡 정돈 쿨다운(초)} = \text{최댓값}\left(1.5 - \left(\frac{\text{기술력(TEC)}}{100}\r\r\r\r\right) \times 0.5, \;\; 1.0\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{호흡 정돈 쿨다운(초)} = \text{최댓값}\left(1.5 - \left(\frac{\text{기술력(TEC)}}{100}\right) \times 0.5, \;\; 1.0\right)$$</div></div>
 <ul>
 <li>TEC 0 기준 1.5초 쿨다운 적용, TEC 100 기준 최소 1.0초 쿨다운으로 단축.</li>
 </ul>
@@ -2088,7 +2088,7 @@ graph TD
 <ol>
 <li><strong>타격 피해량 연산식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{타격 피해량} = \text{최댓값}\left(\text{반올림}\left((\text{POW} \times \text{Skill\_Coeff} \times \text{Crit\_Mult} \times \text{Combo\_Amp}) - (\text{DEF} \times (1 - \text{Pen\_Rate}))\r\r\r\r\right), \;\; 1\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{타격 피해량} = \text{최댓값}\left(\text{반올림}\left((\text{POW} \times \text{Skill\_Coeff} \times \text{Crit\_Mult} \times \text{Combo\_Amp}) - (\text{DEF} \times (1 - \text{Pen\_Rate}))\right), \;\; 1\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 공격력(<code>POW</code>)에 기술 계수, 치명타 배율(일반 1.5배, 방방공 1.8배), 콤보 완주 증폭(1.3배)을 곱한 뒤 방어자의 유효 방어력을 차감 산출 (최소 1 보장).</li>
 <li><strong>[계산 예시 (조건부 크리티컬 [방2]+[공3])]</strong>: POW <code>53</code>, DEF <code>58</code>, [공3] 계수 1.3, 치명타 1.5 배율:</li>
@@ -2097,12 +2097,12 @@ graph TD
 <ol start="2">
 <li><strong>치명타 발현 확률 수식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{치명타 확률(\%)} = \text{최솟값}\left(\text{기술력(TEC)} \times 0.3\% + \text{Combo\_Crit\_Bonus}, \;\; 100.0\%\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{치명타 확률(\%)} = \text{최솟값}\left(\text{기술력(TEC)} \times 0.3\% + \text{Combo\_Crit\_Bonus}, \;\; 100.0\%\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 선수의 기술력(<code>TEC</code>) 1점당 0.3% 치명타율(기본 상한 30%)에 콤보 시너지 보너스([공+공] +25%, [방+공] 및 [방+방+공] 100% 확정) 가산.
 3. <strong>라운드 간 휴식 체력 회복량 연산식</strong>:</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{라운드 간 체력 회복량} = \text{최솟값}\left(\text{반올림}\left(\text{최대 체력} \times \left(\frac{\text{회복력(REC)}}{200}\r\r\r\r\right)\r\r\r\r\right), \;\; \text{최대 체력} - \text{현재 체력}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{라운드 간 체력 회복량} = \text{최솟값}\left(\text{반올림}\left(\text{최대 체력} \times \left(\frac{\text{회복력(REC)}}{200}\right)\right), \;\; \text{최대 체력} - \text{현재 체력}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 라운드 종료 후 15초 휴식 시간 동안 선수의 회복력(<code>REC</code>) 점수에 비례하여 체력을 회복하되, 최대 체력을 초과하지 않도록 제한.</li>
 <li><strong>[계산 예시]</strong>: Max HP <code>1,000</code>, 현재 HP <code>400</code>, REC <code>60</code> 기준: $\text{반올림}(1,000 \times \frac{60}{200}) = \mathbf{300\text{ HP 회복}}$ (잔여 700 HP).</li>
@@ -2263,10 +2263,10 @@ graph TD
 <ol>
 <li><strong>라이브 동적 배당률 산출 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{선수A 라이브 배당률} = \text{Clamp}\left(\text{선수A 기본 배당률} \times \left(\frac{\text{선수B 잔여 체력}}{\text{선수A 잔여 체력}}\r\r\r\r\right), \;\; 1.01, \;\; 50.00\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{선수A 라이브 배당률} = \text{Clamp}\left(\text{선수A 기본 배당률} \times \left(\frac{\text{선수B 잔여 체력}}{\text{선수A 잔여 체력}}\right), \;\; 1.01, \;\; 50.00\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 라운드 종료 시점 두 선수의 잔여 체력 비율을 기본 배당률에 곱하여 실시간 배당률 재산출 후, 1.01배 ~ 50.00배 범위로 제한 고정</li>
-<li><strong>[계산 예시]</strong>: 선수A 기본 배당 <code>2.00배</code>, 선수A 잔여 체력 <code>400</code>, 선수B 잔여 체력 <code>800</code> 기준: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$ 라이브 배당 산출 적용</li>
+<li><strong>[계산 예시]</strong>: 선수A 기본 배당 <code>2.00배</code>, 선수A 잔여 체력 <code>400</code>, 선수B 잔여 체력 <code>800</code> 기준: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$ 라이브 배당 산출 적용</li>
 <li><strong>[계산 예시 (한계 보정)]</strong>: 선수A 체력 급감으로 계산값 <code>65.00배</code> 산출 시: 최대 상한선 <strong><code>50.00배</code></strong> 강제 보정</li>
 </ul>
 <h4>■ 라이브 베팅 UI 연출 및 락(Lock) 인터랙션</h4>
@@ -2389,15 +2389,15 @@ graph TD
 <ul>
 <li><strong>1라운드 누적 유효타 및 잔여 체력 정산</strong>:</li>
 <li>일반 부리 속사 견제 및 유효타 교환 누적: Red 피격 <code>95 데미지</code>, Blue 피격 <code>68 데미지</code>.</li>
-<li><strong>레드 불릿 1R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$0 (잔여 73.0%)</li>
-<li><strong>블레이징 윙 1R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$1 (잔여 69.1%)</li>
+<li><strong>레드 불릿 1R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$0 (잔여 73.0%)</li>
+<li><strong>블레이징 윙 1R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$1 (잔여 69.1%)</li>
 </ul>
 <h4>2) 라운드 간 15초 휴식 &amp; 라이브 배당판 갱신</h4>
 <ul>
 <li><strong>휴식 시간</strong>: <code>00:45 ~ 01:00</code> (15초간 체력 회복 연산 및 2R 라이브 배당 표출)</li>
 <li><strong>체력 회복 연산 (REC 기반, 4.2절 휴식 회복 공식 적용)</strong>:</li>
-<li><code>레드 불릿 (REC 49)</code>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$2 복구.</li>
-<li><code>블레이징 윙 (REC 50)</code>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$3 복구.</li>
+<li><code>레드 불릿 (REC 49)</code>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$2 복구.</li>
+<li><code>블레이징 윙 (REC 50)</code>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$3 복구.</li>
 <li><strong>인플레이 라이브 배당 갱신</strong>: 체력 비율 및 라운드 우세 반영 <code>레드 불릿: 1.75배</code> / <code>블레이징 윙: 2.15배</code>.</li>
 </ul>
 <h4>3) 2라운드: [공+공+공 맹공] vs [방+방+공 카운터 패링] 실시간 격돌 및 캔슬 (45초)</h4>
@@ -2406,7 +2406,7 @@ graph TD
 <li><strong>주요 공방 타임라인 및 수식 연산</strong>:
   1. <strong>Tick 14 (01:14) - 동시 격돌(Clash)과 맞발톱 패링 강제 차단(Cancel)</strong>:<ul>
 <li><code>레드 불릿</code>이 [공+공+공] 3연타 시동:</li>
-<li>1타 <code>[공1: 전진 부리 속사]</code> 시전: 블레이징 윙이 <code>[방1: 깃털 부풀려 버티기]</code>로 -60% 감쇄 ($2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$4 흡수).</li>
+<li>1타 <code>[공1: 전진 부리 속사]</code> 시전: 블레이징 윙이 <code>[방1: 깃털 부풀려 버티기]</code>로 -60% 감쇄 ($2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$4 흡수).</li>
 <li>2타 <code>[공2: 낮은 발톱 할퀴기]</code> 시전 타이밍에 <code>블레이징 윙</code>이 마주 뛰어오르며 <strong><code>[방3: 맞발톱 쳐내기]</code></strong> 패링 성공.</li>
 <li><strong>[Clash &amp; Cancel 판정]</strong>: 레드 불릿의 남아있던 3타 <code>[공4]</code>는 <strong>즉시 강제 캔슬</strong>되며 0.5초 스턴 경직 상태 전환.</li>
 <li><code>블레이징 윙</code>의 <strong>[방+방+공 패링 반격]</strong> 피니시 발동 (<strong>1.8배 무조건 반격 크리티컬</strong>):</li>
@@ -2416,7 +2416,7 @@ graph TD
 <p><div class="formula-card"><div class="formula-body">$$\text{코너 셔플 키} = \text{시드 기반 난수 함수}(\text{matchSeed} + \text{":corner:"} + \text{chickenId})$$</div></div>5</p>
 <ol start="2">
 <li><strong>Tick 25 (01:25) - 블레이징 윙 [방+공+공 가드 돌파 반격]</strong>:<ul>
-<li><code>[방1: 깃털 버티기]</code>(1뎀 흡수) 후 <code>[공1]</code>(1뎀) + <code>[공3: 비상 발톱 급습]</code>(일반 적중: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$5) ➔ Red 피격 <strong><code>12 데미지</code></strong>.</li>
+<li><code>[방1: 깃털 버티기]</code>(1뎀 흡수) 후 <code>[공1]</code>(1뎀) + <code>[공3: 비상 발톱 급습]</code>(일반 적중: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$5) ➔ Red 피격 <strong><code>12 데미지</code></strong>.</li>
 </ul>
 </li>
 <li><strong>Tick 36 (01:36) - 레드 불릿의 외곽 벽면 가드 브레이크(Guard Break) 및 강타</strong>:<ul>
@@ -2429,11 +2429,11 @@ graph TD
 <ul>
 <li><strong>2라운드 누적 유효타 및 잔여 체력 정산</strong>:</li>
 <li>난타전 및 유효타 누적: Red 추가 피격 <code>237 데미지</code>, Blue 추가 피격 <code>329 데미지</code>.</li>
-<li><strong>레드 불릿 2R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$6</li>
-<li><strong>블레이징 윙 2R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$7</li>
+<li><strong>레드 불릿 2R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$6</li>
+<li><strong>블레이징 윙 2R 총 피격</strong>: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$7</li>
 <li><strong>2R 휴식 (01:45 ~ 02:00) 체력 회복</strong>:</li>
-<li>레드 불릿: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$8</li>
-<li>블레이징 윙: $2.00 \times \left(\frac{800}{400}\r\r\r\r\right) = 2.00 \times 2.0 = 4.00\text{배}$9</li>
+<li>레드 불릿: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$8</li>
+<li>블레이징 윙: $2.00 \times \left(\frac{800}{400}\right) = 2.00 \times 2.0 = 4.00\text{배}$9</li>
 <li><strong>3R 직전 라이브 배당</strong>: <code>레드 불릿: 1.30배</code> vs <code>블레이징 윙: 4.20배</code> (01:55 베팅 락).</li>
 </ul>
 <h4>4) 3라운드: 가드 돌파, 투지 버티기(Last Stand)와 바닥 다운 즉시 KO 피니시 (45초)</h4>
@@ -2655,42 +2655,42 @@ graph TD
 <ol>
 <li><strong>속도 (Speed)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{속도} = \text{반올림}\left(\text{민첩(DEX)} \times 0.5 + \text{힘(STR)} \times 0.3 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{속도 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{속도} = \text{반올림}\left(\text{민첩(DEX)} \times 0.5 + \text{힘(STR)} \times 0.3 + \text{잠재력(POT)} \times 0.2\right) + \text{속도 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (도주 스타일, Speed_Bias +3)]</strong>: DEX <code>60</code>, STR <code>50</code>, POT <code>70</code> 기준: $\text{반올림}(60 \times 0.5 + 50 \times 0.3 + 70 \times 0.2) + 3 = \text{반올림}(30 + 15 + 14) + 3 = 59 + 3 = 62\text{ 속도}$ 산출</li>
 </ul>
 <ol start="2">
 <li><strong>출발 (Start)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\r\r\r\r\right) + \text{출발 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\right) + \text{출발 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (도주 스타일, Start_Bias +8)]</strong>: DEX <code>60</code>, LCK <code>40</code>, POT <code>70</code> 기준: $\text{반올림}(60 \times 0.7 + 40 \times 0.2 + 70 \times 0.1) + 8 = \text{반올림}(42 + 8 + 7) + 8 = 57 + 8 = 65\text{ 출발}$ 산출</li>
 </ul>
 <ol start="3">
 <li><strong>지구력 (Stamina)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{지구력} = \text{반올림}\left(\text{활력(VIT)} \times 0.6 + \text{정신력(MEN)} \times 0.2 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{지구력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{지구력} = \text{반올림}\left(\text{활력(VIT)} \times 0.6 + \text{정신력(MEN)} \times 0.2 + \text{잠재력(POT)} \times 0.2\right) + \text{지구력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (추입 스타일, Stamina_Bias +4)]</strong>: VIT <code>70</code>, MEN <code>50</code>, POT <code>60</code> 기준: $\text{반올림}(70 \times 0.6 + 50 \times 0.2 + 60 \times 0.2) + 4 = \text{반올림}(42 + 10 + 12) + 4 = 64 + 4 = 68\text{ 지구력}$ 산출</li>
 </ul>
 <ol start="4">
 <li><strong>집중력 (Focus)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{집중력} = \text{반올림}\left(\text{정신력(MEN)} \times 0.5 + \text{민첩(DEX)} \times 0.3 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{집중력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{집중력} = \text{반올림}\left(\text{정신력(MEN)} \times 0.5 + \text{민첩(DEX)} \times 0.3 + \text{잠재력(POT)} \times 0.2\right) + \text{집중력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (자재 스타일, Focus_Bias +4)]</strong>: MEN <code>60</code>, DEX <code>50</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.5 + 50 \times 0.3 + 60 \times 0.2) + 4 = \text{반올림}(30 + 15 + 12) + 4 = 57 + 4 = 61\text{ 집중력}$ 산출</li>
 </ul>
 <ol start="5">
 <li><strong>기질 (Temper)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{기질} = \text{반올림}\left(\text{행운(LCK)} \times 0.6 + \text{정신력(MEN)} \times 0.2 + \text{힘(STR)} \times 0.2\r\r\r\r\right) + \text{기질 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{기질} = \text{반올림}\left(\text{행운(LCK)} \times 0.6 + \text{정신력(MEN)} \times 0.2 + \text{힘(STR)} \times 0.2\right) + \text{기질 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (변칙 스타일, Temper_Bias +8)]</strong>: LCK <code>50</code>, MEN <code>50</code>, STR <code>50</code> 기준: $\text{반올림}(50 \times 0.6 + 50 \times 0.2 + 50 \times 0.2) + 8 = \text{반올림}(30 + 10 + 10) + 8 = 50 + 8 = 58\text{ 기질}$ 산출</li>
 </ul>
 <ol start="6">
 <li><strong>근성 (Guts)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{근성} = \text{반올림}\left(\text{정신력(MEN)} \times 0.5 + \text{활력(VIT)} \times 0.3 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{근성 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{근성} = \text{반올림}\left(\text{정신력(MEN)} \times 0.5 + \text{활력(VIT)} \times 0.3 + \text{잠재력(POT)} \times 0.2\right) + \text{근성 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (추입 스타일, Guts_Bias +8)]</strong>: MEN <code>60</code>, VIT <code>50</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.5 + 50 \times 0.3 + 60 \times 0.2) + 8 = \text{반올림}(30 + 15 + 12) + 8 = 57 + 8 = 65\text{ 근성}$ 산출</li>
 </ul>
@@ -2701,46 +2701,46 @@ graph TD
 <ol>
 <li><strong>공격력 (POW)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{공격력} = \text{반올림}\left(\text{힘(STR)} \times 0.6 + \text{민첩(DEX)} \times 0.2 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{공격력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{공격력} = \text{반올림}\left(\text{힘(STR)} \times 0.6 + \text{민첩(DEX)} \times 0.2 + \text{잠재력(POT)} \times 0.2\right) + \text{공격력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (브롤러 스타일, POW_Bias +8)]</strong>: STR <code>70</code>, DEX <code>50</code>, POT <code>60</code> 기준: $\text{반올림}(70 \times 0.6 + 50 \times 0.2 + 60 \times 0.2) + 8 = \text{반올림}(42 + 10 + 12) + 8 = 64 + 8 = 72\text{ POW}$ 산출</li>
 </ul>
 <ol start="2">
 <li><strong>방어력 (DEF)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{방어력} = \text{반올림}\left(\text{민첩(DEX)} \times 0.5 + \text{힘(STR)} \times 0.3 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{방어력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{방어력} = \text{반올림}\left(\text{민첩(DEX)} \times 0.5 + \text{힘(STR)} \times 0.3 + \text{잠재력(POT)} \times 0.2\right) + \text{방어력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (브롤러 스타일, DEF_Bias +5)]</strong>: DEX <code>60</code>, STR <code>60</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.5 + 60 \times 0.3 + 60 \times 0.2) + 5 = \text{반올림}(30 + 18 + 12) + 5 = 60 + 5 = 65\text{ DEF}$ 산출</li>
 </ul>
 <ol start="3">
 <li><strong>최대 체력 (Max HP)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{최대 체력} = \text{반올림}\left(\text{활력(VIT)} \times 10 + \text{힘(STR)} \times 2 + \text{잠재력(POT)} \times 2\r\r\r\r\right) + \text{체력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{최대 체력} = \text{반올림}\left(\text{활력(VIT)} \times 10 + \text{힘(STR)} \times 2 + \text{잠재력(POT)} \times 2\right) + \text{체력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (인파이터 스타일, HP_Bias +0)]</strong>: VIT <code>70</code>, STR <code>60</code>, POT <code>60</code> 기준: $\text{반올림}(70 \times 10 + 60 \times 2 + 60 \times 2) + 0 = 700 + 120 + 120 = 940\text{ Max HP}$ 산출</li>
 </ul>
 <ol start="4">
 <li><strong>회복력 (REC)</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{회복력} = \text{반올림}\left(\text{활력(VIT)} \times 0.5 + \text{정신력(MEN)} \times 0.3 + \text{잠재력(POT)} \times 0.2\r\r\r\r\right) + \text{회복력 스타일 보정}$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{회복력} = \text{반올림}\left(\text{활력(VIT)} \times 0.5 + \text{정신력(MEN)} \times 0.3 + \text{잠재력(POT)} \times 0.2\right) + \text{회복력 스타일 보정}$$</div></div>
 <ul>
 <li><strong>[계산 예시 (아웃파이터 스타일, REC_Bias +3)]</strong>: VIT <code>60</code>, MEN <code>50</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.5 + 50 \times 0.3 + 60 \times 0.2) + 3 = \text{반올림}(30 + 15 + 12) + 3 = 57 + 3 = 60\text{ REC}$ 산출</li>
 </ul>
 <ol start="5">
 <li><strong>기술력 (TEC)</strong>:</li>
 </ol>
-<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\r\r\r\r\right) + \text{출발 스타일 보정}$$</div></div>0</p>
+<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\right) + \text{출발 스타일 보정}$$</div></div>0</p>
 <ul>
 <li><strong>[계산 예시 (테크니션 스타일, TEC_Bias +8)]</strong>: DEX <code>70</code>, MEN <code>60</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.7 + 40 \times 0.2 + 70 \times 0.1) + 8 = \text{반올림}(42 + 8 + 7) + 8 = 57 + 8 = 65\text{ 출발}$0 산출</li>
 <li><strong>[기력 호흡 정돈 쿨다운 연동]</strong>: 3연속기 완주 후 스텝/견제 쿨다운 단축:</li>
 </ul>
-<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\r\r\r\r\right) + \text{출발 스타일 보정}$$</div></div>1</p>
+<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\right) + \text{출발 스타일 보정}$$</div></div>1</p>
 <pre><code> (TEC 0 기준 1.5초, TEC 100 기준 최소 1.0초까지 단축)
 </code></pre>
 <ol start="6">
 <li><strong>근성 (GRT)</strong>:</li>
 </ol>
-<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\r\r\r\r\right) + \text{출발 스타일 보정}$$</div></div>2</p>
+<p><div class="formula-card"><div class="formula-body">$$\text{출발} = \text{반올림}\left(\text{민첩(DEX)} \times 0.7 + \text{행운(LCK)} \times 0.2 + \text{잠재력(POT)} \times 0.1\right) + \text{출발 스타일 보정}$$</div></div>2</p>
 <ul>
 <li><strong>[계산 예시 (인파이터 스타일, GRT_Bias +0)]</strong>: MEN <code>70</code>, VIT <code>60</code>, POT <code>60</code> 기준: $\text{반올림}(60 \times 0.7 + 40 \times 0.2 + 70 \times 0.1) + 8 = \text{반올림}(42 + 8 + 7) + 8 = 57 + 8 = 65\text{ 출발}$1 산출</li>
 </ul>

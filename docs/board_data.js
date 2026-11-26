@@ -1,9 +1,9 @@
 // ROOSTER RUMBLE 웹보드 자동 생성 데이터 (v2.2 마크다운 본문 임베딩)
-// 생성 일시: 2026-11-24 14:52:10
+// 생성 일시: 2026-11-26 13:53:01
 window.BOARD_DATA = {
   "project_title": "ROOSTER RUMBLE 아카이브 & 웹보드",
   "project_subtitle": "프로젝트 최종 확정 산출물 포털",
-  "last_sync": "2026-11-24 14:52:10",
+  "last_sync": "2026-11-26 13:53:01",
   "total_items": 86,
   "menu_sections": [
     {
@@ -219,9 +219,9 @@ window.BOARD_DATA = {
         "HTML"
       ],
       "exists": true,
-      "file_size": "394.0 KB",
-      "bytes": 403410,
-      "updated_at": "2026-11-24 14:26",
+      "file_size": "393.6 KB",
+      "bytes": 403010,
+      "updated_at": "2026-11-26 13:52",
       "ext": "html",
       "url": "common/core/통합_MVP_구성안.html",
       "is_hidden": false,
@@ -1144,9 +1144,9 @@ window.BOARD_DATA = {
         "HTML"
       ],
       "exists": true,
-      "file_size": "123.4 KB",
-      "bytes": 126335,
-      "updated_at": "2026-11-24 14:26",
+      "file_size": "123.1 KB",
+      "bytes": 126015,
+      "updated_at": "2026-11-26 13:52",
       "ext": "html",
       "url": "pit/docs/Rumble_Pit_MVP_구성안.html",
       "is_hidden": false,
@@ -1172,8 +1172,8 @@ window.BOARD_DATA = {
       ],
       "exists": true,
       "file_size": "104.4 KB",
-      "bytes": 106916,
-      "updated_at": "2026-11-24 14:26",
+      "bytes": 106898,
+      "updated_at": "2026-11-26 13:52",
       "ext": "html",
       "url": "pit/docs/Rumble_Pit_전투_시뮬레이션_규칙_정의서.html",
       "is_hidden": false,
@@ -1559,9 +1559,9 @@ window.BOARD_DATA = {
         "v1.5.0"
       ],
       "exists": true,
-      "file_size": "147.1 KB",
-      "bytes": 150630,
-      "updated_at": "2026-11-24 14:26",
+      "file_size": "147.0 KB",
+      "bytes": 150566,
+      "updated_at": "2026-11-26 13:52",
       "ext": "html",
       "url": "farm/docs/Rumble_Farm_MVP_구성안.html",
       "is_hidden": false,
@@ -2659,9 +2659,9 @@ window.BOARD_DATA = {
       "exists": true,
       "src": "통합_MVP_구성안_배포용.min.html",
       "dest": "docs/common/core/통합_MVP_구성안_배포용.min.html",
-      "file_size": "394.0 KB",
-      "bytes": 403410,
-      "updated_at": "2026-11-24 14:26",
+      "file_size": "393.6 KB",
+      "bytes": 403010,
+      "updated_at": "2026-11-26 13:52",
       "ext": "html",
       "url": "common/core/통합_MVP_구성안_배포용.min.html",
       "is_hidden": true,

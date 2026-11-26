@@ -383,7 +383,7 @@ flowchart TD
 <ol start="2">
 <li><strong>1차 기본 5대 스탯 초기 생성 분배 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\r\r\r\r\right) + \text{난수}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{잠재력(POT)} \times 0.65\right) + \text{난수}(-3, +3), \;\; 10, \;\; \text{잠재력(POT)}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 잠재력(<code>POT</code>)의 65%를 기준값으로 설정하고, 5개 스탯(<code>STR</code>, <code>DEX</code>, <code>VIT</code>, <code>MEN</code>, <code>LCK</code>) 각각에 독립 난수(<code>-3 ~ +3</code>) 합산 후 최소 10에서 잠재력 상한선 사이로 제한 (성별 <code>ROOSTER</code>/<code>HEN</code> 각 50% 확률 부여)</li>
 <li><strong>[계산 예시 (잠재력 POT 60 알 부화 시)]</strong>:<ul>
@@ -715,13 +715,13 @@ stateDiagram-v2
 <ul>
 <li><strong>훈련 스탯 상승 연산식</strong>:</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{기본 상승량} \times \text{컨디션 계수}\r\r\r\r\right) + \text{유료 부스트 보너스}(0\text{ 또는 }2)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{상승 스탯} = \text{반올림}\left(\text{기본 상승량} \times \text{컨디션 계수}\right) + \text{유료 부스트 보너스}(0\text{ 또는 }2)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 훈련 기본 상승량에 컨디션 계수(최상 <code>1.2</code>, 양호 <code>1.0</code>, 보통 <code>0.9</code>, 저조 <code>0.7</code>)를 곱해 반올림하고 유료 급속 훈련 시 <code>+2</code> 가산</li>
 <li><strong>[계산 예시]</strong>: 기본 상승량 <code>+5</code>, 컨디션 최상(<code>1.2</code>), 일반 무료 훈련 시: $\text{반올림}(5 \times 1.2) = \mathbf{+6}$ 상승 (유료 급속 훈련 시 $+8$ 산출)</li>
 <li><strong>잠재력(POT) 상한 제어 공식</strong>:</li>
 </ul>
-<div class="formula-card"><div class="formula-body">$$\text{최종 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력(POT) 상한}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{최종 스탯} = \text{최솟값}\left(\text{현재 스탯} + \text{상승 스탯}, \;\; \text{잠재력(POT) 상한}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 타고난 잠재력 상한선을 초과하여 성장 불가 (잠재력 상한 돌파는 2세대 교배로만 가능)</li>
 <li><strong>[계산 예시]</strong>: 현재 <code>DEX 60</code>, 상승 <code>+6</code>, 잠재력 <code>POT 64</code> 기준: $60 + 6 = 66$이나 상한선 제어로 <code>+4</code>만 적용되어 최종 <strong><code>64</code></strong> 확정</li>
@@ -776,7 +776,7 @@ stateDiagram-v2
 <ol>
 <li><strong>자손 잠재력(<code>POT</code>) 상한 유전 공식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{자식 POT} = \text{Clamp}\left(\text{반올림}\left(\max(\text{부모A POT}, \;\; \text{부모B POT}) \times 1.05\r\r\r\r\right), \;\; 30, \;\; 100\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{자식 POT} = \text{Clamp}\left(\text{반올림}\left(\max(\text{부모A POT}, \;\; \text{부모B POT}) \times 1.05\right), \;\; 30, \;\; 100\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 부모 중 더 높은 잠재력 수치에 <code>5%</code> 보너스(<code>1.05배</code>)를 곱하여 반올림한 뒤 30~100 범위로 제한</li>
 <li><strong>[계산 예시]</strong>: 부모A 잠재력 <code>70</code>, 부모B 잠재력 <code>80</code> 기준: $\text{반올림}(\max(70, 80) \times 1.05) = 80 \times 1.05 = \mathbf{84\text{ POT}}$ 확정</li>
@@ -784,7 +784,7 @@ stateDiagram-v2
 <ol start="2">
 <li><strong>자손 1차 기본 5대 스탯 (<code>STR/DEX/VIT/MEN/LCK</code>) 상속 연산식</strong>:</li>
 </ol>
-<div class="formula-card"><div class="formula-body">$$\text{자식 스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{부모A}_i \times 0.45 + \text{부모B}_i \times 0.45\r\r\r\r\right) + \text{난수}(-5, +10), \;\; 10, \;\; \text{자식 POT}\r\r\r\r\right)$$</div></div>
+<div class="formula-card"><div class="formula-body">$$\text{자식 스탯}_i = \text{Clamp}\left(\text{반올림}\left(\text{부모A}_i \times 0.45 + \text{부모B}_i \times 0.45\right) + \text{난수}(-5, +10), \;\; 10, \;\; \text{자식 POT}\right)$$</div></div>
 <ul>
 <li><strong>[연산식 설명]</strong>: 부모 A, B 스탯의 각 45%를 합산한 90% 계승치에 <code>-5 ~ +10</code> 범위의 유전 변동 난수를 더하고, 최소 10에서 산출된 <code>자식 POT</code> 상한선 사이로 고정</li>
 <li><strong>[계산 예시]</strong>: 부모A 힘 <code>60</code>, 부모B 힘 <code>50</code>, 유전 난수 <code>+4</code>, <code>자식 POT 84</code> 기준: $\text{반올림}(60 \times 0.45 + 50 \times 0.45) + 4 = \text{반올림}(27 + 22.5) + 4 = 50 + 4 = \mathbf{54\text{ STR}}$ 확정</li>
